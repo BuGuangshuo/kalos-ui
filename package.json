@@ -7,7 +7,7 @@
     "build": "npm run registry:build && next build",
     "start": "next start",
     "lint": "eslint",
-    "registry:build": "node scripts/prepare-registry.mjs && shadcn build && node scripts/verify-registry.mjs",
+    "registry:build": "node scripts/prepare-registry.mjs && shadcn build && node scripts/verify-registry.mjs && node scripts/build-vue-registry.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

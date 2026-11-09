@@ -4,10 +4,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 import { catalog } from "@/lib/catalog";
-import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
+import { Sidebar, OnThisPage } from "@/components/docs-parts";
 import { ComponentDetails } from "@/components/component-details";
 import { InstallCommand } from "@/components/site-shell";
 import { Badge } from "@/components/ui/badge";
+import {
+  FrameworkCode,
+  FrameworkSwitcher,
+  FrameworkText,
+} from "@/components/framework";
+import { vueCatalog, vueExample } from "@/lib/vue-catalog";
 export const dynamicParams = false;
 export function generateStaticParams() {
   return catalog.map((item) => ({ slug: item.slug }));
@@ -32,10 +38,16 @@ export default async function DetailPage({
   const { slug } = await params;
   const item = catalog.find((item) => item.slug === slug);
   if (!item) notFound();
-  const source = await readFile(
-    path.join(process.cwd(), "registry", "pop", `${item.slug}.tsx`),
-    "utf8",
-  );
+  const [source, vueSource] = await Promise.all([
+    readFile(
+      path.join(process.cwd(), "registry", "pop", `${item.slug}.tsx`),
+      "utf8",
+    ),
+    readFile(
+      path.join(process.cwd(), "registry", "vue", `${item.slug}.vue`),
+      "utf8",
+    ),
+  ]);
   const index = catalog.indexOf(item);
   const previous = catalog[index - 1],
     next = catalog[index + 1];
@@ -57,26 +69,40 @@ export default async function DetailPage({
             <p>{item.description}</p>
             <div className="detail-meta">
               <Badge variant="secondary">{item.category}</Badge>
-              <span>React · TypeScript · Radix UI</span>
+              <span>
+                <FrameworkText
+                  react="React · TypeScript · Radix UI"
+                  vue="Vue · TypeScript · Reka UI"
+                />
+              </span>
             </div>
+            <FrameworkSwitcher />
           </header>
           <section id="preview">
-            <ComponentDetails slug={slug} source={source} />
+            <ComponentDetails
+              slug={slug}
+              source={source}
+              vueSource={vueSource}
+            />
           </section>
           <section id="installation">
             <h2>安装</h2>
             <p>
-              在已初始化的 Radix 版 shadcn/ui
-              项目中运行。所需基础组件会自动安装。
+              <FrameworkText
+                react="在已初始化的 Radix 版 shadcn/ui 项目中运行。"
+                vue="在已初始化的 shadcn-vue 项目中运行（Vue 3.5+、Tailwind CSS）。"
+              />
+              所需基础组件会自动安装。
             </p>
             <InstallCommand slug={slug} />
           </section>
           <section id="usage">
             <h2>使用</h2>
-            <CodeBlock
-              language="tsx"
-              filename="example.tsx"
-              code={`import { ${item.slug
+            <FrameworkCode
+              reactFilename="example.tsx"
+              vueFilename="Example.vue"
+              vue={vueExample(slug)}
+              react={`import { ${item.slug
                 .split("-")
                 .map((part) => part[0].toUpperCase() + part.slice(1))
                 .join("")} } from "@/components/ui/${slug}"\n\n${item.usage}`}
@@ -84,7 +110,9 @@ export default async function DetailPage({
           </section>
           <section id="api">
             <h2>组件 API</h2>
-            <p className="props-info">{item.props}</p>
+            <p className="props-info">
+              <FrameworkText react={item.props} vue={vueCatalog[slug].props} />
+            </p>
             <p>
               组件继承现有的语义颜色，视觉规范参考{" "}
               <Link href="/docs/tokens">设计变量</Link>

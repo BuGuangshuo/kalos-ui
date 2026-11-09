@@ -1,0 +1,18 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "pop-badge",
+  "type": "registry:ui",
+  "title": "Pop 徽标 · Vue",
+  "description": "使用简洁的标记展示状态、类别与附加信息。",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "registryDependencies": [
+    "badge"
+  ],
+  "files": [
+    {
+      "path": "pop-badge.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { Badge } from \"@/components/ui/badge\";\nwithDefaults(defineProps<{ status?: \"neutral\" | \"success\" | \"warning\" }>(), {\n  status: \"neutral\",\n});\n</script>\n\n<template>\n  <Badge variant=\"secondary\" class=\"gap-1.5 rounded-full px-2.5 font-medium\">\n    <span\n      v-if=\"status !== 'neutral'\"\n      class=\"size-1.5 shrink-0 rounded-full\"\n      :class=\"status === 'success' ? 'bg-foreground' : 'bg-muted-foreground'\"\n      aria-hidden=\"true\"\n    />\n    <slot />\n  </Badge>\n</template>\n"
+    }
+  ]
+}

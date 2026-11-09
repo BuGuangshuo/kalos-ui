@@ -1,0 +1,86 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "pop-all",
+  "type": "registry:block",
+  "title": "Pop UI · Vue 完整组件库",
+  "description": "一次安装全部 12 个 Vue 组件。",
+  "dependencies": [
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "button",
+    "input",
+    "card",
+    "badge",
+    "switch",
+    "checkbox",
+    "tabs",
+    "accordion",
+    "dialog",
+    "select",
+    "progress",
+    "avatar"
+  ],
+  "files": [
+    {
+      "path": "pop-button.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { LoaderCircle } from \"@lucide/vue\";\nimport { Button } from \"@/components/ui/button\";\ndefineOptions({ inheritAttrs: false });\ndefineProps<{ loading?: boolean; disabled?: boolean }>();\n</script>\n\n<template>\n  <Button\n    v-bind=\"$attrs\"\n    class=\"h-8 rounded-full\"\n    :disabled=\"disabled || loading\"\n    :aria-busy=\"loading || undefined\"\n  >\n    <LoaderCircle\n      v-if=\"loading\"\n      class=\"size-4 animate-spin motion-reduce:animate-none\"\n      aria-hidden=\"true\"\n    />\n    <slot />\n  </Button>\n</template>\n"
+    },
+    {
+      "path": "pop-input.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { useId } from \"vue\";\nimport { Input } from \"@/components/ui/input\";\ndefineOptions({ inheritAttrs: false });\nconst props = defineProps<{\n  label: string;\n  hint?: string;\n  error?: string;\n  id?: string;\n}>();\nconst autoId = useId();\nconst model = defineModel<string | number>({ default: \"\" });\n</script>\n\n<template>\n  <div class=\"flex flex-col gap-1.5\">\n    <label :for=\"props.id || autoId\" class=\"text-sm font-medium\">{{\n      label\n    }}</label>\n    <Input\n      v-bind=\"$attrs\"\n      :id=\"props.id || autoId\"\n      v-model=\"model\"\n      class=\"h-8 rounded-[var(--radius-element,12px)]\"\n      :aria-invalid=\"!!error\"\n      :aria-describedby=\"\n        error || hint ? `${props.id || autoId}-description` : undefined\n      \"\n    />\n    <p\n      v-if=\"error || hint\"\n      :id=\"`${props.id || autoId}-description`\"\n      class=\"text-xs\"\n      :class=\"error ? 'text-destructive' : 'text-muted-foreground'\"\n    >\n      {{ error || hint }}\n    </p>\n  </div>\n</template>\n"
+    },
+    {
+      "path": "pop-card.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport {\n  Card,\n  CardHeader,\n  CardTitle,\n  CardDescription,\n  CardContent,\n  CardFooter,\n} from \"@/components/ui/card\";\ndefineProps<{ title: string; description?: string }>();\n</script>\n\n<template>\n  <Card class=\"gap-4 rounded-[var(--radius-container,16px)] py-5\">\n    <CardHeader class=\"px-5\"\n      ><CardTitle>{{ title }}</CardTitle\n      ><CardDescription v-if=\"description\">{{\n        description\n      }}</CardDescription></CardHeader\n    >\n    <CardContent class=\"px-5 text-sm\"><slot /></CardContent>\n    <CardFooter v-if=\"$slots.footer\" class=\"px-5\"\n      ><slot name=\"footer\"\n    /></CardFooter>\n  </Card>\n</template>\n"
+    },
+    {
+      "path": "pop-badge.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { Badge } from \"@/components/ui/badge\";\nwithDefaults(defineProps<{ status?: \"neutral\" | \"success\" | \"warning\" }>(), {\n  status: \"neutral\",\n});\n</script>\n\n<template>\n  <Badge variant=\"secondary\" class=\"gap-1.5 rounded-full px-2.5 font-medium\">\n    <span\n      v-if=\"status !== 'neutral'\"\n      class=\"size-1.5 shrink-0 rounded-full\"\n      :class=\"status === 'success' ? 'bg-foreground' : 'bg-muted-foreground'\"\n      aria-hidden=\"true\"\n    />\n    <slot />\n  </Badge>\n</template>\n"
+    },
+    {
+      "path": "pop-switch.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { useId } from \"vue\";\nimport { Switch } from \"@/components/ui/switch\";\ndefineOptions({ inheritAttrs: false });\ndefineProps<{\n  label: string;\n  description?: string;\n  id?: string;\n  disabled?: boolean;\n  name?: string;\n}>();\nconst autoId = useId();\nconst model = defineModel<boolean>({ default: false });\n</script>\n\n<template>\n  <div class=\"flex items-center justify-between gap-6\">\n    <label\n      :for=\"id || autoId\"\n      class=\"flex cursor-pointer flex-col gap-1 text-sm font-medium\"\n      >{{ label\n      }}<span\n        v-if=\"description\"\n        class=\"text-xs font-normal text-muted-foreground\"\n        >{{ description }}</span\n      ></label\n    >\n    <Switch\n      v-bind=\"$attrs\"\n      :id=\"id || autoId\"\n      v-model=\"model\"\n      :name=\"name\"\n      :disabled=\"disabled\"\n      class=\"shrink-0\"\n    />\n  </div>\n</template>\n"
+    },
+    {
+      "path": "pop-checkbox.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { useId } from \"vue\";\nimport { Checkbox } from \"@/components/ui/checkbox\";\ndefineOptions({ inheritAttrs: false });\ndefineProps<{\n  label: string;\n  description?: string;\n  id?: string;\n  disabled?: boolean;\n  name?: string;\n}>();\nconst autoId = useId();\nconst model = defineModel<boolean | \"indeterminate\">({ default: false });\n</script>\n\n<template>\n  <div class=\"flex items-start gap-3\">\n    <Checkbox\n      v-bind=\"$attrs\"\n      :id=\"id || autoId\"\n      v-model=\"model\"\n      :name=\"name\"\n      :disabled=\"disabled\"\n      class=\"shrink-0\"\n    />\n    <label\n      :for=\"id || autoId\"\n      class=\"flex cursor-pointer flex-col gap-1 text-sm font-medium\"\n      >{{ label\n      }}<span\n        v-if=\"description\"\n        class=\"text-xs font-normal text-muted-foreground\"\n        >{{ description }}</span\n      ></label\n    >\n  </div>\n</template>\n"
+    },
+    {
+      "path": "pop-tabs.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/ui/tabs\";\ndefineProps<{\n  items: { value: string; label: string; content?: string }[];\n  defaultValue?: string;\n}>();\nconst model = defineModel<string>();\n</script>\n\n<template>\n  <Tabs\n    v-model=\"model\"\n    :default-value=\"defaultValue ?? items[0]?.value\"\n    class=\"w-full gap-4\"\n  >\n    <TabsList class=\"rounded-full\"\n      ><TabsTrigger\n        v-for=\"item in items\"\n        :key=\"item.value\"\n        :value=\"item.value\"\n        class=\"rounded-full\"\n        >{{ item.label }}</TabsTrigger\n      ></TabsList\n    >\n    <TabsContent\n      v-for=\"item in items\"\n      :key=\"item.value\"\n      :value=\"item.value\"\n      class=\"rounded-xl border p-4 text-sm\"\n      ><slot :name=\"item.value\">{{ item.content }}</slot></TabsContent\n    >\n  </Tabs>\n</template>\n"
+    },
+    {
+      "path": "pop-accordion.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport {\n  Accordion,\n  AccordionItem,\n  AccordionTrigger,\n  AccordionContent,\n} from \"@/components/ui/accordion\";\ndefineProps<{ items: { question: string; answer: string }[] }>();\n</script>\n\n<template>\n  <Accordion type=\"single\" collapsible class=\"w-full\">\n    <AccordionItem\n      v-for=\"(item, index) in items\"\n      :key=\"item.question\"\n      :value=\"String(index)\"\n      ><AccordionTrigger class=\"text-sm\">{{ item.question }}</AccordionTrigger\n      ><AccordionContent class=\"text-sm text-muted-foreground\">{{\n        item.answer\n      }}</AccordionContent></AccordionItem\n    >\n  </Accordion>\n</template>\n"
+    },
+    {
+      "path": "pop-dialog.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport {\n  Dialog,\n  DialogTrigger,\n  DialogContent,\n  DialogHeader,\n  DialogTitle,\n  DialogDescription,\n  DialogFooter,\n} from \"@/components/ui/dialog\";\nimport { Button } from \"@/components/ui/button\";\ndefineProps<{ trigger: string; title: string; description?: string }>();\nconst open = defineModel<boolean>(\"open\", { default: false });\n</script>\n\n<template>\n  <Dialog v-model:open=\"open\">\n    <DialogTrigger as-child\n      ><Button variant=\"outline\" class=\"h-8 rounded-full\">{{\n        trigger\n      }}</Button></DialogTrigger\n    >\n    <DialogContent class=\"rounded-[var(--radius-container,16px)]\">\n      <DialogHeader\n        ><DialogTitle>{{ title }}</DialogTitle\n        ><DialogDescription :class=\"!description ? 'sr-only' : undefined\">{{\n          description || title\n        }}</DialogDescription></DialogHeader\n      >\n      <div class=\"text-sm\"><slot /></div>\n      <DialogFooter v-if=\"$slots.footer\"><slot name=\"footer\" /></DialogFooter>\n    </DialogContent>\n  </Dialog>\n</template>\n"
+    },
+    {
+      "path": "pop-select.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { useId } from \"vue\";\nimport {\n  Select,\n  SelectTrigger,\n  SelectValue,\n  SelectContent,\n  SelectItem,\n} from \"@/components/ui/select\";\ndefineProps<{\n  label: string;\n  placeholder?: string;\n  items: { value: string; label: string }[];\n  disabled?: boolean;\n  name?: string;\n  id?: string;\n}>();\nconst autoId = useId();\nconst model = defineModel<string>();\n</script>\n\n<template>\n  <div class=\"flex flex-col gap-1.5\">\n    <label :for=\"id || autoId\" class=\"text-sm font-medium\">{{ label }}</label>\n    <Select v-model=\"model\" :disabled=\"disabled\" :name=\"name\"\n      ><SelectTrigger\n        :id=\"id || autoId\"\n        class=\"h-8 w-full rounded-[var(--radius-element,12px)]\"\n        ><SelectValue :placeholder=\"placeholder || '请选择'\" /></SelectTrigger\n      ><SelectContent\n        ><SelectItem\n          v-for=\"item in items\"\n          :key=\"item.value\"\n          :value=\"item.value\"\n          >{{ item.label }}</SelectItem\n        ></SelectContent\n      ></Select\n    >\n  </div>\n</template>\n"
+    },
+    {
+      "path": "pop-progress.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from \"vue\";\nimport { Progress } from \"@/components/ui/progress\";\nconst props = defineProps<{\n  label: string;\n  value: number;\n  description?: string;\n}>();\nconst progress = computed(() =>\n  Number.isFinite(props.value) ? Math.min(100, Math.max(0, props.value)) : 0,\n);\n</script>\n\n<template>\n  <div class=\"flex w-full flex-col gap-2.5\">\n    <div class=\"flex items-center justify-between gap-4 text-sm\">\n      <span class=\"font-medium\">{{ label }}</span\n      ><span class=\"tabular-nums text-muted-foreground\">{{ progress }}%</span>\n    </div>\n    <Progress :model-value=\"progress\" :aria-label=\"label\" class=\"h-1.5\" />\n    <p v-if=\"description\" class=\"text-xs text-muted-foreground\">\n      {{ description }}\n    </p>\n  </div>\n</template>\n"
+    },
+    {
+      "path": "pop-avatar-stack.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from \"vue\";\nimport { Avatar, AvatarImage, AvatarFallback } from \"@/components/ui/avatar\";\nconst props = withDefaults(\n  defineProps<{ people: { name: string; image?: string }[]; max?: number }>(),\n  { max: 4 },\n);\nconst limit = computed(() => Math.max(0, Math.floor(props.max)));\nconst visible = computed(() => props.people.slice(0, limit.value));\nconst remaining = computed(() =>\n  Math.max(0, props.people.length - visible.value.length),\n);\nconst initials = (name: string) =>\n  name.trim().includes(\" \")\n    ? name\n        .trim()\n        .split(/\\s+/)\n        .slice(0, 2)\n        .map((part) => Array.from(part)[0])\n        .join(\"\")\n        .toUpperCase()\n    : Array.from(name).slice(0, 2).join(\"\");\n</script>\n\n<template>\n  <div class=\"flex -space-x-2\" role=\"group\" aria-label=\"团队成员\">\n    <Avatar\n      v-for=\"(person, index) in visible\"\n      :key=\"`${person.name}-${index}`\"\n      class=\"size-8 border-2 border-background\"\n      :title=\"person.name\"\n      ><AvatarImage\n        v-if=\"person.image\"\n        :src=\"person.image\"\n        :alt=\"person.name\"\n      /><AvatarFallback class=\"text-xs\" :aria-label=\"person.name\">{{\n        initials(person.name)\n      }}</AvatarFallback></Avatar\n    ><span\n      v-if=\"remaining\"\n      class=\"flex size-8 items-center justify-center rounded-full border-2 border-background bg-muted text-xs font-medium\"\n      :aria-label=\"`另外 ${remaining} 位成员`\"\n      >+{{ remaining }}</span\n    >\n  </div>\n</template>\n"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ComponentType, type ReactNode } from "react";
+import { useId, useState, type ComponentType, type ReactNode } from "react";
 import {
   AnimatePresence,
   LayoutGroup,
@@ -48,20 +48,22 @@ export function AutoplayScope({
 }
 
 function SwitchVignette() {
+  const id = useId();
   const [on, setOn] = useState([true, false]);
   useAutoplay(() => setOn(([a, b]) => [!a, !b]), 1600);
   return (
     <FieldGroup className="motion-vignette-fields">
       {["飞行模式", "无线网络"].map((label, index) => (
         <Field key={label} orientation="horizontal">
-          <FieldLabel>
-            <Switch
-              checked={on[index]}
-              onCheckedChange={(value) =>
-                setOn((list) => list.map((v, i) => (i === index ? value : v)))
-              }
-            />
-            {label}
+          <Switch
+            id={`${id}-${index}`}
+            checked={on[index]}
+            onCheckedChange={(value) =>
+              setOn((list) => list.map((v, i) => (i === index ? value : v)))
+            }
+          />
+          <FieldLabel htmlFor={`${id}-${index}`}>
+            <span>{label}</span>
           </FieldLabel>
         </Field>
       ))}
@@ -122,7 +124,7 @@ export function TabsVignette() {
 }
 
 const questions = [
-  ["支持键盘操作吗？", "保留 Radix UI 完整的无障碍交互。"],
+  ["支持键盘操作吗？", "保留完整的键盘与无障碍交互。"],
   ["可以自由修改吗？", "源码就在项目中，每一处都可以定制。"],
   ["如何安装组件？", "使用 shadcn 命令，按需添加到项目。"],
 ];
@@ -149,6 +151,7 @@ function AccordionVignette() {
 
 const tasks = ["预订拍摄工作室", "发送项目报价", "选择合适的字体"];
 function ChecklistVignette() {
+  const id = useId();
   const [done, setDone] = useState(0);
   useAutoplay(() => setDone((count) => (count + 1) % 4), 1100, 200);
   return (
@@ -157,11 +160,12 @@ function ChecklistVignette() {
       <FieldGroup className="motion-vignette-fields">
         {tasks.map((task, index) => (
           <Field key={task} orientation="horizontal">
-            <FieldLabel>
-              <Checkbox
-                checked={index < done}
-                onCheckedChange={(value) => setDone(value ? index + 1 : index)}
-              />
+            <Checkbox
+              id={`${id}-${index}`}
+              checked={index < done}
+              onCheckedChange={(value) => setDone(value ? index + 1 : index)}
+            />
+            <FieldLabel htmlFor={`${id}-${index}`}>
               <span
                 className={index < done ? "motion-task-completed" : undefined}
               >

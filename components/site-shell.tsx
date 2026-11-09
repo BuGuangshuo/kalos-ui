@@ -2,12 +2,10 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { ThemeProvider, useTheme } from "next-themes";
 import {
   ArrowUpRight,
-  Check,
-  Copy,
   Search,
   Sun,
   Moon,
@@ -26,23 +24,19 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/sonner";
-import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { catalog } from "@/lib/catalog";
 import { site } from "@/lib/site";
+import { CopyButton } from "@/components/copy-button";
+import { BrandLogo } from "@/components/brand";
+import {
+  FrameworkSwitcher,
+  FrameworkText,
+  useFramework,
+} from "@/components/framework";
 const HomeShell = dynamic(() =>
   import("@/components/home/shell").then((module) => module.HomeShell),
 );
-export function Mark() {
-  return (
-    <span className="brand-mark" aria-hidden="true">
-      <i />
-      <i />
-      <i />
-      <i />
-    </span>
-  );
-}
 function Header() {
   const path = usePathname();
   const { resolvedTheme, setTheme } = useTheme();
@@ -72,10 +66,7 @@ function Header() {
       <header className={cn("site-header", path === "/" && "home-header")}>
         <div className="header-inner">
           <Link href="/" className="brand" aria-label="Pop UI 首页">
-            <Mark />
-            <span>
-              pop<span className="brand-ui">ui</span>
-            </span>
+            <BrandLogo className="brand-lockup" />
           </Link>
           <nav className="desktop-nav" aria-label="主导航">
             <Link
@@ -91,11 +82,10 @@ function Header() {
               组件
             </Link>
             <Link href="/docs/tokens">设计变量</Link>
-            <a href={site.figma} target="_blank" rel="noreferrer">
-              Figma
-            </a>
+            <Link href="/docs/skills">Skills</Link>
           </nav>
           <div className="header-actions">
+            <FrameworkSwitcher className="header-framework" />
             <Button
               variant="ghost"
               size="icon"
@@ -150,9 +140,9 @@ function Header() {
             <Link onClick={() => setMenu(false)} href="/docs/tokens">
               设计变量
             </Link>
-            <a href={site.figma} target="_blank" rel="noreferrer">
-              Figma 设计库
-            </a>
+            <Link onClick={() => setMenu(false)} href="/docs/skills">
+              Skills
+            </Link>
           </nav>
         ) : null}
       </header>
@@ -205,59 +195,19 @@ export function GithubIcon() {
     </svg>
   );
 }
-export function CopyButton({
-  value,
-  label = "复制",
-  compact = false,
-}: {
-  value: string;
-  label?: string;
-  compact?: boolean;
-}) {
-  const [copied, setCopied] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(
-    () => () => {
-      if (timer.current) clearTimeout(timer.current);
-    },
-    [],
-  );
-  return (
-    <Button
-      variant="ghost"
-      size={compact ? "icon" : "sm"}
-      aria-label={copied ? "已复制" : label}
-      onClick={async () => {
-        try {
-          await navigator.clipboard.writeText(value);
-          setCopied(true);
-          if (timer.current) clearTimeout(timer.current);
-          timer.current = setTimeout(() => setCopied(false), 1800);
-        } catch {
-          toast.error("复制失败，请手动选择并复制文本。");
-        }
-      }}
-    >
-      {copied ? (
-        <Check data-icon="inline-start" />
-      ) : (
-        <Copy data-icon="inline-start" />
-      )}
-      {compact ? null : copied ? "已复制" : label}
-    </Button>
-  );
-}
+export { CopyButton } from "@/components/copy-button";
 const subscribeOrigin = () => () => {};
 const getOrigin = () => window.location.origin;
 const getServerOrigin = () => site.url;
 
 export function InstallCommand({ slug = "pop-button" }: { slug?: string }) {
+  const { framework } = useFramework();
   const origin = useSyncExternalStore(
     subscribeOrigin,
     getOrigin,
     getServerOrigin,
   );
-  const value = `npx shadcn@latest add ${origin}/r/${slug}.json`;
+  const value = `npx ${framework === "vue" ? "shadcn-vue" : "shadcn"}@latest add ${origin}/r/${framework === "vue" ? "vue/" : ""}${slug}.json`;
   return (
     <div className="install-command">
       <Terminal />
@@ -275,8 +225,11 @@ export function BundleInstall() {
       <DialogContent>
         <DialogTitle>将 Pop UI 添加到项目</DialogTitle>
         <DialogDescription>
-          先初始化 Radix 版 shadcn/ui，再运行以下命令。全部 12
-          个组件及所需基础组件会自动安装。
+          <FrameworkText
+            react="先初始化 Radix 版 shadcn/ui"
+            vue="先初始化 shadcn-vue"
+          />
+          ，再运行以下命令。全部 12 个组件及所需基础组件会自动安装。
         </DialogDescription>
         <InstallCommand slug="pop-all" />
       </DialogContent>
@@ -295,19 +248,16 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <main id="main-content">{children}</main>
           <footer className="site-footer">
             <div>
-              <Link href="/" className="brand">
-                <Mark />
-                <span>
-                  pop<span className="brand-ui">ui</span>
-                </span>
+              <Link href="/" className="brand" aria-label="Pop UI 首页">
+                <BrandLogo className="brand-lockup" />
               </Link>
               <p>从基础出发，构建属于你的界面。</p>
             </div>
             <div className="footer-links">
               <Link href="/docs/getting-started">使用文档</Link>
-              <a href={site.figma} target="_blank" rel="noreferrer">
-                Figma <ArrowUpRight />
-              </a>
+              <Link href="/docs/skills">
+                Skills <ArrowUpRight />
+              </Link>
               <a href={site.github} target="_blank" rel="noreferrer">
                 GitHub <ArrowUpRight />
               </a>

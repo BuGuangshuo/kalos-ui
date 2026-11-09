@@ -16,7 +16,8 @@ export function LibrarySidebar({
 }) {
   const [localQuery, setLocalQuery] = useState("");
   const term = query ?? localQuery;
-  const isDocs = active === "docs" || active === "tokens";
+  const isDocs =
+    active === "docs" || active === "tokens" || active === "skills";
   const filtered = catalog.filter((item) =>
     `${item.title} ${item.english}`.toLowerCase().includes(term.toLowerCase()),
   );
@@ -80,6 +81,12 @@ export function LibrarySidebar({
           <Link href="/docs/getting-started#usage">使用第一个组件</Link>
           <Link href="/docs/getting-started#namespace">注册表命名空间</Link>
           <Link href="/docs/getting-started#maintenance">扩展组件库</Link>
+          <Link
+            href="/docs/skills"
+            aria-current={active === "skills" ? "page" : undefined}
+          >
+            Skills
+          </Link>
           <div className="sidebar-section">设计基础</div>
           <Link
             href="/docs/tokens"
@@ -95,9 +102,9 @@ export function LibrarySidebar({
           <Link href="/docs/tokens#motion">动效</Link>
           <div className="sidebar-section">资源</div>
           <Link href="/components">组件总览</Link>
-          <a href={site.figma} target="_blank" rel="noreferrer">
-            Figma 设计库 <ArrowUpRight />
-          </a>
+          <Link href="/docs/skills">
+            安装 Skill <ArrowUpRight />
+          </Link>
           <a href={site.github} target="_blank" rel="noreferrer">
             GitHub 仓库 <ArrowUpRight />
           </a>

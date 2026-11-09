@@ -368,17 +368,24 @@ export function ExamplesSection() {
   const ref = useRef<HTMLDivElement>(null);
   const visible = useInView(ref, { margin: "-100px" });
   return (
-    <section className="motion-examples-section">
+    <section id="skills" className="motion-examples-section">
       <motion.span {...reveal(0)} className="motion-examples-badge">
         <Sparkles />
-        Pop UI · 交互示例
+        Pop UI · Skills
       </motion.span>
-      <motion.h2 {...reveal(1)}>让想法，生动地发生。</motion.h2>
+      <motion.h2 {...reveal(1)}>让 AI，也懂你的界面。</motion.h2>
       <motion.p {...reveal(2)} className="motion-examples-subtitle">
-        从按钮反馈到列表过渡，把自然的交互融入每一个细节。
+        给 Codex、Claude Code 与 Cursor，装上 Pop UI 的组件知识。
         <br className="motion-desktop-break" />
-        使用熟悉的组件，自由组合出你的下一个作品。
+        自动识别 React / Vue，从安装组件到调整动效，一句描述就能开始。
       </motion.p>
+      <motion.div {...reveal(2)} className="motion-skill-command">
+        <CopyCommand kind="skill" id="skill-command" />
+        <p>在项目目录中安装，再向你的 AI 助手描述需求。</p>
+        <Link href="/docs/skills">
+          了解 Skill 的能力与使用方式 <ArrowRight />
+        </Link>
+      </motion.div>
       <motion.div {...reveal(3)} ref={ref} className="motion-example-window">
         <LayoutGroup id="home-scenarios">
           <Tabs
@@ -415,7 +422,7 @@ export function ExamplesSection() {
                 <span />
                 <span />
                 <span />
-                <span>~/pop-ui</span>
+                <span>Pop UI Skill · 使用场景演示</span>
               </div>
               {scenes.map((scene) => (
                 <TabsContent key={scene.id} value={scene.id}>
@@ -439,11 +446,11 @@ export function ExamplesSection() {
         </LayoutGroup>
       </motion.div>
       <motion.div {...reveal(4)} className="motion-examples-install">
-        <p>全部组件支持深浅主题，源码可以直接安装到你的项目中。</p>
+        <p>框架识别、组件安装、语义变量与自然动效，都收录在同一个 Skill 中。</p>
         <CopyCommand name="pop-button" id="example-command" />
         <div className="motion-hero-actions">
-          <Link href="/docs/getting-started" className="motion-primary-link">
-            查看使用文档
+          <Link href="/docs/skills" className="motion-primary-link">
+            阅读 Skill 文档
           </Link>
           <Link href="/components" className="motion-secondary-link">
             探索组件库

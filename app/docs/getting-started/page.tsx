@@ -3,6 +3,11 @@ import Link from "next/link";
 import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
 import { InstallCommand } from "@/components/site-shell";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import {
+  FrameworkCode,
+  FrameworkSwitcher,
+  FrameworkText,
+} from "@/components/framework";
 export const metadata: Metadata = { title: "快速开始" };
 const links = [
   { id: "ai", title: "通过 AI 快速开始" },
@@ -22,14 +27,20 @@ export default function DocsPage() {
           <header className="docs-title">
             <h1>快速开始</h1>
             <p>将组件库添加到项目中，从你的第一个界面开始。</p>
+            <FrameworkSwitcher />
           </header>
           <section id="ai">
             <h2>通过 AI 快速开始</h2>
-            <p>把下面的提示复制到你使用的 AI 编程工具中，让它完成基础配置：</p>
-            <CodeBlock
-              language="text"
-              filename="初始化项目"
-              code={
+            <p>
+              先安装 <Link href="/docs/skills">Pop UI Skill</Link>，让 AI
+              助手识别框架、安装组件并保留你的项目规范：
+            </p>
+            <CodeBlock code="npx skills add BuGuangshuo/pop-ui --skill pop-ui" />
+            <FrameworkCode
+              reactFilename="初始化 React 项目"
+              vueFilename="初始化 Vue 项目"
+              vue="在当前 Vue 3.5+ 项目中配置 Tailwind CSS 和 shadcn-vue，使用 Pop UI Vue 注册表安装所需组件，保留现有项目结构与设计变量。"
+              react={
                 "在当前 React 项目中初始化 Radix 版 shadcn/ui：\nnpx shadcn@latest init --base radix\n\n然后从 Pop UI 组件文档复制需要的安装命令，\n安装组件并阅读生成的源码。保留现有的项目结构与设计变量。"
               }
             />
@@ -41,15 +52,29 @@ export default function DocsPage() {
           <section id="installation">
             <h2>安装与配置</h2>
             <p>
-              使用支持 React 的项目，并配置 Tailwind CSS。推荐使用
-              Next.js、TypeScript 与 Tailwind CSS v4。
+              <FrameworkText
+                react="使用 React / Next.js 项目，并配置 TypeScript 与 Tailwind CSS v4。"
+                vue="使用 Vue 3.5+ / Nuxt 项目，并配置 TypeScript 与 Tailwind CSS。可通过 Vite 创建 Vue 项目。"
+              />
             </p>
-            <CodeBlock code={"npx shadcn@latest init --base radix"} />
+            <FrameworkCode
+              react="npx shadcn@latest init --base radix"
+              vue="npx shadcn-vue@latest init"
+              reactFilename="React"
+              vueFilename="Vue"
+            />
             <Alert>
-              <AlertTitle>使用 Radix 基础组件</AlertTitle>
+              <AlertTitle>
+                <FrameworkText
+                  react="使用 Radix 基础组件"
+                  vue="使用 Reka UI 基础组件"
+                />
+              </AlertTitle>
               <AlertDescription>
-                Pop UI 基于 Radix 版 shadcn/ui API。初始化时使用 --base
-                radix，以保持触发器、选项卡与对话框等组件的 API 一致。
+                <FrameworkText
+                  react="React 版基于 Radix 版 shadcn/ui API。初始化时使用 --base radix，保持触发器、选项卡与对话框的 API 一致。"
+                  vue="Vue 版基于 shadcn-vue 与 Reka UI，提供独立的 .vue 源码。输入、开关、复选框使用 v-model，对话框使用 v-model:open。"
+                />
               </AlertDescription>
             </Alert>
             <p>选择需要的组件，然后运行对应的安装命令：</p>
@@ -63,10 +88,13 @@ export default function DocsPage() {
               从你的本地组件目录导入。组件依赖的 shadcn/ui 基础组件会由 CLI
               自动补齐。
             </p>
-            <CodeBlock
-              filename="app/page.tsx"
-              language="tsx"
-              code={
+            <FrameworkCode
+              reactFilename="app/page.tsx"
+              vueFilename="App.vue"
+              vue={
+                '<script setup lang="ts">\nimport PopButton from "@/components/ui/pop-button.vue"\n</script>\n\n<template>\n  <PopButton>开始构建</PopButton>\n</template>'
+              }
+              react={
                 'import { PopButton } from "@/components/ui/pop-button"\n\nexport default function Page() {\n  return <PopButton>开始构建</PopButton>\n}'
               }
             />
@@ -82,14 +110,22 @@ export default function DocsPage() {
               在项目的 <code>components.json</code> 中添加注册表地址，将
               YOUR-DOMAIN 替换为当前网站的域名：
             </p>
-            <CodeBlock
-              filename="components.json"
-              language="json"
-              code={
+            <FrameworkCode
+              reactFilename="components.json"
+              vueFilename="components.json"
+              vue={
+                '{\n  "registries": {\n    "@pop-ui": "https://YOUR-DOMAIN/r/vue/{name}.json"\n  }\n}'
+              }
+              react={
                 '{\n  "registries": {\n    "@pop-ui": "https://YOUR-DOMAIN/r/{name}.json"\n  }\n}'
               }
             />
-            <CodeBlock code={"npx shadcn@latest add @pop-ui/pop-button"} />
+            <FrameworkCode
+              react="npx shadcn@latest add @pop-ui/pop-button"
+              vue="npx shadcn-vue@latest add @pop-ui/pop-button"
+              reactFilename="React"
+              vueFilename="Vue"
+            />
           </section>
           <section id="theme">
             <h2>主题与设计变量</h2>
@@ -110,7 +146,7 @@ export default function DocsPage() {
               filename="项目结构"
               language="text"
               code={
-                "registry/pop/        可分发的组件源码\nlib/catalog.ts       组件目录、依赖与使用示例\ncomponents/demos.tsx  交互预览\ndesign/tokens.json   代码与 Figma 共用的设计变量\npublic/r/            自动生成的注册表 JSON"
+                "registry/pop/        React 组件源码\nregistry/vue/        Vue 组件源码\nskills/pop-ui/       可安装的 AI Skill\nlib/catalog.ts       组件目录与依赖\ndesign/tokens.json   共享语义设计变量\npublic/r/            React 注册表 JSON\npublic/r/vue/        Vue 注册表 JSON"
               }
             />
             <ol>

@@ -57,7 +57,7 @@ export default function TokensPage() {
               Astryx Tokens
             </a>
             ，并适配 shadcn/ui。代码源文件位于 <code>design/tokens.json</code>
-            ，Figma 中包含对应的颜色与尺寸变量。
+            ，React 与 Vue 组件共用对应的颜色与尺寸变量。
           </p>
           <section id="colors">
             <h2>颜色与主题</h2>

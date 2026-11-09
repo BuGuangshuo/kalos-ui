@@ -2,13 +2,17 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ComponentDemo } from "@/components/demos";
 import { CodeBlock } from "@/components/docs-parts";
+import { useFramework } from "@/components/framework";
 export function ComponentDetails({
   slug,
   source,
+  vueSource,
 }: {
   slug: string;
   source: string;
+  vueSource: string;
 }) {
+  const { framework } = useFramework();
   return (
     <Tabs defaultValue="preview" className="detail-tabs">
       <TabsList>
@@ -21,7 +25,10 @@ export function ComponentDetails({
         </div>
       </TabsContent>
       <TabsContent value="code">
-        <CodeBlock code={source} filename={`${slug}.tsx`} />
+        <CodeBlock
+          code={framework === "vue" ? vueSource : source}
+          filename={`${slug}.${framework === "vue" ? "vue" : "tsx"}`}
+        />
       </TabsContent>
     </Tabs>
   );

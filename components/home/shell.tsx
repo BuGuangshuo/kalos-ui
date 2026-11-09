@@ -191,9 +191,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
                 </p>
                 <nav aria-label="页脚导航">
                   <Link href="/docs/getting-started">文档</Link>
-                  <a href={site.figma} target="_blank" rel="noreferrer">
-                    Figma
-                  </a>
+                  <Link href="/docs/skills">Skills</Link>
                   <Link href="/components">组件库</Link>
                 </nav>
               </footer>

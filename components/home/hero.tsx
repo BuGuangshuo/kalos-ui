@@ -8,17 +8,10 @@ import {
   motion,
   useReducedMotion,
 } from "motion/react";
-import {
-  Box,
-  Check,
-  Code2,
-  Copy,
-  PenTool,
-  Layers,
-  Palette,
-} from "lucide-react";
+import { Box, Check, Copy, Layers, Palette } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { site } from "@/lib/site";
+import { FrameworkSwitcher, useFramework } from "@/components/framework";
 import { easeOut, PackageManagerContext, useIntro } from "./runtime";
 
 const managers = ["npm", "pnpm", "yarn", "bun"] as const;
@@ -35,10 +28,13 @@ const getServerOrigin = () => site.url;
 export function CopyCommand({
   name = "pop-all",
   id = "hero-command",
+  kind = "component",
 }: {
   name?: string;
   id?: string;
+  kind?: "component" | "skill";
 }) {
+  const { framework } = useFramework();
   const { manager, setManager } = use(PackageManagerContext);
   const [copied, setCopied] = useState(false);
   const origin = useSyncExternalStore(
@@ -47,7 +43,9 @@ export function CopyCommand({
     getServerOrigin,
   );
   const command = (value: string) =>
-    `${runners[value as keyof typeof runners]} shadcn@latest add ${origin}/r/${name}.json`;
+    kind === "skill"
+      ? `${runners[value as keyof typeof runners]} skills add BuGuangshuo/pop-ui --skill pop-ui`
+      : `${runners[value as keyof typeof runners]} ${framework === "vue" ? "shadcn-vue" : "shadcn"}@latest add ${origin}/r/${framework === "vue" ? "vue/" : ""}${name}.json`;
   useEffect(() => {
     if (!copied) return;
     const timer = setTimeout(() => setCopied(false), 1600);
@@ -133,8 +131,13 @@ export function CopyCommand({
   );
 }
 
-const words = ["shadcn/ui", "React", "Radix UI", "产品界面"];
+const libraryWords = {
+  react: ["shadcn/ui", "React", "Radix UI", "产品界面"],
+  vue: ["shadcn-vue", "Vue", "Reka UI", "产品界面"],
+};
 function CyclingLibrary({ done }: { done: boolean }) {
+  const { framework } = useFramework();
+  const words = libraryWords[framework];
   const [index, setIndex] = useState(0);
   const reduce = useReducedMotion();
   useEffect(() => {
@@ -151,7 +154,7 @@ function CyclingLibrary({ done }: { done: boolean }) {
       clearTimeout(timer);
       clearInterval(interval);
     };
-  }, [done, reduce]);
+  }, [done, reduce, words]);
   return (
     <motion.span
       layout
@@ -161,7 +164,7 @@ function CyclingLibrary({ done }: { done: boolean }) {
     >
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
-          key={words[index]}
+          key={`${framework}-${words[index]}`}
           initial={{ opacity: 0, y: "65%", filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           exit={{ opacity: 0, y: "-65%", filter: "blur(8px)" }}
@@ -210,6 +213,7 @@ function SplitLine({
 
 export function MotionHero() {
   const { done } = useIntro();
+  const { framework } = useFramework();
   const rise = (index: number) => ({
     initial: { opacity: 0, y: 20, filter: "blur(10px)" },
     animate: done
@@ -219,13 +223,8 @@ export function MotionHero() {
   });
   return (
     <section className="motion-home-hero">
-      <motion.div {...rise(0)} className="motion-framework-pill">
-        <span>
-          <Code2 /> React
-        </span>
-        <a href={site.figma} target="_blank" rel="noreferrer">
-          <PenTool /> Figma
-        </a>
+      <motion.div {...rise(0)}>
+        <FrameworkSwitcher className="motion-framework-pill" />
       </motion.div>
       <h1
         className="motion-hero-title"
@@ -257,7 +256,11 @@ export function MotionHero() {
         </span>
       </h1>
       <motion.p {...rise(5)} className="motion-hero-subtitle">
-        可自由定制的 React 组件，基于 Radix UI 与 shadcn/ui。
+        可自由定制的 {framework === "vue" ? "Vue" : "React"} 组件，基于{" "}
+        {framework === "vue"
+          ? "Reka UI 与 shadcn-vue"
+          : "Radix UI 与 shadcn/ui"}
+        。
         <br className="motion-desktop-break" />
         保留你的风格与源码，让每一次交互自然发生。
       </motion.p>
@@ -274,10 +277,10 @@ export function MotionHero() {
       </motion.div>
       <motion.div {...rise(7)} className="motion-stack-logos">
         <span>
-          <Layers /> Radix UI
+          <Layers /> {framework === "vue" ? "Reka UI" : "Radix UI"}
         </span>
         <span>
-          <Box /> shadcn/ui
+          <Box /> {framework === "vue" ? "shadcn-vue" : "shadcn/ui"}
         </span>
         <span>
           <Palette /> Tailwind CSS

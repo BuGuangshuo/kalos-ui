@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ArrowUpRight, Layers } from "lucide-react";
 import { catalog, categories } from "@/lib/catalog";
-import { site } from "@/lib/site";
+import { FrameworkSwitcher } from "@/components/framework";
 import { ComponentDemo } from "@/components/demos";
 import { LibrarySidebar } from "@/components/library-sidebar";
 import { BundleInstall } from "@/components/site-shell";
@@ -34,15 +34,11 @@ export function CatalogGrid() {
           <h1>浏览组件库</h1>
           <p>每一个基础组件，都有可交互预览、完整源码与清晰的使用示例。</p>
           <div className="catalog-heading-actions">
+            <FrameworkSwitcher />
             <BundleInstall />
-            <a
-              className="secondary-link"
-              href={site.figma}
-              target="_blank"
-              rel="noreferrer"
-            >
-              查看 Figma <ArrowUpRight />
-            </a>
+            <Link className="secondary-link" href="/docs/skills">
+              安装 Skill <ArrowUpRight />
+            </Link>
           </div>
           <div className="mobile-catalog-search">
             <Input

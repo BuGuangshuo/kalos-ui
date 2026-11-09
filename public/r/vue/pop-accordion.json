@@ -1,0 +1,18 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "pop-accordion",
+  "type": "registry:ui",
+  "title": "Pop 折叠面板 · Vue",
+  "description": "按需展开详细内容，在有限空间中保持信息层次。",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "registryDependencies": [
+    "accordion"
+  ],
+  "files": [
+    {
+      "path": "pop-accordion.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport {\n  Accordion,\n  AccordionItem,\n  AccordionTrigger,\n  AccordionContent,\n} from \"@/components/ui/accordion\";\ndefineProps<{ items: { question: string; answer: string }[] }>();\n</script>\n\n<template>\n  <Accordion type=\"single\" collapsible class=\"w-full\">\n    <AccordionItem\n      v-for=\"(item, index) in items\"\n      :key=\"item.question\"\n      :value=\"String(index)\"\n      ><AccordionTrigger class=\"text-sm\">{{ item.question }}</AccordionTrigger\n      ><AccordionContent class=\"text-sm text-muted-foreground\">{{\n        item.answer\n      }}</AccordionContent></AccordionItem\n    >\n  </Accordion>\n</template>\n"
+    }
+  ]
+}

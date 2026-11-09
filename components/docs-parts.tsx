@@ -1,4 +1,4 @@
-import { CopyButton } from "@/components/site-shell";
+import { CopyButton } from "@/components/copy-button";
 export { LibrarySidebar as Sidebar } from "@/components/library-sidebar";
 export function CodeBlock({
   code,
