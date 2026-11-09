@@ -15,8 +15,10 @@ export function PopAccordion({
     <Accordion type="single" collapsible>
       {items.map((item, index) => (
         <AccordionItem key={index} value={String(index)}>
-          <AccordionTrigger>{item.question}</AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
+          <AccordionTrigger className="py-3 text-sm">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent className="text-sm">{item.answer}</AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

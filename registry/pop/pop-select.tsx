@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 export function PopSelect({
   label,
-  placeholder = "Select an option",
+  placeholder = "请选择",
   items,
   value,
   onValueChange,
@@ -28,7 +28,11 @@ export function PopSelect({
         {label}
       </label>
       <Select value={value} onValueChange={onValueChange}>
-        <SelectTrigger id={id} className="w-full">
+        <SelectTrigger
+          size="default"
+          id={id}
+          className="w-full rounded-[var(--radius-element,12px)]"
+        >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>

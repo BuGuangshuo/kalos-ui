@@ -15,7 +15,8 @@ export function PopAvatarStack({
       {people.slice(0, limit).map((person, index) => (
         <Avatar
           key={`${person.name}-${index}`}
-          className="size-10 ring-2 ring-background -ml-2 first:ml-0"
+          size="default"
+          className="ring-2 ring-background -ml-1.5 first:ml-0"
         >
           {person.image ? (
             <AvatarImage src={person.image} alt={person.name} />
@@ -30,7 +31,10 @@ export function PopAvatarStack({
         </Avatar>
       ))}
       {people.length > limit ? (
-        <Avatar className="size-10 ring-2 ring-background -ml-2 first:ml-0">
+        <Avatar
+          size="default"
+          className="ring-2 ring-background -ml-1.5 first:ml-0"
+        >
           <AvatarFallback>+{people.length - limit}</AvatarFallback>
         </Avatar>
       ) : null}

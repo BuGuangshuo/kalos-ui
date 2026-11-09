@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import {
   Field,
@@ -22,18 +23,19 @@ export function PopInput({
   const fieldId = id || autoId;
   const descriptionId = `${fieldId}-description`;
   return (
-    <Field data-invalid={!!error}>
+    <Field data-invalid={!!error} className="gap-1.5">
       <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>
       <Input
         {...props}
+        className={cn("rounded-[var(--radius-element,12px)]", props.className)}
         id={fieldId}
         aria-invalid={!!error}
         aria-describedby={error || hint ? descriptionId : undefined}
       />
       {error ? (
-        <FieldError id={descriptionId}>{error}</FieldError>
+        <FieldError id={descriptionId} className="text-xs">{error}</FieldError>
       ) : hint ? (
-        <FieldDescription id={descriptionId}>{hint}</FieldDescription>
+        <FieldDescription id={descriptionId} className="text-xs">{hint}</FieldDescription>
       ) : null}
     </Field>
   );

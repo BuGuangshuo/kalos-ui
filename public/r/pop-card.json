@@ -1,9 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "pop-card",
-  "title": "Pop Card",
+  "title": "Pop 卡片",
   "author": "Alan Bu <https://github.com/BuGuangshuo>",
-  "description": "A calm home for your content and actions.",
+  "description": "为相关信息与操作提供清晰、紧凑的内容容器。",
   "registryDependencies": [
     "card"
   ],

@@ -3,178 +3,239 @@ import {
   ArrowRight,
   ArrowUpRight,
   Code2,
-  SlidersHorizontal,
-  Accessibility,
-  Terminal,
-  Heart,
+  Box,
+  Layers,
+  Sun,
+  Moon,
 } from "lucide-react";
-import { HeroShowcase, ComponentDemo } from "@/components/demos";
-import { InstallCommand, GithubIcon } from "@/components/site-shell";
+import { HeroShowcase, HomeControls, ComponentDemo } from "@/components/demos";
+import { InstallCommand } from "@/components/site-shell";
 import { catalog } from "@/lib/catalog";
 import { site } from "@/lib/site";
 export default function Home() {
   return (
     <>
-      <section className="hero page-width">
-        <div className="hero-copy">
-          <Link className="release-pill" href="/components">
-            <span className="status-dot" />A small collection. A thoughtful
-            beginning.
-            <ArrowRight />
-          </Link>
+      <section className="home-hero">
+        <div className="hero-center">
+          <div className="hero-wordmark" aria-label="Pop UI">
+            pop<span>ui</span>
+          </div>
           <h1>
-            Small details.
+            一套开源组件库，
             <br />
-            <span className="serif-line">Better interfaces.</span>
-            <span className="hero-spark">✳</span>
+            <strong>让设计与开发自然衔接。</strong>
           </h1>
-          <p>
-            Thoughtful React components that make your next idea feel a little
-            more <em>you.</em> Beautifully simple. Ready to make your own.
-          </p>
           <div className="hero-actions">
-            <Link href="/components" className="primary-link">
-              Explore components <ArrowRight />
+            <Link href="/docs/getting-started" className="primary-link">
+              开始使用 <ArrowRight />
             </Link>
+            <Link href="/components" className="secondary-link">
+              浏览组件
+            </Link>
+          </div>
+          <p className="hero-meta">
+            源码开放，自由定制 · 基于 React 与 shadcn/ui
+          </p>
+        </div>
+        <div className="hero-stage">
+          <HeroShowcase />
+        </div>
+        <div className="hero-bottom-note">
+          <span />
+          <span>为每一个好想法，准备好基础。</span>
+          <span />
+        </div>
+      </section>
+      <section className="home-features">
+        <div className="features-grid">
+          <div className="features-column">
+            <div className="feature-intro">
+              <span className="eyebrow">从基础出发</span>
+              <h2>
+                即刻开始。
+                <br />
+                自由定制。
+                <br />
+                让想法更快落地。
+              </h2>
+              <p>
+                不必反复搭建相同的基础。用一致的组件与设计变量，把时间留给真正重要的创意。
+              </p>
+            </div>
+            <Link className="feature-card theme-feature" href="/docs/tokens">
+              <h3>为你的品牌，找到自己的表达</h3>
+              <p>从中性主题开始，用语义变量统一颜色、间距、圆角和排版。</p>
+              <span className="feature-link">
+                探索设计变量 <ArrowUpRight />
+              </span>
+              <div className="theme-swatches">
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+              <div className="type-sample">
+                Aa <span>简洁，有序，恰到好处。</span>
+              </div>
+            </Link>
+          </div>
+          <div className="features-column">
+            <div className="feature-card components-feature">
+              <h3>从 12 个核心组件开始</h3>
+              <p>
+                覆盖操作、输入、内容、导航与反馈。预览每一种状态，复制你需要的代码。
+              </p>
+              <Link href="/components" className="feature-link">
+                浏览组件 <ArrowUpRight />
+              </Link>
+              <HomeControls />
+            </div>
+            <Link
+              className="feature-card code-feature"
+              href="/docs/getting-started#usage"
+            >
+              <h3>每一行代码，都由你掌控</h3>
+              <p>组件直接安装到项目中。按需使用，随时修改。</p>
+              <div className="mini-code">
+                <div>
+                  <span />
+                  <span />
+                  <span />
+                  <small>your-next-idea.tsx</small>
+                </div>
+                <pre>
+                  <span>import</span> {"{ PopButton }"}
+                  <br /> <span>from</span>{" "}
+                  &quot;@/components/ui/pop-button&quot;
+                  <br />
+                  <br />
+                  <span>export default function</span> App() {"{"}
+                  <br /> <span>return</span>{" "}
+                  &lt;PopButton&gt;开始构建&lt;/PopButton&gt;
+                  <br />
+                  {"}"}
+                </pre>
+              </div>
+            </Link>
+          </div>
+          <div className="features-column">
             <a
-              href={site.github}
+              className="feature-card design-feature"
+              href={site.figma}
               target="_blank"
               rel="noreferrer"
-              className="secondary-link"
             >
-              <GithubIcon />
-              View on GitHub <ArrowUpRight />
+              <h3>从画布到代码，保持一致</h3>
+              <p>
+                配套 Figma 组件、变量与组合示例，让设计与开发使用同一套语言。
+              </p>
+              <span className="feature-link">
+                打开 Figma <ArrowUpRight />
+              </span>
+              <div className="figma-preview">
+                <div className="figma-toolbar">
+                  <span>◈ Pop UI</span>
+                  <span>设计系统</span>
+                </div>
+                <div className="figma-canvas">
+                  <div>
+                    <i />
+                    <strong>项目设置</strong>
+                    <span />
+                    <span />
+                    <b>保存更改</b>
+                  </div>
+                  <div>
+                    <strong>组件变量</strong>
+                    <p>颜色 · 尺寸 · 间距</p>
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </div>
+                <div className="figma-cursor">
+                  ↖ <span>Alan</span>
+                </div>
+              </div>
             </a>
+            <Link
+              className="feature-card modes-feature"
+              href="/docs/tokens#colors"
+            >
+              <div className="mode-symbols">
+                <Sun />
+                <Moon />
+              </div>
+              <h3>明暗之间，体验始终如一</h3>
+              <p>
+                浅色与深色语义变量成套定义，切换主题时保持清晰的层次与对比。
+              </p>
+              <span className="feature-link">
+                了解主题 <ArrowUpRight />
+              </span>
+            </Link>
           </div>
-          <div className="hero-meta">
-            <span>
-              <span className="tiny-check">✓</span>Open source
-            </span>
-            <span>
-              <span className="tiny-check">✓</span>Free, forever
-            </span>
-            <span>
-              <span className="tiny-check">✓</span>Yours to shape
-            </span>
-          </div>
-        </div>
-        <HeroShowcase />
-      </section>
-      <section className="compatibility page-width">
-        <span>A familiar foundation. A fresh perspective.</span>
-        <div>
-          <span className="tech-logo">
-            ⚛ <b>React</b>
-          </span>
-          <span className="tech-logo">
-            <b className="next-logo">N</b> Next.js
-          </span>
-          <span className="tech-logo shadcn-logo">
-            ╱╱ <b>shadcn/ui</b>
-          </span>
-          <span className="tech-logo">
-            ≋ <b>Tailwind CSS</b>
-          </span>
-          <span className="tech-logo">
-            <b className="ts-logo">TS</b> TypeScript
-          </span>
         </div>
       </section>
-      <section className="collection-section page-width">
-        <div className="section-eyebrow">
-          <span className="status-dot" />
-          THE COLLECTION
-        </div>
+      <section className="home-library page-width">
         <div className="section-heading">
           <div>
-            <h2>A good place to start.</h2>
-            <p>
-              The essentials, with a little extra care. Go ahead, try them out.
-            </p>
+            <span className="eyebrow">组件预览</span>
+            <h2>从一个组件，开始你的下一个作品。</h2>
           </div>
-          <Link href="/components" className="text-link">
-            All components <span>12</span>
-            <ArrowUpRight />
+          <Link className="text-link" href="/components">
+            浏览全部 12 个组件 <ArrowUpRight />
           </Link>
         </div>
         <div className="component-grid">
-          {catalog.slice(0, 6).map((item, index) => (
+          {catalog.slice(0, 3).map((item) => (
             <article className="component-card" key={item.slug}>
-              <div className={`component-preview preview-${item.slug}`}>
+              <div className="component-preview">
                 <ComponentDemo slug={item.slug} compact />
               </div>
               <Link
                 className="component-card-label"
                 href={`/components/${item.slug}`}
               >
-                <div>
-                  <span className="component-number">0{index + 1}</span>
-                  <h3>{item.title}</h3>
-                </div>
-                <span className="component-category">{item.category}</span>
+                <span>
+                  {item.title}
+                  <small>{item.english}</small>
+                </span>
                 <ArrowUpRight />
               </Link>
             </article>
           ))}
         </div>
       </section>
-      <section className="values-section page-width">
-        <div className="value-intro">
-          <span className="section-eyebrow">LESS FRICTION. MORE CREATING.</span>
-          <h2>
-            Good components.
-            <br />
-            No strings attached.
-          </h2>
-          <p>
-            Install what you need. Change what you like.
-            <br />
-            Build something that feels like you.
-          </p>
-          <Link href="/docs" className="text-link">
-            Get started <ArrowRight />
-          </Link>
+      <section className="home-principles page-width">
+        <div>
+          <Code2 />
+          <h3>源码开放</h3>
+          <p>复制到项目中使用，自由修改每一处细节。</p>
         </div>
-        <div className="value-grid">
-          {[
-            {
-              Icon: Code2,
-              title: "Your code, your canvas.",
-              text: "Real source files in your project. No black boxes. No waiting for someone else to change a detail.",
-            },
-            {
-              Icon: SlidersHorizontal,
-              title: "Made to be made yours.",
-              text: "Semantic tokens and familiar primitives. Find your colors, your rhythm, your own point of view.",
-            },
-            {
-              Icon: Accessibility,
-              title: "The details are handled.",
-              text: "Keyboard navigation, focus management, and accessible primitives. A considerate place to begin.",
-            },
-            {
-              Icon: Terminal,
-              title: "One command away.",
-              text: "Works with the shadcn CLI you already know. Copy, install, and get back to making things.",
-            },
-          ].map(({ Icon, title, text }) => (
-            <div className="value-item" key={title}>
-              <Icon />
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </div>
-          ))}
+        <div>
+          <Layers />
+          <h3>设计一致</h3>
+          <p>共享语义变量，保持组件与 Figma 同步。</p>
+        </div>
+        <div>
+          <Box />
+          <h3>按需组合</h3>
+          <p>从基本元素开始，构建你需要的产品体验。</p>
         </div>
       </section>
-      <section className="get-started page-width">
-        <div className="section-eyebrow">
-          <Heart /> A LITTLE POP GOES A LONG WAY
-        </div>
-        <h2>Your next idea is waiting.</h2>
-        <p>Start with a button. See where it takes you.</p>
+      <section className="home-cta">
+        <span className="eyebrow">从这里开始</span>
+        <h2>
+          基础已就绪。
+          <br />
+          接下来，交给你的想象力。
+        </h2>
+        <p>一个命令，把你的第一个组件带进项目。</p>
         <InstallCommand />
-        <Link className="text-link" href="/docs">
-          The two-minute setup <ArrowUpRight />
+        <Link className="text-link" href="/docs/getting-started">
+          查看完整安装指南 <ArrowRight />
         </Link>
       </section>
     </>

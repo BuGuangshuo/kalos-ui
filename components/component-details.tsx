@@ -12,8 +12,8 @@ export function ComponentDetails({
   return (
     <Tabs defaultValue="preview" className="detail-tabs">
       <TabsList>
-        <TabsTrigger value="preview">Preview</TabsTrigger>
-        <TabsTrigger value="code">Source code</TabsTrigger>
+        <TabsTrigger value="preview">预览</TabsTrigger>
+        <TabsTrigger value="code">源码</TabsTrigger>
       </TabsList>
       <TabsContent value="preview">
         <div className="detail-preview">

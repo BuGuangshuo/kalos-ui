@@ -1,9 +1,11 @@
 "use client";
 import * as React from "react";
 import { Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 export function PopButton({
   loading = false,
+  size = "default",
   disabled,
   children,
   ...props
@@ -11,6 +13,8 @@ export function PopButton({
   return (
     <Button
       {...props}
+      size={size}
+      className={cn("rounded-full", props.className)}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
     >

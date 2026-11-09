@@ -10,15 +10,23 @@ export function PopTabs({
 }) {
   return (
     <Tabs defaultValue={defaultValue || items[0]?.value}>
-      <TabsList>
+      <TabsList className="rounded-full">
         {items.map((item) => (
-          <TabsTrigger key={item.value} value={item.value}>
+          <TabsTrigger
+            key={item.value}
+            value={item.value}
+            className="rounded-full"
+          >
             {item.label}
           </TabsTrigger>
         ))}
       </TabsList>
       {items.map((item) => (
-        <TabsContent key={item.value} value={item.value}>
+        <TabsContent
+          key={item.value}
+          value={item.value}
+          className="rounded-full"
+        >
           {item.content}
         </TabsContent>
       ))}

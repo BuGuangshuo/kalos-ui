@@ -1,19 +1,19 @@
 # Pop UI
 
-Small details. Better interfaces.
+从基础出发，让想法成真。
 
 一套可以自己维护的 React UI 组件注册表，采用 Next.js App Router、TypeScript、Tailwind CSS v4、shadcn/ui（Radix）。
 
 - 12 个基础组件及交互预览、源码展示、Props 说明
 - 可搜索、可筛选的组件目录
-- 浅色与深色主题、响应式布局、键盘快捷搜索
-- 符合官方 schema 的 shadcn 注册表、可选 Pop 主题
+- Astryx 中性风格、标准尺寸、中文界面、浅色与深色主题、响应式布局、键盘快捷搜索
+- 符合官方 schema 的 shadcn 注册表、整库安装、可选 Pop 主题
 - 共享设计变量，配套 Figma 组件库
 - GitHub + Vercel 持续部署
 
 ## 本地运行
 
-需要 Node.js 22.18+（推荐 24 LTS）和 npm。
+需要 Node.js 24 LTS 和 npm。
 
 ```bash
 npm ci
@@ -84,7 +84,7 @@ Vercel 导入此 GitHub 仓库，框架选择 Next.js，Node.js 选择 24.x；�
 
 当前组件使用 Radix 版 shadcn API。Figma 的变量、文字样式和组件来自相同的配色与尺寸规范。动画交互以代码为准，Figma 展示静态组件状态。
 
-网站信息架构参考 [Affect UI](https://www.affectui.com/)，实现与源码独立编写。注册表协议遵循 [shadcn 官方文档](https://ui.shadcn.com/docs/registry)。
+网站信息架构与视觉规范参考 [Astryx](https://astryx.atmeta.com/)，实现与源码独立编写。注册表协议遵循 [shadcn 官方文档](https://ui.shadcn.com/docs/registry)。
 
 ## License
 

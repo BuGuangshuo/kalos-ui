@@ -1,16 +1,16 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "pop-switch",
-  "title": "Pop Switch",
+  "title": "Pop 开关",
   "author": "Alan Bu <https://github.com/BuGuangshuo>",
-  "description": "One small switch. A clear change of state.",
+  "description": "在两个互斥状态间切换，适用于立即生效的设置。",
   "registryDependencies": [
     "switch"
   ],
   "files": [
     {
       "path": "registry/pop/pop-switch.tsx",
-      "content": "\"use client\";\nimport * as React from \"react\";\nimport { Switch } from \"@/components/ui/switch\";\nexport function PopSwitch({\n  label,\n  description,\n  id,\n  ...props\n}: React.ComponentProps<typeof Switch> & {\n  label: string;\n  description?: string;\n}) {\n  const autoId = React.useId();\n  const fieldId = id || autoId;\n  return (\n    <div className=\"flex items-center justify-between gap-6\">\n      <label\n        htmlFor={fieldId}\n        className=\"flex flex-col gap-1 text-sm font-medium cursor-pointer\"\n      >\n        {label}\n        {description ? (\n          <span className=\"text-xs font-normal text-muted-foreground\">\n            {description}\n          </span>\n        ) : null}\n      </label>\n      <Switch {...props} id={fieldId} />\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\nimport * as React from \"react\";\nimport { Switch } from \"@/components/ui/switch\";\nexport function PopSwitch({\n  label,\n  description,\n  id,\n  ...props\n}: React.ComponentProps<typeof Switch> & {\n  label: string;\n  description?: string;\n}) {\n  const autoId = React.useId();\n  const fieldId = id || autoId;\n  return (\n    <div className=\"flex items-center justify-between gap-6\">\n      <label\n        htmlFor={fieldId}\n        className=\"flex flex-col gap-1 text-sm font-medium cursor-pointer\"\n      >\n        {label}\n        {description ? (\n          <span className=\"text-xs font-normal text-muted-foreground\">\n            {description}\n          </span>\n        ) : null}\n      </label>\n      <Switch size=\"default\" {...props} id={fieldId} />\n    </div>\n  );\n}\n",
       "type": "registry:ui"
     }
   ],

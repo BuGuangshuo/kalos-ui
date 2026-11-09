@@ -4,11 +4,15 @@ import {
   ArrowRight,
   Check,
   Plus,
-  Sparkles,
   ArrowUpRight,
   Layers,
   Heart,
-  Mail,
+  Code2,
+  MoreHorizontal,
+  Command,
+  ArrowUp,
+  Folder,
+  Box,
 } from "lucide-react";
 import { toast } from "sonner";
 import { PopButton } from "@/registry/pop/pop-button";
@@ -26,10 +30,10 @@ import { PopAvatarStack } from "@/registry/pop/pop-avatar-stack";
 import { Separator } from "@/components/ui/separator";
 const people = [
   { name: "Alan Bu" },
-  { name: "Jules Park" },
-  { name: "Emma Chen" },
-  { name: "Noah Lee" },
-  { name: "Olivia Yu" },
+  { name: "陈晓" },
+  { name: "林舟" },
+  { name: "周宁" },
+  { name: "吴昕" },
 ];
 export function ButtonDemo() {
   const [loading, setLoading] = useState(false);
@@ -42,31 +46,39 @@ export function ButtonDemo() {
   );
   return (
     <div className="demo-buttons">
-      <PopButton
-        loading={loading}
-        onClick={() => {
-          setLoading(true);
-          timer.current = setTimeout(() => {
-            setLoading(false);
-            toast.success("Your idea is ready to go.");
-          }, 1000);
-        }}
-      >
-        Make it happen <ArrowRight data-icon="inline-end" />
-      </PopButton>
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex flex-wrap justify-center gap-2">
         <PopButton
-          variant="outline"
-          onClick={() => toast("One more good idea.")}
+          loading={loading}
+          onClick={() => {
+            setLoading(true);
+            timer.current = setTimeout(() => {
+              setLoading(false);
+              toast.success("更改已保存");
+            }, 900);
+          }}
         >
+          主要按钮
+        </PopButton>
+        <PopButton
+          variant="secondary"
+          onClick={() => toast("这是一条操作反馈")}
+        >
+          次要按钮
+        </PopButton>
+      </div>
+      <div className="flex flex-wrap justify-center gap-2">
+        <PopButton variant="outline" onClick={() => toast("已添加到项目")}>
           <Plus data-icon="inline-start" />
-          Add something
+          添加项目
+        </PopButton>
+        <PopButton variant="ghost" onClick={() => toast("操作已取消")}>
+          取消
         </PopButton>
         <PopButton
           variant="outline"
           size="icon"
-          aria-label="Like this component"
-          onClick={() => toast.success("A little love goes a long way.")}
+          aria-label="喜欢这个组件"
+          onClick={() => toast.success("已收藏")}
         >
           <Heart />
         </PopButton>
@@ -90,78 +102,71 @@ export function ComponentDemo({
       return (
         <div className="demo-form">
           <PopInput
-            label="Email address"
+            label="邮箱地址"
             type="email"
             placeholder="you@example.com"
-            hint="A good place to stay in touch."
+            hint="我们只会发送与你有关的重要通知。"
           />
-          <PopInput
-            label="Your next big idea"
-            placeholder="It all starts here…"
-          />
+          {!compact ? (
+            <PopInput label="项目名称" placeholder="为你的想法起个名字" />
+          ) : null}
         </div>
       );
     case "pop-card":
       return (
         <div className="demo-card">
           <PopCard
-            title="A fresh start"
-            description="Your next great thing starts here."
+            title="一个新的开始"
+            description="让你的下一个想法在这里发生。"
             footer={
               <PopButton
                 variant="outline"
-                size="sm"
-                onClick={() => toast("Your workspace is ready to explore.")}
+                onClick={() => toast("工作空间已准备就绪")}
               >
-                Explore workspace <ArrowUpRight data-icon="inline-end" />
+                查看项目 <ArrowUpRight data-icon="inline-end" />
               </PopButton>
             }
           >
-            <div className="card-icon">
+            <div className="card-project-visual">
               <Layers />
+              <span>你的创意工作空间</span>
             </div>
-            <p className="muted text-sm">
-              A little space for your biggest ideas.
-            </p>
           </PopCard>
         </div>
       );
     case "pop-badge":
       return (
         <div className="badge-demo">
-          <PopBadge status="success">All systems operational</PopBadge>
-          <div className="flex gap-2">
-            <PopBadge>In progress</PopBadge>
-            <PopBadge status="warning">In review</PopBadge>
+          <div className="flex flex-wrap justify-center gap-2">
+            <PopBadge status="success">已完成</PopBadge>
+            <PopBadge>进行中</PopBadge>
+            <PopBadge status="warning">待审核</PopBadge>
           </div>
-          <span className="tiny-note">Small details. Clear signals.</span>
+          <p className="tiny-note">以轻量标记，传递清晰状态。</p>
         </div>
       );
     case "pop-switch":
       return (
-        <div className="demo-form settings-demo">
+        <div className="demo-form">
           <PopSwitch
-            label="Push notifications"
-            description="Just the things that matter."
+            label="消息通知"
+            description="接收与你有关的重要动态。"
             defaultChecked
           />
           <Separator />
-          <PopSwitch
-            label="Weekly digest"
-            description="A little inspiration in your inbox."
-          />
+          <PopSwitch label="每周摘要" description="用一封邮件回顾本周进展。" />
         </div>
       );
     case "pop-checkbox":
       return (
         <div className="demo-form">
           <PopCheckbox
-            label="Make something meaningful"
-            description="A good place to begin."
+            label="建立设计规范"
+            description="从一致的基础开始。"
             defaultChecked
           />
-          <PopCheckbox label="Add a little personality" />
-          <PopCheckbox label="Share it with the world" />
+          <PopCheckbox label="添加你的第一个组件" />
+          <PopCheckbox label="分享给团队成员" />
         </div>
       );
     case "pop-tabs":
@@ -171,32 +176,32 @@ export function ComponentDemo({
             items={[
               {
                 value: "overview",
-                label: "Overview",
+                label: "概览",
                 content: (
                   <div className="tabs-copy">
-                    <Sparkles />
-                    <strong>A little clarity.</strong>
-                    <p>Everything you need, right where you need it.</p>
+                    <Layers />
+                    <strong>所有信息，一目了然。</strong>
+                    <p>在同一上下文中，找到你关心的内容。</p>
                   </div>
                 ),
               },
               {
                 value: "activity",
-                label: "Activity",
+                label: "动态",
                 content: (
                   <div className="tabs-copy">
                     <Check />
-                    <strong>Looking good.</strong>
-                    <p>Your latest changes are all up to date.</p>
+                    <strong>你已掌握最新动态。</strong>
+                    <p>所有更改均已同步。</p>
                   </div>
                 ),
               },
               {
                 value: "settings",
-                label: "Settings",
+                label: "设置",
                 content: (
                   <div className="tabs-copy">
-                    <PopSwitch label="Make it yours" defaultChecked />
+                    <PopSwitch label="自动保存" defaultChecked />
                   </div>
                 ),
               },
@@ -210,21 +215,21 @@ export function ComponentDemo({
           <PopAccordion
             items={[
               {
-                question: "Can I make it my own?",
+                question: "可以自定义这些组件吗？",
                 answer:
-                  "Absolutely. The source code lives in your project. Change the colors, the spacing, or every little detail.",
+                  "可以。完整源码安装到你的项目中，颜色、间距、圆角与行为都由你掌控。",
               },
               {
-                question: "Does it work with shadcn/ui?",
+                question: "如何安装到我的项目？",
                 answer:
-                  "Yes. Pop UI builds on shadcn/ui primitives and uses the same CLI and semantic design tokens.",
+                  "先初始化 Radix 版 shadcn/ui，然后复制组件的安装命令。依赖会自动安装。",
               },
               ...(!compact
                 ? [
                     {
-                      question: "Can I use it commercially?",
+                      question: "可以用于商业项目吗？",
                       answer:
-                        "Yes. Every component is open source under the MIT license.",
+                        "可以。组件以 MIT 许可证开源，支持个人与商业项目。",
                     },
                   ]
                 : []),
@@ -235,22 +240,19 @@ export function ComponentDemo({
     case "pop-dialog":
       return (
         <PopDialog
-          trigger="A moment of focus"
-          title="Good ideas deserve a little space."
-          description="An accessible dialog that keeps your next step in focus."
+          trigger="打开对话框"
+          title="创建一个新项目"
+          description="为你的下一个想法留出空间。"
         >
-          <p className="muted text-sm">
-            Try the close button, press Escape, or click outside. Focus returns
-            to where you left off.
-          </p>
-          <PopInput label="Your idea" placeholder="What are you thinking?" />
+          <PopInput label="项目名称" placeholder="输入项目名称" />
+          <p className="tiny-note">按 Esc、点击遮罩或右上角按钮关闭。</p>
         </PopDialog>
       );
     case "pop-select":
       return (
         <div className="demo-form">
           <PopSelect
-            label="Your favorite framework"
+            label="开发框架"
             value={framework}
             onValueChange={setFramework}
             items={[
@@ -259,35 +261,32 @@ export function ComponentDemo({
               { value: "remix", label: "React Router" },
             ]}
           />
-          <p className="tiny-note">A solid foundation for your next project.</p>
+          <p className="tiny-note">为你的下一个项目选择基础框架。</p>
         </div>
       );
     case "pop-progress":
       return (
         <div className="demo-form">
           <PopProgress
-            label="Making good things happen"
+            label="项目准备中"
             value={progress}
             description={
               progress === 100
-                ? "You made it. Time to share it."
-                : "One step closer to something wonderful."
+                ? "准备就绪，可以开始构建了。"
+                : "每一步，都让想法更近一点。"
             }
           />
-          <div className="flex gap-2">
-            <PopButton
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                setProgress((value) =>
-                  value >= 100 ? 0 : Math.min(100, value + 16),
-                )
-              }
-            >
-              {progress === 100 ? "Start again" : "Take a step"}{" "}
-              <ArrowRight data-icon="inline-end" />
-            </PopButton>
-          </div>
+          <PopButton
+            variant="outline"
+            onClick={() =>
+              setProgress((value) =>
+                value >= 100 ? 0 : Math.min(100, value + 16),
+              )
+            }
+          >
+            {progress === 100 ? "重新开始" : "继续下一步"}
+            <ArrowRight data-icon="inline-end" />
+          </PopButton>
         </div>
       );
     case "pop-avatar-stack":
@@ -295,10 +294,8 @@ export function ComponentDemo({
         <div className="avatar-demo">
           <PopAvatarStack people={people} />
           <div>
-            <strong>Better, together.</strong>
-            <p className="tiny-note">
-              A few good people. Endless possibilities.
-            </p>
+            <strong>一起，把想法变成现实。</strong>
+            <p className="tiny-note">5 位成员正在协作</p>
           </div>
         </div>
       );
@@ -308,72 +305,91 @@ export function ComponentDemo({
 }
 export function HeroShowcase() {
   return (
-    <div className="hero-showcase">
-      <div className="float-tag">
-        <span className="status-dot" /> Thoughtfully put together
-      </div>
-      <div className="showcase-main">
-        <div className="showcase-top">
-          <span className="mini-icon">
-            <Sparkles />
+    <div className="hero-orbits">
+      <div className="orbit-card orbit-project">
+        <div className="orbit-card-top">
+          <span>
+            <Folder /> 设计工作空间
           </span>
-          <span className="tiny-note">
-            A little something for your next idea
-          </span>
-          <span className="window-dots">···</span>
+          <MoreHorizontal />
         </div>
-        <div className="showcase-content">
-          <div className="showcase-avatars">
-            <PopAvatarStack people={people.slice(0, 3)} />
-            <PopBadge status="success">Ready when you are</PopBadge>
+        <div className="abstract-preview">
+          <div className="abstract-window">
+            <span />
+            <span />
+            <span />
+            <div />
+            <div />
+            <div />
           </div>
-          <h3>
-            Your next big thing.
-            <br />
-            <span>Starts with the little things.</span>
-          </h3>
-          <PopInput label="Project name" placeholder="Something wonderful" />
-          <div className="showcase-setting">
-            <PopSwitch
-              label="A little extra magic"
-              description="It's all in the details."
-              defaultChecked
-            />
+          <div className="abstract-tile">
+            <Box />
           </div>
-          <PopButton
-            className="w-full"
-            onClick={() => toast.success("Something wonderful is on its way.")}
-          >
-            <Plus data-icon="inline-start" />
-            Create something good
-            <ArrowRight data-icon="inline-end" />
-          </PopButton>
+        </div>
+        <strong>从一个好想法开始。</strong>
+        <p>基础已就绪，创意由你定义。</p>
+        <div className="orbit-row">
+          <PopAvatarStack people={people.slice(0, 3)} />
+          <span>3 位协作者</span>
         </div>
       </div>
-      <div className="floating-notice">
-        <span className="notice-check">
-          <Check />
-        </span>
+      <div className="orbit-composer">
+        <span>今天，想构建些什么？</span>
         <div>
-          <strong>Nice. That feels right.</strong>
-          <span>Small details make a big difference.</span>
+          <Plus />
+          <span>自由探索每一种可能</span>
+          <button
+            aria-label="发送示例想法"
+            onClick={() => toast.success("想法已记录，开始动手吧！")}
+          >
+            <ArrowUp />
+          </button>
         </div>
-        <span className="notice-time">now</span>
       </div>
-      <div className="floating-button">
-        <PopButton
-          variant="outline"
-          onClick={() => toast("Hello from Pop UI.")}
-        >
-          <Mail data-icon="inline-start" />
-          Say hello
-          <ArrowUpRight data-icon="inline-end" />
+      <div className="orbit-card orbit-settings">
+        <div className="orbit-card-top">
+          <span>
+            <Command /> 项目偏好
+          </span>
+          <MoreHorizontal />
+        </div>
+        <PopSwitch label="自动保存" defaultChecked />
+        <Separator />
+        <PopSwitch label="消息通知" description="保持专注，不错过重要动态。" />
+        <Separator />
+        <PopCheckbox label="与团队分享项目" defaultChecked />
+      </div>
+      <div className="orbit-card orbit-progress">
+        <div className="orbit-progress-icon">
+          <Code2 />
+        </div>
+        <strong>构建进度</strong>
+        <PopProgress label="组件已准备就绪" value={75} />
+        <div className="orbit-row">
+          <PopBadge status="success">已同步</PopBadge>
+          <span>刚刚更新</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+export function HomeControls() {
+  return (
+    <div className="home-controls">
+      <div className="flex items-center gap-3">
+        <PopBadge>默认状态</PopBadge>
+        <PopBadge status="success">已完成</PopBadge>
+        <PopSwitch label="" aria-label="示例开关" defaultChecked />
+      </div>
+      <div className="flex gap-2">
+        <PopButton variant="secondary" onClick={() => toast("次要操作已触发")}>
+          次要按钮
+        </PopButton>
+        <PopButton onClick={() => toast.success("主要操作已完成")}>
+          主要按钮
         </PopButton>
       </div>
-      <div className="showcase-caption">
-        <span>12 components</span>
-        <span>∞ possibilities</span>
-      </div>
+      <PopInput label="快速查找" placeholder="搜索你的下一个组件…" />
     </div>
   );
 }

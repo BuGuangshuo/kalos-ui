@@ -1,9 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "pop-checkbox",
-  "title": "Pop Checkbox",
+  "title": "Pop 复选框",
   "author": "Alan Bu <https://github.com/BuGuangshuo>",
-  "description": "Make a choice. Feel a little progress.",
+  "description": "选择一个或多个选项，支持选中与不确定状态。",
   "registryDependencies": [
     "checkbox"
   ],

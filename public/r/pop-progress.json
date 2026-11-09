@@ -1,9 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "pop-progress",
-  "title": "Pop Progress",
+  "title": "Pop 进度条",
   "author": "Alan Bu <https://github.com/BuGuangshuo>",
-  "description": "Every little step deserves to be seen.",
+  "description": "清晰地展示任务进展，支持数值、标题与辅助说明。",
   "registryDependencies": [
     "progress"
   ],

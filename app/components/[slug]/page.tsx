@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 import { catalog } from "@/lib/catalog";
-import { Sidebar, CodeBlock } from "@/components/docs-parts";
+import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
 import { ComponentDetails } from "@/components/component-details";
 import { InstallCommand } from "@/components/site-shell";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +19,10 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const item = catalog.find((item) => item.slug === slug);
-  return { title: item?.title || "Component", description: item?.description };
+  return {
+    title: item ? `${item.title} ${item.english}` : "组件",
+    description: item?.description,
+  };
 }
 export default async function DetailPage({
   params,
@@ -37,61 +40,91 @@ export default async function DetailPage({
   const previous = catalog[index - 1],
     next = catalog[index + 1];
   return (
-    <div className="page-width docs-layout">
+    <div className="workbench">
       <Sidebar active={slug} />
-      <article className="detail-content">
-        <nav className="breadcrumbs" aria-label="Breadcrumb">
-          <Link href="/components">Components</Link>
-          <ChevronRight />
-          <span>{item.title}</span>
-        </nav>
-        <h1>{item.title}</h1>
-        <p className="lead">{item.description}</p>
-        <div className="detail-meta">
-          <Badge variant="secondary">{item.category}</Badge>
-          <span>React · TypeScript · shadcn/ui</span>
-        </div>
-        <ComponentDetails slug={slug} source={source} />
-        <h2>Make it yours.</h2>
-        <p className="muted text-xs leading-relaxed">
-          Add this component to an initialized shadcn/ui project. Required
-          primitives are installed automatically.
-        </p>
-        <InstallCommand slug={slug} />
-        <h2>Usage</h2>
-        <CodeBlock
-          code={`import { ${item.slug
-            .split("-")
-            .map((part) => part[0].toUpperCase() + part.slice(1))
-            .join("")} } from "@/components/ui/${slug}"\n\n${item.usage}`}
+      <div className="docs-grid">
+        <article className="detail-content">
+          <nav className="breadcrumbs" aria-label="面包屑导航">
+            <Link href="/components">组件</Link>
+            <ChevronRight />
+            <span>{item.title}</span>
+          </nav>
+          <header className="detail-title">
+            <h1>
+              {item.title}
+              <span>{item.english}</span>
+            </h1>
+            <p>{item.description}</p>
+            <div className="detail-meta">
+              <Badge variant="secondary">{item.category}</Badge>
+              <span>React · TypeScript · Radix UI</span>
+            </div>
+          </header>
+          <section id="preview">
+            <ComponentDetails slug={slug} source={source} />
+          </section>
+          <section id="installation">
+            <h2>安装</h2>
+            <p>
+              在已初始化的 Radix 版 shadcn/ui
+              项目中运行。所需基础组件会自动安装。
+            </p>
+            <InstallCommand slug={slug} />
+          </section>
+          <section id="usage">
+            <h2>使用</h2>
+            <CodeBlock
+              language="tsx"
+              filename="example.tsx"
+              code={`import { ${item.slug
+                .split("-")
+                .map((part) => part[0].toUpperCase() + part.slice(1))
+                .join("")} } from "@/components/ui/${slug}"\n\n${item.usage}`}
+            />
+          </section>
+          <section id="api">
+            <h2>组件 API</h2>
+            <p className="props-info">{item.props}</p>
+            <p>
+              组件继承现有的语义颜色，视觉规范参考{" "}
+              <Link href="/docs/tokens">设计变量</Link>
+              。需要自定义时，直接修改安装到项目中的源码即可。
+            </p>
+          </section>
+          <div className="detail-next">
+            {previous ? (
+              <Link href={`/components/${previous.slug}`}>
+                <ArrowLeft />
+                {previous.title}
+              </Link>
+            ) : (
+              <Link href="/components">
+                <ArrowLeft />
+                全部组件
+              </Link>
+            )}
+            {next ? (
+              <Link href={`/components/${next.slug}`}>
+                {next.title}
+                <ArrowRight />
+              </Link>
+            ) : (
+              <Link href="/docs/getting-started">
+                使用文档
+                <ArrowRight />
+              </Link>
+            )}
+          </div>
+        </article>
+        <OnThisPage
+          links={[
+            { id: "preview", title: "预览与源码" },
+            { id: "installation", title: "安装" },
+            { id: "usage", title: "使用" },
+            { id: "api", title: "组件 API" },
+          ]}
         />
-        <h2>Component API</h2>
-        <p className="props-info">{item.props}</p>
-        <div className="detail-next">
-          {previous ? (
-            <Link href={`/components/${previous.slug}`}>
-              <ArrowLeft />
-              {previous.title}
-            </Link>
-          ) : (
-            <Link href="/components">
-              <ArrowLeft />
-              All components
-            </Link>
-          )}
-          {next ? (
-            <Link href={`/components/${next.slug}`}>
-              {next.title}
-              <ArrowRight />
-            </Link>
-          ) : (
-            <Link href="/docs">
-              Documentation
-              <ArrowRight />
-            </Link>
-          )}
-        </div>
-      </article>
+      </div>
     </div>
   );
 }

@@ -25,12 +25,25 @@ registry.items.push({
   name: "pop-theme",
   type: "registry:theme",
   title: "Pop Theme",
-  description:
-    "A thoughtful green palette, with coordinated light and dark semantic tokens.",
+  description: "参考 Astryx 的中性黑白配色，包含浅色与深色语义变量。",
   cssVars: {
-    light: { ...tokens.light, radius: "0.625rem" },
+    light: { ...tokens.light, radius: "1rem" },
     dark: tokens.dark,
   },
+});
+registry.items.push({
+  name: "pop-all",
+  type: "registry:block",
+  title: "Pop UI 完整组件库",
+  description: "一次安装全部 12 个组件。",
+  dependencies: ["lucide-react"],
+  registryDependencies: [
+    ...new Set(catalog.flatMap((item) => [...item.dependencies])),
+  ],
+  files: catalog.map((item) => ({
+    path: `registry/pop/${item.slug}.tsx`,
+    type: "registry:ui",
+  })),
 });
 await writeFile("registry.json", JSON.stringify(registry, null, 2) + "\n");
 await mkdir("public/r", { recursive: true });

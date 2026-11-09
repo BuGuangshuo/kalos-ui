@@ -25,7 +25,7 @@ export function PopSwitch({
           </span>
         ) : null}
       </label>
-      <Switch {...props} id={fieldId} />
+      <Switch size="default" {...props} id={fieldId} />
     </div>
   );
 }

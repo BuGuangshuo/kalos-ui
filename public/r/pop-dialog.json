@@ -1,9 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "pop-dialog",
-  "title": "Pop Dialog",
+  "title": "Pop 对话框",
   "author": "Alan Bu <https://github.com/BuGuangshuo>",
-  "description": "A focused moment for something that matters.",
+  "description": "让用户专注于当前任务，包含焦点管理与关闭行为。",
   "registryDependencies": [
     "dialog",
     "button"
