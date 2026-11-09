@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
 import { InstallCommand } from "@/components/site-shell";
+import { PrimitiveSwitcher, PrimitiveText } from "@/components/primitives";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import {
   FrameworkCode,
@@ -28,6 +29,7 @@ export default function DocsPage() {
             <h1>快速开始</h1>
             <p>几步装好组件，开始构建你的界面。</p>
             <FrameworkSwitcher />
+            <PrimitiveSwitcher />
           </header>
           <section id="ai">
             <h2>通过 AI 快速开始</h2>
@@ -37,6 +39,8 @@ export default function DocsPage() {
             </p>
             <CodeBlock code="npx skills add BuGuangshuo/pop-ui --skill pop-ui" />
             <FrameworkCode
+              base="在当前 React 项目中初始化 Base UI 版 shadcn/ui（init --base base），从 /r/base-ui/ 安装所需 Pop UI 组件，保留现有目录和设计变量。"
+              aria="在当前 React 项目中初始化 React Aria 版 shadcn/ui（init --base aria），从 /r/react-aria/ 安装所需 Pop UI 组件，保留现有目录和设计变量。"
               reactFilename="初始化 React 项目"
               vueFilename="初始化 Vue 项目"
               vue="在当前 Vue 3.5+ 项目中配置 Tailwind CSS 和 shadcn-vue，使用 Pop UI Vue 注册表安装所需组件，保留现有项目结构与设计变量。"
@@ -59,24 +63,39 @@ export default function DocsPage() {
             </p>
             <FrameworkCode
               react="npx shadcn@latest init --base radix"
+              base="npx shadcn@latest init --base base"
+              aria="npx shadcn@latest init --base aria"
               vue="npx shadcn-vue@latest init"
               reactFilename="React"
               vueFilename="Vue"
             />
             <Alert>
               <AlertTitle>
-                <FrameworkText
-                  react="使用 Radix 基础组件"
+                <PrimitiveText
+                  radix="使用 Radix UI 基础组件"
+                  base="使用 Base UI 基础组件"
+                  aria="使用 React Aria 基础组件"
                   vue="使用 Reka UI 基础组件"
                 />
               </AlertTitle>
               <AlertDescription>
-                <FrameworkText
-                  react="React 版基于 Radix 版 shadcn/ui API。初始化时使用 --base radix，保持触发器、选项卡与对话框的 API 一致。"
+                <PrimitiveText
+                  radix="当前选择 Radix UI，使用 /r/radix/ 安装入口。底层组件由 shadcn CLI 自动补齐。"
+                  base="当前选择 Base UI，使用 /r/base-ui/ 安装入口，包含基于 @base-ui/react 的独立基础组件。"
+                  aria="当前选择 React Aria，使用 /r/react-aria/ 安装入口，包含基于 react-aria-components 的独立基础组件。"
                   vue="Vue 版基于 shadcn-vue 与 Reka UI，提供独立的 .vue 源码。输入、开关、复选框使用 v-model，对话框使用 v-model:open。"
                 />
               </AlertDescription>
             </Alert>
+            <p>
+              React 可选择 Radix UI、Base UI 或 React Aria；Vue 使用 Reka
+              UI。每个版本均包含 12
+              个组件。优先沿用项目已有的基础库，安装入口、源码和预览会随选择切换。
+            </p>
+            <p>
+              在同一个项目中选择一个版本，避免不同版本覆盖同名 Pop 组件。旧的
+              /r/*.json 入口仍指向 Radix UI。
+            </p>
             <p>选择需要的组件，然后运行对应的安装命令：</p>
             <InstallCommand />
             <p>需要一次安装全部 12 个组件时：</p>
@@ -85,8 +104,7 @@ export default function DocsPage() {
           <section id="usage">
             <h2>使用第一个组件</h2>
             <p>
-              从你的本地组件目录导入。组件依赖的 shadcn/ui 基础组件会由 CLI
-              自动补齐。
+              从本地组件目录导入。所需基础组件和底层库依赖会由 CLI 自动补齐。
             </p>
             <FrameworkCode
               reactFilename="app/page.tsx"
@@ -107,17 +125,22 @@ export default function DocsPage() {
           <section id="namespace">
             <h2>配置注册表命名空间</h2>
             <p>
-              在项目的 <code>components.json</code> 中添加注册表地址，将
-              YOUR-DOMAIN 替换为当前网站的域名：
+              在项目的 <code>components.json</code> 中添加对应版本的注册表地址：
             </p>
             <FrameworkCode
+              base={
+                '{\n  "registries": {\n    "@pop-ui": "https://pop-ui-six.vercel.app/r/base-ui/{name}.json"\n  }\n}'
+              }
+              aria={
+                '{\n  "registries": {\n    "@pop-ui": "https://pop-ui-six.vercel.app/r/react-aria/{name}.json"\n  }\n}'
+              }
               reactFilename="components.json"
               vueFilename="components.json"
               vue={
-                '{\n  "registries": {\n    "@pop-ui": "https://YOUR-DOMAIN/r/vue/{name}.json"\n  }\n}'
+                '{\n  "registries": {\n    "@pop-ui": "https://pop-ui-six.vercel.app/r/vue/{name}.json"\n  }\n}'
               }
               react={
-                '{\n  "registries": {\n    "@pop-ui": "https://YOUR-DOMAIN/r/{name}.json"\n  }\n}'
+                '{\n  "registries": {\n    "@pop-ui": "https://pop-ui-six.vercel.app/r/radix/{name}.json"\n  }\n}'
               }
             />
             <FrameworkCode
@@ -146,7 +169,7 @@ export default function DocsPage() {
               filename="项目结构"
               language="text"
               code={
-                "registry/pop/        React 组件源码\nregistry/vue/        Vue 组件源码\nskills/pop-ui/       可安装的 AI Skill\nlib/catalog.ts       组件目录与依赖\ndesign/tokens.json   共享语义设计变量\npublic/r/            React 注册表 JSON\npublic/r/vue/        Vue 注册表 JSON"
+                "registry/pop/        Radix 组件源码\nregistry/base-ui/    Base UI 组件源码\nregistry/react-aria/ React Aria 组件源码\nregistry/vue/        Vue 组件源码\nskills/pop-ui/       可安装的 AI Skill\nlib/catalog.ts       组件目录与依赖\ndesign/tokens.json   共享语义设计变量\npublic/r/radix/      Radix 注册表 JSON\npublic/r/base-ui/    Base UI 注册表 JSON\npublic/r/react-aria/ React Aria 注册表 JSON\npublic/r/vue/        Vue 注册表 JSON"
               }
             />
             <ol>

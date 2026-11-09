@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pop-badge",
+  "type": "registry:ui",
+  "title": "Pop 徽标 · Base UI",
+  "description": "使用简洁的标记展示状态、类别与附加信息。",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "cn"
+  ],
+  "files": [
+    {
+      "path": "pop-badge.tsx",
+      "type": "registry:ui",
+      "content": "import type { ReactNode } from \"react\";\nimport { Badge } from \"@/components/ui/pop-base-badge\";\nexport function PopBadge({\n  status = \"neutral\",\n  children,\n}: {\n  status?: \"neutral\" | \"success\" | \"warning\";\n  children: ReactNode;\n}) {\n  return (\n    <Badge\n      variant={\n        status === \"success\"\n          ? \"default\"\n          : status === \"warning\"\n            ? \"outline\"\n            : \"secondary\"\n      }\n      className=\"rounded-full\"\n    >\n      <span aria-hidden=\"true\" className=\"size-1 rounded-full bg-current\" />\n      {children}\n    </Badge>\n  );\n}\n"
+    },
+    {
+      "path": "pop-base-badge.tsx",
+      "type": "registry:ui",
+      "content": "import { mergeProps } from \"@base-ui/react/merge-props\";\nimport { useRender } from \"@base-ui/react/use-render\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"cn\";\n\nconst badgeVariants = cva(\n  \"group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all outline-none has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3!\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-primary text-primary-foreground [a]:hover:bg-primary/80\",\n        secondary:\n          \"bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80\",\n        destructive:\n          \"bg-destructive/10 text-destructive dark:bg-destructive/20 [a]:hover:bg-destructive/20\",\n        outline:\n          \"border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground\",\n        ghost:\n          \"hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50\",\n        link: \"text-primary underline-offset-4 hover:underline\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  },\n);\n\nfunction Badge({\n  className,\n  variant = \"default\",\n  render,\n  ...props\n}: useRender.ComponentProps<\"span\"> & VariantProps<typeof badgeVariants>) {\n  return useRender({\n    defaultTagName: \"span\",\n    props: mergeProps<\"span\">(\n      {\n        className: cn(badgeVariants({ variant }), className),\n      },\n      props,\n    ),\n    render,\n    state: {\n      slot: \"badge\",\n      variant,\n    },\n  });\n}\n\nexport { Badge, badgeVariants };\n"
+    }
+  ]
+}

@@ -100,7 +100,7 @@
 }
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
@@ -129,10 +129,8 @@
   input {
     font: inherit;
   }
-  button:focus-visible,
-  a:focus-visible {
-    outline: 2px solid var(--ring);
-    outline-offset: 3px;
+  *:focus-visible {
+    outline: none;
   }
   html {
     scroll-behavior: smooth;
@@ -2632,8 +2630,15 @@
   box-shadow: 0 1px 4px #0000000d;
 }
 .framework-switcher svg {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.framework-switcher .framework-react-logo {
+  color: #087ea4;
+}
+.dark .framework-switcher .framework-react-logo {
+  color: #58c4dc;
 }
 .detail-title > .framework-switcher,
 .docs-title > .framework-switcher {
@@ -2721,11 +2726,11 @@
   text-wrap: balance;
 }
 .motion-hero-install {
-  margin-top: 32px;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   max-width: 100%;
 }
 .motion-copy-command {
@@ -3562,4 +3567,36 @@
 .motion-library-entrance {
   display: inline-block;
   vertical-align: bottom;
+}
+
+.primitive-switcher {
+  align-items: center;
+  margin: 12px 0;
+}
+.primitive-switcher [role="tablist"] {
+  height: 32px;
+}
+.primitive-switcher [role="tab"] {
+  font-size: 12px;
+  padding-inline: 12px;
+}
+.primitive-caption {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  margin: 14px 0;
+}
+.detail-title .primitive-switcher {
+  align-items: flex-start;
+}
+
+.motion-hero-install .primitive-switcher {
+  margin: 0;
+}
+.motion-hero-install .primitive-caption {
+  margin: 0;
+  line-height: 32px;
+}
+.catalog-heading > .primitive-switcher,
+.docs-title > .primitive-switcher {
+  align-items: flex-start;
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ArrowUpRight, Layers } from "lucide-react";
 import { catalog, categories } from "@/lib/catalog";
+import { PrimitiveSwitcher } from "@/components/primitives";
 import { FrameworkSwitcher } from "@/components/framework";
 import { ComponentDemo } from "@/components/demos";
 import { LibrarySidebar } from "@/components/library-sidebar";
@@ -40,6 +41,7 @@ export function CatalogGrid() {
               安装 Skill <ArrowUpRight />
             </Link>
           </div>
+          <PrimitiveSwitcher />
           <div className="mobile-catalog-search">
             <Input
               aria-label="筛选组件"

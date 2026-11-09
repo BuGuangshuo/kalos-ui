@@ -27,6 +27,21 @@ import { PopInput } from '@/components/ui/pop-input'
 <PopButton loading={saving} onClick={save}>保存更改</PopButton>
 ```
 
+## React backend differences
+
+- Radix: Button uses `onClick`, `disabled`; Checkbox supports `checked="indeterminate"`.
+- Base UI: Button also supports `render`; Checkbox uses boolean `checked` and `indeterminate`.
+- React Aria: Button uses `onPress`, `isDisabled` (`disabled` and zero-argument `onClick` are convenience aliases). Switch/Checkbox accept `checked`, `defaultChecked`, `disabled`, `onCheckedChange` and the native `isSelected`, `defaultSelected`, `isDisabled`, `onChange` aliases. Use `isIndeterminate` on Checkbox.
+- Tabs, Select, Accordion, Dialog, Progress, Card, Badge and Avatar Stack keep their Pop props across all three backends; internal composition follows the selected primitive’s API.
+
+```tsx
+// React Aria
+<PopButton onPress={save} loading={saving}>保存</PopButton>
+<PopCheckbox label="部分选择" isIndeterminate />
+// Base UI
+<PopCheckbox label="部分选择" indeterminate />
+```
+
 ## Vue
 
 ```vue
@@ -45,4 +60,4 @@ const notifications = ref(false);
 </template>
 ```
 
-Documentation and source for each component: `https://pop-ui-six.vercel.app/components/{slug}`. The framework selector switches its installation URL, source, example, and API.
+Documentation and source for each component: `https://pop-ui-six.vercel.app/components/{slug}`. The framework and React primitive selectors switch its installation URL, source, example, and API.

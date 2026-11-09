@@ -14,7 +14,9 @@ defineProps<{ items: { question: string; answer: string }[] }>();
       v-for="(item, index) in items"
       :key="item.question"
       :value="String(index)"
-      ><AccordionTrigger class="text-sm">{{ item.question }}</AccordionTrigger
+      ><AccordionTrigger
+        class="text-sm focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent focus-visible:after:border-transparent"
+        >{{ item.question }}</AccordionTrigger
       ><AccordionContent class="text-sm text-muted-foreground">{{
         item.answer
       }}</AccordionContent></AccordionItem

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pop-input",
+  "title": "Pop 文本输入",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "description": "将标签、输入、说明和校验提示组合在一起。",
+  "registryDependencies": [
+    "input",
+    "field"
+  ],
+  "files": [
+    {
+      "path": "registry/pop/pop-input.tsx",
+      "content": "\"use client\";\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { Input } from \"@/components/ui/input\";\nimport {\n  Field,\n  FieldLabel,\n  FieldDescription,\n  FieldError,\n} from \"@/components/ui/field\";\nexport function PopInput({\n  label,\n  hint,\n  error,\n  id,\n  ...props\n}: React.ComponentProps<typeof Input> & {\n  label: string;\n  hint?: string;\n  error?: string;\n}) {\n  const autoId = React.useId();\n  const fieldId = id || autoId;\n  const descriptionId = `${fieldId}-description`;\n  return (\n    <Field data-invalid={!!error} className=\"gap-1.5\">\n      <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>\n      <Input\n        {...props}\n        className={cn(\n          \"rounded-[var(--radius-element,12px)] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-input\",\n          props.className,\n        )}\n        id={fieldId}\n        aria-invalid={!!error}\n        aria-describedby={error || hint ? descriptionId : undefined}\n      />\n      {error ? (\n        <FieldError id={descriptionId} className=\"text-xs\">\n          {error}\n        </FieldError>\n      ) : hint ? (\n        <FieldDescription id={descriptionId} className=\"text-xs\">\n          {hint}\n        </FieldDescription>\n      ) : null}\n    </Field>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

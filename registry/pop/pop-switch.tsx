@@ -25,7 +25,12 @@ export function PopSwitch({
           </span>
         ) : null}
       </label>
-      <Switch size="default" {...props} id={fieldId} />
+      <Switch
+        className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent"
+        size="default"
+        {...props}
+        id={fieldId}
+      />
     </div>
   );
 }

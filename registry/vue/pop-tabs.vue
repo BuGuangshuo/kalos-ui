@@ -18,7 +18,7 @@ const model = defineModel<string>();
         v-for="item in items"
         :key="item.value"
         :value="item.value"
-        class="rounded-full"
+        class="rounded-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent"
         >{{ item.label }}</TabsTrigger
       ></TabsList
     >

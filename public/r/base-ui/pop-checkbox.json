@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pop-checkbox",
+  "type": "registry:ui",
+  "title": "Pop 复选框 · Base UI",
+  "description": "选择一个或多个选项，支持选中与不确定状态。",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react",
+    "cn"
+  ],
+  "files": [
+    {
+      "path": "pop-checkbox.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\";\nimport * as React from \"react\";\nimport { Checkbox } from \"@/components/ui/pop-base-checkbox\";\nexport function PopCheckbox({\n  label,\n  description,\n  id,\n  ...props\n}: React.ComponentProps<typeof Checkbox> & {\n  label: string;\n  description?: string;\n}) {\n  const autoId = React.useId();\n  const fieldId = id || autoId;\n  return (\n    <div className=\"flex items-start gap-3\">\n      <Checkbox\n        className=\"focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-input data-checked:focus-visible:border-primary\"\n        {...props}\n        id={fieldId}\n      />\n      <label\n        htmlFor={fieldId}\n        className=\"flex flex-col gap-1 text-sm font-medium cursor-pointer\"\n      >\n        {label}\n        {description ? (\n          <span className=\"text-xs font-normal text-muted-foreground\">\n            {description}\n          </span>\n        ) : null}\n      </label>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "pop-base-checkbox.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\";\n\nimport { Checkbox as CheckboxPrimitive } from \"@base-ui/react/checkbox\";\nimport { cn } from \"cn\";\nimport { CheckIcon } from \"lucide-react\";\n\nfunction Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {\n  return (\n    <CheckboxPrimitive.Root\n      data-slot=\"checkbox\"\n      className={cn(\n        \"peer relative flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input transition-colors outline-none group-has-disabled/field:opacity-50 after:absolute after:-inset-x-3 after:-inset-y-2 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary\",\n        className,\n      )}\n      {...props}\n    >\n      <CheckboxPrimitive.Indicator\n        data-slot=\"checkbox-indicator\"\n        className=\"grid place-content-center text-current transition-none [&>svg]:size-3.5\"\n      >\n        <CheckIcon />\n      </CheckboxPrimitive.Indicator>\n    </CheckboxPrimitive.Root>\n  );\n}\n\nexport { Checkbox };\n"
+    }
+  ]
+}

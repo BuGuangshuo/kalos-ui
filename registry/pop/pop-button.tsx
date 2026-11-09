@@ -14,7 +14,10 @@ export function PopButton({
     <Button
       {...props}
       size={size}
-      className={cn("rounded-full", props.className)}
+      className={cn(
+        "rounded-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent",
+        props.className,
+      )}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
     >

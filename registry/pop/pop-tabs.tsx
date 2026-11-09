@@ -15,7 +15,7 @@ export function PopTabs({
           <TabsTrigger
             key={item.value}
             value={item.value}
-            className="rounded-full"
+            className="rounded-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent"
           >
             {item.label}
           </TabsTrigger>

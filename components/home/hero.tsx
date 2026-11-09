@@ -12,6 +12,11 @@ import { Box, Check, Copy, Layers, Palette } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { site } from "@/lib/site";
 import { FrameworkSwitcher, useFramework } from "@/components/framework";
+import {
+  usePrimitive,
+  PrimitiveSwitcher,
+  PrimitiveName,
+} from "@/components/primitives";
 import { easeOut, PackageManagerContext, useIntro } from "./runtime";
 
 const managers = ["npm", "pnpm", "yarn", "bun"] as const;
@@ -35,6 +40,7 @@ export function CopyCommand({
   kind?: "component" | "skill";
 }) {
   const { framework } = useFramework();
+  const { primitive } = usePrimitive();
   const { manager, setManager } = use(PackageManagerContext);
   const [copied, setCopied] = useState(false);
   const origin = useSyncExternalStore(
@@ -45,7 +51,7 @@ export function CopyCommand({
   const command = (value: string) =>
     kind === "skill"
       ? `${runners[value as keyof typeof runners]} skills add BuGuangshuo/pop-ui --skill pop-ui`
-      : `${runners[value as keyof typeof runners]} ${framework === "vue" ? "shadcn-vue" : "shadcn"}@latest add ${origin}/r/${framework === "vue" ? "vue/" : ""}${name}.json`;
+      : `${runners[value as keyof typeof runners]} ${framework === "vue" ? "shadcn-vue" : "shadcn"}@latest add ${origin}/r/${framework === "vue" ? "vue/" : `${primitive}/`}${name}.json`;
   useEffect(() => {
     if (!copied) return;
     const timer = setTimeout(() => setCopied(false), 1600);
@@ -132,7 +138,7 @@ export function CopyCommand({
 }
 
 const libraryWords = {
-  react: ["React", "shadcn/ui", "Next.js"],
+  react: ["shadcn/ui", "Base UI", "Radix UI", "React Aria"],
   vue: ["Vue", "shadcn-vue", "Nuxt"],
 };
 function CyclingLibrary({ done }: { done: boolean }) {
@@ -164,13 +170,13 @@ function CyclingLibrary({ done }: { done: boolean }) {
     >
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
-          key={`${framework}-${words[index]}`}
+          key={`${framework}-${words[index % words.length]}`}
           initial={{ opacity: 0, y: "65%", filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           exit={{ opacity: 0, y: "-65%", filter: "blur(8px)" }}
           transition={{ duration: 0.45, ease: easeOut }}
         >
-          {words[index]}
+          {words[index % words.length]}
         </motion.span>
       </AnimatePresence>
     </motion.span>
@@ -249,11 +255,12 @@ export function MotionHero() {
         </span>
       </h1>
       <motion.p {...rise(5)} className="motion-hero-subtitle">
-        12 个基础组件，基于 {framework === "vue" ? "shadcn-vue" : "shadcn/ui"}。
+        12 个基础组件，适配 {framework === "vue" ? "Vue" : "React"} 项目。
         <br className="motion-desktop-break" />
         按需安装源码，自由调整样式和交互。
       </motion.p>
       <motion.div {...rise(6)} className="motion-hero-install">
+        <PrimitiveSwitcher />
         <CopyCommand />
         <div className="motion-hero-actions">
           <Link href="/docs/getting-started" className="motion-primary-link">
@@ -266,7 +273,7 @@ export function MotionHero() {
       </motion.div>
       <motion.div {...rise(7)} className="motion-stack-logos">
         <span>
-          <Layers /> {framework === "vue" ? "Reka UI" : "Radix UI"}
+          <Layers /> <PrimitiveName />
         </span>
         <span>
           <Box /> {framework === "vue" ? "shadcn-vue" : "shadcn/ui"}

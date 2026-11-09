@@ -1,4 +1,9 @@
 "use client";
+import {
+  usePrimitive,
+  PrimitiveSwitcher,
+  PrimitiveText,
+} from "@/components/primitives";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
@@ -31,7 +36,6 @@ import { CopyButton } from "@/components/copy-button";
 import { BrandLogo } from "@/components/brand";
 import {
   FrameworkSwitcher,
-  FrameworkText,
   useFramework,
 } from "@/components/framework";
 const HomeShell = dynamic(() =>
@@ -202,12 +206,13 @@ const getServerOrigin = () => site.url;
 
 export function InstallCommand({ slug = "pop-button" }: { slug?: string }) {
   const { framework } = useFramework();
+  const { primitive } = usePrimitive();
   const origin = useSyncExternalStore(
     subscribeOrigin,
     getOrigin,
     getServerOrigin,
   );
-  const value = `npx ${framework === "vue" ? "shadcn-vue" : "shadcn"}@latest add ${origin}/r/${framework === "vue" ? "vue/" : ""}${slug}.json`;
+  const value = `npx ${framework === "vue" ? "shadcn-vue" : "shadcn"}@latest add ${origin}/r/${framework === "vue" ? "vue/" : `${primitive}/`}${slug}.json`;
   return (
     <div className="install-command">
       <Terminal />
@@ -225,12 +230,15 @@ export function BundleInstall() {
       <DialogContent>
         <DialogTitle>将 Pop UI 添加到项目</DialogTitle>
         <DialogDescription>
-          <FrameworkText
-            react="先初始化 Radix 版 shadcn/ui"
+          <PrimitiveText
+            radix="先初始化 Radix 版 shadcn/ui"
+            base="先初始化 Base UI 版 shadcn/ui"
+            aria="先初始化 React Aria 版 shadcn/ui"
             vue="先初始化 shadcn-vue"
           />
           ，再运行以下命令。全部 12 个组件及所需基础组件会自动安装。
         </DialogDescription>
+        <PrimitiveSwitcher />
         <InstallCommand slug="pop-all" />
       </DialogContent>
     </Dialog>

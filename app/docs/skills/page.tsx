@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
+import { PrimitiveSwitcher } from "@/components/primitives";
 import { FrameworkSwitcher } from "@/components/framework";
 export const metadata: Metadata = { title: "Skills" };
 const links = [
@@ -46,7 +47,8 @@ export default function SkillsPage() {
             <h3>识别项目，选择正确的组件</h3>
             <p>
               读取 package.json、components.json 与现有导入，识别 React /
-              Next.js 或 Vue / Nuxt，选择对应 CLI、注册表地址与组件 API。
+              Next.js 或 Vue / Nuxt，进一步识别 Radix UI、Base UI、React Aria 或
+              Reka UI，选择对应 CLI、注册表地址与组件 API。
             </p>
             <h3>从基础组件组合界面</h3>
             <p>
@@ -67,7 +69,7 @@ export default function SkillsPage() {
               filename="给 AI 助手的提示"
               language="text"
               code={
-                "使用 Pop UI，帮我做一个包含姓名、邮箱和消息开关的偏好设置表单。\n\n用 Pop UI 的对话框完成新增项目流程，保留现有主题和键盘操作。\n\n给保存按钮增加加载、成功和失败反馈，连接已有的保存接口。\n\n我是 Vue 项目，请使用 v-model 绑定 PopInput 和 PopSwitch。"
+                "使用 Pop UI，帮我做一个包含姓名、邮箱和消息开关的偏好设置表单。\n\n用 Pop UI 的对话框完成新增项目流程，保留现有主题和键盘操作。\n\n给保存按钮增加加载、成功和失败反馈，连接已有的保存接口。\n\n我是 Vue 项目，请使用 v-model 绑定 PopInput 和 PopSwitch。\n\n当前项目使用 Base UI，请从 /r/base-ui/ 安装组件。\n\n使用 React Aria 版按钮，用 onPress 连接保存操作。"
               }
             />
             <p>
@@ -78,6 +80,7 @@ export default function SkillsPage() {
           <section id="frameworks">
             <h2>React 与 Vue</h2>
             <FrameworkSwitcher />
+            <PrimitiveSwitcher />
             <p>
               两个版本提供相同的 12
               类组件与中性视觉规范。切换框架后，组件文档中的安装命令、源码、示例与
@@ -95,7 +98,7 @@ export default function SkillsPage() {
                 <tbody>
                   <tr>
                     <td>React</td>
-                    <td>shadcn/ui · Radix UI</td>
+                    <td>shadcn/ui · Radix UI / Base UI / React Aria</td>
                     <td>TSX、属性与回调</td>
                   </tr>
                   <tr>

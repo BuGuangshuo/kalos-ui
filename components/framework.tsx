@@ -1,8 +1,9 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { Code2 } from "lucide-react";
+import { ReactLogo, VueLogo } from "@/components/framework-icons";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { usePrimitive } from "@/lib/use-primitive";
 import { CopyButton } from "@/components/copy-button";
 
 export type Framework = "react" | "vue";
@@ -48,19 +49,11 @@ export function FrameworkSwitcher({ className = "" }: { className?: string }) {
     >
       <TabsList aria-label="开发框架">
         <TabsTrigger value="react">
-          <Code2 />
+          <ReactLogo />
           React
         </TabsTrigger>
         <TabsTrigger value="vue">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="m2 4 10 17L22 4h-6l-4 7-4-7Z"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <VueLogo />
           Vue
         </TabsTrigger>
       </TabsList>
@@ -74,16 +67,28 @@ export function FrameworkText({ react, vue }: { react: string; vue: string }) {
 export function FrameworkCode({
   react,
   vue,
+  base,
+  aria,
   reactFilename = "tsx",
   vueFilename = "vue",
 }: {
   react: string;
   vue: string;
+  base?: string;
+  aria?: string;
   reactFilename?: string;
   vueFilename?: string;
 }) {
   const { framework } = useFramework();
-  const code = framework === "vue" ? vue : react;
+  const { primitive } = usePrimitive();
+  const code =
+    framework === "vue"
+      ? vue
+      : primitive === "base-ui"
+        ? (base ?? react)
+        : primitive === "react-aria"
+          ? (aria ?? react)
+          : react;
   return (
     <div className="code-block">
       <div className="code-header">

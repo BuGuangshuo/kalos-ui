@@ -8,7 +8,7 @@ defineProps<{ loading?: boolean; disabled?: boolean }>();
 <template>
   <Button
     v-bind="$attrs"
-    class="h-8 rounded-full"
+    class="h-8 rounded-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent"
     :disabled="disabled || loading"
     :aria-busy="loading || undefined"
   >

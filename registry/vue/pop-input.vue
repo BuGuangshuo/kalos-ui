@@ -21,7 +21,7 @@ const model = defineModel<string | number>({ default: "" });
       v-bind="$attrs"
       :id="props.id || autoId"
       v-model="model"
-      class="h-8 rounded-[var(--radius-element,12px)]"
+      class="h-8 rounded-[var(--radius-element,12px)] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-input"
       :aria-invalid="!!error"
       :aria-describedby="
         error || hint ? `${props.id || autoId}-description` : undefined

@@ -4,7 +4,7 @@
 
 [在线网站](https://pop-ui-six.vercel.app) · [组件目录](https://pop-ui-six.vercel.app/components) · [中文文档](https://pop-ui-six.vercel.app/docs/getting-started) · [Skills](https://pop-ui-six.vercel.app/docs/skills)
 
-一套可以自己维护的 React / Vue UI 组件注册表，采用 Next.js App Router、TypeScript、Tailwind CSS v4、shadcn/ui（Radix）。
+一套可以自己维护的 React / Vue UI 组件注册表，采用 Next.js App Router、TypeScript、Tailwind CSS v4、shadcn/ui（Radix UI / Base UI / React Aria）。
 
 - 12 个基础组件及交互预览、源码展示、Props 说明
 - 可搜索、可筛选的组件目录
@@ -40,7 +40,7 @@ npm run build
 先在消费者项目中运行 `npx shadcn@latest init --base radix`，选择 Radix 基础。然后从网站复制对应安装命令：
 
 ```bash
-npx shadcn@latest add https://pop-ui-six.vercel.app/r/pop-button.json
+npx shadcn@latest add https://pop-ui-six.vercel.app/r/radix/pop-button.json
 ```
 
 也可在消费者的 `components.json` 配置命名空间：
@@ -48,7 +48,7 @@ npx shadcn@latest add https://pop-ui-six.vercel.app/r/pop-button.json
 ```json
 {
   "registries": {
-    "@pop-ui": "https://pop-ui-six.vercel.app/r/{name}.json"
+    "@pop-ui": "https://pop-ui-six.vercel.app/r/radix/{name}.json"
   }
 }
 ```
@@ -62,8 +62,23 @@ npx shadcn@latest add @pop-ui/pop-button
 一次安装全部组件：
 
 ```bash
-npx shadcn@latest add https://pop-ui-six.vercel.app/r/pop-all.json
+npx shadcn@latest add https://pop-ui-six.vercel.app/r/radix/pop-all.json
 ```
+
+## Base UI 与 React Aria
+
+React 的三个版本均支持全部 12 个组件。根据项目的底层库选择初始化和安装命令：
+
+```bash
+# Base UI
+npx shadcn@latest init --base base
+npx shadcn@latest add https://pop-ui-six.vercel.app/r/base-ui/pop-all.json
+# React Aria
+npx shadcn@latest init --base aria
+npx shadcn@latest add https://pop-ui-six.vercel.app/r/react-aria/pop-all.json
+```
+
+Base UI / React Aria 版本包含匹配的基础组件源码和包依赖，不依赖 Radix。每个版本均提供单组件、整库和可选主题入口。同一项目选择一个版本，避免覆盖同名 Pop 组件；旧的 `/r/*.json` 继续指向 Radix。页面的底层库选择器会同步切换预览、源码、安装命令和 API。React Aria 按钮使用 `onPress`，Base UI 复选框使用 `indeterminate`，React Aria 复选框使用 `isIndeterminate`。
 
 ## Vue 组件
 
@@ -99,7 +114,9 @@ Skill 位于 `skills/pop-ui/`，帮助支持 Agent Skills 的工具识别 React 
 app/                  网站、组件详情、文档
 components/ui/        shadcn/ui 基础组件
 components/demos.tsx  交互预览
-registry/pop/         可分发的 React 组件
+registry/pop/         可分发的 Radix 组件
+registry/base-ui/     可分发的 Base UI 组件
+registry/react-aria/  可分发的 React Aria 组件
 registry/vue/         可分发的 Vue 组件
 skills/pop-ui/        AI Skill 与参考资料
 lib/catalog.ts        组件目录与安装依赖
@@ -112,10 +129,10 @@ design/tokens.json    共享语义设计变量
 
 Vercel 导入此 GitHub 仓库，框架选择 Next.js，Node.js 选择 24.x；默认构建命令为 `npm run build`。Vercel 自动使用项目生产域名生成注册表元数据。自定义域名时可设置 `NEXT_PUBLIC_SITE_URL`。
 
-React 使用 Radix 版 shadcn API，Vue 使用 shadcn-vue / Reka UI API。
+React 按选择使用 Radix UI、Base UI 或 React Aria，Vue 使用 shadcn-vue / Reka UI API。
 
 组件与文档视觉规范参考 [Astryx](https://astryx.atmeta.com/)。首页参考 [Animate UI](https://animate-ui.com/)，滚动轨道及开场动画适配其公开网站实现，保留许可于 `ANIMATE-UI-LICENSE.md`。动画代码仅用于网站展示，不包含在 Pop UI 的组件注册表中。注册表协议遵循 [shadcn 官方文档](https://ui.shadcn.com/docs/registry)。
 
 ## License
 
-Pop UI 注册表组件使用 MIT 许可。shadcn/ui 基础组件保留其原有开源授权；首页适配代码遵循 `ANIMATE-UI-LICENSE.md`，Outfit 字体及其 Logo 字形遵循 `OUTFIT-LICENSE.txt`。
+Pop UI 注册表组件使用 MIT 许可。shadcn/ui 基础组件保留其原有开源授权；首页适配代码遵循 `ANIMATE-UI-LICENSE.md`，Outfit 字体遵循 `OUTFIT-LICENSE.txt`；Manrope Medium 品牌字形遵循 `public/brand/MANROPE-LICENSE.txt`。

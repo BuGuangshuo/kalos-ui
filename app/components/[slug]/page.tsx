@@ -8,11 +8,8 @@ import { Sidebar, OnThisPage } from "@/components/docs-parts";
 import { ComponentDetails } from "@/components/component-details";
 import { InstallCommand } from "@/components/site-shell";
 import { Badge } from "@/components/ui/badge";
-import {
-  FrameworkCode,
-  FrameworkSwitcher,
-  FrameworkText,
-} from "@/components/framework";
+import { FrameworkCode, FrameworkSwitcher } from "@/components/framework";
+import { PrimitiveSwitcher, PrimitiveText } from "@/components/primitives";
 import { vueCatalog, vueExample } from "@/lib/vue-catalog";
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -38,13 +35,21 @@ export default async function DetailPage({
   const { slug } = await params;
   const item = catalog.find((item) => item.slug === slug);
   if (!item) notFound();
-  const [source, vueSource] = await Promise.all([
+  const [source, vueSource, baseSource, ariaSource] = await Promise.all([
     readFile(
       path.join(process.cwd(), "registry", "pop", `${item.slug}.tsx`),
       "utf8",
     ),
     readFile(
       path.join(process.cwd(), "registry", "vue", `${item.slug}.vue`),
+      "utf8",
+    ),
+    readFile(
+      path.join(process.cwd(), "registry", "base-ui", `${item.slug}.tsx`),
+      "utf8",
+    ),
+    readFile(
+      path.join(process.cwd(), "registry", "react-aria", `${item.slug}.tsx`),
       "utf8",
     ),
   ]);
@@ -70,26 +75,33 @@ export default async function DetailPage({
             <div className="detail-meta">
               <Badge variant="secondary">{item.category}</Badge>
               <span>
-                <FrameworkText
-                  react="React · TypeScript · Radix UI"
+                <PrimitiveText
+                  radix="React · TypeScript · Radix UI"
+                  base="React · TypeScript · Base UI"
+                  aria="React · TypeScript · React Aria"
                   vue="Vue · TypeScript · Reka UI"
                 />
               </span>
             </div>
             <FrameworkSwitcher />
+            <PrimitiveSwitcher />
           </header>
           <section id="preview">
             <ComponentDetails
               slug={slug}
               source={source}
+              baseSource={baseSource}
+              ariaSource={ariaSource}
               vueSource={vueSource}
             />
           </section>
           <section id="installation">
             <h2>安装</h2>
             <p>
-              <FrameworkText
-                react="在已初始化的 Radix 版 shadcn/ui 项目中运行。"
+              <PrimitiveText
+                radix="在已初始化的 Radix 版 shadcn/ui 项目中运行。"
+                base="在 Base UI 版 shadcn/ui 项目中运行（init --base base）。"
+                aria="在 React Aria 版 shadcn/ui 项目中运行（init --base aria）。"
                 vue="在已初始化的 shadcn-vue 项目中运行（Vue 3.5+、Tailwind CSS）。"
               />
               所需基础组件会自动安装。
@@ -111,7 +123,26 @@ export default async function DetailPage({
           <section id="api">
             <h2>组件 API</h2>
             <p className="props-info">
-              <FrameworkText react={item.props} vue={vueCatalog[slug].props} />
+              <PrimitiveText
+                radix={item.props}
+                base={
+                  slug === "pop-checkbox"
+                    ? "label: string；description?: string；checked?: boolean；onCheckedChange?: (checked: boolean) => void；indeterminate?: boolean。支持 Base UI Checkbox 属性。"
+                    : slug === "pop-button"
+                      ? "支持 Base UI Button 属性（包括 render）；variant、size、loading?: boolean。"
+                      : item.props
+                }
+                aria={
+                  slug === "pop-checkbox"
+                    ? "label: string；description?: string；checked?: boolean；onCheckedChange?: (checked: boolean) => void；isIndeterminate?: boolean。也支持 React Aria 的 isSelected、defaultSelected、isDisabled 和 onChange。"
+                    : slug === "pop-switch"
+                      ? "label: string；description?: string；checked?: boolean；onCheckedChange?: (checked: boolean) => void。也支持 React Aria 的 isSelected、defaultSelected、isDisabled 和 onChange。"
+                      : slug === "pop-button"
+                        ? "variant、size、loading?: boolean；isDisabled / disabled 控制禁用；onPress 处理操作，onClick?: () => void 为便捷别名。其余属性继承 React Aria Button。"
+                        : item.props
+                }
+                vue={vueCatalog[slug].props}
+              />
             </p>
             <p>
               组件继承现有的语义颜色，视觉规范参考{" "}

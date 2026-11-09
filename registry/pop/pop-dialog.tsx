@@ -23,9 +23,14 @@ export function PopDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">{trigger}</Button>
+        <Button
+          className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent"
+          variant="outline"
+        >
+          {trigger}
+        </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&_button:focus-visible]:outline-none [&_button:focus-visible]:ring-0">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description ? (

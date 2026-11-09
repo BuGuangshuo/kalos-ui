@@ -16,11 +16,15 @@ const open = defineModel<boolean>("open", { default: false });
 <template>
   <Dialog v-model:open="open">
     <DialogTrigger as-child
-      ><Button variant="outline" class="h-8 rounded-full">{{
-        trigger
-      }}</Button></DialogTrigger
+      ><Button
+        variant="outline"
+        class="h-8 rounded-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent"
+        >{{ trigger }}</Button
+      ></DialogTrigger
     >
-    <DialogContent class="rounded-[var(--radius-container,16px)]">
+    <DialogContent
+      class="rounded-[var(--radius-container,16px)] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&_button:focus-visible]:outline-none [&_button:focus-visible]:ring-0"
+    >
       <DialogHeader
         ><DialogTitle>{{ title }}</DialogTitle
         ><DialogDescription :class="!description ? 'sr-only' : undefined">{{

@@ -31,7 +31,7 @@ const model = defineModel<boolean>({ default: false });
       v-model="model"
       :name="name"
       :disabled="disabled"
-      class="shrink-0"
+      class="shrink-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent"
     />
   </div>
 </template>

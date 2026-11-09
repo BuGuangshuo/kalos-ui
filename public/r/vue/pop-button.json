@@ -15,7 +15,7 @@
     {
       "path": "pop-button.vue",
       "type": "registry:ui",
-      "content": "<script setup lang=\"ts\">\nimport { LoaderCircle } from \"@lucide/vue\";\nimport { Button } from \"@/components/ui/button\";\ndefineOptions({ inheritAttrs: false });\ndefineProps<{ loading?: boolean; disabled?: boolean }>();\n</script>\n\n<template>\n  <Button\n    v-bind=\"$attrs\"\n    class=\"h-8 rounded-full\"\n    :disabled=\"disabled || loading\"\n    :aria-busy=\"loading || undefined\"\n  >\n    <LoaderCircle\n      v-if=\"loading\"\n      class=\"size-4 animate-spin motion-reduce:animate-none\"\n      aria-hidden=\"true\"\n    />\n    <slot />\n  </Button>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport { LoaderCircle } from \"@lucide/vue\";\nimport { Button } from \"@/components/ui/button\";\ndefineOptions({ inheritAttrs: false });\ndefineProps<{ loading?: boolean; disabled?: boolean }>();\n</script>\n\n<template>\n  <Button\n    v-bind=\"$attrs\"\n    class=\"h-8 rounded-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent\"\n    :disabled=\"disabled || loading\"\n    :aria-busy=\"loading || undefined\"\n  >\n    <LoaderCircle\n      v-if=\"loading\"\n      class=\"size-4 animate-spin motion-reduce:animate-none\"\n      aria-hidden=\"true\"\n    />\n    <slot />\n  </Button>\n</template>\n"
     }
   ]
 }

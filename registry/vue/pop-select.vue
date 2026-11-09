@@ -25,7 +25,7 @@ const model = defineModel<string>();
     <Select v-model="model" :disabled="disabled" :name="name"
       ><SelectTrigger
         :id="id || autoId"
-        class="h-8 w-full rounded-[var(--radius-element,12px)]"
+        class="h-8 w-full rounded-[var(--radius-element,12px)] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-input"
         ><SelectValue :placeholder="placeholder || '请选择'" /></SelectTrigger
       ><SelectContent
         ><SelectItem

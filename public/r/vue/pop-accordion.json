@@ -12,7 +12,7 @@
     {
       "path": "pop-accordion.vue",
       "type": "registry:ui",
-      "content": "<script setup lang=\"ts\">\nimport {\n  Accordion,\n  AccordionItem,\n  AccordionTrigger,\n  AccordionContent,\n} from \"@/components/ui/accordion\";\ndefineProps<{ items: { question: string; answer: string }[] }>();\n</script>\n\n<template>\n  <Accordion type=\"single\" collapsible class=\"w-full\">\n    <AccordionItem\n      v-for=\"(item, index) in items\"\n      :key=\"item.question\"\n      :value=\"String(index)\"\n      ><AccordionTrigger class=\"text-sm\">{{ item.question }}</AccordionTrigger\n      ><AccordionContent class=\"text-sm text-muted-foreground\">{{\n        item.answer\n      }}</AccordionContent></AccordionItem\n    >\n  </Accordion>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport {\n  Accordion,\n  AccordionItem,\n  AccordionTrigger,\n  AccordionContent,\n} from \"@/components/ui/accordion\";\ndefineProps<{ items: { question: string; answer: string }[] }>();\n</script>\n\n<template>\n  <Accordion type=\"single\" collapsible class=\"w-full\">\n    <AccordionItem\n      v-for=\"(item, index) in items\"\n      :key=\"item.question\"\n      :value=\"String(index)\"\n      ><AccordionTrigger\n        class=\"text-sm focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent focus-visible:after:border-transparent\"\n        >{{ item.question }}</AccordionTrigger\n      ><AccordionContent class=\"text-sm text-muted-foreground\">{{\n        item.answer\n      }}</AccordionContent></AccordionItem\n    >\n  </Accordion>\n</template>\n"
     }
   ]
 }

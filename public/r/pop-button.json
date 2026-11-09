@@ -13,7 +13,7 @@
   "files": [
     {
       "path": "registry/pop/pop-button.tsx",
-      "content": "\"use client\";\nimport * as React from \"react\";\nimport { Loader2 } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { Button } from \"@/components/ui/button\";\nexport function PopButton({\n  loading = false,\n  size = \"default\",\n  disabled,\n  children,\n  ...props\n}: React.ComponentProps<typeof Button> & { loading?: boolean }) {\n  return (\n    <Button\n      {...props}\n      size={size}\n      className={cn(\"rounded-full\", props.className)}\n      disabled={disabled || loading}\n      aria-busy={loading || undefined}\n    >\n      {loading ? (\n        <Loader2 data-icon=\"inline-start\" className=\"animate-spin\" />\n      ) : null}\n      {children}\n    </Button>\n  );\n}\n",
+      "content": "\"use client\";\nimport * as React from \"react\";\nimport { Loader2 } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { Button } from \"@/components/ui/button\";\nexport function PopButton({\n  loading = false,\n  size = \"default\",\n  disabled,\n  children,\n  ...props\n}: React.ComponentProps<typeof Button> & { loading?: boolean }) {\n  return (\n    <Button\n      {...props}\n      size={size}\n      className={cn(\n        \"rounded-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent\",\n        props.className,\n      )}\n      disabled={disabled || loading}\n      aria-busy={loading || undefined}\n    >\n      {loading ? (\n        <Loader2 data-icon=\"inline-start\" className=\"animate-spin\" />\n      ) : null}\n      {children}\n    </Button>\n  );\n}\n",
       "type": "registry:ui"
     }
   ],

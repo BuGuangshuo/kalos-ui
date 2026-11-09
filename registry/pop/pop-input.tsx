@@ -27,15 +27,22 @@ export function PopInput({
       <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>
       <Input
         {...props}
-        className={cn("rounded-[var(--radius-element,12px)]", props.className)}
+        className={cn(
+          "rounded-[var(--radius-element,12px)] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-input",
+          props.className,
+        )}
         id={fieldId}
         aria-invalid={!!error}
         aria-describedby={error || hint ? descriptionId : undefined}
       />
       {error ? (
-        <FieldError id={descriptionId} className="text-xs">{error}</FieldError>
+        <FieldError id={descriptionId} className="text-xs">
+          {error}
+        </FieldError>
       ) : hint ? (
-        <FieldDescription id={descriptionId} className="text-xs">{hint}</FieldDescription>
+        <FieldDescription id={descriptionId} className="text-xs">
+          {hint}
+        </FieldDescription>
       ) : null}
     </Field>
   );

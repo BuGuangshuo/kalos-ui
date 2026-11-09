@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pop-badge",
+  "title": "Pop 徽标",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "description": "使用简洁的标记展示状态、类别与附加信息。",
+  "registryDependencies": [
+    "badge"
+  ],
+  "files": [
+    {
+      "path": "registry/pop/pop-badge.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { Badge } from \"@/components/ui/badge\";\nexport function PopBadge({\n  status = \"neutral\",\n  children,\n}: {\n  status?: \"neutral\" | \"success\" | \"warning\";\n  children: ReactNode;\n}) {\n  return (\n    <Badge\n      variant={\n        status === \"success\"\n          ? \"default\"\n          : status === \"warning\"\n            ? \"outline\"\n            : \"secondary\"\n      }\n      className=\"rounded-full\"\n    >\n      <span aria-hidden=\"true\" className=\"size-1 rounded-full bg-current\" />\n      {children}\n    </Badge>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

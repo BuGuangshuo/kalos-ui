@@ -31,7 +31,7 @@ export function PopSelect({
         <SelectTrigger
           size="default"
           id={id}
-          className="w-full rounded-[var(--radius-element,12px)]"
+          className="w-full rounded-[var(--radius-element,12px)] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-input"
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

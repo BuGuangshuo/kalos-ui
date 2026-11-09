@@ -14,7 +14,11 @@ export function PopCheckbox({
   const fieldId = id || autoId;
   return (
     <div className="flex items-start gap-3">
-      <Checkbox {...props} id={fieldId} />
+      <Checkbox
+        className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-input data-checked:focus-visible:border-primary"
+        {...props}
+        id={fieldId}
+      />
       <label
         htmlFor={fieldId}
         className="flex flex-col gap-1 text-sm font-medium cursor-pointer"
