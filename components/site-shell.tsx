@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ThemeProvider, useTheme } from "next-themes";
@@ -29,6 +30,9 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { catalog } from "@/lib/catalog";
 import { site } from "@/lib/site";
+const HomeShell = dynamic(() =>
+  import("@/components/home/shell").then((module) => module.HomeShell),
+);
 export function Mark() {
   return (
     <span className="brand-mark" aria-hidden="true">
@@ -248,7 +252,11 @@ const getOrigin = () => window.location.origin;
 const getServerOrigin = () => site.url;
 
 export function InstallCommand({ slug = "pop-button" }: { slug?: string }) {
-  const origin = useSyncExternalStore(subscribeOrigin, getOrigin, getServerOrigin);
+  const origin = useSyncExternalStore(
+    subscribeOrigin,
+    getOrigin,
+    getServerOrigin,
+  );
   const value = `npx shadcn@latest add ${origin}/r/${slug}.json`;
   return (
     <div className="install-command">
@@ -276,31 +284,38 @@ export function BundleInstall() {
   );
 }
 export function SiteShell({ children }: { children: React.ReactNode }) {
+  const home = usePathname() === "/";
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-      <Header />
-      <main id="main-content">{children}</main>
-      <footer className="site-footer">
-        <div>
-          <Link href="/" className="brand">
-            <Mark />
-            <span>
-              pop<span className="brand-ui">ui</span>
-            </span>
-          </Link>
-          <p>从基础出发，构建属于你的界面。</p>
-        </div>
-        <div className="footer-links">
-          <Link href="/docs/getting-started">使用文档</Link>
-          <a href={site.figma} target="_blank" rel="noreferrer">
-            Figma <ArrowUpRight />
-          </a>
-          <a href={site.github} target="_blank" rel="noreferrer">
-            GitHub <ArrowUpRight />
-          </a>
-          <span>由 Alan 构建 · MIT 开源许可</span>
-        </div>
-      </footer>
+      {home ? (
+        <HomeShell>{children}</HomeShell>
+      ) : (
+        <>
+          <Header />
+          <main id="main-content">{children}</main>
+          <footer className="site-footer">
+            <div>
+              <Link href="/" className="brand">
+                <Mark />
+                <span>
+                  pop<span className="brand-ui">ui</span>
+                </span>
+              </Link>
+              <p>从基础出发，构建属于你的界面。</p>
+            </div>
+            <div className="footer-links">
+              <Link href="/docs/getting-started">使用文档</Link>
+              <a href={site.figma} target="_blank" rel="noreferrer">
+                Figma <ArrowUpRight />
+              </a>
+              <a href={site.github} target="_blank" rel="noreferrer">
+                GitHub <ArrowUpRight />
+              </a>
+              <span>由 Alan 构建 · MIT 开源许可</span>
+            </div>
+          </footer>
+        </>
+      )}
       <Toaster position="bottom-right" />
     </ThemeProvider>
   );

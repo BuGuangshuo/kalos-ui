@@ -11,6 +11,7 @@
 - Astryx 中性风格、标准尺寸、中文界面、浅色与深色主题、响应式布局、键盘快捷搜索
 - 符合官方 schema 的 shadcn 注册表、整库安装、可选 Pop 主题
 - 共享设计变量，配套 Figma 组件库
+- Animate UI 风格首页：Logo 描边入场与归位、文字轮播、滚动环绕卡片、交互演示
 - GitHub + Vercel 持续部署
 
 ## 本地运行
@@ -92,10 +93,10 @@ Vercel 导入此 GitHub 仓库，框架选择 Next.js，Node.js 选择 24.x；�
 
 当前组件使用 Radix 版 shadcn API。Figma 的变量、文字样式和组件来自相同的配色与尺寸规范。动画交互以代码为准，Figma 展示静态组件状态。
 
-网站信息架构与视觉规范参考 [Astryx](https://astryx.atmeta.com/)，实现与源码独立编写。注册表协议遵循 [shadcn 官方文档](https://ui.shadcn.com/docs/registry)。
+组件与文档视觉规范参考 [Astryx](https://astryx.atmeta.com/)。首页参考 [Animate UI](https://animate-ui.com/)，滚动轨道及开场动画适配其公开网站实现，保留许可于 `ANIMATE-UI-LICENSE.md`。动画代码仅用于网站展示，不包含在 Pop UI 的组件注册表中。注册表协议遵循 [shadcn 官方文档](https://ui.shadcn.com/docs/registry)。
 
 ## License
 
-MIT. shadcn/ui 基础组件保留其原有开源授权。
+Pop UI 注册表组件使用 MIT 许可。shadcn/ui 基础组件保留其原有开源授权；首页适配代码遵循 `ANIMATE-UI-LICENSE.md`，Outfit 字体及其 Logo 字形遵循 `OUTFIT-LICENSE.txt`。
 
 Figma: [Pop UI · Design System](https://www.figma.com/design/EiullLF6nF6hpxIENCatbU/Pop-UI)（30 个主组件、9 个变体集、2 个设计页面）。

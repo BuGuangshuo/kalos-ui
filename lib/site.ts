@@ -6,7 +6,10 @@ export const site = {
   figma: "https://www.figma.com/design/EiullLF6nF6hpxIENCatbU/Pop-UI",
   url:
     process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
+      : undefined) ||
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "http://localhost:3000"),
+      : "https://pop-ui-six.vercel.app"),
 };
