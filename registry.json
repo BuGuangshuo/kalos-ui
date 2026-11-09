@@ -1,0 +1,237 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "pop-ui",
+  "homepage": "http://localhost:3000",
+  "items": [
+    {
+      "name": "pop-button",
+      "type": "registry:ui",
+      "title": "Pop Button",
+      "description": "A little intention behind every interaction.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-input",
+      "type": "registry:ui",
+      "title": "Pop Text field",
+      "description": "Clear labels, helpful hints, and room to type.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "input",
+        "field"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-card",
+      "type": "registry:ui",
+      "title": "Pop Card",
+      "description": "A calm home for your content and actions.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "card"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-badge",
+      "type": "registry:ui",
+      "title": "Pop Badge",
+      "description": "Small signals that say just enough.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "badge"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-switch",
+      "type": "registry:ui",
+      "title": "Pop Switch",
+      "description": "One small switch. A clear change of state.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "switch"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-checkbox",
+      "type": "registry:ui",
+      "title": "Pop Checkbox",
+      "description": "Make a choice. Feel a little progress.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "checkbox"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-tabs",
+      "type": "registry:ui",
+      "title": "Pop Tabs",
+      "description": "A simple way to find your next point of view.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "tabs"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-accordion",
+      "type": "registry:ui",
+      "title": "Pop Accordion",
+      "description": "More detail, only when you need it.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "accordion"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-dialog",
+      "type": "registry:ui",
+      "title": "Pop Dialog",
+      "description": "A focused moment for something that matters.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "dialog",
+        "button"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-select",
+      "type": "registry:ui",
+      "title": "Pop Select",
+      "description": "A good choice starts with a clear menu.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "select"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-progress",
+      "type": "registry:ui",
+      "title": "Pop Progress",
+      "description": "Every little step deserves to be seen.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "progress"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-avatar-stack",
+      "type": "registry:ui",
+      "title": "Pop Avatar stack",
+      "description": "Good things are better when built together.",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "avatar"
+      ],
+      "files": [
+        {
+          "path": "registry/pop/pop-avatar-stack.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pop-theme",
+      "type": "registry:theme",
+      "title": "Pop Theme",
+      "description": "A thoughtful green palette, with coordinated light and dark semantic tokens.",
+      "cssVars": {
+        "light": {
+          "background": "#ffffff",
+          "foreground": "#202622",
+          "primary": "#117766",
+          "primary-foreground": "#ffffff",
+          "muted": "#f5f6f4",
+          "muted-foreground": "#7b827c",
+          "border": "#e7eae5",
+          "input": "#dfe4de",
+          "accent": "#edf4ee",
+          "destructive": "#c34444",
+          "radius": "0.625rem"
+        },
+        "dark": {
+          "background": "#141a17",
+          "foreground": "#e8eee9",
+          "primary": "#79c6ac",
+          "primary-foreground": "#11231c",
+          "muted": "#1f2922",
+          "muted-foreground": "#9aa99e",
+          "border": "#303a32",
+          "input": "#3a483e",
+          "accent": "#27392f",
+          "destructive": "#f18c8c"
+        }
+      }
+    }
+  ]
+}

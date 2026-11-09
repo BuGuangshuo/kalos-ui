@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pop-checkbox",
+  "title": "Pop Checkbox",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "description": "Make a choice. Feel a little progress.",
+  "registryDependencies": [
+    "checkbox"
+  ],
+  "files": [
+    {
+      "path": "registry/pop/pop-checkbox.tsx",
+      "content": "\"use client\";\nimport * as React from \"react\";\nimport { Checkbox } from \"@/components/ui/checkbox\";\nexport function PopCheckbox({\n  label,\n  description,\n  id,\n  ...props\n}: React.ComponentProps<typeof Checkbox> & {\n  label: string;\n  description?: string;\n}) {\n  const autoId = React.useId();\n  const fieldId = id || autoId;\n  return (\n    <div className=\"flex items-start gap-3\">\n      <Checkbox {...props} id={fieldId} />\n      <label\n        htmlFor={fieldId}\n        className=\"flex flex-col gap-1 text-sm font-medium cursor-pointer\"\n      >\n        {label}\n        {description ? (\n          <span className=\"text-xs font-normal text-muted-foreground\">\n            {description}\n          </span>\n        ) : null}\n      </label>\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

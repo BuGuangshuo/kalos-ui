@@ -1,0 +1,39 @@
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+export function PopAvatarStack({
+  people,
+  max = 4,
+}: {
+  people: { name: string; image?: string }[];
+  max?: number;
+}) {
+  const limit = Math.max(1, Math.floor(max));
+  return (
+    <div
+      className="flex"
+      aria-label={people.map((person) => person.name).join(", ")}
+    >
+      {people.slice(0, limit).map((person, index) => (
+        <Avatar
+          key={`${person.name}-${index}`}
+          className="size-10 ring-2 ring-background -ml-2 first:ml-0"
+        >
+          {person.image ? (
+            <AvatarImage src={person.image} alt={person.name} />
+          ) : null}
+          <AvatarFallback>
+            {person.name
+              .split(" ")
+              .map((part) => part[0])
+              .slice(0, 2)
+              .join("")}
+          </AvatarFallback>
+        </Avatar>
+      ))}
+      {people.length > limit ? (
+        <Avatar className="size-10 ring-2 ring-background -ml-2 first:ml-0">
+          <AvatarFallback>+{people.length - limit}</AvatarFallback>
+        </Avatar>
+      ) : null}
+    </div>
+  );
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pop-theme",
+  "title": "Pop Theme",
+  "description": "A thoughtful green palette, with coordinated light and dark semantic tokens.",
+  "cssVars": {
+    "light": {
+      "background": "#ffffff",
+      "foreground": "#202622",
+      "primary": "#117766",
+      "primary-foreground": "#ffffff",
+      "muted": "#f5f6f4",
+      "muted-foreground": "#7b827c",
+      "border": "#e7eae5",
+      "input": "#dfe4de",
+      "accent": "#edf4ee",
+      "destructive": "#c34444",
+      "radius": "0.625rem"
+    },
+    "dark": {
+      "background": "#141a17",
+      "foreground": "#e8eee9",
+      "primary": "#79c6ac",
+      "primary-foreground": "#11231c",
+      "muted": "#1f2922",
+      "muted-foreground": "#9aa99e",
+      "border": "#303a32",
+      "input": "#3a483e",
+      "accent": "#27392f",
+      "destructive": "#f18c8c"
+    }
+  },
+  "type": "registry:theme"
+}

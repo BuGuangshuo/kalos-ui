@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pop-badge",
+  "title": "Pop Badge",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "description": "Small signals that say just enough.",
+  "registryDependencies": [
+    "badge"
+  ],
+  "files": [
+    {
+      "path": "registry/pop/pop-badge.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { Badge } from \"@/components/ui/badge\";\nconst styles = {\n  neutral: \"\",\n  success: \"bg-primary/10 text-primary border-primary/15\",\n  warning: \"bg-muted text-muted-foreground border-border\",\n};\nexport function PopBadge({\n  status = \"neutral\",\n  children,\n}: {\n  status?: \"neutral\" | \"success\" | \"warning\";\n  children: ReactNode;\n}) {\n  return (\n    <Badge variant=\"secondary\" className={styles[status]}>\n      <span aria-hidden=\"true\" className=\"size-1.5 rounded-full bg-current\" />\n      {children}\n    </Badge>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

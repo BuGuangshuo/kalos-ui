@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pop-button",
+  "title": "Pop Button",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "description": "A little intention behind every interaction.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "registry/pop/pop-button.tsx",
+      "content": "\"use client\";\nimport * as React from \"react\";\nimport { Loader2 } from \"lucide-react\";\nimport { Button } from \"@/components/ui/button\";\nexport function PopButton({\n  loading = false,\n  disabled,\n  children,\n  ...props\n}: React.ComponentProps<typeof Button> & { loading?: boolean }) {\n  return (\n    <Button\n      {...props}\n      disabled={disabled || loading}\n      aria-busy={loading || undefined}\n    >\n      {loading ? (\n        <Loader2 data-icon=\"inline-start\" className=\"animate-spin\" />\n      ) : null}\n      {children}\n    </Button>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

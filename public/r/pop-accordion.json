@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pop-accordion",
+  "title": "Pop Accordion",
+  "author": "Alan Bu <https://github.com/BuGuangshuo>",
+  "description": "More detail, only when you need it.",
+  "registryDependencies": [
+    "accordion"
+  ],
+  "files": [
+    {
+      "path": "registry/pop/pop-accordion.tsx",
+      "content": "\"use client\";\nimport type { ReactNode } from \"react\";\nimport {\n  Accordion,\n  AccordionItem,\n  AccordionTrigger,\n  AccordionContent,\n} from \"@/components/ui/accordion\";\nexport function PopAccordion({\n  items,\n}: {\n  items: { question: string; answer: ReactNode }[];\n}) {\n  return (\n    <Accordion type=\"single\" collapsible>\n      {items.map((item, index) => (\n        <AccordionItem key={index} value={String(index)}>\n          <AccordionTrigger>{item.question}</AccordionTrigger>\n          <AccordionContent>{item.answer}</AccordionContent>\n        </AccordionItem>\n      ))}\n    </Accordion>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
