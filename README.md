@@ -2,6 +2,8 @@
 
 从基础出发，让想法成真。
 
+[在线网站](https://pop-ui-six.vercel.app) · [组件目录](https://pop-ui-six.vercel.app/components) · [中文文档](https://pop-ui-six.vercel.app/docs/getting-started) · [Figma 设计库](https://www.figma.com/design/EiullLF6nF6hpxIENCatbU/Pop-UI)
+
 一套可以自己维护的 React UI 组件注册表，采用 Next.js App Router、TypeScript、Tailwind CSS v4、shadcn/ui（Radix）。
 
 - 12 个基础组件及交互预览、源码展示、Props 说明
@@ -37,7 +39,7 @@ npm run build
 先在消费者项目中运行 `npx shadcn@latest init --base radix`，选择 Radix 基础。然后从网站复制对应安装命令：
 
 ```bash
-npx shadcn@latest add https://YOUR-DOMAIN/r/pop-button.json
+npx shadcn@latest add https://pop-ui-six.vercel.app/r/pop-button.json
 ```
 
 也可在消费者的 `components.json` 配置命名空间：
@@ -45,7 +47,7 @@ npx shadcn@latest add https://YOUR-DOMAIN/r/pop-button.json
 ```json
 {
   "registries": {
-    "@pop-ui": "https://YOUR-DOMAIN/r/{name}.json"
+    "@pop-ui": "https://pop-ui-six.vercel.app/r/{name}.json"
   }
 }
 ```
@@ -55,6 +57,12 @@ npx shadcn@latest add @pop-ui/pop-button
 ```
 
 不安装 Pop 主题时，组件使用你已有的 shadcn 语义变量。安装 `pop-theme.json` 可应用本站的配色。
+
+一次安装全部组件：
+
+```bash
+npx shadcn@latest add https://pop-ui-six.vercel.app/r/pop-all.json
+```
 
 ## 新增组件
 
