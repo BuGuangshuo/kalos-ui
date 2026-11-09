@@ -263,10 +263,10 @@ function OrbitStage() {
             }}
           >
             <Headline progress={progress} range={[-0.01, 0, 0.78, 0.87]}>
-              每个组件，都有动效。
+              常用组件，随取随用。
             </Headline>
             <Headline progress={progress} range={[0.9, 0.97, 1, 1.01]}>
-              点一点，试试看。
+              先试试，再装进项目。
             </Headline>
 
             <motion.div
@@ -324,7 +324,7 @@ function StaticGrid() {
           transition={{ duration: 0.6, ease: ease.out }}
           className="text-center text-3xl font-medium text-balance md:text-5xl"
         >
-          每个组件，都有动效。
+          常用组件，随取随用。
         </motion.h2>
         <div
           className={cn(

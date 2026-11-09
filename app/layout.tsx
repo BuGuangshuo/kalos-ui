@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    default: "Pop UI — 让组件动起来。",
+    default: "Pop UI — 从组件开始。",
     template: "%s · Pop UI",
   },
   description: site.description,

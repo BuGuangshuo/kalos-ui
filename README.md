@@ -1,6 +1,6 @@
 # Pop UI
 
-让组件动起来。
+从组件开始，构建你的界面。
 
 [在线网站](https://pop-ui-six.vercel.app) · [组件目录](https://pop-ui-six.vercel.app/components) · [中文文档](https://pop-ui-six.vercel.app/docs/getting-started) · [Skills](https://pop-ui-six.vercel.app/docs/skills)
 

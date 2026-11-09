@@ -33,40 +33,40 @@ const scenes = [
   {
     id: "save",
     label: "保存按钮",
-    prompt: "保存时显示加载，完成后告诉我「已保存」。",
+    prompt: "给保存按钮加上加载状态，完成后显示「已保存」。",
     steps: [
-      "沿用现有的按钮样式。",
+      "按需安装按钮组件。",
       "保存期间禁用按钮，防止重复点击。",
-      "让图标和文字平滑切换。",
+      "处理加载和完成两种状态。",
       "显示「已保存」，再恢复按钮。",
     ],
   },
   {
     id: "bell",
-    label: "通知图标",
-    prompt: "鼠标放上去时，让铃铛轻轻摇一下。",
+    label: "图标按钮",
+    prompt: "做个通知按钮，支持点击和键盘操作。",
     steps: [
-      "沿用现有的铃铛图标。",
-      "以顶部为轴，左右轻摆。",
-      "悬停和点击都能触发。",
-      "结束后回到原位。",
+      "使用带有清晰标签的图标按钮。",
+      "保留键盘操作和焦点提示。",
+      "点击时提供轻量反馈。",
+      "适配浅色与深色主题。",
     ],
   },
   {
     id: "list",
-    label: "待办列表",
-    prompt: "新增和删除待办时，让列表平滑地跟着变化。",
+    label: "待办清单",
+    prompt: "做个待办清单，可以添加和删除任务。",
     steps: [
-      "新待办轻轻浮现。",
-      "删除时淡出，其他待办跟着补位。",
-      "过渡短一点，不打断操作。",
+      "用列表呈现每一条任务。",
+      "加入新增和删除操作。",
+      "让内容变化保持清楚。",
       "点点加号和关闭按钮，试试看。",
     ],
   },
   {
     id: "form",
-    label: "表单输入",
-    prompt: "帮我做个偏好设置表单，能填写信息、选择通知方式。",
+    label: "设置表单",
+    prompt: "做个偏好设置表单，能填写邮箱、选择通知方式。",
     steps: [
       "为输入项配好标签和提示。",
       "用复选框选择通知方式。",
@@ -136,7 +136,7 @@ function BellPreview({ playing }: { playing: boolean }) {
     <div className="motion-bell-preview">
       <motion.button
         type="button"
-        aria-label="摇动通知图标"
+        aria-label="通知按钮"
         onClick={() => setRings((n) => n + 1)}
         whileTap={{ scale: 0.92 }}
         whileHover={{ scale: 1.04 }}
@@ -158,7 +158,7 @@ function BellPreview({ playing }: { playing: boolean }) {
           <Bell />
         </motion.span>
       </motion.button>
-      <span>悬停 · 点击 · 进入视口 · 循环</span>
+      <span>悬停或点击，试试按钮反馈</span>
     </div>
   );
 }
@@ -373,11 +373,11 @@ export function ExamplesSection() {
         <Sparkles />
         Pop UI · Skills
       </motion.span>
-      <motion.h2 {...reveal(1)}>想要什么动效，直接说。</motion.h2>
+      <motion.h2 {...reveal(1)}>让 AI 帮你搭界面。</motion.h2>
       <motion.p {...reveal(2)} className="motion-examples-subtitle">
-        描述你想要的效果。AI 会选好组件、补上交互，
+        把需求告诉 AI，让它帮你选组件、搭界面。
         <br className="motion-desktop-break" />
-        也会沿用项目里已有的样式。
+        支持 React 和 Vue，沿用项目里已有的样式。
       </motion.p>
       <motion.div {...reveal(2)} className="motion-skill-command">
         <CopyCommand kind="skill" id="skill-command" />

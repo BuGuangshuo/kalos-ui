@@ -132,8 +132,8 @@ export function CopyCommand({
 }
 
 const libraryWords = {
-  react: ["shadcn/ui", "React", "Radix UI"],
-  vue: ["shadcn-vue", "Vue", "Reka UI"],
+  react: ["React", "shadcn/ui", "Next.js"],
+  vue: ["Vue", "shadcn-vue", "Nuxt"],
 };
 function CyclingLibrary({ done }: { done: boolean }) {
   const { framework } = useFramework();
@@ -226,10 +226,10 @@ export function MotionHero() {
       <motion.div {...rise(0)}>
         <FrameworkSwitcher className="motion-framework-pill" />
       </motion.div>
-      <h1 className="motion-hero-title" aria-label="让你的组件动起来。">
+      <h1 className="motion-hero-title" aria-label="构建界面，从组件开始。">
         <span className="motion-hero-first-line">
           <span>
-            <SplitLine parts={["让你的"]} done={done} />
+            <SplitLine parts={["构建界面，从"]} done={done} />
           </span>{" "}
           <motion.span
             className="motion-library-entrance"
@@ -245,14 +245,13 @@ export function MotionHero() {
           </motion.span>
         </span>
         <span>
-          <SplitLine parts={["组件", "动起来。"]} done={done} delay={0.3} />
+          <SplitLine parts={["组件", "开始。"]} done={done} delay={0.3} />
         </span>
       </h1>
       <motion.p {...rise(5)} className="motion-hero-subtitle">
-        基于 {framework === "vue" ? "shadcn-vue" : "shadcn/ui"} 的{" "}
-        {framework === "vue" ? "Vue" : "React"} 组件，安装后就能用。
+        12 个基础组件，基于 {framework === "vue" ? "shadcn-vue" : "shadcn/ui"}。
         <br className="motion-desktop-break" />
-        源码直接装进项目，样式和交互随你改。
+        按需安装源码，自由调整样式和交互。
       </motion.p>
       <motion.div {...rise(6)} className="motion-hero-install">
         <CopyCommand />
