@@ -1,7 +1,7 @@
 export const site = {
   name: "Pop UI",
   description:
-    "一套可自由定制的开源 React / Vue 组件库。基于 shadcn，提供中文文档、AI Skill、交互预览和完整源码。",
+    "开箱即用的 React / Vue 组件。源码直接装进项目，样式和交互随你改。",
   github: "https://github.com/BuGuangshuo/pop-ui",
   url:
     process.env.NEXT_PUBLIC_SITE_URL ||

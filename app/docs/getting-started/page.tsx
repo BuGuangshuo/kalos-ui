@@ -26,7 +26,7 @@ export default function DocsPage() {
         <article className="docs-content">
           <header className="docs-title">
             <h1>快速开始</h1>
-            <p>将组件库添加到项目中，从你的第一个界面开始。</p>
+            <p>几步装好组件，开始构建你的界面。</p>
             <FrameworkSwitcher />
           </header>
           <section id="ai">

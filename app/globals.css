@@ -2643,6 +2643,15 @@
   width: min(100%, 580px);
   margin-top: 32px;
 }
+.motion-skill-command .motion-copy-command,
+.motion-skill-command .motion-command-box {
+  width: 100%;
+}
+.motion-skill-command .motion-command-content code {
+  overflow-x: auto;
+  scrollbar-width: none;
+  mask-image: none;
+}
 .motion-skill-command > p {
   margin-top: 16px;
   font-size: 13px;

@@ -33,45 +33,45 @@ const scenes = [
   {
     id: "save",
     label: "保存按钮",
-    prompt: "让保存按钮先显示加载状态，再轻快地确认已保存。",
+    prompt: "保存时显示加载，完成后告诉我「已保存」。",
     steps: [
-      "使用 PopButton，保留已有的按钮风格。",
-      "按下后显示加载状态，避免重复提交。",
-      "图标与文字通过模糊过渡自然切换。",
-      "保存完成后反馈成功，再回到初始状态。",
+      "沿用现有的按钮样式。",
+      "保存期间禁用按钮，防止重复点击。",
+      "让图标和文字平滑切换。",
+      "显示「已保存」，再恢复按钮。",
     ],
   },
   {
     id: "bell",
     label: "通知图标",
-    prompt: "让通知图标在悬停时轻轻摇动，点击时也能得到反馈。",
+    prompt: "鼠标放上去时，让铃铛轻轻摇一下。",
     steps: [
-      "保持熟悉的通知图标与清晰的轮廓。",
-      "围绕顶部摇动，模拟自然的钟摆效果。",
-      "悬停、点击与循环演示使用相同的节奏。",
-      "动画结束后，准确地回到初始位置。",
+      "沿用现有的铃铛图标。",
+      "以顶部为轴，左右轻摆。",
+      "悬停和点击都能触发。",
+      "结束后回到原位。",
     ],
   },
   {
     id: "list",
     label: "待办列表",
-    prompt: "为列表的新增和移除添加过渡，让每一步变化都清晰可见。",
+    prompt: "新增和删除待办时，让列表平滑地跟着变化。",
     steps: [
-      "每个任务都有稳定的名称与位置。",
-      "新任务从轻微的模糊中向上浮现。",
-      "移除任务时，让其他任务自然填补位置。",
-      "点击右侧加号与关闭按钮，亲手试试。",
+      "新待办轻轻浮现。",
+      "删除时淡出，其他待办跟着补位。",
+      "过渡短一点，不打断操作。",
+      "点点加号和关闭按钮，试试看。",
     ],
   },
   {
     id: "form",
     label: "表单输入",
-    prompt: "用一致的基础组件，组合一个清晰、易用的偏好设置表单。",
+    prompt: "帮我做个偏好设置表单，能填写信息、选择通知方式。",
     steps: [
-      "输入框保留标签、提示与键盘操作。",
-      "用复选框清楚地表达通知偏好。",
-      "按钮提供明确的提交与完成反馈。",
-      "同一套语义变量，同时适配深浅主题。",
+      "为输入项配好标签和提示。",
+      "用复选框选择通知方式。",
+      "提交后给出完成反馈。",
+      "浅色、深色主题都能用。",
     ],
   },
 ];
@@ -339,7 +339,7 @@ function ScenarioPane({
               animate={{ opacity: 1, y: 0 }}
             >
               <Sparkles />
-              示例已就绪，可以直接操作右侧预览。
+              做好了，试试右边的效果。
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -373,17 +373,17 @@ export function ExamplesSection() {
         <Sparkles />
         Pop UI · Skills
       </motion.span>
-      <motion.h2 {...reveal(1)}>让 AI，也懂你的界面。</motion.h2>
+      <motion.h2 {...reveal(1)}>想要什么动效，直接说。</motion.h2>
       <motion.p {...reveal(2)} className="motion-examples-subtitle">
-        给 Codex、Claude Code 与 Cursor，装上 Pop UI 的组件知识。
+        描述你想要的效果。AI 会选好组件、补上交互，
         <br className="motion-desktop-break" />
-        自动识别 React / Vue，从安装组件到调整动效，一句描述就能开始。
+        也会沿用项目里已有的样式。
       </motion.p>
       <motion.div {...reveal(2)} className="motion-skill-command">
         <CopyCommand kind="skill" id="skill-command" />
-        <p>在项目目录中安装，再向你的 AI 助手描述需求。</p>
+        <p>装好 Skill，就可以向 AI 描述你的想法。</p>
         <Link href="/docs/skills">
-          了解 Skill 的能力与使用方式 <ArrowRight />
+          查看 Skill 文档 <ArrowRight />
         </Link>
       </motion.div>
       <motion.div {...reveal(3)} ref={ref} className="motion-example-window">
@@ -422,7 +422,7 @@ export function ExamplesSection() {
                 <span />
                 <span />
                 <span />
-                <span>Pop UI Skill · 使用场景演示</span>
+                <span>Pop UI Skill · 使用示例</span>
               </div>
               {scenes.map((scene) => (
                 <TabsContent key={scene.id} value={scene.id}>
@@ -446,14 +446,13 @@ export function ExamplesSection() {
         </LayoutGroup>
       </motion.div>
       <motion.div {...reveal(4)} className="motion-examples-install">
-        <p>框架识别、组件安装、语义变量与自然动效，都收录在同一个 Skill 中。</p>
-        <CopyCommand name="pop-button" id="example-command" />
+        <p>支持 Codex、Claude Code、Cursor，以及其他支持 Skill 的 AI 工具。</p>
         <div className="motion-hero-actions">
           <Link href="/docs/skills" className="motion-primary-link">
             阅读 Skill 文档
           </Link>
           <Link href="/components" className="motion-secondary-link">
-            探索组件库
+            查看组件
           </Link>
         </div>
       </motion.div>

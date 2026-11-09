@@ -132,8 +132,8 @@ export function CopyCommand({
 }
 
 const libraryWords = {
-  react: ["shadcn/ui", "React", "Radix UI", "产品界面"],
-  vue: ["shadcn-vue", "Vue", "Reka UI", "产品界面"],
+  react: ["shadcn/ui", "React", "Radix UI"],
+  vue: ["shadcn-vue", "Vue", "Reka UI"],
 };
 function CyclingLibrary({ done }: { done: boolean }) {
   const { framework } = useFramework();
@@ -226,13 +226,10 @@ export function MotionHero() {
       <motion.div {...rise(0)}>
         <FrameworkSwitcher className="motion-framework-pill" />
       </motion.div>
-      <h1
-        className="motion-hero-title"
-        aria-label="一行命令，让你的组件拥有自然流畅的交互。"
-      >
+      <h1 className="motion-hero-title" aria-label="让你的组件动起来。">
         <span className="motion-hero-first-line">
           <span>
-            <SplitLine parts={["一行命令，", "让你的"]} done={done} />
+            <SplitLine parts={["让你的"]} done={done} />
           </span>{" "}
           <motion.span
             className="motion-library-entrance"
@@ -248,21 +245,14 @@ export function MotionHero() {
           </motion.span>
         </span>
         <span>
-          <SplitLine
-            parts={["组件拥有", "自然流畅", "的交互。"]}
-            done={done}
-            delay={0.3}
-          />
+          <SplitLine parts={["组件", "动起来。"]} done={done} delay={0.3} />
         </span>
       </h1>
       <motion.p {...rise(5)} className="motion-hero-subtitle">
-        可自由定制的 {framework === "vue" ? "Vue" : "React"} 组件，基于{" "}
-        {framework === "vue"
-          ? "Reka UI 与 shadcn-vue"
-          : "Radix UI 与 shadcn/ui"}
-        。
+        基于 {framework === "vue" ? "shadcn-vue" : "shadcn/ui"} 的{" "}
+        {framework === "vue" ? "Vue" : "React"} 组件，安装后就能用。
         <br className="motion-desktop-break" />
-        保留你的风格与源码，让每一次交互自然发生。
+        源码直接装进项目，样式和交互随你改。
       </motion.p>
       <motion.div {...rise(6)} className="motion-hero-install">
         <CopyCommand />
@@ -271,7 +261,7 @@ export function MotionHero() {
             开始使用
           </Link>
           <Link href="/components" className="motion-secondary-link">
-            浏览组件
+            查看组件
           </Link>
         </div>
       </motion.div>

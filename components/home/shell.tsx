@@ -186,7 +186,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
               </main>
               <footer className="motion-home-footer">
                 <p>
-                  由 <a href={site.github}>Alan</a> 构建，源码开放在{" "}
+                  由 <a href={site.github}>Alan</a> 制作，源码在{" "}
                   <a href={site.github}>GitHub</a>。
                 </p>
                 <nav aria-label="页脚导航">

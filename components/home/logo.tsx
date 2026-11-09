@@ -1,12 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import {
-  POP_LOGO_VIEWBOX,
-  POP_MARK_BODY,
-  POP_MARK_DOT,
-  POP_WORDMARK,
-} from "@/lib/brand";
+import { POP_LOGO_VIEWBOX, POP_MARK_BODY, POP_WORDMARK } from "@/lib/brand";
 import { BrandMark } from "@/components/brand";
 import { easeOut } from "./runtime";
 
@@ -19,7 +14,7 @@ export function PopLogo({
 }) {
   return (
     <svg viewBox={POP_LOGO_VIEWBOX} aria-hidden="true" className={className}>
-      {[POP_MARK_BODY, POP_WORDMARK, POP_MARK_DOT].map((d, index) => (
+      {[POP_MARK_BODY, POP_WORDMARK].map((d, index) => (
         <motion.path
           key={index}
           d={d}
@@ -31,7 +26,7 @@ export function PopLogo({
           animate={{ pathLength: 1, fillOpacity: 1 }}
           transition={{
             pathLength: {
-              duration: index === 2 ? 0.45 : 1.3 - index * 0.2,
+              duration: 1.3 - index * 0.2,
               delay: index * 0.2,
               ease: "easeInOut",
             },

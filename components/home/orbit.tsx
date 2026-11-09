@@ -263,10 +263,10 @@ function OrbitStage() {
             }}
           >
             <Headline progress={progress} range={[-0.01, 0, 0.78, 0.87]}>
-              每一个组件，都生动起来。
+              每个组件，都有动效。
             </Headline>
             <Headline progress={progress} range={[0.9, 0.97, 1, 1.01]}>
-              亲手试试，让交互自然发生。
+              点一点，试试看。
             </Headline>
 
             <motion.div
@@ -324,7 +324,7 @@ function StaticGrid() {
           transition={{ duration: 0.6, ease: ease.out }}
           className="text-center text-3xl font-medium text-balance md:text-5xl"
         >
-          每一个组件，都生动起来。
+          每个组件，都有动效。
         </motion.h2>
         <div
           className={cn(

@@ -32,7 +32,7 @@ export function CatalogGrid() {
       <div className="catalog-content">
         <div className="catalog-heading">
           <h1>浏览组件库</h1>
-          <p>每一个基础组件，都有可交互预览、完整源码与清晰的使用示例。</p>
+          <p>先试试效果，再把源码带回你的项目。</p>
           <div className="catalog-heading-actions">
             <FrameworkSwitcher />
             <BundleInstall />

@@ -1,6 +1,6 @@
 # Pop UI
 
-从基础出发，让想法成真。
+让组件动起来。
 
 [在线网站](https://pop-ui-six.vercel.app) · [组件目录](https://pop-ui-six.vercel.app/components) · [中文文档](https://pop-ui-six.vercel.app/docs/getting-started) · [Skills](https://pop-ui-six.vercel.app/docs/skills)
 

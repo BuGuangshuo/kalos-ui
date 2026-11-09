@@ -251,7 +251,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <Link href="/" className="brand" aria-label="Pop UI 首页">
                 <BrandLogo className="brand-lockup" />
               </Link>
-              <p>从基础出发，构建属于你的界面。</p>
+              <p>为你的下一个界面，准备好组件。</p>
             </div>
             <div className="footer-links">
               <Link href="/docs/getting-started">使用文档</Link>
