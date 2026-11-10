@@ -137,13 +137,9 @@ export function CopyCommand({
   );
 }
 
-const libraryWords = {
-  react: ["shadcn/ui", "Base UI", "Radix UI", "React Aria"],
-  vue: ["Vue", "shadcn-vue", "Nuxt"],
-};
+const libraryWords = ["shadcn/ui", "Base UI", "Radix UI", "React Aria"];
 function CyclingLibrary({ done }: { done: boolean }) {
-  const { framework } = useFramework();
-  const words = libraryWords[framework];
+  const words = libraryWords;
   const [index, setIndex] = useState(0);
   const reduce = useReducedMotion();
   useEffect(() => {
@@ -170,7 +166,7 @@ function CyclingLibrary({ done }: { done: boolean }) {
     >
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
-          key={`${framework}-${words[index % words.length]}`}
+          key={words[index % words.length]}
           initial={{ opacity: 0, y: "65%", filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           exit={{ opacity: 0, y: "-65%", filter: "blur(8px)" }}
