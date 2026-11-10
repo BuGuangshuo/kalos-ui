@@ -5,13 +5,13 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    default: "Pop UI — 从组件开始。",
-    template: "%s · Pop UI",
+    default: `${site.name} — 从组件开始。`,
+    template: `%s · ${site.name}`,
   },
   description: site.description,
   icons: { icon: "/icon.svg" },
   openGraph: {
-    title: "Pop UI",
+    title: site.name,
     description: site.description,
     type: "website",
   },

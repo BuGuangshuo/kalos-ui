@@ -1,67 +1,75 @@
 export const vueCatalog: Record<string, { usage: string; props: string }> = {
-  "pop-button": {
-    usage: '<PopButton :loading="saving">保存更改</PopButton>',
+  "kalos-button": {
+    usage: '<KalosButton :loading="saving">保存更改</KalosButton>',
     props:
       "loading?: boolean；disabled?: boolean；支持 shadcn-vue Button 的属性与默认插槽。",
   },
-  "pop-input": {
+  "kalos-command-menu": {
+    usage: `<KalosCommandMenu :groups="[{ label: '项目', items: [{ value: 'new', label: '创建项目' }, { value: 'settings', label: '项目设置' }] }]" @run="value => console.log(value)" />`,
+    props: "groups: CommandGroup[]；v-model:query；@run；@close；filter?: boolean；#icon 与 #description 插槽。",
+  },
+  "kalos-popover": {
+    usage: '<KalosPopover trigger="更多操作" :items="[{ value: \'edit\', label: \'编辑项目\' }, { value: \'duplicate\', label: \'创建副本\' }, { value: \'archive\', label: \'归档项目\' }]" />',
+    props: "trigger: string；label?: string；items?: { value: string; label: string; disabled?: boolean }[]；v-model:open?: boolean；@action；默认插槽。",
+  },
+  "kalos-input": {
     usage:
-      '<PopInput v-model="email" label="邮箱地址" type="email" placeholder="you@example.com" />',
+      '<KalosInput v-model="email" label="邮箱地址" type="email" placeholder="you@example.com" />',
     props:
       "v-model: string | number；label: string；hint?: string；error?: string；原生 input 属性。",
   },
-  "pop-card": {
+  "kalos-card": {
     usage:
-      '<PopCard title="我的工作空间" description="让灵感在这里发生。">从一个好想法开始。</PopCard>',
+      '<KalosCard title="设计工作空间">Kalos UI</KalosCard>',
     props: "title: string；description?: string；默认插槽；footer 插槽。",
   },
-  "pop-badge": {
-    usage: '<PopBadge status="success">已完成</PopBadge>',
+  "kalos-badge": {
+    usage: '<KalosBadge status="success">已完成</KalosBadge>',
     props: 'status?: "neutral" | "success" | "warning"；默认插槽。',
   },
-  "pop-switch": {
+  "kalos-switch": {
     usage:
-      '<PopSwitch v-model="enabled" label="消息通知" description="接收与你有关的重要动态。" />',
+      '<KalosSwitch v-model="enabled" label="消息通知" />',
     props:
       "v-model: boolean；label: string；description?: string；disabled?: boolean；name?: string。",
   },
-  "pop-checkbox": {
-    usage: '<PopCheckbox v-model="accepted" label="同意接收产品更新" />',
+  "kalos-checkbox": {
+    usage: '<KalosCheckbox v-model="accepted" label="同意接收产品更新" />',
     props:
       'v-model: boolean | "indeterminate"；label: string；description?: string；disabled?: boolean；name?: string。',
   },
-  "pop-tabs": {
+  "kalos-tabs": {
     usage:
-      "<PopTabs :items=\"[{ value: 'overview', label: '概览', content: '所有信息，一目了然。' }]\" />",
+      "<KalosTabs :items=\"[{ value: 'overview', label: '概览', content: '14 个组件' }]\" />",
     props:
       "items: { value: string; label: string; content?: string }[]；v-model?: string；defaultValue?: string；以 value 命名的内容插槽。",
   },
-  "pop-accordion": {
+  "kalos-accordion": {
     usage:
-      "<PopAccordion :items=\"[{ question: '可以自定义吗？', answer: '每一行源码都由你掌控。' }]\" />",
+      "<KalosAccordion :items=\"[{ question: '可以自定义吗？', answer: '每一行源码都由你掌控。' }]\" />",
     props:
       "items: { question: string; answer: string }[]；单项展开；支持键盘操作。",
   },
-  "pop-dialog": {
+  "kalos-dialog": {
     usage:
-      '<PopDialog trigger="查看详情" title="专注于当前任务">在这里放置你的内容。</PopDialog>',
+      '<KalosDialog trigger="查看项目" title="设计工作空间">Kalos UI</KalosDialog>',
     props:
       "v-model:open?: boolean；trigger: string；title: string；description?: string；默认插槽与 footer 插槽。",
   },
-  "pop-select": {
+  "kalos-select": {
     usage:
-      '<PopSelect v-model="framework" label="开发框架" :items="[{ value: \'vue\', label: \'Vue\' }]" />',
+      '<KalosSelect v-model="framework" label="开发框架" :items="[{ value: \'vue\', label: \'Vue\' }]" />',
     props:
       "v-model?: string；label: string；placeholder?: string；items: { value: string; label: string }[]；disabled?: boolean。",
   },
-  "pop-progress": {
-    usage: '<PopProgress label="项目准备中" :value="68" />',
+  "kalos-progress": {
+    usage: '<KalosProgress label="项目准备中" :value="68" />',
     props:
       "label: string；value: number（自动限制为 0–100）；description?: string。",
   },
-  "pop-avatar-stack": {
+  "kalos-avatar-stack": {
     usage:
-      "<PopAvatarStack :people=\"[{ name: 'Alan Bu' }, { name: '陈晓' }]\" />",
+      "<KalosAvatarStack :people=\"[{ name: 'Alan Bu' }, { name: '陈晓' }]\" />",
     props:
       "people: { name: string; image?: string }[]；max?: number；32px 头像，包含姓名回退和溢出计数。",
   },
@@ -73,11 +81,11 @@ export function vueExample(slug: string) {
     .map((part) => part[0].toUpperCase() + part.slice(1))
     .join("");
   const state: Record<string, string> = {
-    "pop-button": "const saving = ref(false)",
-    "pop-input": "const email = ref('')",
-    "pop-switch": "const enabled = ref(false)",
-    "pop-checkbox": "const accepted = ref(false)",
-    "pop-select": "const framework = ref('vue')",
+    "kalos-button": "const saving = ref(false)",
+    "kalos-input": "const email = ref('')",
+    "kalos-switch": "const enabled = ref(false)",
+    "kalos-checkbox": "const accepted = ref(false)",
+    "kalos-select": "const framework = ref('vue')",
   };
   return `<script setup lang="ts">\n${state[slug] ? "import { ref } from 'vue'\n" : ""}import ${name} from '@/components/ui/${slug}.vue'\n${state[slug] ? `\n${state[slug]}\n` : ""}</script>\n\n<template>\n  ${vueCatalog[slug].usage}\n</template>`;
 }

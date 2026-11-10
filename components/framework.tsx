@@ -4,10 +4,10 @@ import { useSyncExternalStore } from "react";
 import { ReactLogo, VueLogo } from "@/components/framework-icons";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePrimitive } from "@/lib/use-primitive";
-import { CopyButton } from "@/components/copy-button";
+import { CodeBlock } from "@/components/code-block";
 
 export type Framework = "react" | "vue";
-const event = "pop-ui-framework";
+const event = "kalos-ui-framework";
 function subscribe(callback: () => void) {
   window.addEventListener(event, callback);
   window.addEventListener("storage", callback);
@@ -89,15 +89,5 @@ export function FrameworkCode({
         : primitive === "react-aria"
           ? (aria ?? react)
           : react;
-  return (
-    <div className="code-block">
-      <div className="code-header">
-        <span>{framework === "vue" ? vueFilename : reactFilename}</span>
-        <CopyButton value={code} label="复制代码" compact />
-      </div>
-      <pre>
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
+  return <CodeBlock code={code} filename={framework === "vue" ? vueFilename : reactFilename} language={framework === "vue" ? "markup" : "tsx"} />;
 }

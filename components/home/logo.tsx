@@ -1,11 +1,25 @@
 "use client";
 
 import { motion } from "motion/react";
-import { POP_LOGO_VIEWBOX, POP_MARK_BODY, POP_WORDMARK } from "@/lib/brand";
+import { KALOS_WORDMARK_VIEWBOX, KALOS_WORDMARK } from "@/lib/brand";
+import {
+  BRAND_ICON_BODY,
+  BRAND_ICON_VIEWBOX,
+} from "@/lib/brand-icon";
 import { BrandMark } from "@/components/brand";
+import { cn } from "@/lib/utils";
 import { easeOut } from "./runtime";
 
-export function PopLogo({
+const drawTransition = { duration: 1.3, ease: "easeInOut" } as const;
+const outlineState = { pathLength: 0, fillOpacity: 0, strokeOpacity: 1 };
+const solidState = { pathLength: 1, fillOpacity: 1, strokeOpacity: 0 };
+const logoTransition = {
+  pathLength: drawTransition,
+  fillOpacity: { duration: 0.35, delay: 1.3, ease: easeOut },
+  strokeOpacity: { duration: 0.35, delay: 1.3, ease: easeOut },
+};
+
+export function KalosLogo({
   draw = false,
   className,
 }: {
@@ -13,29 +27,42 @@ export function PopLogo({
   className?: string;
 }) {
   return (
-    <svg viewBox={POP_LOGO_VIEWBOX} aria-hidden="true" className={className}>
-      {[POP_MARK_BODY, POP_WORDMARK].map((d, index) => (
+    <div className={cn("brand-lockup", className)} aria-hidden="true">
+      {draw ? (
+        <svg
+          viewBox={BRAND_ICON_VIEWBOX}
+          className="brand-symbol"
+          data-brand-icon="disc-3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <motion.path
+            d={BRAND_ICON_BODY}
+            fill="currentColor"
+            fillRule="evenodd"
+            stroke="currentColor"
+            strokeWidth={24 / 64}
+            initial={outlineState}
+            animate={solidState}
+            transition={logoTransition}
+          />
+        </svg>
+      ) : (
+        <BrandMark />
+      )}
+      <svg viewBox={KALOS_WORDMARK_VIEWBOX} className="brand-wordmark">
         <motion.path
-          key={index}
-          d={d}
-          fillRule={index === 0 ? "evenodd" : "nonzero"}
+          d={KALOS_WORDMARK}
           stroke="currentColor"
           strokeWidth={1}
           fill="currentColor"
-          initial={draw ? { pathLength: 0, fillOpacity: 0 } : false}
-          animate={{ pathLength: 1, fillOpacity: 1 }}
-          transition={{
-            pathLength: {
-              duration: 1.3 - index * 0.2,
-              delay: index * 0.2,
-              ease: "easeInOut",
-            },
-            fillOpacity: { duration: 0.45, delay: 1.15, ease: easeOut },
-          }}
+          initial={draw ? outlineState : false}
+          animate={solidState}
+          transition={logoTransition}
         />
-      ))}
-    </svg>
+      </svg>
+    </div>
   );
 }
 
-export const PopMark = BrandMark;
+export const KalosMark = BrandMark;

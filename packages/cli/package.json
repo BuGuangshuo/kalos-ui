@@ -1,0 +1,15 @@
+{
+  "name": "@kalos-ui/cli",
+  "version": "0.1.1",
+  "private": true,
+  "description": "Interactive installer for Kalos UI components",
+  "type": "module",
+  "bin": { "kalos-ui": "./bin/kalos-ui.mjs" },
+  "files": ["bin", "lib", "manifest.json", "README.md", "LICENSE"],
+  "engines": { "node": ">=20.18.1" },
+  "dependencies": {
+    "cross-spawn": "7.0.6",
+    "prompts": "2.4.2"
+  },
+  "license": "MIT"
+}

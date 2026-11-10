@@ -27,7 +27,7 @@ import {
 
 import { cn } from "cn";
 
-import { PopMark } from "./logo";
+import { KalosMark } from "./logo";
 
 import { AutoplayScope, VIGNETTES } from "./vignettes";
 
@@ -285,7 +285,7 @@ function OrbitStage() {
                 transformPerspective: 1200,
               }}
             >
-              <PopMark className="h-[240px] w-[256px] text-foreground drop-shadow-[0_30px_60px_rgb(0_0_0/0.25)]" />
+              <KalosMark className="h-[240px] w-[256px] text-foreground drop-shadow-[0_30px_60px_rgb(0_0_0/0.25)]" />
             </motion.div>
 
             {vignettes.map(({ title }, index) => (

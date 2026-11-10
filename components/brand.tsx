@@ -1,18 +1,29 @@
-import { POP_LOGO_VIEWBOX, POP_MARK_BODY, POP_WORDMARK } from "@/lib/brand";
+import type { ComponentProps } from "react";
+import { Disc3Icon } from "@/components/ui/disc-3-icon";
+import { KALOS_WORDMARK_VIEWBOX, KALOS_WORDMARK } from "@/lib/brand";
+import { cn } from "@/lib/utils";
 
-export function BrandMark({ className }: { className?: string }) {
+export function BrandMark({
+  className,
+  ...props
+}: ComponentProps<typeof Disc3Icon>) {
   return (
-    <svg viewBox="0 0 106 106" className={className} aria-hidden="true">
-      <path fill="currentColor" fillRule="evenodd" d={POP_MARK_BODY} />
-    </svg>
+    <Disc3Icon
+      size={64}
+      {...props}
+      className={cn("brand-symbol", className)}
+      aria-hidden="true"
+    />
   );
 }
 
 export function BrandLogo({ className }: { className?: string }) {
   return (
-    <svg viewBox={POP_LOGO_VIEWBOX} className={className} aria-hidden="true">
-      <path fill="currentColor" fillRule="evenodd" d={POP_MARK_BODY} />
-      <path fill="currentColor" d={POP_WORDMARK} />
-    </svg>
+    <div className={cn("brand-lockup", className)}>
+      <BrandMark />
+      <svg viewBox={KALOS_WORDMARK_VIEWBOX} className="brand-wordmark" aria-hidden="true">
+        <path fill="currentColor" d={KALOS_WORDMARK} />
+      </svg>
+    </div>
   );
 }

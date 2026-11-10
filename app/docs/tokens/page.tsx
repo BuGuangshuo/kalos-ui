@@ -48,16 +48,8 @@ export default function TokensPage() {
             <p>用一套共享的语义规则，保持组件、页面与设计稿的一致。</p>
           </header>
           <p className="tokens-intro">
-            以下变量映射参考{" "}
-            <a
-              href="https://astryx.atmeta.com/docs/tokens"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Astryx Tokens
-            </a>
-            ，并适配 shadcn/ui。代码源文件位于 <code>design/tokens.json</code>
-            ，React 与 Vue 组件共用对应的颜色与尺寸变量。
+            语义变量维护在 <code>design/tokens.json</code>，控件状态维护在 <code>design/component-tokens.json</code>。
+            React、Vue 与 Figma 共用这些颜色、尺寸和字体规则。
           </p>
           <section id="colors">
             <h2>颜色与主题</h2>
@@ -119,15 +111,15 @@ export default function TokensPage() {
             <h2>圆角</h2>
             <TokenTable
               rows={[
-                ["--radius-inner", "8px", "嵌套元素"],
-                ["--radius-element", "12px", "输入与选择控件"],
-                ["--radius-container", "16px", "卡片与弹出层"],
-                ["--radius-page", "32px", "页面区块"],
-                ["--radius-full", "9999px", "胶囊按钮与头像"],
+                ["--radius-inner", "6px", "按钮与嵌套元素"],
+                ["--radius-element", "7px", "输入与选择控件"],
+                ["--radius-container", "12px", "卡片与弹出层"],
+                ["--radius-page", "20px", "页面区块"],
+                ["--radius-full", "9999px", "开关与头像"],
               ]}
             />
             <div className="radius-preview">
-              {[8, 12, 16, 32].map((radius) => (
+              {[6, 7, 12, 20].map((radius) => (
                 <div key={radius} style={{ borderRadius: radius }}>
                   {radius}px
                 </div>
@@ -137,12 +129,12 @@ export default function TokensPage() {
           <section id="typography">
             <h2>排版</h2>
             <p>
-              中文界面优先使用系统字体，代码采用等宽字体。通过字号、字重与行高建立层次，而不是增加额外装饰。
+              界面与标题使用 Roboto，中文按系统字体回退。正文与按钮为 400 字重，标题为 500–600；代码使用系统等宽字体。
             </p>
             <TokenTable
               rows={[
                 ["--font-size-sm", "12px", "辅助说明"],
-                ["--font-size-base", "14px", "正文与控件"],
+                ["--font-size-base", "14px / 20px", "正文、表单标签、导航与按钮"],
                 ["--font-size-lg", "17px", "强调内容"],
                 ["--font-size-xl", "20px", "区块标题"],
                 ["--font-size-2xl", "24px", "内容标题"],
@@ -154,14 +146,15 @@ export default function TokensPage() {
             <h2>动效与焦点</h2>
             <TokenTable
               rows={[
-                ["--duration-fast", "175ms", "悬停、状态切换"],
-                ["--duration-medium", "410ms", "入场与展开"],
-                ["--ease-standard", "cubic-bezier(.24, 1, .4, 1)", "标准缓动"],
-                ["--focus-outline-width", "2px", "键盘焦点"],
-                ["--focus-outline-offset", "3px", "焦点偏移"],
+                ["--duration-fast", "140ms", "输入与按钮状态切换"],
+                ["select/highlight", "180ms", "选项背景滑动"],
+                ["switch/thumb", "260ms", "开关滑块"],
+                ["--duration-medium", "200ms", "分段指示器"],
+                ["--ease-standard", "cubic-bezier(.22, 1, .36, 1)", "标准缓动"],
+                ["field/focus-edge", "1px", "聚焦阴影边缘"],
               ]}
             />
-            <p>启用系统“减少动态效果”时，界面会缩短动效并关闭平滑滚动。</p>
+            <p>选项背景连续滑动，开关与复选框通过短过渡表达状态变化。</p>
           </section>
           <section id="usage">
             <h2>在项目中使用</h2>
@@ -169,7 +162,7 @@ export default function TokensPage() {
               filename="globals.css"
               language="css"
               code={
-                ":root {\n  --primary: #1b1b1b;\n  --primary-foreground: #ffffff;\n  --muted: #f1f1f1;\n  --radius: 1rem;\n}\n\n.your-component {\n  color: var(--foreground);\n  background: var(--background);\n  border-radius: var(--radius-element);\n}"
+                ":root {\n  --primary: rgba(0, 0, 0, .88);\n  --primary-foreground: #fcfcfc;\n  --muted: rgba(0, 0, 0, .04);\n  --radius: .75rem;\n}\n\n.your-component {\n  color: var(--foreground);\n  background: var(--background);\n  border-radius: var(--radius-element);\n}"
               }
             />
           </section>

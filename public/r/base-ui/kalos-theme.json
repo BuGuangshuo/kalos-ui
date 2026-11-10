@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kalos-theme",
+  "type": "registry:theme",
+  "title": "Kalos Theme · Base UI",
+  "css": {
+    "@layer base": {
+      "::selection": {
+        "backgroundColor": "var(--selection-background)",
+        "color": "var(--selection-foreground)"
+      }
+    }
+  },
+  "cssVars": {
+    "light": {
+      "background": "#ffffff",
+      "foreground": "rgba(0, 0, 0, 0.88)",
+      "primary": "rgba(0, 0, 0, 0.88)",
+      "primary-foreground": "#fcfcfc",
+      "muted": "rgba(0, 0, 0, 0.04)",
+      "muted-foreground": "rgba(0, 0, 0, 0.61)",
+      "border": "#00000014",
+      "input": "rgba(0, 0, 0, 0.12)",
+      "accent": "rgba(0, 0, 0, 0.045)",
+      "destructive": "#c4320a",
+      "card": "#ffffff",
+      "card-foreground": "rgba(0, 0, 0, 0.88)",
+      "popover": "#ffffff",
+      "popover-foreground": "rgba(0, 0, 0, 0.88)",
+      "secondary": "#ffffff",
+      "secondary-foreground": "rgba(0, 0, 0, 0.88)",
+      "selection-background": "#b3d4fc",
+      "selection-foreground": "#14253d",
+      "radius": "0.75rem"
+    },
+    "dark": {
+      "background": "#161616",
+      "foreground": "rgba(255, 255, 255, 0.9)",
+      "primary": "rgba(255, 255, 255, 0.9)",
+      "primary-foreground": "#161618",
+      "muted": "rgba(255, 255, 255, 0.05)",
+      "muted-foreground": "rgba(255, 255, 255, 0.62)",
+      "border": "#ffffff1a",
+      "input": "rgba(255, 255, 255, 0.16)",
+      "accent": "rgba(255, 255, 255, 0.07)",
+      "destructive": "#ff8a7a",
+      "card": "#1c1c1e",
+      "card-foreground": "rgba(255, 255, 255, 0.9)",
+      "popover": "#1f1f22",
+      "popover-foreground": "rgba(255, 255, 255, 0.9)",
+      "secondary": "#1c1c1e",
+      "secondary-foreground": "rgba(255, 255, 255, 0.9)",
+      "selection-background": "#264c73",
+      "selection-foreground": "#f5f9ff"
+    }
+  }
+}

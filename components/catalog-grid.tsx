@@ -5,10 +5,8 @@ import { Input } from "@/components/ui/input";
 import { ArrowUpRight, Layers } from "lucide-react";
 import { catalog, categories } from "@/lib/catalog";
 import { PrimitiveSwitcher } from "@/components/primitives";
-import { FrameworkSwitcher } from "@/components/framework";
 import { ComponentDemo } from "@/components/demos";
 import { LibrarySidebar } from "@/components/library-sidebar";
-import { BundleInstall } from "@/components/site-shell";
 import {
   Empty,
   EmptyHeader,
@@ -31,16 +29,7 @@ export function CatalogGrid() {
         onQueryChange={setQuery}
       />
       <div className="catalog-content">
-        <div className="catalog-heading">
-          <h1>浏览组件库</h1>
-          <p>先试试效果，再把源码带回你的项目。</p>
-          <div className="catalog-heading-actions">
-            <FrameworkSwitcher />
-            <BundleInstall />
-            <Link className="secondary-link" href="/docs/skills">
-              安装 Skill <ArrowUpRight />
-            </Link>
-          </div>
+        <div className="catalog-toolbar">
           <PrimitiveSwitcher />
           <div className="mobile-catalog-search">
             <Input

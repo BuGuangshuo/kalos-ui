@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
 import { PrimitiveSwitcher } from "@/components/primitives";
-import { FrameworkSwitcher } from "@/components/framework";
 export const metadata: Metadata = { title: "Skills" };
 const links = [
   { id: "install", title: "安装 Skill" },
@@ -19,27 +18,27 @@ export default function SkillsPage() {
         <article className="docs-content">
           <header className="docs-title">
             <h1>Skills</h1>
-            <p>让你的 AI 助手理解 Pop UI，从组件安装到细节打磨。</p>
+            <p>让你的 AI 助手理解 Kalos UI，从组件安装到细节打磨。</p>
           </header>
           <p>
-            Pop UI Skill 为 Codex、Claude Code、Cursor 等支持 Agent Skills
+            Kalos UI Skill 为 Codex、Claude Code、Cursor 等支持 Agent Skills
             的编程工具提供项目上下文：识别框架、选对注册表、阅读组件
             API，并使用已有的设计变量构建界面。
           </p>
           <section id="install">
             <h2>安装 Skill</h2>
             <p>在你的项目目录运行，按提示选择使用的 AI 工具：</p>
-            <CodeBlock code="npx skills add BuGuangshuo/pop-ui --skill pop-ui" />
+            <CodeBlock code="npx skills add BuGuangshuo/kalos-ui --skill kalos-ui" />
             <p>也可以使用你的包管理器：</p>
             <CodeBlock
               code={
-                "pnpm dlx skills add BuGuangshuo/pop-ui --skill pop-ui\nyarn dlx skills add BuGuangshuo/pop-ui --skill pop-ui\nbun x skills add BuGuangshuo/pop-ui --skill pop-ui"
+                "pnpm dlx skills add BuGuangshuo/kalos-ui --skill kalos-ui\nyarn dlx skills add BuGuangshuo/kalos-ui --skill kalos-ui\nbun x skills add BuGuangshuo/kalos-ui --skill kalos-ui"
               }
             />
             <p>
               添加 <code>-g</code>{" "}
               可以安装到全局。安装后，在支持的工具中描述你的需求，或显式调用{" "}
-              <code>$pop-ui</code>。
+              <code>$kalos-ui</code>。
             </p>
           </section>
           <section id="included">
@@ -52,7 +51,7 @@ export default function SkillsPage() {
             </p>
             <h3>从基础组件组合界面</h3>
             <p>
-              提供按钮、输入框、卡片、徽标、开关、复选框、选项卡、折叠面板、对话框、选择器、进度条和头像组的使用指导。按需安装源码，保留你的目录、别名与现有组件。
+              提供按钮、输入框、卡片、徽标、开关、复选框、选项卡、折叠面板、对话框、选择器、进度条、头像组、浮层和命令菜单的使用指导。按需安装源码，保留你的目录、别名与现有组件。
             </p>
             <h3>保持项目风格</h3>
             <p>
@@ -60,7 +59,7 @@ export default function SkillsPage() {
             </p>
             <h3>保留可访问性与实际行为</h3>
             <p>
-              保持标签关联、焦点管理、键盘操作、禁用与加载状态，遵循减少动态效果偏好，并检查窄屏布局与受影响的交互。
+              保持标签关联、焦点管理、键盘操作、禁用与加载状态，并检查窄屏布局与受影响的交互。
             </p>
           </section>
           <section id="prompts">
@@ -69,7 +68,7 @@ export default function SkillsPage() {
               filename="给 AI 助手的提示"
               language="text"
               code={
-                "使用 Pop UI，帮我做一个包含姓名、邮箱和消息开关的偏好设置表单。\n\n用 Pop UI 的对话框完成新增项目流程，保留现有主题和键盘操作。\n\n给保存按钮增加加载、成功和失败反馈，连接已有的保存接口。\n\n我是 Vue 项目，请使用 v-model 绑定 PopInput 和 PopSwitch。\n\n当前项目使用 Base UI，请从 /r/base-ui/ 安装组件。\n\n使用 React Aria 版按钮，用 onPress 连接保存操作。"
+                "使用 Kalos UI，帮我做一个包含姓名、邮箱和消息开关的偏好设置表单。\n\n用 Kalos UI 的对话框完成新增项目流程，保留现有主题和键盘操作。\n\n给保存按钮增加加载、成功和失败反馈，连接已有的保存接口。\n\n我是 Vue 项目，请使用 v-model 绑定 KalosInput 和 KalosSwitch。\n\n当前项目使用 Base UI，请从 /r/base-ui/ 安装组件。\n\n使用 React Aria 版按钮，用 onPress 连接保存操作。"
               }
             />
             <p>
@@ -79,10 +78,9 @@ export default function SkillsPage() {
           </section>
           <section id="frameworks">
             <h2>React 与 Vue</h2>
-            <FrameworkSwitcher />
             <PrimitiveSwitcher />
             <p>
-              两个版本提供相同的 12
+              两个版本提供相同的 14
               类组件与中性视觉规范。切换框架后，组件文档中的安装命令、源码、示例与
               API 会一起切换。
             </p>
@@ -118,7 +116,7 @@ export default function SkillsPage() {
             <p>
               Skill 的指令与参考资料随组件源码一起开源，可在{" "}
               <a
-                href="https://github.com/BuGuangshuo/pop-ui/tree/main/skills/pop-ui"
+                href="https://github.com/BuGuangshuo/kalos-ui/tree/main/skills/kalos-ui"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -136,7 +134,7 @@ export default function SkillsPage() {
               >
                 Skills CLI
               </a>
-              ；内容面向 Pop UI 的真实组件与 API。
+              ；内容面向 Kalos UI 的真实组件与 API。
             </p>
           </section>
         </article>

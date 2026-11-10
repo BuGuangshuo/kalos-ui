@@ -1,17 +1,37 @@
 export type Category = "操作" | "表单输入" | "内容展示" | "导航" | "反馈";
 export const catalog = [
   {
-    slug: "pop-button",
+    slug: "kalos-button",
     title: "按钮",
     english: "Button",
     category: "操作",
     description: "用于触发操作，提供主要、次要、轮廓、危险和加载状态。",
     dependencies: ["button"],
     props: "支持 shadcn Button 的全部属性；loading?: boolean；默认标准尺寸。",
-    usage: "<PopButton loading={saving}>保存更改</PopButton>",
+    usage: "<KalosButton loading={saving}>保存更改</KalosButton>",
   },
   {
-    slug: "pop-input",
+    slug: "kalos-command-menu",
+    title: "命令菜单",
+    english: "Command Menu",
+    category: "导航",
+    description: "在分组列表中搜索并执行操作，支持匹配上下文、键盘导航和连续滑动的选中背景。",
+    dependencies: [],
+    props: "groups: KalosCommandGroup[]；query?: string；onQueryChange?；onRun?；onClose?；filter?: boolean。",
+    usage: '<KalosCommandMenu groups={[{ label: "项目", items: [{ value: "new", label: "创建项目" }, { value: "settings", label: "项目设置" }] }]} onRun={value => console.log(value)} />',
+  },
+  {
+    slug: "kalos-popover",
+    title: "浮层",
+    english: "Popover",
+    category: "操作",
+    description: "在触发元素附近展示操作列表或自定义内容，支持键盘导航与背景滑动。",
+    dependencies: ["popover", "button"],
+    props: "trigger: string；items?: { value: string; label: string; disabled?: boolean }[]；children?: ReactNode；onAction?: (value: string) => void；open?: boolean；onOpenChange?: (open: boolean) => void。",
+    usage: '<KalosPopover trigger="更多操作" items={[{ value: "edit", label: "编辑项目" }, { value: "duplicate", label: "创建副本" }, { value: "archive", label: "归档项目" }]} />',
+  },
+  {
+    slug: "kalos-input",
     title: "文本输入",
     english: "Text Input",
     category: "表单输入",
@@ -20,10 +40,10 @@ export const catalog = [
     props:
       "label: string；hint?: string；error?: string；支持原生 input 属性。默认高度 32px。",
     usage:
-      '<PopInput label="邮箱地址" type="email" placeholder="you@example.com" />',
+      '<KalosInput label="邮箱地址" type="email" placeholder="you@example.com" />',
   },
   {
-    slug: "pop-card",
+    slug: "kalos-card",
     title: "卡片",
     english: "Card",
     category: "内容展示",
@@ -32,10 +52,10 @@ export const catalog = [
     props:
       "title: string；description?: string；children: ReactNode；footer?: ReactNode。标准尺寸卡片。",
     usage:
-      '<PopCard title="我的工作空间" description="让灵感在这里发生。">从一个好想法开始。</PopCard>',
+      '<KalosCard title="设计工作空间">Kalos UI</KalosCard>',
   },
   {
-    slug: "pop-badge",
+    slug: "kalos-badge",
     title: "徽标",
     english: "Badge",
     category: "反馈",
@@ -43,10 +63,10 @@ export const catalog = [
     dependencies: ["badge"],
     props:
       'status?: "neutral" | "success" | "warning"；children: ReactNode。所有状态采用黑白语义配色。',
-    usage: '<PopBadge status="success">已完成</PopBadge>',
+    usage: '<KalosBadge status="success">已完成</KalosBadge>',
   },
   {
-    slug: "pop-switch",
+    slug: "kalos-switch",
     title: "开关",
     english: "Switch",
     category: "表单输入",
@@ -55,10 +75,10 @@ export const catalog = [
     props:
       "label: string；description?: string；checked?: boolean；onCheckedChange?: (checked: boolean) => void。默认标准尺寸。",
     usage:
-      '<PopSwitch label="消息通知" description="接收与你有关的重要动态。" />',
+      '<KalosSwitch label="消息通知" />',
   },
   {
-    slug: "pop-checkbox",
+    slug: "kalos-checkbox",
     title: "复选框",
     english: "Checkbox",
     category: "表单输入",
@@ -66,10 +86,10 @@ export const catalog = [
     dependencies: ["checkbox"],
     props:
       "label: string；description?: string；checked?: CheckedState；onCheckedChange?: (checked: CheckedState) => void。",
-    usage: '<PopCheckbox label="同意接收产品更新" />',
+    usage: '<KalosCheckbox label="同意接收产品更新" />',
   },
   {
-    slug: "pop-tabs",
+    slug: "kalos-tabs",
     title: "选项卡",
     english: "Tabs",
     category: "导航",
@@ -78,10 +98,10 @@ export const catalog = [
     props:
       "items: { value: string; label: string; content: ReactNode }[]；defaultValue?: string。",
     usage:
-      '<PopTabs items={[{ value: "overview", label: "概览", content: "所有信息，一目了然。" }]} />',
+      '<KalosTabs items={[{ value: "overview", label: "概览", content: "13 个组件" }]} />',
   },
   {
-    slug: "pop-accordion",
+    slug: "kalos-accordion",
     title: "折叠面板",
     english: "Accordion",
     category: "内容展示",
@@ -90,10 +110,10 @@ export const catalog = [
     props:
       "items: { question: string; answer: ReactNode }[]。同一时间展开一项。",
     usage:
-      '<PopAccordion items={[{ question: "可以自定义吗？", answer: "每一行源码都由你掌控。" }]} />',
+      '<KalosAccordion items={[{ question: "可以自定义吗？", answer: "每一行源码都由你掌控。" }]} />',
   },
   {
-    slug: "pop-dialog",
+    slug: "kalos-dialog",
     title: "对话框",
     english: "Dialog",
     category: "操作",
@@ -102,10 +122,10 @@ export const catalog = [
     props:
       "trigger: string；title: string；description?: string；children: ReactNode。",
     usage:
-      '<PopDialog trigger="查看详情" title="专注于当前任务">在这里放置你的内容。</PopDialog>',
+      '<KalosDialog trigger="查看项目" title="设计工作空间">Kalos UI</KalosDialog>',
   },
   {
-    slug: "pop-select",
+    slug: "kalos-select",
     title: "选择器",
     english: "Select",
     category: "表单输入",
@@ -114,10 +134,10 @@ export const catalog = [
     props:
       "label: string；placeholder?: string；items: { value: string; label: string }[]；value?: string；onValueChange?: (value: string) => void。",
     usage:
-      '<PopSelect label="开发框架" items={[{ value: "next", label: "Next.js" }]} />',
+      '<KalosSelect label="开发框架" items={[{ value: "next", label: "Next.js" }]} />',
   },
   {
-    slug: "pop-progress",
+    slug: "kalos-progress",
     title: "进度条",
     english: "Progress",
     category: "反馈",
@@ -125,10 +145,10 @@ export const catalog = [
     dependencies: ["progress"],
     props:
       "label: string；value: number（自动限制为 0–100）；description?: string。",
-    usage: '<PopProgress label="项目准备中" value={68} />',
+    usage: '<KalosProgress label="项目准备中" value={68} />',
   },
   {
-    slug: "pop-avatar-stack",
+    slug: "kalos-avatar-stack",
     title: "头像组",
     english: "Avatar Group",
     category: "内容展示",
@@ -137,7 +157,7 @@ export const catalog = [
     props:
       "people: { name: string; image?: string }[]；max?: number。默认标准尺寸，32px。",
     usage:
-      '<PopAvatarStack people={[{ name: "Alan Bu" }, { name: "陈晓" }]} />',
+      '<KalosAvatarStack people={[{ name: "Alan Bu" }, { name: "陈晓" }]} />',
   },
 ] as const;
 export type Item = (typeof catalog)[number];

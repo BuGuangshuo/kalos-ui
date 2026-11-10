@@ -1,30 +1,34 @@
 "use client";
 import { DemoContent } from "@/components/demo-content";
-import { PopAccordion } from "@/registry/react-aria/pop-accordion";
-import { PopAvatarStack } from "@/registry/react-aria/pop-avatar-stack";
-import { PopBadge } from "@/registry/react-aria/pop-badge";
-import { PopButton } from "@/registry/react-aria/pop-button";
-import { PopCard } from "@/registry/react-aria/pop-card";
-import { PopCheckbox } from "@/registry/react-aria/pop-checkbox";
-import { PopDialog } from "@/registry/react-aria/pop-dialog";
-import { PopInput } from "@/registry/react-aria/pop-input";
-import { PopProgress } from "@/registry/react-aria/pop-progress";
-import { PopSelect } from "@/registry/react-aria/pop-select";
-import { PopSwitch } from "@/registry/react-aria/pop-switch";
-import { PopTabs } from "@/registry/react-aria/pop-tabs";
+import { KalosAccordion } from "@/registry/react-aria/kalos-accordion";
+import { KalosAvatarStack } from "@/registry/react-aria/kalos-avatar-stack";
+import { KalosBadge } from "@/registry/react-aria/kalos-badge";
+import { KalosButton } from "@/registry/react-aria/kalos-button";
+import { KalosCard } from "@/registry/react-aria/kalos-card";
+import { KalosCheckbox } from "@/registry/react-aria/kalos-checkbox";
+import { KalosDialog } from "@/registry/react-aria/kalos-dialog";
+import { KalosPopover } from "@/registry/react-aria/kalos-popover";
+import { KalosCommandMenu } from "@/registry/react-aria/kalos-command-menu";
+import { KalosInput } from "@/registry/react-aria/kalos-input";
+import { KalosProgress } from "@/registry/react-aria/kalos-progress";
+import { KalosSelect } from "@/registry/react-aria/kalos-select";
+import { KalosSwitch } from "@/registry/react-aria/kalos-switch";
+import { KalosTabs } from "@/registry/react-aria/kalos-tabs";
 const components = {
-  PopAccordion,
-  PopAvatarStack,
-  PopBadge,
-  PopButton,
-  PopCard,
-  PopCheckbox,
-  PopDialog,
-  PopInput,
-  PopProgress,
-  PopSelect,
-  PopSwitch,
-  PopTabs,
+  KalosAccordion,
+  KalosAvatarStack,
+  KalosBadge,
+  KalosButton,
+  KalosCard,
+  KalosCheckbox,
+  KalosDialog,
+  KalosInput,
+  KalosPopover,
+  KalosCommandMenu,
+  KalosProgress,
+  KalosSelect,
+  KalosSwitch,
+  KalosTabs,
 };
 export default function BackendDemo({
   slug,

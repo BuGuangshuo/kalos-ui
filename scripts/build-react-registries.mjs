@@ -2,13 +2,13 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import { registrySchema, registryItemSchema } from "shadcn/schema";
 import { catalog } from "../lib/catalog.ts";
+import { site } from "../lib/site.ts";
 import tokens from "../design/tokens.json" with { type: "json" };
 
-const homepage =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://pop-ui-six.vercel.app";
+const homepage = site.url;
 for (const [backend, label, prefix, dependency] of [
-  ["base-ui", "Base UI", "pop-base-", "@base-ui/react"],
-  ["react-aria", "React Aria", "pop-aria-", "react-aria-components"],
+  ["base-ui", "Base UI", "kalos-base-", "@base-ui/react"],
+  ["react-aria", "React Aria", "kalos-aria-", "react-aria-components"],
 ]) {
   async function collect(filePath, files = new Map()) {
     if (files.has(filePath)) return files;
@@ -32,9 +32,16 @@ for (const [backend, label, prefix, dependency] of [
       const files = [
         ...(await collect(`registry/${backend}/${item.slug}.tsx`)).values(),
       ];
+      if (["kalos-select", "kalos-tabs", "kalos-popover", "kalos-command-menu"].includes(item.slug)) {
+        files.push(...(await collect("components/ui/kalos-highlight.ts")).values());
+      }
+      if (item.slug === "kalos-command-menu") files.push(...(await collect("components/ui/kalos-command-menu-panel.tsx")).values());
+      if (item.slug === "kalos-popover") files.push(...(await collect("components/ui/kalos-popover-menu.tsx")).values());
+      files.push(...(await collect("components/ui/kalos-styles.ts")).values());
       const combined = files.map((file) => file.content).join("\n");
       const dependencies = [
         dependency,
+        "@fontsource/roboto",
         ...["lucide-react", "class-variance-authority", "cn"].filter((name) =>
           combined.includes(`from "${name}"`),
         ),
@@ -47,7 +54,7 @@ for (const [backend, label, prefix, dependency] of [
         $schema: "https://ui.shadcn.com/schema/registry-item.json",
         name: item.slug,
         type: "registry:ui",
-        title: `Pop ${item.title} · ${label}`,
+        title: `Kalos ${item.title} · ${label}`,
         description: item.description,
         author: "Alan Bu <https://github.com/BuGuangshuo>",
         dependencies,
@@ -57,20 +64,21 @@ for (const [backend, label, prefix, dependency] of [
   );
   items.push({
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
-    name: "pop-theme",
+    name: "kalos-theme",
     type: "registry:theme",
-    title: `Pop Theme · ${label}`,
-    cssVars: { light: { ...tokens.light, radius: "1rem" }, dark: tokens.dark },
+    title: `Kalos Theme · ${label}`,
+    css: { "@layer base": { "::selection": { backgroundColor: "var(--selection-background)", color: "var(--selection-foreground)" } } },
+    cssVars: { light: { ...tokens.light, radius: "0.75rem" }, dark: tokens.dark },
   });
   const allFiles = new Map(
     items.flatMap((item) => item.files || []).map((file) => [file.path, file]),
   );
   items.push({
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
-    name: "pop-all",
+    name: "kalos-all",
     type: "registry:block",
-    title: `Pop UI · ${label} 完整组件库`,
-    description: "一次安装全部 12 个组件及对应基础组件。",
+    title: `Kalos UI · ${label} 完整组件库`,
+    description: `一次安装全部 ${catalog.length} 个组件及对应基础组件。`,
     dependencies: [
       ...new Set(items.flatMap((item) => item.dependencies || [])),
     ],
@@ -78,7 +86,7 @@ for (const [backend, label, prefix, dependency] of [
   });
   const registry = {
     $schema: "https://ui.shadcn.com/schema/registry.json",
-    name: `pop-ui-${backend}`,
+    name: `kalos-ui-${backend}`,
     homepage,
     items,
   };

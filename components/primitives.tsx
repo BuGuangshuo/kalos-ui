@@ -12,15 +12,14 @@ export { usePrimitive } from "@/lib/use-primitive";
 export function PrimitiveSwitcher() {
   const { framework } = useFramework();
   const { primitive, setPrimitive } = usePrimitive();
-  if (framework === "vue")
-    return <p className="primitive-caption">基于 shadcn-vue · Reka UI</p>;
+  if (framework === "vue") return null;
   return (
     <Tabs
       value={primitive}
       onValueChange={setPrimitive}
       className="primitive-switcher"
     >
-      <TabsList aria-label="组件基础库">
+      <TabsList variant="default" aria-label="组件基础库">
         {(Object.keys(primitiveNames) as Primitive[]).map((value) => (
           <TabsTrigger value={value} key={value}>
             {primitiveNames[value]}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { flushSync } from "react-dom";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
@@ -13,9 +13,21 @@ export function ThemeToggle({ className }: { className?: string }) {
   const { setTheme } = useTheme();
   const maskId = `theme-moon-${useId()}`;
   const activeTransition = useRef<ViewTransition | null>(null);
+  const themeRequest = useRef(0);
+
+  useEffect(() => () => {
+    themeRequest.current += 1;
+    if (activeTransition.current) {
+      activeTransition.current.skipTransition();
+      activeTransition.current = null;
+      document.documentElement.classList.remove("theme-transition");
+    }
+  }, []);
 
   async function toggleTheme(button: HTMLButtonElement) {
-    if (activeTransition.current) return;
+    const request = ++themeRequest.current;
+    activeTransition.current?.skipTransition();
+    activeTransition.current = null;
 
     const root = document.documentElement;
     const nextTheme = root.classList.contains("dark") ? "light" : "dark";
@@ -23,6 +35,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       !document.startViewTransition ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
+      root.classList.remove("theme-transition");
       setTheme(nextTheme);
       return;
     }
@@ -39,11 +52,14 @@ export function ThemeToggle({ className }: { className?: string }) {
     root.classList.add("theme-transition");
     try {
       const transition = document.startViewTransition(() => {
-        flushSync(() => setTheme(nextTheme));
+        if (request === themeRequest.current) {
+          flushSync(() => setTheme(nextTheme));
+        }
       });
       activeTransition.current = transition;
       const finished = transition.finished.catch(() => {});
       await transition.ready;
+      if (request !== themeRequest.current) return;
 
       const reveal = root.animate(
         {
@@ -62,11 +78,15 @@ export function ThemeToggle({ className }: { className?: string }) {
       await finished;
     } catch {
       // Interrupted or unsupported transitions still complete the theme change.
-      activeTransition.current?.skipTransition();
-      setTheme(nextTheme);
+      if (request === themeRequest.current) {
+        activeTransition.current?.skipTransition();
+        setTheme(nextTheme);
+      }
     } finally {
-      root.classList.remove("theme-transition");
-      activeTransition.current = null;
+      if (request === themeRequest.current) {
+        root.classList.remove("theme-transition");
+        activeTransition.current = null;
+      }
     }
   }
 

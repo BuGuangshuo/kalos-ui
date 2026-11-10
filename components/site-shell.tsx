@@ -1,20 +1,12 @@
 "use client";
-import {
-  usePrimitive,
-  PrimitiveSwitcher,
-  PrimitiveText,
-} from "@/components/primitives";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { ThemeProvider } from "next-themes";
 import {
-  ArrowUpRight,
-  Search,
   Menu,
   X,
-  ArrowRight,
   Terminal,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,38 +17,22 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import { catalog } from "@/lib/catalog";
 import { site } from "@/lib/site";
+import { installerCommand } from "@/lib/installer";
 import { CopyButton } from "@/components/copy-button";
 import { BrandLogo } from "@/components/brand";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { FrameworkSwitcher, useFramework } from "@/components/framework";
+import { GlobalSearch } from "@/components/global-search";
+import { FrameworkSwitcher } from "@/components/framework";
 const HomeShell = dynamic(() =>
   import("@/components/home/shell").then((module) => module.HomeShell),
 );
 function Header() {
   const path = usePathname();
-  const [search, setSearch] = useState(false);
-  const [query, setQuery] = useState("");
   const [menu, setMenu] = useState(false);
-  useEffect(() => {
-    const listener = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
-        event.preventDefault();
-        setSearch((value) => !value);
-      }
-    };
-    window.addEventListener("keydown", listener);
-    return () => window.removeEventListener("keydown", listener);
-  }, []);
-  const results = catalog.filter((item) =>
-    `${item.title} ${item.english} ${item.description}`
-      .toLowerCase()
-      .includes(query.toLowerCase()),
-  );
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -64,7 +40,7 @@ function Header() {
       </a>
       <header className={cn("site-header", path === "/" && "home-header")}>
         <div className="header-inner">
-          <Link href="/" className="brand" aria-label="Pop UI 首页">
+          <Link href="/" className="brand" aria-label="Kalos UI 首页">
             <BrandLogo className="brand-lockup" />
           </Link>
           <nav className="desktop-nav" aria-label="主导航">
@@ -84,15 +60,7 @@ function Header() {
             <Link href="/docs/skills">Skills</Link>
           </nav>
           <div className="header-actions">
-            <FrameworkSwitcher className="header-framework" />
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="搜索组件"
-              onClick={() => setSearch(true)}
-            >
-              <Search />
-            </Button>
+            <GlobalSearch />
             <ThemeToggle />
             <a
               className="icon-link"
@@ -120,6 +88,7 @@ function Header() {
         </div>
         {menu ? (
           <nav className="mobile-nav" aria-label="移动导航">
+            <FrameworkSwitcher className="mobile-framework-switcher" />
             <Link onClick={() => setMenu(false)} href="/docs/getting-started">
               文档
             </Link>
@@ -135,39 +104,6 @@ function Header() {
           </nav>
         ) : null}
       </header>
-      <Dialog open={search} onOpenChange={setSearch}>
-        <DialogContent>
-          <DialogTitle>搜索组件</DialogTitle>
-          <DialogDescription>查找组件、预览与使用文档。</DialogDescription>
-          <Input
-            aria-label="搜索组件名称"
-            placeholder="输入名称或关键词…"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
-          <div className="search-results">
-            {results.length ? (
-              results.map((item) => (
-                <Link
-                  onClick={() => setSearch(false)}
-                  key={item.slug}
-                  href={`/components/${item.slug}`}
-                >
-                  <span>
-                    {item.title}
-                    <small>
-                      {item.english} · {item.category}
-                    </small>
-                  </span>
-                  <ArrowRight />
-                </Link>
-              ))
-            ) : (
-              <p className="muted">未找到匹配的组件，请尝试其他关键词。</p>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
     </>
   );
 }
@@ -189,15 +125,13 @@ const subscribeOrigin = () => () => {};
 const getOrigin = () => window.location.origin;
 const getServerOrigin = () => site.url;
 
-export function InstallCommand({ slug = "pop-button" }: { slug?: string }) {
-  const { framework } = useFramework();
-  const { primitive } = usePrimitive();
+export function InstallCommand({ slug = "kalos-button", manager = "npm" }: { slug?: string; manager?: string }) {
   const origin = useSyncExternalStore(
     subscribeOrigin,
     getOrigin,
     getServerOrigin,
   );
-  const value = `npx ${framework === "vue" ? "shadcn-vue" : "shadcn"}@latest add ${origin}/r/${framework === "vue" ? "vue/" : `${primitive}/`}${slug}.json`;
+  const value = installerCommand(origin, manager, slug);
   return (
     <div className="install-command">
       <Terminal />
@@ -213,18 +147,12 @@ export function BundleInstall() {
         <Button className="pill-button">安装组件库</Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogTitle>将 Pop UI 添加到项目</DialogTitle>
+        <DialogTitle>将 Kalos UI 添加到项目</DialogTitle>
         <DialogDescription>
-          <PrimitiveText
-            radix="先初始化 Radix 版 shadcn/ui"
-            base="先初始化 Base UI 版 shadcn/ui"
-            aria="先初始化 React Aria 版 shadcn/ui"
-            vue="先初始化 shadcn-vue"
-          />
-          ，再运行以下命令。全部 12 个组件及所需基础组件会自动安装。
+          在项目根目录运行，安装器会识别框架，并在终端引导选择基础组件库。
+          全部 {catalog.length} 个组件及所需基础组件会自动安装。
         </DialogDescription>
-        <PrimitiveSwitcher />
-        <InstallCommand slug="pop-all" />
+        <InstallCommand slug="kalos-all" />
       </DialogContent>
     </Dialog>
   );
@@ -239,24 +167,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <>
           <Header />
           <main id="main-content">{children}</main>
-          <footer className="site-footer">
-            <div>
-              <Link href="/" className="brand" aria-label="Pop UI 首页">
-                <BrandLogo className="brand-lockup" />
-              </Link>
-              <p>为你的下一个界面，准备好组件。</p>
-            </div>
-            <div className="footer-links">
-              <Link href="/docs/getting-started">使用文档</Link>
-              <Link href="/docs/skills">
-                Skills <ArrowUpRight />
-              </Link>
-              <a href={site.github} target="_blank" rel="noreferrer">
-                GitHub <ArrowUpRight />
-              </a>
-              <span>由 Alan 构建 · MIT 开源许可</span>
-            </div>
-          </footer>
         </>
       )}
       <Toaster position="bottom-right" />

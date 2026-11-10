@@ -1,0 +1,19 @@
+{
+  "registry": "https://kalos-ui-six.vercel.app",
+  "components": [
+    "kalos-button",
+    "kalos-command-menu",
+    "kalos-popover",
+    "kalos-input",
+    "kalos-card",
+    "kalos-badge",
+    "kalos-switch",
+    "kalos-checkbox",
+    "kalos-tabs",
+    "kalos-accordion",
+    "kalos-dialog",
+    "kalos-select",
+    "kalos-progress",
+    "kalos-avatar-stack"
+  ]
+}

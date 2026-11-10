@@ -6,7 +6,7 @@ export const primitiveNames: Record<Primitive, string> = {
   "base-ui": "Base UI",
   "react-aria": "React Aria",
 };
-const event = "pop-ui-primitive";
+const event = "kalos-ui-primitive";
 function subscribe(callback: () => void) {
   window.addEventListener(event, callback);
   window.addEventListener("storage", callback);

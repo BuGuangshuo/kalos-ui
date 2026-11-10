@@ -1,26 +1,5 @@
-import { CopyButton } from "@/components/copy-button";
 export { LibrarySidebar as Sidebar } from "@/components/library-sidebar";
-export function CodeBlock({
-  code,
-  filename,
-  language = "bash",
-}: {
-  code: string;
-  filename?: string;
-  language?: string;
-}) {
-  return (
-    <div className="code-block">
-      <div className="code-header">
-        <span>{filename || language}</span>
-        <CopyButton value={code} label="复制代码" compact />
-      </div>
-      <pre>
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
-}
+export { CodeBlock } from "@/components/code-block";
 export function OnThisPage({
   links,
 }: {

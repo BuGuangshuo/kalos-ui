@@ -17,8 +17,10 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
+import type { KalosCommandMenuProps } from "@/components/ui/kalos-command-menu-panel";
 export interface DemoComponents {
-  PopButton: ComponentType<{
+  KalosCommandMenu: ComponentType<KalosCommandMenuProps>;
+  KalosButton: ComponentType<{
     children?: ReactNode;
     variant?: "default" | "secondary" | "outline" | "ghost";
     size?: "default" | "icon";
@@ -26,58 +28,63 @@ export interface DemoComponents {
     onClick?: () => void;
     "aria-label"?: string;
   }>;
-  PopInput: ComponentType<
+  KalosPopover: ComponentType<{
+    trigger: string;
+    items?: { value: string; label: string; disabled?: boolean }[];
+    onAction?: (value: string) => void;
+  }>;
+  KalosInput: ComponentType<
     InputHTMLAttributes<HTMLInputElement> & {
       label: string;
       hint?: string;
       error?: string;
     }
   >;
-  PopCard: ComponentType<{
+  KalosCard: ComponentType<{
     title: string;
     description?: string;
     children: ReactNode;
     footer?: ReactNode;
   }>;
-  PopBadge: ComponentType<{
+  KalosBadge: ComponentType<{
     status?: "neutral" | "success" | "warning";
     children: ReactNode;
   }>;
-  PopSwitch: ComponentType<{
+  KalosSwitch: ComponentType<{
     label: string;
     description?: string;
     defaultChecked?: boolean;
   }>;
-  PopCheckbox: ComponentType<{
+  KalosCheckbox: ComponentType<{
     label: string;
     description?: string;
     defaultChecked?: boolean;
   }>;
-  PopTabs: ComponentType<{
+  KalosTabs: ComponentType<{
     items: { value: string; label: string; content: ReactNode }[];
     defaultValue?: string;
   }>;
-  PopAccordion: ComponentType<{
+  KalosAccordion: ComponentType<{
     items: { question: string; answer: ReactNode }[];
   }>;
-  PopDialog: ComponentType<{
+  KalosDialog: ComponentType<{
     trigger: string;
     title: string;
     description?: string;
     children: ReactNode;
   }>;
-  PopSelect: ComponentType<{
+  KalosSelect: ComponentType<{
     label: string;
     items: { value: string; label: string }[];
     value?: string;
     onValueChange?: (value: string) => void;
   }>;
-  PopProgress: ComponentType<{
+  KalosProgress: ComponentType<{
     label: string;
     value: number;
     description?: string;
   }>;
-  PopAvatarStack: ComponentType<{
+  KalosAvatarStack: ComponentType<{
     people: { name: string; image?: string }[];
     max?: number;
   }>;
@@ -89,7 +96,7 @@ const people = [
   { name: "周宁" },
   { name: "吴昕" },
 ];
-function ButtonDemo({ PopButton }: Pick<DemoComponents, "PopButton">) {
+function ButtonDemo({ KalosButton }: Pick<DemoComponents, "KalosButton">) {
   const [loading, setLoading] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(
@@ -101,7 +108,7 @@ function ButtonDemo({ PopButton }: Pick<DemoComponents, "PopButton">) {
   return (
     <div className="demo-buttons">
       <div className="flex flex-wrap justify-center gap-2">
-        <PopButton
+        <KalosButton
           loading={loading}
           onClick={() => {
             setLoading(true);
@@ -112,30 +119,30 @@ function ButtonDemo({ PopButton }: Pick<DemoComponents, "PopButton">) {
           }}
         >
           主要按钮
-        </PopButton>
-        <PopButton
+        </KalosButton>
+        <KalosButton
           variant="secondary"
           onClick={() => toast("这是一条操作反馈")}
         >
           次要按钮
-        </PopButton>
+        </KalosButton>
       </div>
       <div className="flex flex-wrap justify-center gap-2">
-        <PopButton variant="outline" onClick={() => toast("已添加到项目")}>
+        <KalosButton variant="outline" onClick={() => toast("已添加到项目")}>
           <Plus data-icon="inline-start" />
           添加项目
-        </PopButton>
-        <PopButton variant="ghost" onClick={() => toast("操作已取消")}>
+        </KalosButton>
+        <KalosButton variant="ghost" onClick={() => toast("操作已取消")}>
           取消
-        </PopButton>
-        <PopButton
+        </KalosButton>
+        <KalosButton
           variant="outline"
           size="icon"
           aria-label="喜欢这个组件"
           onClick={() => toast.success("已收藏")}
         >
           <Heart />
-        </PopButton>
+        </KalosButton>
       </div>
     </div>
   );
@@ -150,99 +157,109 @@ export function DemoContent({
   components: DemoComponents;
 }) {
   const {
-    PopButton,
-    PopInput,
-    PopCard,
-    PopBadge,
-    PopSwitch,
-    PopCheckbox,
-    PopTabs,
-    PopAccordion,
-    PopDialog,
-    PopSelect,
-    PopProgress,
-    PopAvatarStack,
+    KalosButton,
+    KalosInput,
+    KalosPopover,
+    KalosCommandMenu,
+    KalosCard,
+    KalosBadge,
+    KalosSwitch,
+    KalosCheckbox,
+    KalosTabs,
+    KalosAccordion,
+    KalosDialog,
+    KalosSelect,
+    KalosProgress,
+    KalosAvatarStack,
   } = components;
   const [progress, setProgress] = useState(68);
   const [framework, setFramework] = useState("next");
   switch (slug) {
-    case "pop-button":
-      return <ButtonDemo PopButton={PopButton} />;
-    case "pop-input":
+    case "kalos-button":
+      return <ButtonDemo KalosButton={KalosButton} />;
+    case "kalos-command-menu":
+      return <div className="w-full max-w-[560px] p-2"><KalosCommandMenu
+        groups={compact ? [{ label: "项目", items: [{ value: "new", label: "创建项目", icon: <Plus /> }, { value: "settings", label: "项目设置", icon: <Layers /> }] }] : [
+          { label: "项目", items: [{ value: "new", label: "创建项目", icon: <Plus />, description: "React · TypeScript" }, { value: "settings", label: "项目设置", icon: <Layers />, description: "成员、权限与通知" }] },
+          { label: "文档", items: [{ value: "installation", label: "安装指南", icon: <ArrowUpRight />, description: "选择基础库并安装组件源码" }, { value: "archive", label: "归档项目", disabled: true }] },
+        ]}
+        onRun={value => toast({ new: "已创建项目", settings: "已打开项目设置", installation: "已打开安装指南" }[value] || value)}
+      /></div>;
+    case "kalos-popover":
+      return <KalosPopover
+        trigger="更多操作"
+        items={[
+          { value: "edit", label: "编辑项目" },
+          { value: "duplicate", label: "创建副本" },
+          { value: "share", label: "分享项目" },
+          { value: "archive", label: "归档项目", disabled: true },
+        ]}
+        onAction={value => toast.success({ edit: "已打开项目编辑", duplicate: "已创建副本", share: "分享链接已准备就绪" }[value] || value)}
+      />;
+    case "kalos-input":
       return (
         <div className="demo-form">
-          <PopInput
+          <KalosInput
             label="邮箱地址"
             type="email"
             placeholder="you@example.com"
-            hint="我们只会发送与你有关的重要通知。"
           />
           {!compact ? (
-            <PopInput label="项目名称" placeholder="为你的想法起个名字" />
+            <KalosInput label="项目名称" placeholder="输入项目名称" />
           ) : null}
         </div>
       );
-    case "pop-card":
+    case "kalos-card":
       return (
         <div className="demo-card">
-          <PopCard
-            title="一个新的开始"
-            description="让你的下一个想法在这里发生。"
+          <KalosCard
+            title="设计工作空间"
             footer={
-              <PopButton
+              <KalosButton
                 variant="outline"
                 onClick={() => toast("工作空间已准备就绪")}
               >
                 查看项目 <ArrowUpRight data-icon="inline-end" />
-              </PopButton>
+              </KalosButton>
             }
           >
             <div className="card-project-visual">
               <Layers />
-              <span>你的创意工作空间</span>
+              <span>Kalos UI</span>
             </div>
-          </PopCard>
+          </KalosCard>
         </div>
       );
-    case "pop-badge":
+    case "kalos-badge":
       return (
         <div className="badge-demo">
           <div className="flex flex-wrap justify-center gap-2">
-            <PopBadge status="success">已完成</PopBadge>
-            <PopBadge>进行中</PopBadge>
-            <PopBadge status="warning">待审核</PopBadge>
+            <KalosBadge status="success">已完成</KalosBadge>
+            <KalosBadge>进行中</KalosBadge>
+            <KalosBadge status="warning">待审核</KalosBadge>
           </div>
-          <p className="tiny-note">以轻量标记，传递清晰状态。</p>
         </div>
       );
-    case "pop-switch":
+    case "kalos-switch":
       return (
         <div className="demo-form">
-          <PopSwitch
-            label="消息通知"
-            description="接收与你有关的重要动态。"
-            defaultChecked
-          />
+          <KalosSwitch label="消息通知" defaultChecked />
           <Separator />
-          <PopSwitch label="每周摘要" description="用一封邮件回顾本周进展。" />
+          <KalosSwitch label="每周摘要" />
         </div>
       );
-    case "pop-checkbox":
+    case "kalos-checkbox":
       return (
         <div className="demo-form">
-          <PopCheckbox
-            label="建立设计规范"
-            description="从一致的基础开始。"
-            defaultChecked
-          />
-          <PopCheckbox label="添加你的第一个组件" />
-          <PopCheckbox label="分享给团队成员" />
+          <KalosCheckbox label="建立设计规范" defaultChecked />
+          <KalosCheckbox label="添加组件" />
+          <KalosCheckbox label="邀请成员" />
         </div>
       );
-    case "pop-tabs":
+    case "kalos-tabs":
       return (
         <div className="demo-form">
-          <PopTabs
+          <KalosTabs
             items={[
               {
                 value: "overview",
@@ -250,8 +267,7 @@ export function DemoContent({
                 content: (
                   <div className="tabs-copy">
                     <Layers />
-                    <strong>所有信息，一目了然。</strong>
-                    <p>在同一上下文中，找到你关心的内容。</p>
+                    <strong>14 个组件</strong>
                   </div>
                 ),
               },
@@ -261,8 +277,7 @@ export function DemoContent({
                 content: (
                   <div className="tabs-copy">
                     <Check />
-                    <strong>你已掌握最新动态。</strong>
-                    <p>所有更改均已同步。</p>
+                    <strong>所有更改已同步</strong>
                   </div>
                 ),
               },
@@ -271,7 +286,7 @@ export function DemoContent({
                 label: "设置",
                 content: (
                   <div className="tabs-copy">
-                    <PopSwitch label="自动保存" defaultChecked />
+                    <KalosSwitch label="自动保存" defaultChecked />
                   </div>
                 ),
               },
@@ -279,10 +294,10 @@ export function DemoContent({
           />
         </div>
       );
-    case "pop-accordion":
+    case "kalos-accordion":
       return (
         <div className="demo-form">
-          <PopAccordion
+          <KalosAccordion
             items={[
               {
                 question: "可以自定义这些组件吗？",
@@ -291,8 +306,7 @@ export function DemoContent({
               },
               {
                 question: "如何安装到我的项目？",
-                answer:
-                  "在上方选择底层库，然后复制对应的安装命令。依赖会自动安装。",
+                answer: "运行安装命令，在终端选择基础组件库。",
               },
               ...(!compact
                 ? [
@@ -307,21 +321,16 @@ export function DemoContent({
           />
         </div>
       );
-    case "pop-dialog":
+    case "kalos-dialog":
       return (
-        <PopDialog
-          trigger="打开对话框"
-          title="创建一个新项目"
-          description="为你的下一个想法留出空间。"
-        >
-          <PopInput label="项目名称" placeholder="输入项目名称" />
-          <p className="tiny-note">按 Esc、点击遮罩或右上角按钮关闭。</p>
-        </PopDialog>
+        <KalosDialog trigger="打开对话框" title="创建项目">
+          <KalosInput label="项目名称" placeholder="输入项目名称" />
+        </KalosDialog>
       );
-    case "pop-select":
+    case "kalos-select":
       return (
         <div className="demo-form">
-          <PopSelect
+          <KalosSelect
             label="开发框架"
             value={framework}
             onValueChange={setFramework}
@@ -331,22 +340,16 @@ export function DemoContent({
               { value: "remix", label: "React Router" },
             ]}
           />
-          <p className="tiny-note">为你的下一个项目选择基础框架。</p>
         </div>
       );
-    case "pop-progress":
+    case "kalos-progress":
       return (
         <div className="demo-form">
-          <PopProgress
-            label="项目准备中"
+          <KalosProgress
+            label={progress === 100 ? "准备就绪" : "项目准备中"}
             value={progress}
-            description={
-              progress === 100
-                ? "准备就绪，可以开始构建了。"
-                : "每一步，都让想法更近一点。"
-            }
           />
-          <PopButton
+          <KalosButton
             variant="outline"
             onClick={() =>
               setProgress((value) =>
@@ -356,17 +359,13 @@ export function DemoContent({
           >
             {progress === 100 ? "重新开始" : "继续下一步"}
             <ArrowRight data-icon="inline-end" />
-          </PopButton>
+          </KalosButton>
         </div>
       );
-    case "pop-avatar-stack":
+    case "kalos-avatar-stack":
       return (
         <div className="avatar-demo">
-          <PopAvatarStack people={people} />
-          <div>
-            <strong>一起，把想法变成现实。</strong>
-            <p className="tiny-note">5 位成员正在协作</p>
-          </div>
+          <KalosAvatarStack people={people} />
         </div>
       );
     default:

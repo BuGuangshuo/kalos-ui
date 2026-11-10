@@ -1,248 +1,426 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "pop-ui",
-  "homepage": "http://localhost:3000",
+  "name": "kalos-ui",
+  "homepage": "https://kalos-ui-six.vercel.app",
   "items": [
     {
-      "name": "pop-button",
+      "name": "kalos-button",
       "type": "registry:ui",
-      "title": "Pop 按钮",
+      "title": "Kalos 按钮",
       "description": "用于触发操作，提供主要、次要、轮廓、危险和加载状态。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "button"
       ],
       "dependencies": [
+        "@fontsource/roboto",
         "lucide-react"
       ],
       "files": [
         {
-          "path": "registry/pop/pop-button.tsx",
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-input",
+      "name": "kalos-command-menu",
       "type": "registry:ui",
-      "title": "Pop 文本输入",
+      "title": "Kalos 命令菜单",
+      "description": "在分组列表中搜索并执行操作，支持匹配上下文、键盘导航和连续滑动的选中背景。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [],
+      "dependencies": [
+        "@fontsource/roboto",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-command-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-command-menu-panel.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-popover",
+      "type": "registry:ui",
+      "title": "Kalos 浮层",
+      "description": "在触发元素附近展示操作列表或自定义内容，支持键盘导航与背景滑动。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "popover",
+        "button"
+      ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-popover-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-input",
+      "type": "registry:ui",
+      "title": "Kalos 文本输入",
       "description": "将标签、输入、说明和校验提示组合在一起。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "input",
         "field"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-input.tsx",
+          "path": "registry/kalos/kalos-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-card",
+      "name": "kalos-card",
       "type": "registry:ui",
-      "title": "Pop 卡片",
+      "title": "Kalos 卡片",
       "description": "为相关信息与操作提供清晰、紧凑的内容容器。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "card"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-card.tsx",
+          "path": "registry/kalos/kalos-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-badge",
+      "name": "kalos-badge",
       "type": "registry:ui",
-      "title": "Pop 徽标",
+      "title": "Kalos 徽标",
       "description": "使用简洁的标记展示状态、类别与附加信息。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "badge"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-badge.tsx",
+          "path": "registry/kalos/kalos-badge.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-switch",
+      "name": "kalos-switch",
       "type": "registry:ui",
-      "title": "Pop 开关",
+      "title": "Kalos 开关",
       "description": "在两个互斥状态间切换，适用于立即生效的设置。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "switch"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-switch.tsx",
+          "path": "registry/kalos/kalos-switch.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-checkbox",
+      "name": "kalos-checkbox",
       "type": "registry:ui",
-      "title": "Pop 复选框",
+      "title": "Kalos 复选框",
       "description": "选择一个或多个选项，支持选中与不确定状态。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "checkbox"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-checkbox.tsx",
+          "path": "registry/kalos/kalos-checkbox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-tabs",
+      "name": "kalos-tabs",
       "type": "registry:ui",
-      "title": "Pop 选项卡",
+      "title": "Kalos 选项卡",
       "description": "在同一上下文中切换相关内容，支持键盘操作。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "tabs"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-tabs.tsx",
+          "path": "registry/kalos/kalos-tabs.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-accordion",
+      "name": "kalos-accordion",
       "type": "registry:ui",
-      "title": "Pop 折叠面板",
+      "title": "Kalos 折叠面板",
       "description": "按需展开详细内容，在有限空间中保持信息层次。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "accordion"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-accordion.tsx",
+          "path": "registry/kalos/kalos-accordion.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-dialog",
+      "name": "kalos-dialog",
       "type": "registry:ui",
-      "title": "Pop 对话框",
+      "title": "Kalos 对话框",
       "description": "让用户专注于当前任务，包含焦点管理与关闭行为。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "dialog",
         "button"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-dialog.tsx",
+          "path": "registry/kalos/kalos-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-select",
+      "name": "kalos-select",
       "type": "registry:ui",
-      "title": "Pop 选择器",
+      "title": "Kalos 选择器",
       "description": "从一组候选项中进行选择，支持键盘导航与选中反馈。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "select"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-select.tsx",
+          "path": "registry/kalos/kalos-select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-progress",
+      "name": "kalos-progress",
       "type": "registry:ui",
-      "title": "Pop 进度条",
+      "title": "Kalos 进度条",
       "description": "清晰地展示任务进展，支持数值、标题与辅助说明。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "progress"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-progress.tsx",
+          "path": "registry/kalos/kalos-progress.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-avatar-stack",
+      "name": "kalos-avatar-stack",
       "type": "registry:ui",
-      "title": "Pop 头像组",
+      "title": "Kalos 头像组",
       "description": "以紧凑的头像组合展示成员，包含姓名回退和溢出数量。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "avatar"
       ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
       "files": [
         {
-          "path": "registry/pop/pop-avatar-stack.tsx",
+          "path": "registry/kalos/kalos-avatar-stack.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
     },
     {
-      "name": "pop-theme",
+      "name": "kalos-theme",
       "type": "registry:theme",
-      "title": "Pop Theme",
-      "description": "参考 Astryx 的中性黑白配色，包含浅色与深色语义变量。",
+      "title": "Kalos Theme",
+      "description": "中性黑白配色，包含浅色与深色语义变量。",
+      "css": {
+        "@layer base": {
+          "::selection": {
+            "backgroundColor": "var(--selection-background)",
+            "color": "var(--selection-foreground)"
+          }
+        }
+      },
       "cssVars": {
         "light": {
           "background": "#ffffff",
-          "foreground": "#000000",
-          "primary": "#1b1b1b",
-          "primary-foreground": "#ffffff",
-          "muted": "#f1f1f1",
-          "muted-foreground": "#474747",
+          "foreground": "rgba(0, 0, 0, 0.88)",
+          "primary": "rgba(0, 0, 0, 0.88)",
+          "primary-foreground": "#fcfcfc",
+          "muted": "rgba(0, 0, 0, 0.04)",
+          "muted-foreground": "rgba(0, 0, 0, 0.61)",
           "border": "#00000014",
-          "input": "#d4d4d4",
-          "accent": "#0000000f",
-          "destructive": "#c9303a",
-          "radius": "1rem"
+          "input": "rgba(0, 0, 0, 0.12)",
+          "accent": "rgba(0, 0, 0, 0.045)",
+          "destructive": "#c4320a",
+          "card": "#ffffff",
+          "card-foreground": "rgba(0, 0, 0, 0.88)",
+          "popover": "#ffffff",
+          "popover-foreground": "rgba(0, 0, 0, 0.88)",
+          "secondary": "#ffffff",
+          "secondary-foreground": "rgba(0, 0, 0, 0.88)",
+          "selection-background": "#b3d4fc",
+          "selection-foreground": "#14253d",
+          "radius": "0.75rem"
         },
         "dark": {
-          "background": "#1b1b1b",
-          "foreground": "#ffffff",
-          "primary": "#f1f1f1",
-          "primary-foreground": "#111111",
-          "muted": "#262626",
-          "muted-foreground": "#9e9e9e",
+          "background": "#161616",
+          "foreground": "rgba(255, 255, 255, 0.9)",
+          "primary": "rgba(255, 255, 255, 0.9)",
+          "primary-foreground": "#161618",
+          "muted": "rgba(255, 255, 255, 0.05)",
+          "muted-foreground": "rgba(255, 255, 255, 0.62)",
           "border": "#ffffff1a",
-          "input": "#525252",
-          "accent": "#ffffff1a",
-          "destructive": "#ff705d"
+          "input": "rgba(255, 255, 255, 0.16)",
+          "accent": "rgba(255, 255, 255, 0.07)",
+          "destructive": "#ff8a7a",
+          "card": "#1c1c1e",
+          "card-foreground": "rgba(255, 255, 255, 0.9)",
+          "popover": "#1f1f22",
+          "popover-foreground": "rgba(255, 255, 255, 0.9)",
+          "secondary": "#1c1c1e",
+          "secondary-foreground": "rgba(255, 255, 255, 0.9)",
+          "selection-background": "#264c73",
+          "selection-foreground": "#f5f9ff"
         }
       }
     },
     {
-      "name": "pop-all",
+      "name": "kalos-all",
       "type": "registry:block",
-      "title": "Pop UI 完整组件库",
-      "description": "一次安装全部 12 个组件。",
+      "title": "Kalos UI 完整组件库",
+      "description": "一次安装全部 14 个组件。",
       "dependencies": [
-        "lucide-react"
+        "lucide-react",
+        "@fontsource/roboto"
       ],
       "registryDependencies": [
         "button",
+        "popover",
         "input",
         "field",
         "card",
@@ -258,51 +436,75 @@
       ],
       "files": [
         {
-          "path": "registry/pop/pop-button.tsx",
+          "path": "registry/kalos/kalos-button.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-input.tsx",
+          "path": "registry/kalos/kalos-command-menu.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-card.tsx",
+          "path": "registry/kalos/kalos-popover.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-badge.tsx",
+          "path": "registry/kalos/kalos-input.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-switch.tsx",
+          "path": "registry/kalos/kalos-card.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-checkbox.tsx",
+          "path": "registry/kalos/kalos-badge.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-tabs.tsx",
+          "path": "registry/kalos/kalos-switch.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-accordion.tsx",
+          "path": "registry/kalos/kalos-checkbox.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-dialog.tsx",
+          "path": "registry/kalos/kalos-tabs.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-select.tsx",
+          "path": "registry/kalos/kalos-accordion.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-progress.tsx",
+          "path": "registry/kalos/kalos-dialog.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/pop/pop-avatar-stack.tsx",
+          "path": "registry/kalos/kalos-select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-progress.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-avatar-stack.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-command-menu-panel.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-popover-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]

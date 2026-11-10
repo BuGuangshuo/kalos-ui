@@ -1,4 +1,5 @@
 "use client";
+import { catalog } from "@/lib/catalog";
 
 import Link from "next/link";
 import { use, useEffect, useState, useSyncExternalStore } from "react";
@@ -12,11 +13,7 @@ import { Box, Check, Copy, Layers, Palette } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { site } from "@/lib/site";
 import { FrameworkSwitcher, useFramework } from "@/components/framework";
-import {
-  usePrimitive,
-  PrimitiveSwitcher,
-  PrimitiveName,
-} from "@/components/primitives";
+import { installerCommand } from "@/lib/installer";
 import { easeOut, PackageManagerContext, useIntro } from "./runtime";
 
 const managers = ["npm", "pnpm", "yarn", "bun"] as const;
@@ -31,7 +28,7 @@ const getOrigin = () => window.location.origin;
 const getServerOrigin = () => site.url;
 
 export function CopyCommand({
-  name = "pop-all",
+  name = "kalos-all",
   id = "hero-command",
   kind = "component",
 }: {
@@ -39,8 +36,6 @@ export function CopyCommand({
   id?: string;
   kind?: "component" | "skill";
 }) {
-  const { framework } = useFramework();
-  const { primitive } = usePrimitive();
   const { manager, setManager } = use(PackageManagerContext);
   const [copied, setCopied] = useState(false);
   const origin = useSyncExternalStore(
@@ -50,8 +45,8 @@ export function CopyCommand({
   );
   const command = (value: string) =>
     kind === "skill"
-      ? `${runners[value as keyof typeof runners]} skills add BuGuangshuo/pop-ui --skill pop-ui`
-      : `${runners[value as keyof typeof runners]} ${framework === "vue" ? "shadcn-vue" : "shadcn"}@latest add ${origin}/r/${framework === "vue" ? "vue/" : `${primitive}/`}${name}.json`;
+      ? `${runners[value as keyof typeof runners]} skills add BuGuangshuo/kalos-ui --skill kalos-ui`
+      : installerCommand(origin, value, name);
   useEffect(() => {
     if (!copied) return;
     const timer = setTimeout(() => setCopied(false), 1600);
@@ -251,13 +246,15 @@ export function MotionHero() {
         </span>
       </h1>
       <motion.p {...rise(5)} className="motion-hero-subtitle">
-        12 个基础组件，适配 {framework === "vue" ? "Vue" : "React"} 项目。
+        {catalog.length} 个基础组件，适配 {framework === "vue" ? "Vue" : "React"} 项目。
         <br className="motion-desktop-break" />
         按需安装源码，自由调整样式和交互。
       </motion.p>
       <motion.div {...rise(6)} className="motion-hero-install">
-        <PrimitiveSwitcher />
         <CopyCommand />
+        <p className="motion-install-hint">
+          {framework === "vue" ? "自动识别 Vue 项目，安装 Reka UI 版本。" : "运行后在终端选择基础组件库。"}
+        </p>
         <div className="motion-hero-actions">
           <Link href="/docs/getting-started" className="motion-primary-link">
             开始使用
@@ -268,15 +265,35 @@ export function MotionHero() {
         </div>
       </motion.div>
       <motion.div {...rise(7)} className="motion-stack-logos">
-        <span>
-          <Layers /> <PrimitiveName />
-        </span>
-        <span>
-          <Box /> {framework === "vue" ? "shadcn-vue" : "shadcn/ui"}
-        </span>
-        <span>
-          <Palette /> Tailwind CSS
-        </span>
+        {framework === "vue" ? (
+          <>
+            <span><Layers /> Reka UI</span>
+            <span><Box /> shadcn-vue</span>
+            <span><Palette /> Tailwind CSS</span>
+          </>
+        ) : (
+          <>
+            <span>
+              <svg viewBox="0 0 17 24" fill="currentColor" aria-hidden="true">
+                <path d="M9.5001 7.01537C9.2245 6.99837 9 7.22385 9 7.49999V23C13.4183 23 17 19.4183 17 15C17 10.7497 13.6854 7.27351 9.5001 7.01537Z" />
+                <path d="M8 9.8V12V23C3.58172 23 0 19.0601 0 14.2V12V1C4.41828 1 8 4.93989 8 9.8Z" />
+              </svg>
+              Base UI
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M11.52 24a7.68 7.68 0 0 1-7.68-7.68 7.68 7.68 0 0 1 7.68-7.68V24Zm0-24v7.68H3.84V0h7.68Zm4.8 7.68a3.84 3.84 0 1 1 0-7.68 3.84 3.84 0 0 1 0 7.68Z" />
+              </svg>
+              Radix UI
+            </span>
+            <span>
+              <svg viewBox="200 206 800 790" fill="currentColor" aria-hidden="true">
+                <path d="M720.67 205.995C867.583 205.995 986.679 325.091 986.68 472.003C986.68 590.753 908.865 691.325 801.446 725.521L979.312 948.055C994.438 966.98 980.963 995 956.736 995H795.612C778.743 995 762.715 987.629 751.734 974.823L697.365 911.421L493.126 653.39C457.134 607.918 489.518 540.979 547.511 540.977L720.67 540.971C758.758 540.971 789.635 510.091 789.635 472.003C789.634 433.915 758.758 403.038 720.67 403.038H429.939C404.955 403.038 388.623 391.886 373.994 373.623L277.349 252.966C262.194 234.045 275.664 205.996 299.905 205.995H720.67Z M396.605 720.706C407.798 705.406 430.443 704.843 442.381 719.568L503.816 797.018H502.786L535.569 838.934C548.074 854.358 549.943 877.191 538.047 893.09L476.638 972.545C465.692 986.707 448.803 995 430.903 995H242.276C218.18 995 204.665 967.248 219.523 948.278L337.992 797.018H337.923L396.605 720.706Z" />
+              </svg>
+              React Aria
+            </span>
+          </>
+        )}
       </motion.div>
     </section>
   );

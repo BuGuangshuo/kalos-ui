@@ -22,8 +22,8 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { PopInput } from "@/registry/pop/pop-input";
-import { PopCheckbox } from "@/registry/pop/pop-checkbox";
+import { KalosInput } from "@/registry/kalos/kalos-input";
+import { KalosCheckbox } from "@/registry/kalos/kalos-checkbox";
 import { toast } from "sonner";
 import { CopyCommand } from "./hero";
 import { AutoplayScope } from "./vignettes";
@@ -158,7 +158,6 @@ function BellPreview({ playing }: { playing: boolean }) {
           <Bell />
         </motion.span>
       </motion.button>
-      <span>悬停或点击，试试按钮反馈</span>
     </div>
   );
 }
@@ -240,14 +239,13 @@ function FormPreview() {
         toast.success("偏好已保存");
       }}
     >
-      <PopInput
+      <KalosInput
         label="邮箱地址"
         type="email"
         placeholder="you@example.com"
         required
-        hint="我们只会发送与你有关的通知。"
       />
-      <PopCheckbox label="接收项目动态" defaultChecked />
+      <KalosCheckbox label="接收项目动态" defaultChecked />
       <Button type="submit">保存偏好</Button>
     </form>
   );
@@ -371,7 +369,7 @@ export function ExamplesSection() {
     <section id="skills" className="motion-examples-section">
       <motion.span {...reveal(0)} className="motion-examples-badge">
         <Sparkles />
-        Pop UI · Skills
+        Kalos UI · Skills
       </motion.span>
       <motion.h2 {...reveal(1)}>让 AI 帮你搭界面。</motion.h2>
       <motion.p {...reveal(2)} className="motion-examples-subtitle">
@@ -422,7 +420,7 @@ export function ExamplesSection() {
                 <span />
                 <span />
                 <span />
-                <span>Pop UI Skill · 使用示例</span>
+                <span>Kalos UI Skill · 使用示例</span>
               </div>
               {scenes.map((scene) => (
                 <TabsContent key={scene.id} value={scene.id}>

@@ -5,6 +5,7 @@ import { Search, ArrowUpRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { catalog, categories } from "@/lib/catalog";
 import { site } from "@/lib/site";
+import { FrameworkSwitcher } from "@/components/framework";
 export function LibrarySidebar({
   active,
   query,
@@ -38,37 +39,39 @@ export function LibrarySidebar({
               }
             />
           </div>
+          <FrameworkSwitcher className="sidebar-framework-switcher" />
           <Link
             className="sidebar-overview"
             href="/components"
             aria-current={active === "overview" ? "page" : undefined}
           >
-            全部组件 <span>12</span>
+            全部组件 <span>{catalog.length}</span>
           </Link>
-          <div className="sidebar-section">组件</div>
-          {categories.map((category) => (
-            <div className="sidebar-group" key={category}>
-              <span>{category}</span>
-              {filtered
-                .filter((item) => item.category === category)
-                .map((item) => (
+          {categories.map((category) => {
+            const group = filtered.filter((item) => item.category === category);
+            return group.length ? (
+              <div className="sidebar-group" key={category}>
+                <span>{category}</span>
+                {group.map((item) => (
                   <Link
                     key={item.slug}
                     href={`/components/${item.slug}`}
                     aria-current={active === item.slug ? "page" : undefined}
                   >
-                    {item.title}
-                    <small>{item.english}</small>
+                    <span>{item.english}</span>
+                    <small>{item.title}</small>
                   </Link>
                 ))}
-            </div>
-          ))}
+              </div>
+            ) : null;
+          })}
           {filtered.length === 0 ? (
             <p className="sidebar-empty">没有匹配的组件</p>
           ) : null}
         </>
       ) : (
         <>
+          <FrameworkSwitcher className="sidebar-framework-switcher" />
           <Link
             className="sidebar-overview"
             href="/docs/getting-started"

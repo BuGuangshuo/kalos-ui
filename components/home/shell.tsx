@@ -9,9 +9,10 @@ import {
   motion,
   useReducedMotion,
 } from "motion/react";
+import { GlobalSearch } from "@/components/global-search";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { site } from "@/lib/site";
-import { PopLogo } from "./logo";
+import { KalosLogo } from "./logo";
 import { easeOut, IntroContext, PackageManagerContext } from "./runtime";
 
 const logoGlide = {
@@ -46,11 +47,11 @@ export function HomeShell({ children }: { children: ReactNode }) {
 
   return (
     <MotionConfig reducedMotion="user">
-      <LayoutGroup id="pop-home">
+      <LayoutGroup id="kalos-home">
         <IntroContext value={{ playing: intro, done: done || Boolean(reduce) }}>
           <PackageManagerContext value={{ manager, setManager }}>
             <div
-              className="pop-motion-home"
+              className="kalos-motion-home"
               data-intro={intro ? "playing" : "done"}
             >
               <a className="skip-link" href="#main-content">
@@ -88,7 +89,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
                     transition={{ layout: logoGlide }}
                     className="motion-intro-wordmark"
                   >
-                    <PopLogo draw />
+                    <KalosLogo draw />
                   </motion.div>
                 </div>
               ) : null}
@@ -108,7 +109,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
                 <div className="motion-header-inner">
                   <Link
                     href="/"
-                    aria-label="Pop UI 首页"
+                    aria-label="Kalos UI 首页"
                     className="motion-header-brand"
                   >
                     {!intro ? (
@@ -116,7 +117,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
                         layoutId="home-logo"
                         transition={{ layout: logoGlide }}
                       >
-                        <PopLogo />
+                        <KalosLogo />
                       </motion.div>
                     ) : null}
                   </Link>
@@ -136,6 +137,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
                       <Link href="/components">组件</Link>
                       <Link href="/docs/tokens">设计变量</Link>
                     </nav>
+                    <GlobalSearch />
                     <motion.a
                       className="motion-github-link"
                       href={site.github}

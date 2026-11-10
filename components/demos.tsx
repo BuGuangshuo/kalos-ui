@@ -15,18 +15,20 @@ import {
   Box,
 } from "lucide-react";
 import { toast } from "sonner";
-import { PopButton } from "@/registry/pop/pop-button";
-import { PopInput } from "@/registry/pop/pop-input";
-import { PopCard } from "@/registry/pop/pop-card";
-import { PopBadge } from "@/registry/pop/pop-badge";
-import { PopSwitch } from "@/registry/pop/pop-switch";
-import { PopCheckbox } from "@/registry/pop/pop-checkbox";
-import { PopTabs } from "@/registry/pop/pop-tabs";
-import { PopAccordion } from "@/registry/pop/pop-accordion";
-import { PopDialog } from "@/registry/pop/pop-dialog";
-import { PopSelect } from "@/registry/pop/pop-select";
-import { PopProgress } from "@/registry/pop/pop-progress";
-import { PopAvatarStack } from "@/registry/pop/pop-avatar-stack";
+import { KalosButton } from "@/registry/kalos/kalos-button";
+import { KalosPopover } from "@/registry/kalos/kalos-popover";
+import { KalosCommandMenu } from "@/registry/kalos/kalos-command-menu";
+import { KalosInput } from "@/registry/kalos/kalos-input";
+import { KalosCard } from "@/registry/kalos/kalos-card";
+import { KalosBadge } from "@/registry/kalos/kalos-badge";
+import { KalosSwitch } from "@/registry/kalos/kalos-switch";
+import { KalosCheckbox } from "@/registry/kalos/kalos-checkbox";
+import { KalosTabs } from "@/registry/kalos/kalos-tabs";
+import { KalosAccordion } from "@/registry/kalos/kalos-accordion";
+import { KalosDialog } from "@/registry/kalos/kalos-dialog";
+import { KalosSelect } from "@/registry/kalos/kalos-select";
+import { KalosProgress } from "@/registry/kalos/kalos-progress";
+import { KalosAvatarStack } from "@/registry/kalos/kalos-avatar-stack";
 import { Separator } from "@/components/ui/separator";
 const people = [
   { name: "Alan Bu" },
@@ -36,18 +38,20 @@ const people = [
   { name: "吴昕" },
 ];
 const radixComponents = {
-  PopButton,
-  PopInput,
-  PopCard,
-  PopBadge,
-  PopSwitch,
-  PopCheckbox,
-  PopTabs,
-  PopAccordion,
-  PopDialog,
-  PopSelect,
-  PopProgress,
-  PopAvatarStack,
+  KalosButton,
+  KalosInput,
+  KalosPopover,
+  KalosCommandMenu,
+  KalosCard,
+  KalosBadge,
+  KalosSwitch,
+  KalosCheckbox,
+  KalosTabs,
+  KalosAccordion,
+  KalosDialog,
+  KalosSelect,
+  KalosProgress,
+  KalosAvatarStack,
 };
 export function ComponentDemo({
   slug,
@@ -90,9 +94,8 @@ export function HeroShowcase() {
           </div>
         </div>
         <strong>从一个好想法开始。</strong>
-        <p>基础已就绪，创意由你定义。</p>
         <div className="orbit-row">
-          <PopAvatarStack people={people.slice(0, 3)} />
+          <KalosAvatarStack people={people.slice(0, 3)} />
           <span>3 位协作者</span>
         </div>
       </div>
@@ -116,20 +119,20 @@ export function HeroShowcase() {
           </span>
           <MoreHorizontal />
         </div>
-        <PopSwitch label="自动保存" defaultChecked />
+        <KalosSwitch label="自动保存" defaultChecked />
         <Separator />
-        <PopSwitch label="消息通知" description="保持专注，不错过重要动态。" />
+        <KalosSwitch label="消息通知" />
         <Separator />
-        <PopCheckbox label="与团队分享项目" defaultChecked />
+        <KalosCheckbox label="与团队分享项目" defaultChecked />
       </div>
       <div className="orbit-card orbit-progress">
         <div className="orbit-progress-icon">
           <Code2 />
         </div>
         <strong>构建进度</strong>
-        <PopProgress label="组件已准备就绪" value={75} />
+        <KalosProgress label="组件已准备就绪" value={75} />
         <div className="orbit-row">
-          <PopBadge status="success">已同步</PopBadge>
+          <KalosBadge status="success">已同步</KalosBadge>
           <span>刚刚更新</span>
         </div>
       </div>
@@ -140,19 +143,19 @@ export function HomeControls() {
   return (
     <div className="home-controls">
       <div className="flex items-center gap-3">
-        <PopBadge>默认状态</PopBadge>
-        <PopBadge status="success">已完成</PopBadge>
-        <PopSwitch label="" aria-label="示例开关" defaultChecked />
+        <KalosBadge>默认状态</KalosBadge>
+        <KalosBadge status="success">已完成</KalosBadge>
+        <KalosSwitch label="" aria-label="示例开关" defaultChecked />
       </div>
       <div className="flex gap-2">
-        <PopButton variant="secondary" onClick={() => toast("次要操作已触发")}>
+        <KalosButton variant="secondary" onClick={() => toast("次要操作已触发")}>
           次要按钮
-        </PopButton>
-        <PopButton onClick={() => toast.success("主要操作已完成")}>
+        </KalosButton>
+        <KalosButton onClick={() => toast.success("主要操作已完成")}>
           主要按钮
-        </PopButton>
+        </KalosButton>
       </div>
-      <PopInput label="快速查找" placeholder="搜索你的下一个组件…" />
+      <KalosInput label="快速查找" placeholder="搜索你的下一个组件…" />
     </div>
   );
 }
