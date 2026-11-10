@@ -8,12 +8,10 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { ThemeProvider, useTheme } from "next-themes";
+import { ThemeProvider } from "next-themes";
 import {
   ArrowUpRight,
   Search,
-  Sun,
-  Moon,
   Menu,
   X,
   ArrowRight,
@@ -34,16 +32,13 @@ import { catalog } from "@/lib/catalog";
 import { site } from "@/lib/site";
 import { CopyButton } from "@/components/copy-button";
 import { BrandLogo } from "@/components/brand";
-import {
-  FrameworkSwitcher,
-  useFramework,
-} from "@/components/framework";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { FrameworkSwitcher, useFramework } from "@/components/framework";
 const HomeShell = dynamic(() =>
   import("@/components/home/shell").then((module) => module.HomeShell),
 );
 function Header() {
   const path = usePathname();
-  const { resolvedTheme, setTheme } = useTheme();
   const [search, setSearch] = useState(false);
   const [query, setQuery] = useState("");
   const [menu, setMenu] = useState(false);
@@ -98,17 +93,7 @@ function Header() {
             >
               <Search />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="切换深浅主题"
-              onClick={() =>
-                setTheme(resolvedTheme === "dark" ? "light" : "dark")
-              }
-            >
-              <Sun className="theme-sun" />
-              <Moon className="theme-moon" />
-            </Button>
+            <ThemeToggle />
             <a
               className="icon-link"
               href={site.github}

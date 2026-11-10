@@ -9,9 +9,7 @@ import {
   motion,
   useReducedMotion,
 } from "motion/react";
-import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { site } from "@/lib/site";
 import { PopLogo } from "./logo";
 import { easeOut, IntroContext, PackageManagerContext } from "./runtime";
@@ -22,22 +20,6 @@ const logoGlide = {
   damping: 24,
   mass: 0.9,
 } as const;
-
-function HomeThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      aria-label="切换深浅主题"
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="motion-theme-toggle"
-    >
-      <Sun className="theme-sun" />
-      <Moon className="theme-moon" />
-    </Button>
-  );
-}
 
 export function HomeShell({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
@@ -172,7 +154,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
                       </svg>
                       <span>GitHub</span>
                     </motion.a>
-                    <HomeThemeToggle />
+                    <ThemeToggle className="motion-theme-toggle" />
                   </motion.div>
                 </div>
               </header>
