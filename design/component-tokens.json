@@ -6,7 +6,7 @@
   },
   "font": {
     "family": "Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", ByteSans, Arial, \"Helvetica Neue\", -apple-system, BlinkMacSystemFont, \"noto sans\", Helvetica, sans-serif",
-    "controlSize": 14,
+    "controlSize": 13,
     "controlLineHeight": 20,
     "controlWeight": 400,
     "bodyWeight": 400,
@@ -738,7 +738,9 @@
         "--ui-btnc-shine-on-solid": "#ffffff",
         "--ui-btnc-focus": "rgba(0, 96, 226, 0.7)",
         "--ui-btnc-ease": "cubic-bezier(0.22, 1, 0.36, 1)",
-        "--ui-btnc-load": "650ms"
+        "--ui-btnc-load": "650ms",
+        "--ui-btnc-on-danger": "#fcfcfc",
+        "--ui-btnc-danger-hover": "color-mix(in srgb, #c4320a 90%, #000000)"
       },
       "dark": {
         "--ui-btnc-title": "rgba(255, 255, 255, 0.9)",
@@ -759,7 +761,9 @@
         "--ui-btnc-shine-on-solid": "#ffffff",
         "--ui-btnc-focus": "rgba(77, 141, 255, 0.8)",
         "--ui-btnc-ease": "cubic-bezier(0.22, 1, 0.36, 1)",
-        "--ui-btnc-load": "650ms"
+        "--ui-btnc-load": "650ms",
+        "--ui-btnc-on-danger": "#161618",
+        "--ui-btnc-danger-hover": "color-mix(in srgb, #ff8a7a 90%, #ffffff)"
       },
       "rules": [
         {
@@ -1200,6 +1204,16 @@
         "shadow": "0 0 0 0.5px rgba(255, 255, 255, 0.12), 0 12px 32px -8px rgba(0, 0, 0, 0.6)",
         "ease": "cubic-bezier(0.22, 1, 0.36, 1)"
       }
+    },
+    "dialog": {
+      "light": {
+        "edge": "#e8edf3",
+        "shadow": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
+      },
+      "dark": {
+        "edge": "#2a2a2a",
+        "shadow": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
+      }
     }
   },
   "defaults": {
@@ -1207,14 +1221,14 @@
       "height": 32,
       "radius": 6,
       "paddingX": 10,
-      "fontSize": 14,
+      "fontSize": 13,
       "fontWeight": 400
     },
     "text-field": {
       "height": 32,
       "radius": 7,
       "paddingX": 10,
-      "fontSize": 14,
+      "fontSize": 13,
       "lineHeight": 20
     },
     "select": {
@@ -1277,11 +1291,35 @@
     },
     "documentation": {
       "installationTabContentGap": 16
+    },
+    "dialog": {
+      "borderWidth": 1,
+      "duration": 450,
+      "scale": 0.95,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "overlayEase": "cubic-bezier(0.32, 0.72, 0, 1)",
+      "footerGap": 12,
+      "footerPadding": 16,
+      "maxWidth": 480,
+      "contentPadding": 0,
+      "contentGap": 0,
+      "formGap": 14,
+      "sectionPaddingX": 20,
+      "sectionPaddingY": 20,
+      "headerPaddingTop": 20,
+      "headerPaddingBottom": 0
+    },
+    "alert-dialog": {
+      "contentPadding": 20,
+      "contentGap": 20,
+      "buttonGap": 12,
+      "footerBorder": false,
+      "maxWidth": 400
     }
   },
   "typographyOverride": {
     "family": "Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", ByteSans, Arial, \"Helvetica Neue\", -apple-system, BlinkMacSystemFont, \"noto sans\", Helvetica, sans-serif",
-    "controlSize": 14,
+    "controlSize": 13,
     "controlLineHeight": 20,
     "controlWeight": 400,
     "bodyWeight": 400,

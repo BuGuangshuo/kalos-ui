@@ -6,6 +6,7 @@ import { KalosBadge } from "@/registry/base-ui/kalos-badge";
 import { KalosButton } from "@/registry/base-ui/kalos-button";
 import { KalosCard } from "@/registry/base-ui/kalos-card";
 import { KalosCheckbox } from "@/registry/base-ui/kalos-checkbox";
+import { KalosAlertDialog } from "@/registry/base-ui/kalos-alert-dialog";
 import { KalosDialog } from "@/registry/base-ui/kalos-dialog";
 import { KalosPopover } from "@/registry/base-ui/kalos-popover";
 import { KalosCommandMenu } from "@/registry/base-ui/kalos-command-menu";
@@ -22,6 +23,7 @@ const components = {
   KalosCard,
   KalosCheckbox,
   KalosDialog,
+  KalosAlertDialog,
   KalosInput,
   KalosPopover,
   KalosCommandMenu,

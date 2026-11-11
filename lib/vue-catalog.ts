@@ -50,9 +50,22 @@ export const vueCatalog: Record<string, { usage: string; props: string }> = {
     props:
       "items: { question: string; answer: string }[]；单项展开；支持键盘操作。",
   },
+  "kalos-alert-dialog": {
+    usage: '<KalosAlertDialog trigger="删除项目" title="删除项目？" description="项目及其数据将永久删除，无法撤销。" action-label="删除项目" @confirm="confirmDelete" />',
+    props: "trigger: string；title: string；description: string；actionLabel?: string；cancelLabel?: string；v-model:open；@confirm。",
+  },
   "kalos-dialog": {
     usage:
-      '<KalosDialog trigger="查看项目" title="设计工作空间">Kalos UI</KalosDialog>',
+      `<KalosDialog v-model:open="open" trigger="创建项目" title="创建项目">
+    <div class="flex flex-col gap-3.5">
+      <KalosInput label="项目名称" model-value="Kalos UI" />
+      <KalosInput label="项目标识" model-value="kalos-ui" />
+    </div>
+    <template #footer>
+      <KalosButton variant="outline" @click="open = false">取消</KalosButton>
+      <KalosButton @click="open = false">创建项目</KalosButton>
+    </template>
+  </KalosDialog>`,
     props:
       "v-model:open?: boolean；trigger: string；title: string；description?: string；默认插槽与 footer 插槽。",
   },
@@ -76,6 +89,18 @@ export const vueCatalog: Record<string, { usage: string; props: string }> = {
 };
 
 export function vueExample(slug: string) {
+  if (slug === "kalos-alert-dialog") return `<script setup lang="ts">
+import KalosAlertDialog from '@/components/ui/kalos-alert-dialog.vue'
+
+function confirmDelete() {
+  console.log('confirmed')
+}
+</script>
+
+<template>
+  ${vueCatalog[slug].usage}
+</template>`;
+
   const name = slug
     .split("-")
     .map((part) => part[0].toUpperCase() + part.slice(1))
@@ -86,6 +111,7 @@ export function vueExample(slug: string) {
     "kalos-switch": "const enabled = ref(false)",
     "kalos-checkbox": "const accepted = ref(false)",
     "kalos-select": "const framework = ref('vue')",
+    "kalos-dialog": "const open = ref(false)",
   };
-  return `<script setup lang="ts">\n${state[slug] ? "import { ref } from 'vue'\n" : ""}import ${name} from '@/components/ui/${slug}.vue'\n${state[slug] ? `\n${state[slug]}\n` : ""}</script>\n\n<template>\n  ${vueCatalog[slug].usage}\n</template>`;
+  return `<script setup lang="ts">\n${state[slug] ? "import { ref } from 'vue'\n" : ""}import ${name} from '@/components/ui/${slug}.vue'\n${slug === "kalos-dialog" ? "import KalosInput from '@/components/ui/kalos-input.vue'\nimport KalosButton from '@/components/ui/kalos-button.vue'\n" : ""}${state[slug] ? `\n${state[slug]}\n` : ""}</script>\n\n<template>\n  ${vueCatalog[slug].usage}\n</template>`;
 }

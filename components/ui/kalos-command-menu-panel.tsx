@@ -90,7 +90,7 @@ export function KalosCommandMenu({ groups, label = "命令菜单", placeholder =
           >{item.icon ? <span className={controlStyles.commandIcon}>{item.icon}</span> : null}<span className={controlStyles.commandItemText}><span className={controlStyles.commandTitle}>{item.label}</span>{item.description ? <span className={controlStyles.commandDescription}>{item.description}</span> : null}</span></button>;
         })}
       </div>)}
-      {visible.length === 0 ? <p className="px-3 py-8 text-center text-[14px] text-muted-foreground" role="status">{emptyMessage}</p> : null}
+      {visible.length === 0 ? <p className="px-3 py-8 text-center text-[13px] text-muted-foreground" role="status">{emptyMessage}</p> : null}
     </div>
     <div className={controlStyles.commandFooter} aria-hidden="true">
       <span><kbd className={controlStyles.commandKey}>↑</kbd><kbd className={controlStyles.commandKey}>↓</kbd>选择</span>

@@ -15,7 +15,7 @@ const items = await Promise.all(
     description: item.description,
     author: "Alan Bu <https://github.com/BuGuangshuo>",
     registryDependencies: item.dependencies.filter((name) => name !== "field"),
-    dependencies: ["@fontsource/roboto", ...(item.slug === "kalos-button" ? ["@lucide/vue"] : [])],
+    dependencies: ["@fontsource/roboto", ...(["kalos-button", "kalos-dialog"].includes(item.slug) ? ["@lucide/vue"] : [])],
     files: [
       { path: "kalos-styles.ts", type: "registry:ui", content: await readFile("components/ui/kalos-styles.ts", "utf8") },
       {

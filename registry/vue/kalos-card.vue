@@ -19,7 +19,7 @@ defineProps<{ title: string; description?: string }>();
         description
       }}</CardDescription></CardHeader
     >
-    <CardContent class="px-5 text-sm"><slot /></CardContent>
+    <CardContent class="px-5 text-[13px]"><slot /></CardContent>
     <CardFooter v-if="$slots.footer" class="px-5"
       ><slot name="footer"
     /></CardFooter>

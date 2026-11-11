@@ -16,9 +16,9 @@ defineProps<{ items: { question: string; answer: string }[] }>();
       :key="item.question"
       :value="String(index)"
       ><AccordionTrigger
-        class="text-sm focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent focus-visible:after:border-transparent"
+        class="text-[13px] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent focus-visible:after:border-transparent"
         >{{ item.question }}</AccordionTrigger
-      ><AccordionContent class="text-sm text-muted-foreground">{{
+      ><AccordionContent class="text-[13px] text-muted-foreground">{{
         item.answer
       }}</AccordionContent></AccordionItem
     >

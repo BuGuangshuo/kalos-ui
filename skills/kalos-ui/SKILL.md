@@ -5,7 +5,7 @@ description: Install, compose, and customize Kalos UI components in React or Vue
 
 # Kalos UI
 
-Kalos UI is a source registry with 14 components in React and Vue. Its components inherit the host project's shadcn semantic variables. Documentation: https://kalos-ui-six.vercel.app/docs/getting-started
+Kalos UI is a source registry with 15 components in React and Vue. Its components inherit the host project's shadcn semantic variables. Documentation: https://kalos-ui-six.vercel.app/docs/getting-started
 
 ## Unified installer
 
@@ -39,7 +39,7 @@ npx shadcn@latest add https://kalos-ui-six.vercel.app/r/react-aria/kalos-button.
 npx shadcn-vue@latest add https://kalos-ui-six.vercel.app/r/vue/kalos-button.json
 ```
 
-Each backend provides all 14 components, `kalos-all.json`, and `kalos-theme.json`. Choose one backend per project: the Kalos filenames are shared. Base UI and React Aria bundle their matching foundation source under collision-free `kalos-base-*` / `kalos-aria-*` names and do not depend on Radix. Legacy `/r/{name}.json` URLs still resolve to Radix. `kalos-all.json` installs all 14 components. `kalos-theme.json` installs the optional neutral theme; apply it only when the user wants a theme change. Read the installed source before editing. Keep the host project's import aliases and existing component choices.
+Each backend provides all 15 components, `kalos-all.json`, and `kalos-theme.json`. Choose one backend per project: the Kalos filenames are shared. Base UI and React Aria bundle their matching foundation source under collision-free `kalos-base-*` / `kalos-aria-*` names and do not depend on Radix. Legacy `/r/{name}.json` URLs still resolve to Radix. `kalos-all.json` installs all 15 components. `kalos-theme.json` installs the optional neutral theme; apply it only when the user wants a theme change. Read the installed source before editing. Keep the host project's import aliases and existing component choices.
 
 ## Compose and customize
 

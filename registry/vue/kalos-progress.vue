@@ -14,7 +14,7 @@ const progress = computed(() =>
 
 <template>
   <div :class="[`flex w-full flex-col gap-2.5`, controlStyles.font]">
-    <div class="flex items-center justify-between gap-4 text-sm">
+    <div class="flex items-center justify-between gap-4 text-[13px]">
       <span class="font-medium">{{ label }}</span
       ><span class="tabular-nums text-muted-foreground">{{ progress }}%</span>
     </div>

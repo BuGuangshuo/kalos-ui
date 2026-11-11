@@ -12,6 +12,7 @@
     "kalos-tabs",
     "kalos-accordion",
     "kalos-dialog",
+    "kalos-alert-dialog",
     "kalos-select",
     "kalos-progress",
     "kalos-avatar-stack"

@@ -16,10 +16,10 @@ export function KalosAccordion({
     <Accordion className={controlStyles.font} allowsMultipleExpanded={false}>
       {items.map((item, index) => (
         <AccordionItem key={index} id={String(index)}>
-          <AccordionTrigger className="py-3 text-sm focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent focus-visible:after:border-transparent">
+          <AccordionTrigger className="py-3 text-[13px] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent focus-visible:after:border-transparent">
             {item.question}
           </AccordionTrigger>
-          <AccordionContent className="text-sm">{item.answer}</AccordionContent>
+          <AccordionContent className="text-[13px]">{item.answer}</AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

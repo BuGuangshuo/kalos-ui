@@ -27,6 +27,7 @@ export function KalosButton({
       className={cn(
         controlStyles.button,
         variant === "default" && controlStyles.buttonSolid,
+        variant === "destructive" && controlStyles.buttonDanger,
         (variant === "secondary" || variant === "outline") && controlStyles.buttonSurface,
         variant === "ghost" && controlStyles.buttonGhost,
         props.className,

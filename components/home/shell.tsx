@@ -11,6 +11,7 @@ import {
 } from "motion/react";
 import { GlobalSearch } from "@/components/global-search";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SiteNavigation } from "@/components/site-navigation";
 import { site } from "@/lib/site";
 import { KalosLogo } from "./logo";
 import { easeOut, IntroContext, PackageManagerContext } from "./runtime";
@@ -133,9 +134,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
                     transition={{ duration: 0.6, ease: easeOut, delay: 0.25 }}
                   >
                     <nav aria-label="主导航">
-                      <Link href="/docs/getting-started">文档</Link>
-                      <Link href="/components">组件</Link>
-                      <Link href="/docs/tokens">设计变量</Link>
+                      <SiteNavigation />
                     </nav>
                     <GlobalSearch />
                     <motion.a

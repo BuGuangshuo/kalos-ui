@@ -134,7 +134,7 @@ export default function TokensPage() {
             <TokenTable
               rows={[
                 ["--font-size-sm", "12px", "辅助说明"],
-                ["--font-size-base", "14px / 20px", "正文、表单标签、导航与按钮"],
+                ["--font-size-base", "13px / 20px", "正文、表单标签、导航与按钮"],
                 ["--font-size-lg", "17px", "强调内容"],
                 ["--font-size-xl", "20px", "区块标题"],
                 ["--font-size-2xl", "24px", "内容标题"],

@@ -18,6 +18,7 @@ const registry = {
     files: [
       { path: `registry/kalos/${item.slug}.tsx`, type: "registry:ui" },
       { path: "components/ui/kalos-styles.ts", type: "registry:ui" },
+      ...(item.slug === "kalos-dialog" ? [{ path: "components/ui/dialog.tsx", type: "registry:ui" }] : []),
       ...(item.slug === "kalos-command-menu" ? [{ path: "components/ui/kalos-command-menu-panel.tsx", type: "registry:ui" }] : []),
       ...(item.slug === "kalos-popover" ? [{ path: "components/ui/kalos-popover-menu.tsx", type: "registry:ui" }] : []),
       ...(["kalos-select", "kalos-tabs", "kalos-popover", "kalos-command-menu"].includes(item.slug)
@@ -46,7 +47,7 @@ registry.items.push({
   registryDependencies: [
     ...new Set(catalog.flatMap((item) => [...item.dependencies])),
   ],
-  files: [...catalog.map((item) => ({
+  files: [{ path: "components/ui/dialog.tsx", type: "registry:ui" }, ...catalog.map((item) => ({
     path: `registry/kalos/${item.slug}.tsx`,
     type: "registry:ui",
   })), { path: "components/ui/kalos-command-menu-panel.tsx", type: "registry:ui" }, { path: "components/ui/kalos-popover-menu.tsx", type: "registry:ui" }, { path: "components/ui/kalos-highlight.ts", type: "registry:ui" }, { path: "components/ui/kalos-styles.ts", type: "registry:ui" }],

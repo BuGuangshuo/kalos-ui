@@ -1,16 +1,19 @@
 <script setup lang="ts">
+import { useId } from "vue";
 import { controlStyles } from "@/components/ui/kalos-styles";
 import {
   Dialog,
   DialogTrigger,
-  DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { DialogContent, DialogOverlay, DialogPortal, DialogClose } from "reka-ui";
+import { X } from "@lucide/vue";
 import { Button } from "@/components/ui/button";
 defineProps<{ trigger: string; title: string; description?: string }>();
+const descriptionId = useId();
 const open = defineModel<boolean>("open", { default: false });
 </script>
 
@@ -19,21 +22,26 @@ const open = defineModel<boolean>("open", { default: false });
     <DialogTrigger as-child
       ><Button
         variant="outline"
-        :class="[`h-8 rounded-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent`, controlStyles.font]"
+        :class="[controlStyles.button, controlStyles.buttonSurface]"
         >{{ trigger }}</Button
       ></DialogTrigger
     >
-    <DialogContent
-      class="rounded-[var(--radius-container,12px)] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&_button:focus-visible]:outline-none [&_button:focus-visible]:ring-0"
-    >
-      <DialogHeader
-        ><DialogTitle>{{ title }}</DialogTitle
-        ><DialogDescription :class="!description ? 'sr-only' : undefined">{{
-          description || title
-        }}</DialogDescription></DialogHeader
+    <DialogPortal>
+      <DialogOverlay :class="['fixed inset-0 z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs', controlStyles.dialogRadixOverlay]" />
+      <DialogContent
+        :aria-describedby="description ? descriptionId : undefined"
+        :class="['fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-popover text-popover-foreground outline-none', controlStyles.font, controlStyles.dialogSurface, controlStyles.dialogWidth, controlStyles.dialogLayout, controlStyles.dialogRadixMotion]"
       >
-      <div class="text-sm"><slot /></div>
-      <DialogFooter v-if="$slots.footer"><slot name="footer" /></DialogFooter>
-    </DialogContent>
+      <DialogHeader :class="controlStyles.dialogHeader"
+        ><DialogTitle>{{ title }}</DialogTitle
+        ><DialogDescription v-if="description" :id="descriptionId">{{ description }}</DialogDescription></DialogHeader
+      >
+      <div :class="controlStyles.dialogBody"><slot /></div>
+      <DialogFooter v-if="$slots.footer" :class="controlStyles.dialogFooter"><slot name="footer" /></DialogFooter>
+        <DialogClose as-child>
+          <Button variant="ghost" size="icon-sm" class="absolute top-3 right-3" aria-label="关闭"><X aria-hidden="true" /></Button>
+        </DialogClose>
+      </DialogContent>
+    </DialogPortal>
   </Dialog>
 </template>

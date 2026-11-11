@@ -1,6 +1,35 @@
 import type { Item } from "@/lib/catalog";
 
 export function reactExample(item: Item) {
+  if (item.slug === "kalos-dialog") return `"use client";
+
+import { useState } from "react";
+import { KalosDialog } from "@/components/ui/kalos-dialog";
+import { KalosInput } from "@/components/ui/kalos-input";
+import { KalosButton } from "@/components/ui/kalos-button";
+import { FieldGroup } from "@/components/ui/field";
+
+export default function Example() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <KalosDialog
+      trigger="创建项目"
+      title="创建项目"
+      open={open}
+      onOpenChange={setOpen}
+      footer={<>
+        <KalosButton variant="outline" onClick={() => setOpen(false)}>取消</KalosButton>
+        <KalosButton onClick={() => setOpen(false)}>创建项目</KalosButton>
+      </>}
+    >
+      <FieldGroup className="gap-3.5">
+        <KalosInput label="项目名称" defaultValue="Kalos UI" />
+        <KalosInput label="项目标识" defaultValue="kalos-ui" />
+      </FieldGroup>
+    </KalosDialog>
+  );
+}`;
   const name = item.slug.split("-").map(part => part[0].toUpperCase() + part.slice(1)).join("");
   const samples: Record<string, { state: string; jsx: string }> = {
     "kalos-input": { state: 'const [email, setEmail] = useState("");', jsx: '<KalosInput\n      label="邮箱地址"\n      type="email"\n      value={email}\n      onChange={event => setEmail(event.target.value)}\n      placeholder="you@example.com"\n    />' },

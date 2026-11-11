@@ -14,7 +14,7 @@
 - 符合官方 schema 的 shadcn 注册表、整库安装、可选 Kalos 主题
 - React 与 Vue 共用设计变量；可安装的 Kalos UI AI Skill
 - Animate UI 风格首页：Logo 描边入场与归位、文字轮播、滚动环绕卡片、交互演示
-- AnimateIcons Disc3 圆盘标志与 Outfit SemiBold（600）字标；界面与正文采用 Roboto，控件与正文为 14px / 20px、400 字重，标题 500–600
+- AnimateIcons Disc3 圆盘标志与 Outfit SemiBold（600）字标；界面与正文采用 Roboto，控件与正文为 13px / 20px、400 字重，标题 500–600
 - GitHub + Vercel 持续部署
 
 ## 本地运行
@@ -51,7 +51,7 @@ Logo 使用 `pnpm dlx shadcn@latest add @animateicons/lu-disc-3` 安装的圆盘
 在已有项目的根目录运行一个命令：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.1.tgz
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.2.tgz
 ```
 
 React 用户在终端选择 Radix UI、Base UI 或 React Aria，Vue 项目自动使用 Reka UI。尚未配置 shadcn 的项目会先引导初始化；已有项目默认选中当前基础库，沿用现有主题和目录。
@@ -60,11 +60,11 @@ React 用户在终端选择 Radix UI、Base UI 或 React Aria，Vue 项目自动
 
 ```bash
 # 只安装按钮和卡片
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.1.tgz add button card
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.2.tgz add button card
 # 明确选择 Base UI，适用于脚本和 CI
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.1.tgz --base base --yes
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.2.tgz --base base --yes
 # 只预览将执行的命令
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.1.tgz --base aria --dry-run
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.2.tgz --base aria --dry-run
 ```
 
 安装器随站点构建为可通过 npx 执行的包，无需单独发布 npm。开发预览的安装命令会自动带上当前注册表站点。可以运行 `npm run cli:build` 单独打包、`npm run cli:test` 验证安装流程。修改安装器并发布新版本时应递增 `packages/cli/package.json` 的版本号。
@@ -73,7 +73,7 @@ npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.1.tgz --base aria --dry-run
 
 ## 高级：直接使用注册表
 
-React 的三个版本均支持全部 14 个组件。统一安装器会自动选择对应入口；需要直接调用 shadcn 时，也可根据项目的基础库运行：
+React 的三个版本均支持全部 15 个组件。统一安装器会自动选择对应入口；需要直接调用 shadcn 时，也可根据项目的基础库运行：
 
 ```bash
 # Base UI
@@ -91,10 +91,10 @@ Base UI / React Aria 版本包含匹配的基础组件源码和包依赖，不�
 在 Vue 3.5+ / Nuxt 项目中配置 Tailwind CSS，然后运行同一个安装器：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.1.tgz
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.1.2.tgz
 ```
 
-Vue 版提供全部 14 个组件的独立 `.vue` 源码，基于 Reka UI。输入、开关和复选框通过 `v-model` 绑定，对话框使用 `v-model:open`。文档顶部切换框架后会同步切换安装、源码、示例和 API。
+Vue 版提供全部 15 个组件的独立 `.vue` 源码，基于 Reka UI。输入、开关和复选框通过 `v-model` 绑定，对话框使用 `v-model:open`。文档顶部切换框架后会同步切换安装、源码、示例和 API。
 
 ## AI Skill
 

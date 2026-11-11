@@ -255,7 +255,8 @@
         "button"
       ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@fontsource/roboto",
+        "@lucide/vue"
       ],
       "files": [
         {
@@ -264,6 +265,31 @@
         },
         {
           "path": "registry/vue/kalos-dialog.vue",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+      "name": "kalos-alert-dialog",
+      "type": "registry:ui",
+      "title": "Kalos 确认对话框 · Vue",
+      "description": "在执行重要操作前请求确认，打开时聚焦取消，点击遮罩不会关闭。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "alert-dialog",
+        "button"
+      ],
+      "dependencies": [
+        "@fontsource/roboto"
+      ],
+      "files": [
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/kalos-alert-dialog.vue",
           "type": "registry:ui"
         }
       ]
@@ -402,7 +428,7 @@
       "name": "kalos-all",
       "type": "registry:block",
       "title": "Kalos UI · Vue 完整组件库",
-      "description": "一次安装全部 14 个 Vue 组件。",
+      "description": "一次安装全部 15 个 Vue 组件。",
       "dependencies": [
         "@lucide/vue",
         "@fontsource/roboto"
@@ -418,6 +444,7 @@
         "tabs",
         "accordion",
         "dialog",
+        "alert-dialog",
         "select",
         "progress",
         "avatar"
@@ -469,6 +496,10 @@
         },
         {
           "path": "registry/vue/kalos-dialog.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/vue/kalos-alert-dialog.vue",
           "type": "registry:ui"
         },
         {

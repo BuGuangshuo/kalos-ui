@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ArrowUpRight, Layers } from "lucide-react";
 import { catalog, categories } from "@/lib/catalog";
-import { PrimitiveSwitcher } from "@/components/primitives";
 import { ComponentDemo } from "@/components/demos";
 import { LibrarySidebar } from "@/components/library-sidebar";
 import {
@@ -29,16 +28,13 @@ export function CatalogGrid() {
         onQueryChange={setQuery}
       />
       <div className="catalog-content">
-        <div className="catalog-toolbar">
-          <PrimitiveSwitcher />
-          <div className="mobile-catalog-search">
-            <Input
-              aria-label="筛选组件"
-              placeholder="搜索组件…"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </div>
+        <div className="mobile-catalog-search">
+          <Input
+            aria-label="筛选组件"
+            placeholder="搜索组件…"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
         </div>
         {query ? (
           <div className="catalog-result">

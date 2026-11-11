@@ -23,7 +23,8 @@ const references: Record<string, Reference> = {
   "kalos-card": { props: [["title", "string", "—", "卡片标题"], optionalDescription, ["children", "ReactNode", "—", "卡片内容"], ["footer", "ReactNode", "—", "底部操作区"]], keyboard: [] },
   "kalos-badge": { props: [["status", '"neutral" | "success" | "warning"', "neutral", "状态语义"], ["children", "ReactNode", "—", "状态名称"]], keyboard: [] },
   "kalos-accordion": { props: [["items", "{ question: string; answer: ReactNode }[]", "—", "标题与展开内容；一次展开一项"]], keyboard: [["Enter / Space", "展开或收起当前项"], ["↑ / ↓", "移动到相邻标题"], ["Home / End", "移动到首项或末项"]] },
-  "kalos-dialog": { props: [["trigger", "string", "—", "触发按钮文本"], ["title", "string", "—", "对话框标题与可访问名称"], optionalDescription, ["children", "ReactNode", "—", "对话框内容"]], keyboard: [["Enter / Space", "打开对话框"], ["Tab / Shift + Tab", "在对话框内移动焦点"], ["Esc", "关闭并返回触发按钮"]] },
+  "kalos-alert-dialog": { props: [["trigger", "string", "—", "触发按钮文本"], ["title", "string", "—", "确认对话框标题"], ["description", "string", "—", "操作的影响或不可恢复的结果"], ["actionLabel", "string", "确认", "确认按钮文字"], ["cancelLabel", "string", "取消", "取消按钮文字"], ["onConfirm", "() => void", "—", "仅确认时调用；取消、Esc 和遮罩点击不会触发"], ["open", "boolean", "—", "受控打开状态"], ["onOpenChange", "(open: boolean) => void", "—", "打开状态变化时调用"]], keyboard: [["Enter / Space", "打开或激活当前按钮"], ["Tab / Shift + Tab", "在确认与取消之间移动焦点"], ["Esc", "取消并返回触发按钮"]] },
+  "kalos-dialog": { props: [["trigger", "string", "—", "触发按钮文本"], ["title", "string", "—", "对话框标题与可访问名称"], optionalDescription, ["children", "ReactNode", "—", "对话框内容"], ["footer", "ReactNode", "—", "底部操作区"], ["open", "boolean", "—", "受控打开状态"], ["onOpenChange", "(open: boolean) => void", "—", "打开状态变化时调用"]], keyboard: [["Enter / Space", "打开对话框"], ["Tab / Shift + Tab", "在对话框内移动焦点"], ["Esc", "关闭并返回触发按钮"]] },
   "kalos-progress": { props: [label, ["value", "number", "—", "进度，自动限制为 0–100"], optionalDescription], keyboard: [] },
   "kalos-avatar-stack": { props: [["people", "{ name: string; image?: string }[]", "—", "成员及头像地址；无图片时显示姓名缩写"], ["max", "number", "4", "可见头像数量，其余显示为计数"]], keyboard: [] },
 };
@@ -56,7 +57,8 @@ export function componentReference(slug: string, framework: string, primitive: P
     if (slug === "kalos-popover") {
       for (const row of props) { if (row[0] === "open") row[0] = "v-model:open"; if (row[0] === "onAction") row[0] = "@action"; }
     }
-    if (slug === "kalos-dialog") props.push(["v-model:open", "boolean", "false", "控制打开状态"]);
+    if (["kalos-dialog", "kalos-alert-dialog"].includes(slug)) { for (const row of props) if (row[0] === "open") { row[0] = "v-model:open"; row[2] = "false"; } }
+    if (slug === "kalos-alert-dialog") for (const row of props) if (row[0] === "onConfirm") row[0] = "@confirm";
     return { props: props.filter(row => !["onClick", "onCheckedChange", "onValueChange", "defaultChecked", "variant", "size", "onOpenChange", "defaultOpen"].includes(row[0])), keyboard: source.keyboard };
   }
   return { props, keyboard: source.keyboard };

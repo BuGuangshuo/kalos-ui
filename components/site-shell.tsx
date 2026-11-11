@@ -18,7 +18,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Toaster } from "@/components/ui/sonner";
-import { cn } from "@/lib/utils";
 import { catalog } from "@/lib/catalog";
 import { site } from "@/lib/site";
 import { installerCommand } from "@/lib/installer";
@@ -27,37 +26,24 @@ import { BrandLogo } from "@/components/brand";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { GlobalSearch } from "@/components/global-search";
 import { FrameworkSwitcher } from "@/components/framework";
+import { SiteNavigation } from "@/components/site-navigation";
 const HomeShell = dynamic(() =>
   import("@/components/home/shell").then((module) => module.HomeShell),
 );
 function Header() {
-  const path = usePathname();
   const [menu, setMenu] = useState(false);
   return (
     <>
       <a className="skip-link" href="#main-content">
         跳至主要内容
       </a>
-      <header className={cn("site-header", path === "/" && "home-header")}>
+      <header className="site-header">
         <div className="header-inner">
           <Link href="/" className="brand" aria-label="Kalos UI 首页">
             <BrandLogo className="brand-lockup" />
           </Link>
           <nav className="desktop-nav" aria-label="主导航">
-            <Link
-              href="/docs/getting-started"
-              aria-current={path.startsWith("/docs") ? "page" : undefined}
-            >
-              文档
-            </Link>
-            <Link
-              href="/components"
-              aria-current={path.startsWith("/components") ? "page" : undefined}
-            >
-              组件
-            </Link>
-            <Link href="/docs/tokens">设计变量</Link>
-            <Link href="/docs/skills">Skills</Link>
+            <SiteNavigation />
           </nav>
           <div className="header-actions">
             <GlobalSearch />
@@ -89,18 +75,7 @@ function Header() {
         {menu ? (
           <nav className="mobile-nav" aria-label="移动导航">
             <FrameworkSwitcher className="mobile-framework-switcher" />
-            <Link onClick={() => setMenu(false)} href="/docs/getting-started">
-              文档
-            </Link>
-            <Link onClick={() => setMenu(false)} href="/components">
-              组件
-            </Link>
-            <Link onClick={() => setMenu(false)} href="/docs/tokens">
-              设计变量
-            </Link>
-            <Link onClick={() => setMenu(false)} href="/docs/skills">
-              Skills
-            </Link>
+            <SiteNavigation onNavigate={() => setMenu(false)} />
           </nav>
         ) : null}
       </header>

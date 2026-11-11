@@ -9,7 +9,7 @@ withDefaults(defineProps<{ loading?: boolean; disabled?: boolean; variant?: "def
 <template>
   <Button
     v-bind="$attrs"
-    :class="[controlStyles.button, variant === 'default' && controlStyles.buttonSolid, ['secondary', 'outline'].includes(variant) && controlStyles.buttonSurface, variant === 'ghost' && controlStyles.buttonGhost]"
+    :class="[controlStyles.button, variant === 'default' && controlStyles.buttonSolid, variant === 'destructive' && controlStyles.buttonDanger, ['secondary', 'outline'].includes(variant) && controlStyles.buttonSurface, variant === 'ghost' && controlStyles.buttonGhost]"
     :variant="variant"
     :disabled="disabled || loading"
     :aria-busy="loading || undefined"

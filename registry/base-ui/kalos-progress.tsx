@@ -15,7 +15,7 @@ export function KalosProgress({
   );
   return (
     <div className={`flex flex-col gap-3 ${controlStyles.font}`}>
-      <div className="flex items-center justify-between gap-4 text-sm">
+      <div className="flex items-center justify-between gap-4 text-[13px]">
         <span className="font-medium">{label}</span>
         <span className="tabular-nums text-muted-foreground">
           {Math.round(percent)}%

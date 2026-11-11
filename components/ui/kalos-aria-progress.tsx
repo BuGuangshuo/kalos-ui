@@ -112,7 +112,7 @@ function ProgressIndicator({
 function ProgressLabel({ className, ...props }: LabelProps) {
   return (
     <LabelPrimitive
-      className={cn("text-sm font-medium", className)}
+      className={cn("text-[13px] font-medium", className)}
       data-slot="progress-label"
       {...props}
     />
@@ -130,7 +130,7 @@ function ProgressValue({
   return (
     <span
       className={cn(
-        "ml-auto text-sm text-muted-foreground tabular-nums",
+        "ml-auto text-[13px] text-muted-foreground tabular-nums",
         className,
       )}
       data-slot="progress-value"

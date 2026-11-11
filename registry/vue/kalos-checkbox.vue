@@ -26,7 +26,7 @@ const model = defineModel<boolean | "indeterminate">({ default: false });
     />
     <label
       :for="id || autoId"
-      class="flex cursor-pointer flex-col gap-1 text-[14px] font-normal"
+      class="flex cursor-pointer flex-col gap-1 text-[13px] font-normal"
       >{{ label
       }}<span
         v-if="description"

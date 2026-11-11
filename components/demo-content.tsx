@@ -17,14 +17,17 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
+import { controlStyles } from "@/components/ui/kalos-styles";
+import { FieldGroup } from "@/components/ui/field";
 import type { KalosCommandMenuProps } from "@/components/ui/kalos-command-menu-panel";
 export interface DemoComponents {
   KalosCommandMenu: ComponentType<KalosCommandMenuProps>;
   KalosButton: ComponentType<{
     children?: ReactNode;
-    variant?: "default" | "secondary" | "outline" | "ghost";
+    variant?: "default" | "secondary" | "outline" | "ghost" | "destructive";
     size?: "default" | "icon";
     loading?: boolean;
+    disabled?: boolean;
     onClick?: () => void;
     "aria-label"?: string;
   }>;
@@ -67,11 +70,22 @@ export interface DemoComponents {
   KalosAccordion: ComponentType<{
     items: { question: string; answer: ReactNode }[];
   }>;
+  KalosAlertDialog: ComponentType<{
+    trigger: string;
+    title: string;
+    description: string;
+    actionLabel?: string;
+    cancelLabel?: string;
+    onConfirm?: () => void;
+  }>;
   KalosDialog: ComponentType<{
     trigger: string;
     title: string;
     description?: string;
     children: ReactNode;
+    footer?: ReactNode;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
   }>;
   KalosSelect: ComponentType<{
     label: string;
@@ -144,6 +158,10 @@ function ButtonDemo({ KalosButton }: Pick<DemoComponents, "KalosButton">) {
           <Heart />
         </KalosButton>
       </div>
+      <div className="flex items-center justify-center gap-2">
+        <KalosButton variant="destructive" onClick={() => toast("危险操作已触发")}>危险操作</KalosButton>
+        <KalosButton disabled>禁用按钮</KalosButton>
+      </div>
     </div>
   );
 }
@@ -168,12 +186,14 @@ export function DemoContent({
     KalosTabs,
     KalosAccordion,
     KalosDialog,
+    KalosAlertDialog,
     KalosSelect,
     KalosProgress,
     KalosAvatarStack,
   } = components;
   const [progress, setProgress] = useState(68);
   const [framework, setFramework] = useState("next");
+  const [dialogOpen, setDialogOpen] = useState(false);
   switch (slug) {
     case "kalos-button":
       return <ButtonDemo KalosButton={KalosButton} />;
@@ -321,10 +341,30 @@ export function DemoContent({
           />
         </div>
       );
+    case "kalos-alert-dialog":
+      return <KalosAlertDialog
+        trigger="删除项目"
+        title="删除项目？"
+        description="项目及其数据将永久删除，无法撤销。"
+        actionLabel="删除项目"
+        onConfirm={() => toast.success("项目已删除")}
+      />;
     case "kalos-dialog":
       return (
-        <KalosDialog trigger="打开对话框" title="创建项目">
-          <KalosInput label="项目名称" placeholder="输入项目名称" />
+        <KalosDialog
+          trigger="打开对话框"
+          title="创建项目"
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          footer={<>
+            <KalosButton variant="outline" onClick={() => setDialogOpen(false)}>取消</KalosButton>
+            <KalosButton onClick={() => { setDialogOpen(false); toast.success("项目已创建"); }}>创建项目</KalosButton>
+          </>}
+        >
+          <FieldGroup className={controlStyles.dialogForm}>
+            <KalosInput label="项目名称" defaultValue="Kalos UI" />
+            <KalosInput label="项目标识" defaultValue="kalos-ui" />
+          </FieldGroup>
         </KalosDialog>
       );
     case "kalos-select":

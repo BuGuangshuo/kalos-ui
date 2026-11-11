@@ -8,34 +8,42 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogFooter,
 } from "@/components/ui/kalos-aria-dialog";
 export function KalosDialog({
   trigger,
   title,
   description,
   children,
+  footer,
+  open,
+  onOpenChange,
 }: {
   trigger: string;
   title: string;
   description?: string;
   children: ReactNode;
+  footer?: ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
   return (
-    <DialogTrigger>
+    <DialogTrigger isOpen={open} onOpenChange={onOpenChange}>
       <Button
         className={`${controlStyles.button} ${controlStyles.buttonSurface}`}
         variant="outline"
       >
         {trigger}
       </Button>
-      <Dialog>
-        <DialogHeader>
+      <Dialog className={`${controlStyles.font} ${controlStyles.dialogLayout}`}>
+        <DialogHeader className={controlStyles.dialogHeader}>
           <DialogTitle>{title}</DialogTitle>
           {description ? (
             <DialogDescription>{description}</DialogDescription>
           ) : null}
         </DialogHeader>
-        {children}
+        <div className={controlStyles.dialogBody}>{children}</div>
+        {footer ? <DialogFooter>{footer}</DialogFooter> : null}
       </Dialog>
     </DialogTrigger>
   );

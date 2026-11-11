@@ -72,7 +72,7 @@ const navigate = (event: KeyboardEvent) => {
           <span :class="controlStyles.commandItemText"><span :class="controlStyles.commandTitle">{{ item.label }}</span><span v-if="item.description" :class="controlStyles.commandDescription"><slot name="description" :item="item">{{ item.description }}</slot></span></span>
         </button>
       </div>
-      <p v-if="!visible.length" class="px-3 py-8 text-center text-[14px] text-muted-foreground" role="status">{{ emptyMessage }}</p>
+      <p v-if="!visible.length" class="px-3 py-8 text-center text-[13px] text-muted-foreground" role="status">{{ emptyMessage }}</p>
     </div>
     <div aria-hidden="true" :class="controlStyles.commandFooter">
       <span><kbd :class="controlStyles.commandKey">↑</kbd><kbd :class="controlStyles.commandKey">↓</kbd>选择</span>

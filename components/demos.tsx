@@ -25,6 +25,7 @@ import { KalosSwitch } from "@/registry/kalos/kalos-switch";
 import { KalosCheckbox } from "@/registry/kalos/kalos-checkbox";
 import { KalosTabs } from "@/registry/kalos/kalos-tabs";
 import { KalosAccordion } from "@/registry/kalos/kalos-accordion";
+import { KalosAlertDialog } from "@/registry/kalos/kalos-alert-dialog";
 import { KalosDialog } from "@/registry/kalos/kalos-dialog";
 import { KalosSelect } from "@/registry/kalos/kalos-select";
 import { KalosProgress } from "@/registry/kalos/kalos-progress";
@@ -49,6 +50,7 @@ const radixComponents = {
   KalosTabs,
   KalosAccordion,
   KalosDialog,
+  KalosAlertDialog,
   KalosSelect,
   KalosProgress,
   KalosAvatarStack,

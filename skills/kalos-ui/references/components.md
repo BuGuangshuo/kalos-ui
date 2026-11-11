@@ -14,7 +14,8 @@ Use the slug with the framework's registry URL in SKILL.md. React named exports 
 | kalos-checkbox     | `label`, `description`, disabled/name               | `v-model` boolean or `indeterminate`                             |
 | kalos-tabs         | items with value/label/content                      | string content or a slot named by item value; optional `v-model` |
 | kalos-accordion    | items with question/answer, single open item        | answers are strings                                              |
-| kalos-dialog       | `trigger`, `title`, `description`                   | `v-model:open`; default and footer slots                         |
+| kalos-alert-dialog | `trigger`, `title`, `description`, `actionLabel`, `cancelLabel`, `onConfirm`, `open`, `onOpenChange` | `v-model:open`; `@confirm` |
+| kalos-dialog       | `trigger`, `title`, `description`, `footer`, `open`, `onOpenChange`                   | `v-model:open`; default and footer slots                         |
 | kalos-select       | `label`, `placeholder`, items with value/label      | optional `v-model` string                                        |
 | kalos-progress     | `label`, `value` clamped 0–100, `description`       | `:value="68"`                                                    |
 | kalos-avatar-stack | people with name/image, `max`                       | `:people="members"`                                              |

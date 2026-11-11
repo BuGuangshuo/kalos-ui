@@ -120,9 +120,19 @@ export const catalog = [
     description: "让用户专注于当前任务，包含焦点管理与关闭行为。",
     dependencies: ["dialog", "button"],
     props:
-      "trigger: string；title: string；description?: string；children: ReactNode。",
+      "trigger: string；title: string；description?: string；children: ReactNode；footer?: ReactNode；open?: boolean；onOpenChange?: (open: boolean) => void。",
     usage:
       '<KalosDialog trigger="查看项目" title="设计工作空间">Kalos UI</KalosDialog>',
+  },
+  {
+    slug: "kalos-alert-dialog",
+    title: "确认对话框",
+    english: "Alert Dialog",
+    category: "操作",
+    description: "在执行重要操作前请求确认，打开时聚焦取消，点击遮罩不会关闭。",
+    dependencies: ["alert-dialog", "button"],
+    props: "trigger: string；title: string；description: string；actionLabel?: string；cancelLabel?: string；onConfirm?: () => void；open?: boolean；onOpenChange?: (open: boolean) => void。",
+    usage: '<KalosAlertDialog trigger="删除项目" title="删除项目？" description="项目及其数据将永久删除，无法撤销。" actionLabel="删除项目" onConfirm={() => console.log("confirmed")} />',
   },
   {
     slug: "kalos-select",

@@ -41,7 +41,7 @@ watch(model, updateHighlight);
       v-for="item in items"
       :key="item.value"
       :value="item.value"
-      class="rounded-xl border p-4 text-sm"
+      class="rounded-xl border p-4 text-[13px]"
       ><slot :name="item.value">{{ item.content }}</slot></TabsContent
     >
   </Tabs>
