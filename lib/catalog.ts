@@ -31,14 +31,24 @@ export const catalog = [
     usage: '<KalosPopover trigger="更多操作" items={[{ value: "edit", label: "编辑项目" }, { value: "duplicate", label: "创建副本" }, { value: "archive", label: "归档项目" }]} />',
   },
   {
+    slug: "kalos-form",
+    title: "表单",
+    english: "Form",
+    category: "表单输入",
+    description: "组合文本、密码、选择器、复选框和开关，提供字段校验、保存与取消。",
+    dependencies: ["input", "field", "select", "checkbox", "switch", "button", "card"],
+    props: "fields: KalosFormField[]；defaultValues?: KalosFormValues；validate?；onSubmit?；onCancel?；disabled?。输入时实时校验当前项格式；保存时检查全部字段，已填内容清空时检查必填，取消恢复到初始或最近保存的值。",
+    usage: '<KalosForm fields={[{ name: "email", label: "邮箱地址", type: "email", required: true }]} onSubmit={save} />',
+  },
+  {
     slug: "kalos-input",
     title: "文本输入",
     english: "Text Input",
     category: "表单输入",
     description: "将标签、输入、说明和校验提示组合在一起。",
-    dependencies: ["input", "field"],
+    dependencies: ["input", "field", "button"],
     props:
-      "label: string；hint?: string；error?: string；支持原生 input 属性。默认高度 32px。",
+      "label: string；hint?: string；error?: string；clearable?: boolean；onClear?；密码末尾提供显示切换；支持原生 input 属性。默认高度 32px。",
     usage:
       '<KalosInput label="邮箱地址" type="email" placeholder="you@example.com" />',
   },
@@ -140,7 +150,7 @@ export const catalog = [
     english: "Select",
     category: "表单输入",
     description: "从一组候选项中进行选择，支持键盘导航与选中反馈。",
-    dependencies: ["select"],
+    dependencies: ["select", "field", "button"],
     props:
       "label: string；placeholder?: string；items: { value: string; label: string }[]；value?: string；onValueChange?: (value: string) => void。",
     usage:

@@ -1,4 +1,5 @@
 "use client";
+import { KalosForm } from "@/registry/base-ui/kalos-form";
 import { DemoContent } from "@/components/demo-content";
 import { KalosAccordion } from "@/registry/base-ui/kalos-accordion";
 import { KalosAvatarStack } from "@/registry/base-ui/kalos-avatar-stack";
@@ -16,6 +17,7 @@ import { KalosSelect } from "@/registry/base-ui/kalos-select";
 import { KalosSwitch } from "@/registry/base-ui/kalos-switch";
 import { KalosTabs } from "@/registry/base-ui/kalos-tabs";
 const components = {
+  KalosForm,
   KalosAccordion,
   KalosAvatarStack,
   KalosBadge,

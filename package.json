@@ -10,7 +10,7 @@
     "brand:build": "node scripts/build-brand.mjs",
     "cli:build": "node scripts/build-installer.mjs",
     "cli:test": "node --test packages/cli/test/*.test.mjs",
-    "registry:build": "npm run styles:build && node scripts/prepare-registry.mjs && shadcn build && node scripts/verify-registry.mjs && node scripts/build-vue-registry.mjs && node scripts/build-react-registries.mjs",
+    "registry:build": "npm run styles:build && node scripts/prepare-registry.mjs && shadcn build && node scripts/verify-registry.mjs && node scripts/build-react-registries.mjs",
     "typecheck": "tsc --noEmit",
     "styles:build": "node scripts/build-component-styles.mjs",
     "search:build": "node scripts/build-search-index.mjs",

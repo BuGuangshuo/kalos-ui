@@ -5,7 +5,6 @@ import { Search, ArrowUpRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { catalog, categories } from "@/lib/catalog";
 import { site } from "@/lib/site";
-import { FrameworkSwitcher } from "@/components/framework";
 export function LibrarySidebar({
   active,
   query,
@@ -18,7 +17,7 @@ export function LibrarySidebar({
   const [localQuery, setLocalQuery] = useState("");
   const term = query ?? localQuery;
   const isDocs =
-    active === "docs" || active === "tokens" || active === "skills";
+    active === "docs" || active === "tokens" || active === "skills" || active === "registry";
   const filtered = catalog.filter((item) =>
     `${item.title} ${item.english}`.toLowerCase().includes(term.toLowerCase()),
   );
@@ -39,7 +38,6 @@ export function LibrarySidebar({
               }
             />
           </div>
-          <FrameworkSwitcher className="sidebar-framework-switcher" />
           <Link
             className="sidebar-overview"
             href="/components"
@@ -71,43 +69,19 @@ export function LibrarySidebar({
         </>
       ) : (
         <>
-          <FrameworkSwitcher className="sidebar-framework-switcher" />
+          <div className="sidebar-section">使用指南</div>
           <Link
-            className="sidebar-overview"
             href="/docs/getting-started"
             aria-current={active === "docs" ? "page" : undefined}
           >
             快速开始
           </Link>
-          <div className="sidebar-section">使用指南</div>
-          <Link href="/docs/getting-started#installation">安装与配置</Link>
-          <Link href="/docs/getting-started#usage">使用第一个组件</Link>
-          <Link href="/docs/getting-started#namespace">注册表命名空间</Link>
-          <Link href="/docs/getting-started#maintenance">扩展组件库</Link>
-          <Link
-            href="/docs/skills"
-            aria-current={active === "skills" ? "page" : undefined}
-          >
-            Skills
-          </Link>
+          <Link href="/docs/registry" aria-current={active === "registry" ? "page" : undefined}>注册表配置</Link>
+          <Link href="/docs/skills" aria-current={active === "skills" ? "page" : undefined}>Skills</Link>
           <div className="sidebar-section">设计基础</div>
-          <Link
-            href="/docs/tokens"
-            aria-current={active === "tokens" ? "page" : undefined}
-          >
-            设计变量
-          </Link>
-          <Link href="/docs/tokens#colors">颜色与主题</Link>
-          <Link href="/docs/tokens#spacing">间距</Link>
-          <Link href="/docs/tokens#size">尺寸</Link>
-          <Link href="/docs/tokens#radius">圆角</Link>
-          <Link href="/docs/tokens#typography">排版</Link>
-          <Link href="/docs/tokens#motion">动效</Link>
+          <Link href="/docs/tokens" aria-current={active === "tokens" ? "page" : undefined}>设计系统</Link>
           <div className="sidebar-section">资源</div>
           <Link href="/components">组件总览</Link>
-          <Link href="/docs/skills">
-            安装 Skill <ArrowUpRight />
-          </Link>
           <a href={site.github} target="_blank" rel="noreferrer">
             GitHub 仓库 <ArrowUpRight />
           </a>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { DocsPagination } from "@/components/page-pagination";
 import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
 import tokens from "@/design/tokens.json";
-export const metadata: Metadata = { title: "设计变量" };
+export const metadata: Metadata = { title: "设计系统" };
 const links = [
   { id: "colors", title: "颜色与主题" },
   { id: "spacing", title: "间距" },
@@ -44,12 +45,12 @@ export default function TokensPage() {
       <div className="docs-grid">
         <article className="docs-content">
           <header className="docs-title">
-            <h1>设计变量</h1>
+            <h1>设计系统</h1>
             <p>用一套共享的语义规则，保持组件、页面与设计稿的一致。</p>
           </header>
           <p className="tokens-intro">
             语义变量维护在 <code>design/tokens.json</code>，控件状态维护在 <code>design/component-tokens.json</code>。
-            React、Vue 与 Figma 共用这些颜色、尺寸和字体规则。
+            三种 React 基础库与 Figma 共用这些颜色、尺寸和字体规则。
           </p>
           <section id="colors">
             <h2>颜色与主题</h2>
@@ -166,6 +167,7 @@ export default function TokensPage() {
               }
             />
           </section>
+          <DocsPagination current="/docs/tokens" />
         </article>
         <OnThisPage links={links} />
       </div>

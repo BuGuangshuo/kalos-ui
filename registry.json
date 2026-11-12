@@ -90,6 +90,73 @@
       ]
     },
     {
+      "name": "kalos-form",
+      "type": "registry:ui",
+      "title": "Kalos 表单",
+      "description": "组合文本、密码、选择器、复选框和开关，提供字段校验、保存与取消。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "registryDependencies": [
+        "input",
+        "field",
+        "select",
+        "checkbox",
+        "switch",
+        "button",
+        "card"
+      ],
+      "dependencies": [
+        "@fontsource/roboto",
+        "motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-form.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-checkbox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-switch.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-form-state.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "kalos-input",
       "type": "registry:ui",
       "title": "Kalos 文本输入",
@@ -97,10 +164,13 @@
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "input",
-        "field"
+        "field",
+        "button"
       ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@fontsource/roboto",
+        "motion",
+        "lucide-react"
       ],
       "files": [
         {
@@ -109,6 +179,14 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
           "type": "registry:ui"
         }
       ]
@@ -169,7 +247,8 @@
         "switch"
       ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@fontsource/roboto",
+        "motion"
       ],
       "files": [
         {
@@ -178,6 +257,10 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
           "type": "registry:ui"
         }
       ]
@@ -192,7 +275,8 @@
         "checkbox"
       ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@fontsource/roboto",
+        "motion"
       ],
       "files": [
         {
@@ -201,6 +285,10 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
           "type": "registry:ui"
         }
       ]
@@ -314,10 +402,14 @@
       "description": "从一组候选项中进行选择，支持键盘导航与选中反馈。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
-        "select"
+        "select",
+        "field",
+        "button"
       ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@fontsource/roboto",
+        "motion",
+        "lucide-react"
       ],
       "files": [
         {
@@ -326,6 +418,14 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
           "type": "registry:ui"
         },
         {
@@ -441,29 +541,42 @@
       "name": "kalos-all",
       "type": "registry:block",
       "title": "Kalos UI 完整组件库",
-      "description": "一次安装全部 15 个组件。",
+      "description": "一次安装全部 16 个组件。",
       "dependencies": [
         "lucide-react",
-        "@fontsource/roboto"
+        "@fontsource/roboto",
+        "motion"
       ],
       "registryDependencies": [
         "button",
         "popover",
         "input",
         "field",
+        "select",
+        "checkbox",
+        "switch",
         "card",
         "badge",
-        "switch",
-        "checkbox",
         "tabs",
         "accordion",
         "dialog",
         "alert-dialog",
-        "select",
         "progress",
         "avatar"
       ],
       "files": [
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-form-state.ts",
+          "type": "registry:ui"
+        },
         {
           "path": "components/ui/dialog.tsx",
           "type": "registry:ui"
@@ -478,6 +591,10 @@
         },
         {
           "path": "registry/kalos/kalos-popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-form.tsx",
           "type": "registry:ui"
         },
         {

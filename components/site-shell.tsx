@@ -20,12 +20,11 @@ import {
 import { Toaster } from "@/components/ui/sonner";
 import { catalog } from "@/lib/catalog";
 import { site } from "@/lib/site";
-import { installerCommand } from "@/lib/installer";
+import { installerCommand, type InstallationMode } from "@/lib/installer";
 import { CopyButton } from "@/components/copy-button";
 import { BrandLogo } from "@/components/brand";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { GlobalSearch } from "@/components/global-search";
-import { FrameworkSwitcher } from "@/components/framework";
 import { SiteNavigation } from "@/components/site-navigation";
 const HomeShell = dynamic(() =>
   import("@/components/home/shell").then((module) => module.HomeShell),
@@ -74,7 +73,6 @@ function Header() {
         </div>
         {menu ? (
           <nav className="mobile-nav" aria-label="移动导航">
-            <FrameworkSwitcher className="mobile-framework-switcher" />
             <SiteNavigation onNavigate={() => setMenu(false)} />
           </nav>
         ) : null}
@@ -100,13 +98,13 @@ const subscribeOrigin = () => () => {};
 const getOrigin = () => window.location.origin;
 const getServerOrigin = () => site.url;
 
-export function InstallCommand({ slug = "kalos-button", manager = "npm" }: { slug?: string; manager?: string }) {
+export function InstallCommand({ slug = "kalos-button", manager = "npm", mode = "add", template }: { slug?: string; manager?: string; mode?: InstallationMode; template?: string }) {
   const origin = useSyncExternalStore(
     subscribeOrigin,
     getOrigin,
     getServerOrigin,
   );
-  const value = installerCommand(origin, manager, slug);
+  const value = installerCommand(origin, manager, slug, mode, template);
   return (
     <div className="install-command">
       <Terminal />

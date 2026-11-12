@@ -7,8 +7,8 @@ const family = typography.family.replaceAll('"', '').replace(/\s+/g, "_");
 const font = `[font-family:${family}] text-[${typography.controlSize}px] leading-[${typography.controlLineHeight}px]`;
 const focus = "outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0";
 const state = "[&:is([data-checked],[data-selected],[data-state=checked],[data-state=indeterminate],[data-indeterminate])]";
-const fieldVars = vars("text-field", Object.fromEntries(["ink", "surface", "shadow", "shadow-hover", "shadow-focus", "danger-edge", "subtle"].map(k => [k, `--ui-tfc-${k}`])));
-const field = `${font} ${focus} ${fieldVars} h-8 rounded-[7px] border-0 bg-[var(--k-surface)]! px-2.5 py-0 text-[color:var(--k-ink)] shadow-[var(--k-shadow)] transition-[box-shadow,background-color] duration-[140ms] ease-[ease] hover:shadow-[var(--k-shadow-hover)] focus-visible:shadow-[var(--k-shadow-focus)] placeholder:text-[color:var(--k-subtle)] aria-invalid:shadow-[0_0_0_1px_var(--k-danger-edge),0_1px_2px_0_rgba(0,0,0,.05)] disabled:opacity-40`;
+const fieldVars = vars("text-field", Object.fromEntries(["ink", "surface", "shadow", "shadow-hover", "shadow-focus", "danger-edge", "danger-edge-focus", "danger-surface", "subtle"].map(k => [k, `--ui-tfc-${k}`])));
+const field = `${font} ${focus} ${fieldVars} h-8 rounded-[7px] border-0 bg-[var(--k-surface)]! px-2.5 py-0 text-[color:var(--k-ink)] shadow-[var(--k-shadow)] transition-[box-shadow,background-color] duration-[140ms] ease-[ease] hover:shadow-[var(--k-shadow-hover)] focus-visible:shadow-[var(--k-shadow-focus)] placeholder:text-[color:var(--k-subtle)] aria-invalid:ring-0 aria-invalid:bg-[var(--k-danger-surface)]! aria-invalid:shadow-[0_0_0_1px_var(--k-danger-edge),0_1px_2px_0_rgba(0,0,0,.05)] aria-invalid:focus-visible:shadow-[0_0_0_1px_var(--k-danger-edge-focus),0_1px_2px_0_rgba(0,0,0,.05)] group-data-[invalid=true]/field:bg-[var(--k-danger-surface)]! group-data-[invalid=true]/field:shadow-[0_0_0_1px_var(--k-danger-edge),0_1px_2px_0_rgba(0,0,0,.05)] group-data-[invalid=true]/field:focus-within:shadow-[0_0_0_1px_var(--k-danger-edge-focus),0_1px_2px_0_rgba(0,0,0,.05)] disabled:opacity-40`;
 const buttonVars = vars("button", Object.fromEntries(["ink", "solid", "solid-hover", "on-solid", "surface", "shadow", "shadow-hover", "wash", "ease", "danger", "danger-hover", "on-danger"].map(k => [k, `--ui-btnc-${k}`])));
 const menuVars = vars("select", Object.fromEntries(["ink", "menu", "glow", "shadow-menu", "ease"].map(k => [k, `--ui-selc-${k}`])));
 const switchVars = vars("switch", Object.fromEntries(["off", "off-hover", "on", "on-hover", "thumb", "thumb-shadow", "ease"].map(k => [k, `--ui-swc-${k}`])));
@@ -21,7 +21,35 @@ const alertDialog = inventory.defaults["alert-dialog"];
 const dialogVars = vars("dialog", { "dialog-edge": "edge", "dialog-shadow": "shadow" });
 const dialogMotion = `duration-[${dialog.duration}ms] ease-[${css(dialog.ease)}] [animation-duration:${dialog.duration}ms] [animation-timing-function:${css(dialog.ease)}]`;
 const dialogOverlayMotion = `duration-[${dialog.duration}ms] ease-[${css(dialog.overlayEase)}] [animation-duration:${dialog.duration}ms] [animation-timing-function:${css(dialog.overlayEase)}]`;
+const form = inventory.defaults.form;
+const fieldMessageMotion = inventory.defaults["field-message"];
+const cardVars = vars("text-field", { "card-surface": "--ui-tfc-surface", "card-ink": "--ui-tfc-ink", "card-shadow": "--ui-tfc-shadow" });
+const cardSurface = `${cardVars} rounded-[12px] border-0 bg-[var(--k-card-surface)] text-[color:var(--k-card-ink)] shadow-[var(--k-card-shadow)] ring-0`;
+const validationVars = vars("text-field", { "validation-edge": "--ui-tfc-danger-edge" });
+const validation = `${validationVars} aria-invalid:ring-0 data-invalid:ring-0 aria-invalid:shadow-[0_0_0_1px_var(--k-validation-edge)] data-invalid:shadow-[0_0_0_1px_var(--k-validation-edge)]`;
+const action = `inline-flex size-6 shrink-0 items-center justify-center rounded-full border-0 bg-transparent! p-0! text-muted-foreground shadow-none transition-[background-color,box-shadow,color,opacity] duration-150 hover:bg-transparent! hover:shadow-none hover:text-foreground focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-ring focus-visible:ring-0 disabled:opacity-40 [&_svg]:size-3.5`;
 const styles = {
+  form: `${font} flex w-full min-w-0 max-w-[${form.maxWidth}px] flex-col`,
+  card: `${font} ${cardSurface} gap-5 py-5`,
+  cardHeader: "px-5",
+  cardContent: "px-5",
+  cardFooter: "border-t border-border bg-transparent p-4",
+  formCard: `${cardSurface} w-full min-w-0 gap-0 py-0`,
+  inputGroup: `${field} ring-0! flex w-full min-w-0 px-0 focus-within:shadow-[var(--k-shadow-focus)] data-[invalid=true]:bg-[var(--k-danger-surface)]! data-[invalid=true]:shadow-[0_0_0_1px_var(--k-danger-edge)] data-[invalid=true]:focus-within:shadow-[0_0_0_1px_var(--k-danger-edge-focus)] data-[disabled=true]:opacity-40`,
+  inputContent: `${font} h-full min-w-0 flex-1 rounded-[7px] border-0 bg-transparent! px-2.5 py-0 text-[color:var(--k-ink)] shadow-none outline-none ring-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 aria-invalid:ring-0 disabled:bg-transparent disabled:opacity-100 placeholder:text-[color:var(--k-subtle)]`,
+  inputClear: "[&_svg]:size-3! pointer-events-none opacity-0 transition-opacity duration-150 group-hover/input-group:pointer-events-auto group-hover/input-group:opacity-100 group-focus-within/input-group:pointer-events-auto group-focus-within/input-group:opacity-100 focus-visible:pointer-events-auto focus-visible:opacity-100",
+  inputAddon: "flex h-full shrink-0 items-center gap-0.5 pr-2",
+  inputAction: action,
+  selectClearable: "[&>svg]:transition-opacity [&>svg]:duration-150 [&>svg]:group-has-[[data-slot=select-clear]:hover]/select-control:opacity-0 [&>svg]:group-has-[:focus-visible]/select-control:opacity-0",
+  selectClear: `${action} [&_svg]:size-3! absolute top-1 right-2 opacity-0 hover:opacity-100 group-has-[:focus-visible]/select-control:opacity-100 focus-visible:opacity-100`,
+  formHeader: `px-[${form.padding}px] pt-[${form.padding}px] pb-0`,
+  formTitle: "text-[14px] font-medium leading-5",
+  formContent: `min-w-0 p-[${form.padding}px]`,
+  formFooter: `flex flex-col items-stretch gap-3 border-t border-border bg-transparent p-[${form.footerPadding}px]`,
+  formFields: `gap-[${form.gap}px]`,
+  formActions: `flex flex-wrap justify-end gap-[${form.buttonGap}px]`,
+  formError: "text-xs leading-[18px] text-destructive",
+  formStatus: "text-xs leading-[18px] text-muted-foreground",
   font,
   alertDialogWidth: `w-[${alertDialog.maxWidth}px]!`,
   alertDialogLayout: `gap-[${alertDialog.contentGap}px] p-[${alertDialog.contentPadding}px]`,
@@ -42,9 +70,10 @@ const styles = {
   dialogRadixOverlay: `${dialogOverlayMotion} data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0`,
   dialogBaseOverlay: `${dialogOverlayMotion} transition-opacity data-starting-style:opacity-0 data-ending-style:opacity-0`,
   dialogAriaOverlay: `${dialogOverlayMotion} data-entering:animate-in data-entering:fade-in-0 data-exiting:animate-out data-exiting:fade-out-0`,
-  label: `${font} font-normal`,
+  label: `${font} gap-1 font-normal`,
+  requiredMark: "ml-0.5 text-destructive",
   field,
-  selectTrigger: `${field} w-full pr-2 data-[state=open]:shadow-[var(--k-shadow-focus)] data-popup-open:shadow-[var(--k-shadow-focus)] data-open:shadow-[var(--k-shadow-focus)]`,
+  selectTrigger: `${field} w-full pr-3 data-[state=open]:shadow-[var(--k-shadow-focus)] data-popup-open:shadow-[var(--k-shadow-focus)] data-open:shadow-[var(--k-shadow-focus)] aria-invalid:data-[state=open]:shadow-[0_0_0_1px_var(--k-danger-edge-focus)] aria-invalid:data-popup-open:shadow-[0_0_0_1px_var(--k-danger-edge-focus)] aria-invalid:data-open:shadow-[0_0_0_1px_var(--k-danger-edge-focus)]`,
   selectMenu: `${font} ${menuVars} rounded-[10px] border-0 ring-0 bg-[var(--k-menu)] p-1 text-[color:var(--k-ink)] shadow-[var(--k-shadow-menu)] before:rounded-[6px] before:bg-[var(--k-glow)] before:duration-[180ms] before:ease-[var(--k-ease)] [&_[role=option]]:min-h-8 [&_[role=option]]:rounded-[6px] [&_[role=option]]:py-1.5 [&_[role=option]]:pl-2 [&_[role=option]]:pr-8 [&_[role=option]]:text-[13px] [&_[role=option]]:leading-5 [&_[role=option]]:text-[color:var(--k-ink)] [&_[data-slot=select-group]]:p-0`,
   commandMenu: `${font} ${commandVars} w-full max-w-[${command.width}px] overflow-hidden rounded-[${command.radius}px] bg-[var(--k-command-surface)] text-[color:var(--k-command-ink)] shadow-[var(--k-command-shadow)]`,
   commandSearch: `flex h-[${command.searchHeight}px] items-center gap-2.5 border-b border-[var(--k-command-edge)] px-[${command.contentInset}px] [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--k-command-muted)]`,
@@ -66,10 +95,10 @@ const styles = {
   buttonSolid: "bg-[var(--k-solid)] text-[color:var(--k-on-solid)] shadow-none hover:bg-[var(--k-solid-hover)]",
   buttonSurface: "bg-[var(--k-surface)]! text-[color:var(--k-ink)] shadow-[var(--k-shadow)] hover:bg-[var(--k-surface)]! hover:shadow-[var(--k-shadow-hover)]",
   buttonGhost: "bg-transparent text-[color:var(--k-ink)] shadow-none hover:bg-[var(--k-wash)]",
-  switch: `${focus} ${switchVars} relative h-5 w-8 shrink-0 rounded-full border-0 p-0.5 bg-[var(--k-off)]! hover:bg-[var(--k-off-hover)]! transition-colors duration-200 ${state}:bg-[var(--k-on)]! ${state}:hover:bg-[var(--k-on-hover)]! [&_[data-slot=switch-thumb]]:size-4 [&_[data-slot=switch-thumb]]:bg-[var(--k-thumb)]! [&_[data-slot=switch-thumb]]:shadow-[var(--k-thumb-shadow)] [&_[data-slot=switch-thumb]]:transition-[transform,width] [&_[data-slot=switch-thumb]]:duration-[260ms] [&_[data-slot=switch-thumb]]:ease-[var(--k-ease)] ${state}:[&_[data-slot=switch-thumb]]:translate-x-3 disabled:opacity-40`,
-  checkbox: `${focus} ${checkVars} size-4 shrink-0 rounded-[4.5px] border-0 bg-[var(--k-surface)]! shadow-[inset_0_0_0_1px_var(--k-edge),0_1px_1px_rgba(0,0,0,.04)] hover:shadow-[inset_0_0_0_1px_var(--k-edge-hover),0_1px_1px_rgba(0,0,0,.04)] transition-[background-color,box-shadow,transform] duration-[160ms] ease-[var(--k-ease)] active:scale-[.93] ${state}:bg-[var(--k-fill)]! ${state}:text-[color:var(--k-on-fill)] ${state}:shadow-none ${state}:hover:shadow-none [&_svg]:size-4 [&_svg]:text-current disabled:opacity-40`,
+  switch: `${validation} ${focus} ${switchVars} relative h-5 w-8 shrink-0 rounded-full border-0 p-0.5 bg-[var(--k-off)]! hover:bg-[var(--k-off-hover)]! transition-colors duration-200 ${state}:bg-[var(--k-on)]! ${state}:hover:bg-[var(--k-on-hover)]! [&_[data-slot=switch-thumb]]:size-4 [&_[data-slot=switch-thumb]]:bg-[var(--k-thumb)]! [&_[data-slot=switch-thumb]]:shadow-[var(--k-thumb-shadow)] [&_[data-slot=switch-thumb]]:transition-[transform,width] [&_[data-slot=switch-thumb]]:duration-[260ms] [&_[data-slot=switch-thumb]]:ease-[var(--k-ease)] ${state}:[&_[data-slot=switch-thumb]]:translate-x-3 disabled:opacity-40`,
+  checkbox: `${validation} ${focus} ${checkVars} size-4 shrink-0 rounded-[4.5px] border-0 bg-[var(--k-surface)]! shadow-[inset_0_0_0_1px_var(--k-edge),0_1px_1px_rgba(0,0,0,.04)] hover:shadow-[inset_0_0_0_1px_var(--k-edge-hover),0_1px_1px_rgba(0,0,0,.04)] transition-[background-color,box-shadow,transform] duration-[160ms] ease-[var(--k-ease)] active:scale-[.93] ${state}:bg-[var(--k-fill)]! ${state}:text-[color:var(--k-on-fill)] ${state}:shadow-none ${state}:hover:shadow-none [&_svg]:size-4 [&_svg]:text-current disabled:opacity-40`,
   tabsList: `${font} ${tabVars} h-7! rounded-[8px] border-0 bg-[var(--k-track)] p-0.5 text-[color:var(--k-text)] before:rounded-[6px] before:bg-[var(--k-card)] before:shadow-[var(--k-card-shadow)] before:duration-200 before:ease-[var(--k-ease)]`,
   tabsTrigger: `${focus} relative z-10 h-6 min-h-0 rounded-[6px] border-0 bg-transparent! px-2.5 py-0 text-[13px] font-normal leading-5 text-[color:var(--k-text)] data-active:text-[color:var(--k-ink)] data-selected:text-[color:var(--k-ink)] data-[state=active]:text-[color:var(--k-ink)] data-active:bg-transparent! data-selected:bg-transparent! data-[state=active]:bg-transparent! data-active:shadow-none! data-selected:shadow-none! data-[state=active]:shadow-none!`,
 };
-await writeFile("components/ui/kalos-styles.ts", `// Generated from design/component-tokens.json by scripts/build-component-styles.mjs.\nimport "@fontsource/roboto/latin-400.css";\nimport "@fontsource/roboto/latin-500.css";\nexport const controlStyles = ${JSON.stringify(styles, null, 2)} as const;\n`);
+await writeFile("components/ui/kalos-styles.ts", `// Generated from design/component-tokens.json by scripts/build-component-styles.mjs.\nimport "@fontsource/roboto/latin-400.css";\nimport "@fontsource/roboto/latin-500.css";\nexport const controlStyles = ${JSON.stringify(styles, null, 2)} as const;\nexport const fieldMessageMotion = ${JSON.stringify(fieldMessageMotion)} as const;\n`);
 console.log("Generated shared component styles from measured tokens.");

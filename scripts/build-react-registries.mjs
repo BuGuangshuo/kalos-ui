@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile, rm } from "node:fs/promises";
 import assert from "node:assert/strict";
 import { registrySchema, registryItemSchema } from "shadcn/schema";
 import { catalog } from "../lib/catalog.ts";
@@ -25,13 +25,18 @@ for (const [backend, label, prefix, dependency] of [
     ];
     for (const match of imports)
       await collect(`components/ui/${match[1]}.tsx`, files);
+    for (const match of content.matchAll(/from "\.\/(kalos-[\w-]+)"/g)) {
+      await collect(`registry/${backend}/${match[1]}.tsx`, files);
+    }
+    if (content.includes("@/components/ui/kalos-field-message")) await collect("components/ui/kalos-field-message.tsx", files);
+    if (content.includes("@/components/ui/kalos-form-state")) await collect("components/ui/kalos-form-state.ts", files);
     return files;
   }
   const items = await Promise.all(
     catalog.map(async (item) => {
-      const files = [
-        ...(await collect(`registry/${backend}/${item.slug}.tsx`)).values(),
-      ];
+      const collected = await collect(`registry/${backend}/${item.slug}.tsx`);
+      if (item.slug === "kalos-form") await collect("components/ui/kalos-highlight.ts", collected);
+      const files = [...collected.values()];
       if (["kalos-select", "kalos-tabs", "kalos-popover", "kalos-command-menu"].includes(item.slug)) {
         files.push(...(await collect("components/ui/kalos-highlight.ts")).values());
       }
@@ -42,6 +47,7 @@ for (const [backend, label, prefix, dependency] of [
       const dependencies = [
         dependency,
         "@fontsource/roboto",
+        ...(combined.includes('from "motion/react"') ? ["motion"] : []),
         ...["lucide-react", "class-variance-authority", "cn"].filter((name) =>
           combined.includes(`from "${name}"`),
         ),
@@ -126,3 +132,10 @@ await writeFile(
 console.log(
   `Verified ${radix.items.length} explicit Radix endpoints; legacy endpoints retained.`,
 );
+
+// Remove retired registries from existing checkouts as well as fresh builds.
+await Promise.all([
+  rm("registry-vue.json", { force: true }),
+  rm("public/registry-vue.json", { force: true }),
+  rm("public/r/vue", { recursive: true, force: true }),
+]);

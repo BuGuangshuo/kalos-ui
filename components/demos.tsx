@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
+import { KalosForm } from "@/registry/kalos/kalos-form";
 import { DemoContent } from "@/components/demo-content";
-import { useFramework } from "@/components/framework";
 import { usePrimitive } from "@/components/primitives";
 const BaseDemo = dynamic(() => import("@/components/base-ui-demos"));
 const AriaDemo = dynamic(() => import("@/components/react-aria-demos"));
@@ -39,6 +39,7 @@ const people = [
   { name: "吴昕" },
 ];
 const radixComponents = {
+  KalosForm,
   KalosButton,
   KalosInput,
   KalosPopover,
@@ -62,11 +63,10 @@ export function ComponentDemo({
   slug: string;
   compact?: boolean;
 }) {
-  const { framework } = useFramework();
   const { primitive } = usePrimitive();
-  if (framework === "react" && primitive === "base-ui")
+  if (primitive === "base-ui")
     return <BaseDemo slug={slug} compact={compact} />;
-  if (framework === "react" && primitive === "react-aria")
+  if (primitive === "react-aria")
     return <AriaDemo slug={slug} compact={compact} />;
   return (
     <DemoContent components={radixComponents} slug={slug} compact={compact} />

@@ -7,18 +7,15 @@ import { ComponentDemo } from "@/components/demos";
 import { CodeBlock } from "@/components/docs-parts";
 import { CopyButton } from "@/components/copy-button";
 import { PrimitiveSwitcher, usePrimitive } from "@/components/primitives";
-import { useFramework } from "@/components/framework";
 import { componentReference } from "@/lib/component-reference";
 import { InstallCommand } from "@/components/site-shell";
 
 type ManualSource = { files?: { path: string; content?: string }[]; dependencies?: string[]; registryDependencies?: string[] };
 
 export function ComponentInstallation({ slug }: { slug: string }) {
-  const { framework } = useFramework();
   const { primitive } = usePrimitive();
   const [method, setMethod] = useState("cli");
-  const family = framework === "vue" ? "vue" : primitive;
-  const url = `/r/${family}/${slug}.json`;
+  const url = `/r/${primitive}/${slug}.json`;
   const [manual, setManual] = useState<{ url: string; data?: ManualSource; error?: boolean } | null>(null);
   useEffect(() => {
     if (method !== "manual") return;
@@ -44,9 +41,9 @@ export function ComponentInstallation({ slug }: { slug: string }) {
         </Tabs>
       </TabsContent>
       <TabsContent value="manual">
-        <p>先初始化对应的 shadcn 项目，将文件放入 UI 别名目录。</p>
+        <p>先完成组件配置，将文件放入 components.json 中的 UI 别名目录。</p>
         {manual?.url === url && manual.error ? <p role="alert">源码读取失败。<a href={url}>打开注册表文件</a></p> : !data ? <p role="status">正在读取源码…</p> : <>
-          {!!data.registryDependencies?.length && <CodeBlock code={`npx ${framework === "vue" ? "shadcn-vue" : "shadcn"}@latest add ${data.registryDependencies.join(" ")}`} language="bash" />}
+          {!!data.registryDependencies?.length && <CodeBlock code={`npx shadcn@latest add ${data.registryDependencies.join(" ")}`} language="bash" />}
           {!!data.dependencies?.length && <CodeBlock code={`npm install ${data.dependencies.join(" ")}`} language="bash" />}
           {[...(data.files || [])].sort((a, b) => Number(!a.path.includes(slug)) - Number(!b.path.includes(slug))).map((file, index) => <details className="manual-source-file" key={file.path} open={index === 0}><summary>{file.path.split("/").at(-1)}</summary><CodeBlock code={file.content || ""} filename={file.path.split("/").at(-1)} /></details>)}
         </>}
@@ -57,20 +54,17 @@ export function ComponentInstallation({ slug }: { slug: string }) {
 export function ComponentDetails({
   slug,
   source,
-  vueSource,
   baseSource,
   ariaSource,
 }: {
   slug: string;
   source: string;
-  vueSource: string;
   baseSource: string;
   ariaSource: string;
 }) {
-  const { framework } = useFramework();
   const { primitive } = usePrimitive();
   const [revision, setRevision] = useState(0);
-  const code = framework === "vue" ? vueSource : primitive === "base-ui" ? baseSource : primitive === "react-aria" ? ariaSource : source;
+  const code = primitive === "base-ui" ? baseSource : primitive === "react-aria" ? ariaSource : source;
   return (
     <Tabs defaultValue="preview" className="detail-tabs">
       <div className="detail-preview-toolbar">
@@ -86,13 +80,13 @@ export function ComponentDetails({
       </div>
       <TabsContent value="preview">
         <div className="detail-preview">
-          <div className="detail-preview-surface" data-component={slug}><ComponentDemo key={`${framework}-${primitive}-${revision}`} slug={slug} /></div>
+          <div className="detail-preview-surface" data-component={slug}><ComponentDemo key={`${primitive}-${revision}`} slug={slug} /></div>
         </div>
       </TabsContent>
       <TabsContent value="code">
         <CodeBlock
           code={code}
-          filename={`${slug}.${framework === "vue" ? "vue" : "tsx"}`}
+          filename={`${slug}.tsx`}
         />
       </TabsContent>
     </Tabs>
@@ -100,9 +94,8 @@ export function ComponentDetails({
 }
 
 export function ComponentReference({ slug }: { slug: string }) {
-  const { framework } = useFramework();
   const { primitive } = usePrimitive();
-  const { props, keyboard } = componentReference(slug, framework, primitive);
+  const { props, keyboard } = componentReference(slug, primitive);
   return (
     <>
       <section id="api">

@@ -1,24 +1,25 @@
 # Components and APIs
 
-Use the slug with the framework's registry URL in SKILL.md. React named exports and Vue default exports use PascalCase (`kalos-avatar-stack` → `KalosAvatarStack`). Install paths follow `components.json` aliases.
+Use the slug with the selected primitive registry URL in SKILL.md. React named exports use PascalCase (`kalos-avatar-stack` → `KalosAvatarStack`). Install paths follow `components.json` aliases.
 
-| Slug             | Shared purpose and props                            | Vue differences                                                  |
-| ---------------- | --------------------------------------------------- | ---------------------------------------------------------------- |
-| kalos-button       | `loading`, `disabled`, underlying Button attributes | default slot; `:loading="saving"`                                |
-| kalos-command-menu | grouped commands, optional context, controlled query, onRun/onClose | `v-model:query`, `@run`, `@close`, `icon` / `description` slots |
-| kalos-popover | trigger, items, optional custom content, controlled open, action callback | `v-model:open`, `@action`, default slot |
-| kalos-input        | `label`, `hint`, `error`, native input attributes   | `v-model` is string or number                                    |
-| kalos-card         | `title`, `description`, content and footer          | default and `footer` slots                                       |
-| kalos-badge        | `status`: neutral / success / warning               | default slot                                                     |
-| kalos-switch       | `label`, `description`, disabled/name               | `v-model` boolean                                                |
-| kalos-checkbox     | `label`, `description`, disabled/name               | `v-model` boolean or `indeterminate`                             |
-| kalos-tabs         | items with value/label/content                      | string content or a slot named by item value; optional `v-model` |
-| kalos-accordion    | items with question/answer, single open item        | answers are strings                                              |
-| kalos-alert-dialog | `trigger`, `title`, `description`, `actionLabel`, `cancelLabel`, `onConfirm`, `open`, `onOpenChange` | `v-model:open`; `@confirm` |
-| kalos-dialog       | `trigger`, `title`, `description`, `footer`, `open`, `onOpenChange`                   | `v-model:open`; default and footer slots                         |
-| kalos-select       | `label`, `placeholder`, items with value/label      | optional `v-model` string                                        |
-| kalos-progress     | `label`, `value` clamped 0–100, `description`       | `:value="68"`                                                    |
-| kalos-avatar-stack | people with name/image, `max`                       | `:people="members"`                                              |
+| Slug             | Shared purpose and props                            |
+| ---------------- | --------------------------------------------------- |
+| kalos-button       | `loading`, `disabled`, underlying Button attributes |
+| kalos-command-menu | grouped commands, optional context, controlled query, onRun/onClose |
+| kalos-popover | trigger, items, optional custom content, controlled open, action callback |
+| kalos-form         | `fields`, `defaultValues`, `validate`, async `onSubmit`, `onCancel`; built-in required/email/length validation |
+| kalos-input        | `label`, `hint`, `error`, native input attributes; a single trailing action: password reveal for password, hover clear for other inputs; `clearable` defaults to true   |
+| kalos-card         | `title`, `description`, content and footer          |
+| kalos-badge        | `status`: neutral / success / warning               |
+| kalos-switch       | `label`, `description`, `error`, disabled/name               |
+| kalos-checkbox     | `label`, `description`, `error`, disabled/name               |
+| kalos-tabs         | items with value/label/content                      |
+| kalos-accordion    | items with question/answer, single open item        |
+| kalos-alert-dialog | `trigger`, `title`, `description`, `actionLabel`, `cancelLabel`, `onConfirm`, `open`, `onOpenChange` |
+| kalos-dialog       | `trigger`, `title`, `description`, `footer`, `open`, `onOpenChange`                   |
+| kalos-select       | `label`, `placeholder`, items with value/label      |
+| kalos-progress     | `label`, `value` clamped 0–100, `description`       |
+| kalos-avatar-stack | people with name/image, `max`                       |
 
 ## React
 
@@ -45,22 +46,6 @@ import { KalosInput } from '@/components/ui/kalos-input'
 <KalosCheckbox label="部分选择" indeterminate />
 ```
 
-## Vue
+Documentation and source for each component: `https://kalos-ui-six.vercel.app/components/{slug}`. The primitive selector switches its source, example and API. Next.js, Vite and React Router share these React components.
 
-```vue
-<script setup lang="ts">
-import { ref } from "vue";
-import KalosInput from "@/components/ui/kalos-input.vue";
-import KalosSwitch from "@/components/ui/kalos-switch.vue";
-
-const email = ref("");
-const notifications = ref(false);
-</script>
-
-<template>
-  <KalosInput v-model="email" label="邮箱" type="email" />
-  <KalosSwitch v-model="notifications" label="消息通知" />
-</template>
-```
-
-Documentation and source for each component: `https://kalos-ui-six.vercel.app/components/{slug}`. The framework and React primitive selectors switch its installation URL, source, example, and API.
+Form fields use unique `name` keys and `type`: `text`, `email`, `password`, `select`, `checkbox`, or `switch`. Add `required`, `minLength`, `items`, `hint`, `autoComplete`, and `disabled` only when needed. Errors replace hints and are linked to their controls. Cancel restores initial or last successfully saved values; changing `defaultValues` later requires remounting with a new key. Keep password values out of logs and persistent storage.

@@ -12,10 +12,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 项目定位与技术栈
 
-- Kalos UI 是可安装源码的 React / Vue 组件库，网站提供组件预览、源码、安装入口和中文文档。
+- Kalos UI 是可安装源码的 React 组件库，支持 Next.js、Vite 和 React Router，网站提供组件预览、源码、安装入口和中文文档。
 - 使用 Next.js App Router、React、TypeScript、Tailwind CSS v4 和 shadcn/ui。以 `package.json` 中的实际版本为准；修改 Next.js 代码前先读上方要求的本地文档。
 - 本仓库使用 Node.js 24.x 与 npm，安装依赖使用 `npm ci`。不要混入其他包管理器的锁文件；产品文档和安装器仍支持 npm、pnpm、yarn、bun。
-- React 支持 Radix UI、Base UI、React Aria 三种基础库；Vue 组件基于 shadcn-vue / Reka UI。保留各自 API，不用一种基础库的实现冒充另一种。
+- 支持 Radix UI、Base UI、React Aria 三种基础库。保留各自 API，不用一种基础库的实现冒充另一种。
 
 ## 设计与文案
 
@@ -31,7 +31,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `hint`、`description` 等可选属性继续支持，但默认示例省略；确有需要时再传入。不要为了展示属性而添加无用文案。
 - 必须保留字段标签、图标按钮的可访问名称、对话框标题、必要的格式约束、错误与操作结果。精简文案不等于删掉语义或隐藏错误。
 - 组件名称及其中英文对应、必要的 API 说明、安装选择提示可以保留；避免在同一界面重复显示已经由导航、标签页或分组表达的信息。
-- 中文为默认界面语言；文档、示例和 AI Skill 应遵守同一原则。文档要解释真实用法，示例要能独立理解。
+- 中文为默认界面语言；文档、示例和 AI Skill 应遵守同一原则。文档直接说明 Kalos UI 的真实安装与接入步骤，不跳转到 shadcn 的配置参考；保留必要的依赖与许可说明，示例要能独立理解。
 
 ## 视觉与交互
 
@@ -39,7 +39,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 默认控件高度 32px；按钮圆角 6px，输入与选择控件 7px，卡片/弹层 12px，页面容器 20px。开关为 32×20px，复选框为 16px、圆角 4.5px；菜单圆角 10px、选项圆角 6px；分段控件圆角 8px、内边距 2px；保留语义颜色和组件 variant。
 - Dialog 桌面最大宽度 480px、窄屏两侧至少留白 16px；使用独立的 1px 浅深主题边框与双层投影，打开和关闭以 450ms 在 95% 缩放与完整尺寸之间淡入淡出；弹层缓动为 `cubic-bezier(0.22, 1, 0.36, 1)`。Footer 保留 1px 顶部分隔线、16px 内边距，桌面按钮组右对齐、间距 12px，窄屏纵向反排；不叠加灰色背景。标题栏上、左、右内边距 20px、底部为 0，内容区四边内边距 20px，表单项间距 14px；输入框、按钮及弹窗圆角沿用本组件库规范。标准演示包含两个输入项和带取消、确认按钮的底部操作区。
 - 组件及右侧详情内容的样式迭代不得改变站点整体框架。保持现有导航、侧栏宽度及页面背景结构，不擅自增加外层灰色画布、圆角页面壳或重排全站布局。
-- 顶部主导航只展示“首页 / 文档 / 组件 / 模版”；模版入口点击后提示“正在建设中”。“全部组件”概览不展示 React 基础库切换栏；基础库切换保留在组件详情中，侧栏的 React / Vue 框架切换保持全局共享。
+- 顶部主导航只展示“首页 / 文档 / 组件 / 模版”；模版入口点击后提示“正在建设中”。“全部组件”概览不展示 React 基础库切换栏；基础库切换保留在组件详情中，不提供框架切换。
 - 组件详情提供可复制的 CLI / 手动安装方式、包管理器切换、带语法高亮与行号的使用示例、API 表格和必要的键盘说明。不添加“使用场景”“可访问性”独立介绍区块；组件本身仍保留完整的可访问语义。内容反映实际支持的功能，不照搬不存在的属性或行为。
 - 保持中性黑白风格、浅色与深色主题。不要用硬编码颜色覆盖语义状态；布局使用 flex/grid 与 gap。
 - 字体与 CostScope 的字体规范保持一致：界面、正文与标题使用 Roboto；中文依次回退 PingFang SC、Hiragino Sans GB、Microsoft YaHei，完整字体栈维护在全局样式及字体变量中。正文与按钮默认 400，标题 500–600，代码使用系统等宽字体。控件、表单标签、导航和正文统一为 13px / 20px；12px 辅助文字和独立标题层级按用途保留。字体对齐仅涉及排版；Dialog 另按上方弹窗规范处理，不把外部项目样式扩散到其他组件。
@@ -67,8 +67,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 | `components/home/` | 首页、开场动画、交互演示 |
 | `registry/kalos/` | 可分发的 Radix 版 Kalos 组件 |
 | `registry/base-ui/`、`registry/react-aria/` | 可分发的其他 React 版本 |
-| `registry/vue/` | 可分发的 Vue 单文件组件 |
-| `lib/catalog.ts`、`lib/vue-catalog.ts` | 组件目录、依赖、API 与使用示例 |
+| `lib/catalog.ts` | 组件目录、依赖、API 与使用示例 |
 | `lib/search-content.json`、`scripts/build-search-index.mjs` | 从真实正文生成的搜索索引；构建和启动开发服务时自动更新 |
 | `lib/site.ts` | 站点名称、GitHub 与正式站点地址 |
 | `packages/cli/`、`lib/installer.ts` | 终端安装器与页面命令生成 |
@@ -80,16 +79,16 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 使用 TypeScript 和已有的 `@/` 路径别名；复用现有组件、工具与目录，不为小改动引入新依赖或抽象层。
 - 页面默认保持 Server Component；需要状态、事件或浏览器 API 的部分才使用 `"use client"`。独立读取可并行执行，避免无必要的数据和组件重复加载。
 - 组件导出为 `KalosXxx`，文件及注册表条目使用 `kalos-*`。Base UI / React Aria 基础文件使用 `kalos-base-*` / `kalos-aria-*`，避免安装冲突。
-- 修改组件时核对三个 React 版本和 Vue 版本的相关行为、Props 与示例，不引入无意的 API 差异或框架迁移。
+- 修改组件时核对三个 React 版本的相关行为、Props 与示例，不引入无意的 API 差异或框架迁移。
 - 可选辅助内容不传时不占位；有错误时优先显示错误。控件 ID 使用稳定且唯一的生成方式，ARIA 不引用不存在的节点。
 - 不随手改写无关组件或用户未完成的修改；不把注册表组件和首页演示专用代码耦合。
 
 ## 安装与生成产物
 
-- 首页保留统一安装入口，React 基础库在终端选择；页面中的基础库切换器用于查看预览、源码和 API，不再产生三套首页安装入口。
-- 安装器识别已有框架、基础库与包管理器，保留宿主项目的主题、目录和别名；不静默迁移基础库。非交互运行通过 `--base` 指定或沿用已配置的基础库。
+- 首页只展示 init 初始化命令和包管理器切换，不展示“新建项目 / 已有项目”切换。文档和终端保留两种安装方式：init 选择脚手架、基础库、项目名和包管理器，add 安装到已有项目。基础库切换器用于查看预览、源码和 API，不产生三套首页安装入口。
+- init 支持 Next.js、Vite、React Router，在新目录中创建脚手架和完整组件库；add 识别已有框架、基础库与包管理器，保留宿主项目的主题、目录和别名；不静默迁移基础库。非交互运行通过 `--base` 指定或沿用已配置的基础库。
 - 站点 URL 统一读取 `lib/site.ts`，自定义部署使用 `NEXT_PUBLIC_SITE_URL`。生成脚本必须使用相同来源，不写入本机路径或遗留域名。
-- `registry.json`、`registry-vue.json`、`public/registry*.json`、`public/r/**`、`packages/cli/manifest.json` 和 `public/cli/*.tgz` 都是生成产物。修改源组件、目录或生成脚本后重新生成，不直接修补产物。
+- `registry.json`、`public/registry*.json`、`public/r/**`、`packages/cli/manifest.json` 和 `public/cli/*.tgz` 都是生成产物。修改源组件、目录或生成脚本后重新生成，不直接修补产物。
 - 品牌 SVG 和 favicon 同样由脚本生成；修改共享路径后运行 `npm run brand:build`。
 - 发布新的安装器版本时递增 `packages/cli/package.json` 版本，并同步文档中的版本命令。不要在既有版本上悄悄发布不同实现。
 - 保留上方 Next.js 自动管理的规则块和仓库中的授权文件。
@@ -100,7 +99,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 更新前通过 `ping` 确认插件连接，并确认目标文件；多个文件连接时明确选择并锁定本次文件，避免修改其他设计稿。
 - 先读取文件已有的组件、变量、文本和效果样式，再同步代码中的设计。优先复用组件实例并绑定变量，不重复绘制或硬编码已有的设计值。
 - 页面和组件样式变更应同步到对应 Figma 页面、组件及其状态；使用自动布局，保持命名、层级和变体一致。
-- React / Vue 框架切换统一放在左侧栏的搜索与组件列表之间，全局共享；组件正文内不重复放置框架切换。左上品牌与侧栏菜单文字左对齐，在导航高度内垂直居中，使用紧凑尺寸。侧栏顶部不额外叠加间距；组件菜单英文在前、中文紧随其后，分类标题使用弱文字色与分隔线。
+- 站点只展示 React 组件；Next.js、Vite 和 React Router 共用源码与 API，不增加重复的框架切换。左上品牌与侧栏菜单文字左对齐，在导航高度内垂直居中，使用紧凑尺寸。侧栏顶部不额外叠加间距；组件菜单英文在前、中文紧随其后，分类标题使用弱文字色与分隔线。
 - 更新后截图或读回核验，确认布局、尺寸、文案与网页一致。连接中断或目标文件不可用时明确说明，不能声称已同步。
 
 ## 验证与交付
@@ -112,3 +111,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - UI 改动在浏览器查看真实页面：检查受影响的基础库、窄屏布局和相关交互。涉及对话框时验证标题、打开、关闭与 Escape；涉及表单时验证标签点击、输入和错误反馈。
 - 以截图核对布局，不只凭编译通过判断视觉结果。精简文案后检查是否出现空白占位、错误引用或可访问性警告。
 - 交付说明写明实际改动、验证结果及尚未完成的发布步骤，区分本地完成与线上已生效。
+
+- 安装、框架接入与组件用法保持在同一篇快速开始文档中；注册表配置使用独立介绍页，并在左侧“使用指南”分组中列出。实际文档页面与组件详情均使用统一的上一章 / 下一章导航；React 使用示例与源码默认以 TSX 高亮，命令、JSON、CSS 分别显式指定格式。
+
+- 左侧文档导航只链接独立介绍页面，不列出同一页面的章节锚点；同页章节跳转由右侧“本页内容”承担。底部上一章 / 下一章的顺序与左侧独立页面顺序一致。
+
+- “快速开始”位于左侧“使用指南”分组内；设计变量页面对外名称为“设计系统”，变量定义和 /docs/tokens 路径保持不变。
+
+- 快速开始中的“框架接入”使用两列图标卡片，仅展示Next.js、Vite、React Router，不展开框架差异说明。

@@ -20,13 +20,13 @@ export function KalosCard({
   footer?: ReactNode;
 }) {
   return (
-    <Card className={`rounded-[12px] border border-border bg-card shadow-sm ${controlStyles.font}`}>
-      <CardHeader>
+    <Card className={controlStyles.card}>
+      <CardHeader className={controlStyles.cardHeader}>
         <CardTitle>{title}</CardTitle>
         {description ? <CardDescription>{description}</CardDescription> : null}
       </CardHeader>
-      <CardContent>{children}</CardContent>
-      {footer ? <CardFooter>{footer}</CardFooter> : null}
+      <CardContent className={controlStyles.cardContent}>{children}</CardContent>
+      {footer ? <CardFooter className={controlStyles.cardFooter}>{footer}</CardFooter> : null}
     </Card>
   );
 }

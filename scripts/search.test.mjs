@@ -33,7 +33,7 @@ test("highlights literal punctuation and preserves source casing", () => {
 });
 
 test("built index finds body text absent from navigation and excludes source code", () => {
-  assert.ok(searchSite("路径别名").some(result => result.context.includes("路径别名") && result.href.includes("installation")));
+  assert.ok(searchSite("路径别名").some(result => result.context.includes("路径别名") && result.href === "/docs/getting-started#existing-project"));
   assert.deepEqual(searchSite("export default function"), []);
   assert.ok(searchEntries.every(entry => entry.paragraphs.length && entry.paragraphs.every(Boolean)));
 });

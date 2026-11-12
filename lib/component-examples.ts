@@ -1,6 +1,31 @@
 import type { Item } from "@/lib/catalog";
 
 export function reactExample(item: Item) {
+  if (item.slug === "kalos-form") return `"use client";
+
+import { KalosForm, type KalosFormField, type KalosFormValues } from "@/components/ui/kalos-form";
+
+const fields: KalosFormField[] = [
+  { name: "email", label: "邮箱地址", type: "email", required: true, autoComplete: "email" },
+  { name: "password", label: "密码", type: "password", required: true, placeholder: "请输入密码", minLength: 8, hint: "至少 8 位", autoComplete: "new-password" },
+  { name: "role", label: "成员角色", type: "select", required: true, items: [{ value: "editor", label: "编辑者" }, { value: "viewer", label: "查看者" }] },
+  { name: "notifications", label: "消息通知", type: "switch" },
+  { name: "terms", label: "同意服务条款", type: "checkbox", required: true },
+];
+
+export default function Example() {
+  async function save(values: KalosFormValues) {
+    // 替换为你的保存接口；失败时抛出异常，表单会保留输入并显示重试提示。
+    const response = await fetch("/api/members", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    if (!response.ok) throw new Error("保存失败");
+  }
+
+  return <KalosForm title="成员设置" fields={fields} defaultValues={{ notifications: true }} onSubmit={save} aria-label="成员设置" />;
+}`;
   if (item.slug === "kalos-dialog") return `"use client";
 
 import { useState } from "react";

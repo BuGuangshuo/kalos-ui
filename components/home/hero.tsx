@@ -9,11 +9,10 @@ import {
   motion,
   useReducedMotion,
 } from "motion/react";
-import { Box, Check, Copy, Layers, Palette } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { site } from "@/lib/site";
-import { FrameworkSwitcher, useFramework } from "@/components/framework";
-import { installerCommand } from "@/lib/installer";
+import { installerCommand, type InstallationMode } from "@/lib/installer";
 import { easeOut, PackageManagerContext, useIntro } from "./runtime";
 
 const managers = ["npm", "pnpm", "yarn", "bun"] as const;
@@ -31,10 +30,12 @@ export function CopyCommand({
   name = "kalos-all",
   id = "hero-command",
   kind = "component",
+  mode = "add",
 }: {
   name?: string;
   id?: string;
   kind?: "component" | "skill";
+  mode?: InstallationMode;
 }) {
   const { manager, setManager } = use(PackageManagerContext);
   const [copied, setCopied] = useState(false);
@@ -46,7 +47,7 @@ export function CopyCommand({
   const command = (value: string) =>
     kind === "skill"
       ? `${runners[value as keyof typeof runners]} skills add BuGuangshuo/kalos-ui --skill kalos-ui`
-      : installerCommand(origin, value, name);
+      : installerCommand(origin, value, name, mode);
   useEffect(() => {
     if (!copied) return;
     const timer = setTimeout(() => setCopied(false), 1600);
@@ -210,7 +211,6 @@ function SplitLine({
 
 export function MotionHero() {
   const { done } = useIntro();
-  const { framework } = useFramework();
   const rise = (index: number) => ({
     initial: { opacity: 0, y: 20, filter: "blur(10px)" },
     animate: done
@@ -220,9 +220,6 @@ export function MotionHero() {
   });
   return (
     <section className="motion-home-hero">
-      <motion.div {...rise(0)}>
-        <FrameworkSwitcher className="motion-framework-pill" />
-      </motion.div>
       <h1 className="motion-hero-title" aria-label="构建界面，从组件开始。">
         <span className="motion-hero-first-line">
           <span>
@@ -246,14 +243,14 @@ export function MotionHero() {
         </span>
       </h1>
       <motion.p {...rise(5)} className="motion-hero-subtitle">
-        {catalog.length} 个基础组件，适配 {framework === "vue" ? "Vue" : "React"} 项目。
+        {catalog.length} 个 React 组件，支持 Next.js、Vite 和 React Router。
         <br className="motion-desktop-break" />
         按需安装源码，自由调整样式和交互。
       </motion.p>
       <motion.div {...rise(6)} className="motion-hero-install">
-        <CopyCommand />
+        <div className="hero-init-command"><CopyCommand mode="init" id="hero-init-command" /></div>
         <p className="motion-install-hint">
-          {framework === "vue" ? "自动识别 Vue 项目，安装 Reka UI 版本。" : "运行后在终端选择基础组件库。"}
+          在终端选择脚手架、基础组件库、项目名和包管理器。
         </p>
         <div className="motion-hero-actions">
           <Link href="/docs/getting-started" className="motion-primary-link">
@@ -265,14 +262,6 @@ export function MotionHero() {
         </div>
       </motion.div>
       <motion.div {...rise(7)} className="motion-stack-logos">
-        {framework === "vue" ? (
-          <>
-            <span><Layers /> Reka UI</span>
-            <span><Box /> shadcn-vue</span>
-            <span><Palette /> Tailwind CSS</span>
-          </>
-        ) : (
-          <>
             <span>
               <svg viewBox="0 0 17 24" fill="currentColor" aria-hidden="true">
                 <path d="M9.5001 7.01537C9.2245 6.99837 9 7.22385 9 7.49999V23C13.4183 23 17 19.4183 17 15C17 10.7497 13.6854 7.27351 9.5001 7.01537Z" />
@@ -292,8 +281,6 @@ export function MotionHero() {
               </svg>
               React Aria
             </span>
-          </>
-        )}
       </motion.div>
     </section>
   );

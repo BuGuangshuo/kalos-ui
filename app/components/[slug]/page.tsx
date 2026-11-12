@@ -2,14 +2,14 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { catalog } from "@/lib/catalog";
 import { Sidebar } from "@/components/docs-parts";
+import { PagePagination } from "@/components/page-pagination";
 import { ComponentDetails, ComponentInstallation, ComponentReference } from "@/components/component-details";
 import { InstallCommand } from "@/components/site-shell";
-import { FrameworkCode } from "@/components/framework";
+import { PrimitiveCode } from "@/components/primitive-code";
 import { reactExample } from "@/lib/component-examples";
-import { vueExample } from "@/lib/vue-catalog";
 export const dynamicParams = false;
 export function generateStaticParams() {
   return catalog.map((item) => ({ slug: item.slug }));
@@ -34,22 +34,19 @@ export default async function DetailPage({
   const { slug } = await params;
   const item = catalog.find((item) => item.slug === slug);
   if (!item) notFound();
-  const sharedSource = slug === "kalos-command-menu" ? path.join(process.cwd(), "components/ui/kalos-command-menu-panel.tsx") : undefined;
-  const [source, vueSource, baseSource, ariaSource] = await Promise.all([
+  const [source, baseSource, ariaSource] = slug === "kalos-command-menu"
+    ? Array<string>(3).fill(await readFile(path.join(process.cwd(), "components/ui/kalos-command-menu-panel.tsx"), "utf8"))
+    : await Promise.all([
     readFile(
-      sharedSource || path.join(process.cwd(), "registry", "kalos", `${item.slug}.tsx`),
+      path.join(process.cwd(), "registry", "kalos", `${item.slug}.tsx`),
       "utf8",
     ),
     readFile(
-      path.join(process.cwd(), "registry", "vue", `${item.slug}.vue`),
+      path.join(process.cwd(), "registry", "base-ui", `${item.slug}.tsx`),
       "utf8",
     ),
     readFile(
-      sharedSource || path.join(process.cwd(), "registry", "base-ui", `${item.slug}.tsx`),
-      "utf8",
-    ),
-    readFile(
-      sharedSource || path.join(process.cwd(), "registry", "react-aria", `${item.slug}.tsx`),
+      path.join(process.cwd(), "registry", "react-aria", `${item.slug}.tsx`),
       "utf8",
     ),
   ]);
@@ -82,44 +79,20 @@ export default async function DetailPage({
               source={source}
               baseSource={baseSource}
               ariaSource={ariaSource}
-              vueSource={vueSource}
             />
           </section>
           <ComponentInstallation slug={slug} />
           <section id="usage">
             <h2>使用</h2>
-            <FrameworkCode
-              reactFilename="example.tsx"
-              vueFilename="Example.vue"
-              vue={vueExample(slug)}
-              react={reactExample(item)}
+            <PrimitiveCode
+              radix={reactExample(item)}
             />
           </section>
           <ComponentReference slug={slug} />
-          <div className="detail-next">
-            {previous ? (
-              <Link href={`/components/${previous.slug}`}>
-                <ArrowLeft />
-                {previous.title}
-              </Link>
-            ) : (
-              <Link href="/components">
-                <ArrowLeft />
-                全部组件
-              </Link>
-            )}
-            {next ? (
-              <Link href={`/components/${next.slug}`}>
-                {next.title}
-                <ArrowRight />
-              </Link>
-            ) : (
-              <Link href="/docs/getting-started">
-                使用文档
-                <ArrowRight />
-              </Link>
-            )}
-          </div>
+          <PagePagination
+            previous={previous ? { href: `/components/${previous.slug}`, title: previous.title } : { href: "/components", title: "全部组件" }}
+            next={next ? { href: `/components/${next.slug}`, title: next.title } : { href: "/docs/getting-started", title: "安装" }}
+          />
         </article>
       </div>
     </div>

@@ -17,13 +17,13 @@ const codeTheme: PrismTheme = {
   ],
 };
 
-export function CodeBlock({ code, filename, language = "bash" }: { code: string; filename?: string; language?: string }) {
+export function CodeBlock({ code, filename, language = "tsx" }: { code: string; filename?: string; language?: string }) {
   const extension = filename?.split(".").at(-1);
-  const syntax = ["tsx", "jsx", "ts", "js", "vue", "css", "json"].includes(extension || "") ? extension : language;
-  const grammar = syntax === "vue" ? "markup" : syntax === "ts" ? "typescript" : syntax === "js" ? "javascript" : syntax === "bash" || syntax === "text" ? "plain" : syntax;
+  const syntax = ["tsx", "jsx", "ts", "js", "css", "json"].includes(extension || "") ? extension : language;
+  const grammar = syntax === "ts" ? "typescript" : syntax === "js" ? "javascript" : syntax === "bash" || syntax === "text" ? "plain" : syntax;
   return (
     <div className="code-block highlighted-code">
-      <div className="code-header"><span><FileCode2 aria-hidden="true" />{filename || language}</span><CopyButton value={code} label="复制代码" /></div>
+      <div className="code-header"><span><FileCode2 aria-hidden="true" />{filename || (language === "tsx" ? "React" : language)}</span><CopyButton value={code} label="复制代码" /></div>
       <Highlight code={code.trimEnd()} language={grammar || "plain"} theme={codeTheme}>
         {({ tokens, getTokenProps }) => <pre tabIndex={0} aria-label={filename || "代码"}><code>{tokens.map((line, index) => <span className="code-line" key={index}><span className="code-line-number" aria-hidden="true">{index + 1}</span><span className="code-line-content">{line.map((token, key) => <span key={key} {...getTokenProps({ token })} />)}</span></span>)}</code></pre>}
       </Highlight>

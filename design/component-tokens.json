@@ -36,7 +36,8 @@
         "--ui-tfc-danger-edge-focus": "rgba(229, 72, 77, 0.8)",
         "--ui-tfc-success": "#1e8a4f",
         "--ui-tfc-focus": "rgba(0, 96, 226, 0.7)",
-        "--ui-tfc-ease": "cubic-bezier(0.22, 1, 0.36, 1)"
+        "--ui-tfc-ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "--ui-tfc-danger-surface": "rgba(240, 68, 56, 0.035)"
       },
       "dark": {
         "--ui-tfc-title": "rgba(255, 255, 255, 0.92)",
@@ -56,7 +57,8 @@
         "--ui-tfc-danger-edge-focus": "rgba(255, 99, 105, 0.75)",
         "--ui-tfc-success": "#7dcf9f",
         "--ui-tfc-focus": "rgba(77, 141, 255, 0.8)",
-        "--ui-tfc-ease": "cubic-bezier(0.22, 1, 0.36, 1)"
+        "--ui-tfc-ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "--ui-tfc-danger-surface": "rgba(255, 107, 95, 0.08)"
       },
       "rules": [
         {
@@ -1315,6 +1317,33 @@
       "buttonGap": 12,
       "footerBorder": false,
       "maxWidth": 400
+    },
+    "form": {
+      "gap": 14,
+      "buttonGap": 12,
+      "maxWidth": 400,
+      "padding": 20,
+      "radius": 12,
+      "footerPadding": 16
+    },
+    "control-action": {
+      "size": 24,
+      "iconSize": 14,
+      "clearIconSize": 12,
+      "inset": 8,
+      "radius": 9999
+    },
+    "field-message": {
+      "duration": 0.2,
+      "textDuration": 0.18,
+      "offset": 3,
+      "gap": 6,
+      "ease": [
+        0.22,
+        1,
+        0.36,
+        1
+      ]
     }
   },
   "typographyOverride": {

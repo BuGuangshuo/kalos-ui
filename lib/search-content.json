@@ -1,48 +1,36 @@
 [
   {
-    "title": "快速开始",
-    "href": "/docs/getting-started",
-    "section": "文档",
-    "paragraphs": [
-      "几步装好组件，开始构建你的界面。"
-    ]
-  },
-  {
-    "title": "快速开始 · 通过 AI 快速开始",
-    "href": "/docs/getting-started#ai",
-    "section": "文档",
-    "paragraphs": [
-      "先安装 Kalos UI Skill，让 AI 助手识别框架、安装组件并保留你的项目规范：",
-      "Kalos UI 的每个组件都以源码形式安装到项目中。你可以直接修改，无需依赖额外的运行时组件包。"
-    ]
-  },
-  {
-    "title": "快速开始 · 安装与配置",
+    "title": "快速开始 · 新建项目",
     "href": "/docs/getting-started#installation",
     "section": "文档",
     "paragraphs": [
-      "在已有的 React / Next.js 或 Vue / Nuxt 项目根目录运行同一个安装命令。 安装器会识别框架，并在终端引导 React 用户选择基础组件库。",
-      "React 可选择 Radix UI、Base UI 或 React Aria；Vue 自动使用 Reka UI。 已有项目会默认选中当前基础库，并保留现有的主题与路径别名。",
-      "如果项目尚未配置 shadcn，安装器会先引导初始化，再安装组件。 请确保项目已经配置 TypeScript 与 Tailwind CSS。",
-      "只安装一个组件时，使用同样的入口：",
-      "文档中的基础库切换用于查看示例和 API，安装命令始终相同，实际版本在终端选择。"
+      "运行命令，选择脚手架、基础库、项目名和包管理器。"
     ]
   },
   {
-    "title": "快速开始 · 使用第一个组件",
+    "title": "快速开始 · 已有项目",
+    "href": "/docs/getting-started#existing-project",
+    "section": "文档",
+    "paragraphs": [
+      "在项目根目录运行，沿用现有主题、目录和路径别名。",
+      "已有项目需配置 TypeScript、Tailwind CSS 和路径别名。"
+    ]
+  },
+  {
+    "title": "快速开始 · 使用组件",
     "href": "/docs/getting-started#usage",
     "section": "文档",
     "paragraphs": [
-      "从本地组件目录导入。所需基础组件和底层库依赖会由 CLI 自动补齐。",
-      "所有组件都包含 交互预览、完整源码和 API 说明 。根据项目需要组合它们，或直接修改源码。"
+      "从本地组件目录导入，源码可直接修改。",
+      "浏览全部组件与 API →"
     ]
   },
   {
-    "title": "快速开始 · 配置注册表命名空间",
-    "href": "/docs/getting-started#namespace",
+    "title": "快速开始 · 使用 AI",
+    "href": "/docs/getting-started#ai",
     "section": "文档",
     "paragraphs": [
-      "在项目的 中添加对应版本的注册表地址："
+      "安装 Kalos UI Skill，让 AI 按项目规范添加和修改组件。"
     ]
   },
   {
@@ -50,20 +38,19 @@
     "href": "/docs/getting-started#theme",
     "section": "文档",
     "paragraphs": [
-      "组件采用中性主题，采用标准尺寸、柔和圆角与统一的语义颜色。组件会继承你的 shadcn 设计变量，也可以安装本站主题：",
-      "查看 设计变量参考 ，了解颜色、尺寸、间距、圆角和排版的映射。"
+      "组件继承项目的主题变量。需要 Kalos 配色时安装：",
+      "查看设计系统 →"
     ]
   },
   {
-    "title": "快速开始 · 扩展你自己的组件库",
+    "title": "快速开始 · 扩展组件库",
     "href": "/docs/getting-started#maintenance",
     "section": "文档",
     "paragraphs": [
       "在 中添加组件源码。",
       "在 中登记组件信息与依赖。",
       "在 中添加交互示例。",
-      "构建并推送代码，Vercel 会从 GitHub 自动部署。",
-      "构建过程使用 shadcn CLI 生成 JSON，并检查官方 schema 与源码完整性。"
+      "构建并推送代码，Vercel 会从 GitHub 自动部署。"
     ]
   },
   {
@@ -71,54 +58,90 @@
     "href": "/docs/getting-started#license",
     "section": "文档",
     "paragraphs": [
-      "Kalos UI 使用 MIT 许可证，支持个人与商业项目 ，组件交互基础来自 shadcn/ui 。"
+      "Kalos UI 使用 MIT 许可证，支持个人与商业项目。组件交互基础来自 shadcn/ui 。"
     ]
   },
   {
-    "title": "设计变量",
+    "title": "注册表配置 · 配置文件",
+    "href": "/docs/registry#configuration",
+    "section": "文档",
+    "paragraphs": [
+      "项目根目录的 决定组件的安装位置、导入别名和样式入口。Kalos 安装器会读取这份配置；使用统一安装命令时，无需手动添加命名空间。"
+    ]
+  },
+  {
+    "title": "注册表配置 · 添加命名空间",
+    "href": "/docs/registry#namespace",
+    "section": "文档",
+    "paragraphs": [
+      "需要通过 安装时，选择项目当前的基础库，将下方 字段合并到已有配置。",
+      "会替换为组件条目名，例如 。三种地址分别提供 Radix UI、Base UI 和 React Aria 源码；切换这里的示例不会迁移项目的基础库。"
+    ]
+  },
+  {
+    "title": "注册表配置 · 安装组件",
+    "href": "/docs/registry#install",
+    "section": "文档",
+    "paragraphs": [
+      "配置后，在项目根目录使用命名空间安装组件及其依赖。",
+      "安装全部组件；需要 Kalos 主题时，另外添加 。已有项目可继续使用原来的主题。",
+      "安装后的源码位于 对应目录，可直接修改。再次安装同名组件时，先核对本地改动，再决定是否覆盖。"
+    ]
+  },
+  {
+    "title": "注册表配置 · 自定义地址",
+    "href": "/docs/registry#custom-registry",
+    "section": "文档",
+    "paragraphs": [
+      "自行部署注册表后，将域名替换为部署地址，保留基础库路径和 占位符。例如：",
+      "注册表地址必须能从终端访问，并返回 JSON。出现找不到组件的错误时，检查域名、基础库目录与组件名是否一致。"
+    ]
+  },
+  {
+    "title": "设计系统",
     "href": "/docs/tokens",
-    "section": "设计变量",
+    "section": "设计系统",
     "paragraphs": [
       "用一套共享的语义规则，保持组件、页面与设计稿的一致。",
-      "语义变量维护在 ，控件状态维护在 。 React、Vue 与 Figma 共用这些颜色、尺寸和字体规则。"
+      "语义变量维护在 ，控件状态维护在 。 三种 React 基础库与 Figma 共用这些颜色、尺寸和字体规则。"
     ]
   },
   {
-    "title": "设计变量 · 颜色与主题",
+    "title": "设计系统 · 颜色与主题",
     "href": "/docs/tokens#colors",
-    "section": "设计变量",
+    "section": "设计系统",
     "paragraphs": [
       "使用语义颜色表达界面角色。默认操作色为中性黑色，浅色与深色主题分别定义，避免直接把颜色写死到组件中。"
     ]
   },
   {
-    "title": "设计变量 · 间距",
+    "title": "设计系统 · 间距",
     "href": "/docs/tokens#spacing",
-    "section": "设计变量",
+    "section": "设计系统",
     "paragraphs": [
       "以 4px 为基础单元。根据内容关系选择间距，在组件内部使用紧凑间隔，在区块间保留充分留白。"
     ]
   },
   {
-    "title": "设计变量 · 组件尺寸",
+    "title": "设计系统 · 组件尺寸",
     "href": "/docs/tokens#size",
-    "section": "设计变量",
+    "section": "设计系统",
     "paragraphs": [
       "默认使用标准尺寸。根据界面密度，可显式选择紧凑或宽松规格。"
     ]
   },
   {
-    "title": "设计变量 · 排版",
+    "title": "设计系统 · 排版",
     "href": "/docs/tokens#typography",
-    "section": "设计变量",
+    "section": "设计系统",
     "paragraphs": [
       "界面与标题使用 Roboto，中文按系统字体回退。正文与按钮为 400 字重，标题为 500–600；代码使用系统等宽字体。"
     ]
   },
   {
-    "title": "设计变量 · 动效与焦点",
+    "title": "设计系统 · 动效与焦点",
     "href": "/docs/tokens#motion",
-    "section": "设计变量",
+    "section": "设计系统",
     "paragraphs": [
       "选项背景连续滑动，开关与复选框通过短过渡表达状态变化。"
     ]
@@ -147,7 +170,7 @@
     "href": "/docs/skills#included",
     "section": "Skills",
     "paragraphs": [
-      "读取 package.json、components.json 与现有导入，识别 React / Next.js 或 Vue / Nuxt，进一步识别 Radix UI、Base UI、React Aria 或 Reka UI，选择对应 CLI、注册表地址与组件 API。",
+      "读取 package.json、components.json 与现有导入，识别项目框架， 进一步识别 Radix UI、Base UI 或 React Aria，选择对应注册表地址与组件 API。",
       "提供按钮、输入框、卡片、徽标、开关、复选框、选项卡、折叠面板、对话框、选择器、进度条、头像组、浮层和命令菜单的使用指导。按需安装源码，保留你的目录、别名与现有组件。",
       "使用语义颜色和一致的圆角、间距，沿用项目里的主题与组件规范。需要加载反馈、列表过渡等细节时，也会优先复用现有的实现方式。",
       "保持标签关联、焦点管理、键盘操作、禁用与加载状态，并检查窄屏布局与受影响的交互。"
@@ -159,15 +182,6 @@
     "section": "Skills",
     "paragraphs": [
       "首页的交互场景展示这类需求的实现效果。Skill 在你的编程工具中读取和修改项目源码，网站提供组件预览与文档。"
-    ]
-  },
-  {
-    "title": "Skills · React 与 Vue",
-    "href": "/docs/skills#frameworks",
-    "section": "Skills",
-    "paragraphs": [
-      "两个版本提供相同的 14 类组件与中性视觉规范。切换框架后，组件文档中的安装命令、源码、示例与 API 会一起切换。",
-      "查看安装指南 →"
     ]
   },
   {
@@ -184,7 +198,8 @@
     "href": "/",
     "section": "页面",
     "paragraphs": [
-      "个基础组件，适配 项目。 按需安装源码，自由调整样式和交互。"
+      "个 React 组件，支持 Next.js、Vite 和 React Router。 按需安装源码，自由调整样式和交互。",
+      "在终端选择脚手架、基础组件库、项目名和包管理器。"
     ]
   },
   {
@@ -192,7 +207,7 @@
     "href": "/#skills",
     "section": "页面",
     "paragraphs": [
-      "把需求告诉 AI，让它帮你选组件、搭界面。 支持 React 和 Vue，沿用项目里已有的样式。",
+      "把需求告诉 AI，让它帮你选组件、搭界面。 支持多种 React 项目，沿用项目里已有的样式。",
       "装好 Skill，就可以向 AI 描述你的想法。",
       "支持 Codex、Claude Code、Cursor，以及其他支持 Skill 的 AI 工具。"
     ]
@@ -270,6 +285,34 @@
     ]
   },
   {
+    "title": "Form 表单",
+    "href": "/components/kalos-form",
+    "section": "组件",
+    "paragraphs": [
+      "组合文本、密码、选择器、复选框和开关，提供字段校验、保存与取消。"
+    ]
+  },
+  {
+    "title": "Form 表单 · API",
+    "href": "/components/kalos-form#api",
+    "section": "组件",
+    "paragraphs": [
+      "卡片标题",
+      "字段列表；每项的 name 唯一，支持 text、email、password、select、checkbox、switch",
+      "输入与选择项显示红色 *，复选框不显示；格式随输入实时校验，必填空值在保存或已填内容清空时校验",
+      "文本与密码的最少字符数；密码不去除空格",
+      "输入约束；校验错误出现时替代此提示",
+      "select 的候选项",
+      "输入占位、自动填充与字段禁用状态",
+      "挂载时的初始值；后续更换数据时通过 key 重新挂载",
+      "同步自定义校验，按字段名返回错误；叠加在内置必填、邮箱、选项与长度校验上",
+      "点击保存校验全部字段后调用；等待保存时禁用控件，异常时保留输入并显示错误",
+      "恢复到初始值或最近一次保存成功的值，并清除错误",
+      "操作按钮文本",
+      "禁用整个表单"
+    ]
+  },
+  {
     "title": "Text Input 文本输入",
     "href": "/components/kalos-input",
     "section": "组件",
@@ -287,7 +330,10 @@
       "原生输入类型",
       "必要的输入约束或提示",
       "校验错误；显示时替代提示",
-      "禁用输入"
+      "禁用输入",
+      "普通输入非空且可编辑时，hover 或键盘聚焦显示清空；密码仅保留眼睛图标",
+      "点击清空或按 Esc 清空后调用",
+      "末尾提供眼睛图标切换显示与隐藏"
     ]
   },
   {
@@ -341,6 +387,7 @@
     "paragraphs": [
       "控件的可见标签",
       "仅在需要补充信息时显示",
+      "校验错误；显示时替代说明并关联控件",
       "受控开关状态",
       "初始状态",
       "状态变化时调用",
@@ -362,6 +409,7 @@
     "paragraphs": [
       "控件的可见标签",
       "仅在需要补充信息时显示",
+      "校验错误；显示时替代说明并关联控件",
       "受控选中状态",
       "初始状态",
       "选中状态变化时调用",
@@ -464,7 +512,10 @@
       "可选项",
       "当前选中的值",
       "选择变化时调用",
-      "未选择时显示"
+      "未选择时显示",
+      "约束提示或校验错误，错误优先",
+      "有值时 hover 箭头区域才替换为清空图标；键盘聚焦同样可用，清空后恢复触发器焦点并回调空字符串",
+      "表单字段关联与状态"
     ]
   },
   {

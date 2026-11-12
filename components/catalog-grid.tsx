@@ -6,6 +6,7 @@ import { ArrowUpRight, Layers } from "lucide-react";
 import { catalog, categories } from "@/lib/catalog";
 import { ComponentDemo } from "@/components/demos";
 import { LibrarySidebar } from "@/components/library-sidebar";
+import { PagePagination } from "@/components/page-pagination";
 import {
   Empty,
   EmptyHeader,
@@ -85,6 +86,7 @@ export function CatalogGrid() {
             </EmptyHeader>
           </Empty>
         )}
+        <PagePagination previous={{ href: "/docs/getting-started", title: "安装" }} next={{ href: `/components/${catalog[0].slug}`, title: catalog[0].title }} />
       </div>
     </div>
   );

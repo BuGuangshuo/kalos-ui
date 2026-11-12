@@ -375,7 +375,7 @@ export function ExamplesSection() {
       <motion.p {...reveal(2)} className="motion-examples-subtitle">
         把需求告诉 AI，让它帮你选组件、搭界面。
         <br className="motion-desktop-break" />
-        支持 React 和 Vue，沿用项目里已有的样式。
+        支持多种 React 项目，沿用项目里已有的样式。
       </motion.p>
       <motion.div {...reveal(2)} className="motion-skill-command">
         <CopyCommand kind="skill" id="skill-command" />

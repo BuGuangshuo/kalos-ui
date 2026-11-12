@@ -4,7 +4,7 @@ import ts from "typescript";
 import { catalog } from "../lib/catalog.ts";
 import { componentReference } from "../lib/component-reference.ts";
 
-const excluded = new Set(["code", "pre", "nav", "aside", "button", "kbd", "script", "style", "CodeBlock", "FrameworkCode", "InstallCommand", "Sidebar", "OnThisPage"]);
+const excluded = new Set(["code", "pre", "nav", "aside", "button", "kbd", "script", "style", "CodeBlock", "PrimitiveCode", "InstallCommand", "Sidebar", "OnThisPage", "PagePagination", "DocsPagination"]);
 const prose = new Set(["p", "motion.p", "li", "AlertDescription"]);
 const normalize = value => value.replace(/\s+/g, " ").trim();
 const tagOf = node => ts.isJsxElement(node) ? node.openingElement.tagName.getText() : ts.isJsxSelfClosingElement(node) ? node.tagName.getText() : "";
@@ -55,7 +55,8 @@ export async function buildSearchIndex() {
   const entries = [];
   for (const [file, path, title, section] of [
     ["app/docs/getting-started/page.tsx", "/docs/getting-started", "快速开始", "文档"],
-    ["app/docs/tokens/page.tsx", "/docs/tokens", "设计变量", "设计变量"],
+    ["app/docs/registry/page.tsx", "/docs/registry", "注册表配置", "文档"],
+    ["app/docs/tokens/page.tsx", "/docs/tokens", "设计系统", "设计系统"],
     ["app/docs/skills/page.tsx", "/docs/skills", "Skills", "Skills"],
     ["components/home/hero.tsx", "/", "首页", "页面"],
     ["components/home/examples.tsx", "/", "首页", "页面"],
@@ -66,7 +67,7 @@ export async function buildSearchIndex() {
     const title = `${item.english} ${item.title}`;
     const href = `/components/${item.slug}`;
     entries.push({ title, href, section: "组件", paragraphs: [item.description] });
-    const details = [...new Set(["react", "vue"].flatMap(framework => ["radix", "base-ui", "react-aria"].flatMap(primitive => componentReference(item.slug, framework, primitive).props.map(row => row[3]))))];
+    const details = [...new Set(["radix", "base-ui", "react-aria"].flatMap(primitive => componentReference(item.slug, primitive).props.map(row => row[3])))];
     entries.push({ title: `${title} · API`, href: `${href}#api`, section: "组件", paragraphs: details });
   }
   await writeFile("lib/search-content.json", JSON.stringify(entries, null, 2) + "\n");

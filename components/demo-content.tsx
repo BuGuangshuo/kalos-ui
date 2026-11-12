@@ -20,7 +20,19 @@ import { Separator } from "@/components/ui/separator";
 import { controlStyles } from "@/components/ui/kalos-styles";
 import { FieldGroup } from "@/components/ui/field";
 import type { KalosCommandMenuProps } from "@/components/ui/kalos-command-menu-panel";
+import type { KalosFormProps } from "@/registry/kalos/kalos-form";
+import type { KalosFormField } from "@/components/ui/kalos-form-state";
+
+const formFields: KalosFormField[] = [
+  { name: "email", label: "邮箱地址", type: "email", required: true, placeholder: "you@example.com", autoComplete: "email" },
+  { name: "password", label: "密码", type: "password", required: true, placeholder: "请输入密码", minLength: 8, hint: "至少 8 位", autoComplete: "new-password" },
+  { name: "role", label: "成员角色", type: "select", required: true, items: [{ value: "editor", label: "编辑者" }, { value: "viewer", label: "查看者" }, { value: "admin", label: "管理员" }] },
+  { name: "notifications", label: "消息通知", type: "switch" },
+  { name: "terms", label: "同意服务条款", type: "checkbox", required: true },
+];
+
 export interface DemoComponents {
+  KalosForm: ComponentType<KalosFormProps>;
   KalosCommandMenu: ComponentType<KalosCommandMenuProps>;
   KalosButton: ComponentType<{
     children?: ReactNode;
@@ -175,6 +187,7 @@ export function DemoContent({
   components: DemoComponents;
 }) {
   const {
+    KalosForm,
     KalosButton,
     KalosInput,
     KalosPopover,
@@ -195,6 +208,8 @@ export function DemoContent({
   const [framework, setFramework] = useState("next");
   const [dialogOpen, setDialogOpen] = useState(false);
   switch (slug) {
+    case "kalos-form":
+      return <KalosForm title="成员设置" fields={formFields} defaultValues={{ notifications: true }} aria-label="成员设置" />;
     case "kalos-button":
       return <ButtonDemo KalosButton={KalosButton} />;
     case "kalos-command-menu":

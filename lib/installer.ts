@@ -9,9 +9,11 @@ const runners: Record<string, string> = {
   bun: "bun x",
 };
 
-export function installerCommand(origin: string, manager = "npm", slug = "kalos-all") {
+export type InstallationMode = "init" | "add";
+
+export function installerCommand(origin: string, manager = "npm", slug = "kalos-all", mode: InstallationMode = "add", template?: string) {
   const component = slug.replace(/^kalos-/, "");
-  const selection = component === "all" ? "" : ` add ${component}`;
+  const selection = mode === "init" ? ` init${template ? ` --template ${template}` : ""}` : component === "all" ? " add" : ` add ${component}`;
   const localRegistry = origin.replace(/\/$/, "") === site.url.replace(/\/$/, "")
     ? ""
     : ` --registry ${origin}`;
