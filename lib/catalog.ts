@@ -18,17 +18,17 @@ export const catalog = [
     description: "在分组列表中搜索并执行操作，支持匹配上下文、键盘导航和连续滑动的选中背景。",
     dependencies: [],
     props: "groups: KalosCommandGroup[]；query?: string；onQueryChange?；onRun?；onClose?；filter?: boolean。",
-    usage: '<KalosCommandMenu groups={[{ label: "项目", items: [{ value: "new", label: "创建项目" }, { value: "settings", label: "项目设置" }] }]} onRun={value => console.log(value)} />',
+    usage: '<KalosCommandMenu groups={[{ label: "常用操作", items: [{ value: "new", label: "新建文档" }, { value: "settings", label: "账号设置" }] }]} onRun={value => console.log(value)} />',
   },
   {
     slug: "kalos-popover",
     title: "浮层",
     english: "Popover",
     category: "操作",
-    description: "在触发元素附近展示操作列表或自定义内容，支持键盘导航与背景滑动。",
+    description: "在触发按钮附近展示说明与表单，支持对齐、键盘操作与焦点返回。",
     dependencies: ["popover", "button"],
     props: "trigger: string；items?: { value: string; label: string; disabled?: boolean }[]；children?: ReactNode；onAction?: (value: string) => void；open?: boolean；onOpenChange?: (open: boolean) => void。",
-    usage: '<KalosPopover trigger="更多操作" items={[{ value: "edit", label: "编辑项目" }, { value: "duplicate", label: "创建副本" }, { value: "archive", label: "归档项目" }]} />',
+    usage: '<KalosPopover trigger="打开浮层" label="尺寸"><div className="flex flex-col gap-1 p-3"><h3 className="font-medium">尺寸</h3><p>设置浮层的尺寸。</p></div></KalosPopover>',
   },
   {
     slug: "kalos-form",
@@ -132,7 +132,7 @@ export const catalog = [
     props:
       "trigger: string；title: string；description?: string；children: ReactNode；footer?: ReactNode；open?: boolean；onOpenChange?: (open: boolean) => void。",
     usage:
-      '<KalosDialog trigger="查看项目" title="设计工作空间">Kalos UI</KalosDialog>',
+      '<KalosDialog trigger="打开对话框" title="添加联系人"><KalosInput label="姓名" placeholder="请输入姓名" /></KalosDialog>',
   },
   {
     slug: "kalos-alert-dialog",
@@ -142,7 +142,7 @@ export const catalog = [
     description: "在执行重要操作前请求确认，打开时聚焦取消，点击遮罩不会关闭。",
     dependencies: ["alert-dialog", "button"],
     props: "trigger: string；title: string；description: string；actionLabel?: string；cancelLabel?: string；onConfirm?: () => void；open?: boolean；onOpenChange?: (open: boolean) => void。",
-    usage: '<KalosAlertDialog trigger="删除项目" title="删除项目？" description="项目及其数据将永久删除，无法撤销。" actionLabel="删除项目" onConfirm={() => console.log("confirmed")} />',
+    usage: '<KalosAlertDialog trigger="删除文件" title="删除这个文件？" description="文件将被永久删除，无法撤销。" actionLabel="删除文件" onConfirm={() => console.log("confirmed")} />',
   },
   {
     slug: "kalos-select",
@@ -165,7 +165,7 @@ export const catalog = [
     dependencies: ["progress"],
     props:
       "label: string；value: number（自动限制为 0–100）；description?: string。",
-    usage: '<KalosProgress label="项目准备中" value={68} />',
+    usage: '<KalosProgress label="文件上传中" value={68} />',
   },
   {
     slug: "kalos-avatar-stack",

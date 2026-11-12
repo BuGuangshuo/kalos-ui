@@ -1,6 +1,7 @@
 "use client";
 import { KalosForm } from "@/registry/base-ui/kalos-form";
 import { DemoContent } from "@/components/demo-content";
+import type { PopoverExampleVariant } from "@/lib/component-examples";
 import { KalosAccordion } from "@/registry/base-ui/kalos-accordion";
 import { KalosAvatarStack } from "@/registry/base-ui/kalos-avatar-stack";
 import { KalosBadge } from "@/registry/base-ui/kalos-badge";
@@ -37,9 +38,11 @@ const components = {
 export default function BackendDemo({
   slug,
   compact,
+  popoverVariant,
 }: {
   slug: string;
   compact?: boolean;
+  popoverVariant?: PopoverExampleVariant;
 }) {
-  return <DemoContent components={components} slug={slug} compact={compact} />;
+  return <DemoContent components={components} slug={slug} compact={compact} popoverVariant={popoverVariant} />;
 }

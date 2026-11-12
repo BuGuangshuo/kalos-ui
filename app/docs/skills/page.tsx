@@ -65,7 +65,7 @@ export default function SkillsPage() {
               filename="给 AI 助手的提示"
               language="text"
               code={
-                "使用 Kalos UI，帮我做一个包含姓名、邮箱和消息开关的偏好设置表单。\n\n用 Kalos UI 的对话框完成新增项目流程，保留现有主题和键盘操作。\n\n给保存按钮增加加载、成功和失败反馈，连接已有的保存接口。\n\n当前是 React + Vite 项目，保留现有路径别名与 Tailwind 配置。\n\n在 React Router 路由页面中加入设置表单，沿用 ~/ 别名。\n\n当前项目使用 Base UI，请从 /r/base-ui/ 安装组件。\n\n使用 React Aria 版按钮，用 onPress 连接保存操作。"
+                "使用 Kalos UI，帮我做一个包含姓名、邮箱和消息开关的偏好设置表单。\n\n用 Kalos UI 的对话框完成添加联系人流程，保留现有主题和键盘操作。\n\n给保存按钮增加加载、成功和失败反馈，连接已有的保存接口。\n\n当前是 React + Vite 项目，保留现有路径别名与 Tailwind 配置。\n\n在 React Router 路由页面中加入设置表单，沿用 ~/ 别名。\n\n当前项目使用 Base UI，请从 /r/base-ui/ 安装组件。\n\n使用 React Aria 版按钮，用 onPress 连接保存操作。"
               }
             />
             <p>

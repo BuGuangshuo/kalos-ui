@@ -11,6 +11,7 @@ export type KalosPopoverProps = {
   label?: string;
   items?: KalosPopoverItem[];
   children?: ReactNode;
+  contentClassName?: string;
   onAction?: (value: string) => void;
   align?: "start" | "center" | "end";
   open?: boolean;

@@ -87,6 +87,7 @@ export function ComponentDetails({
         <CodeBlock
           code={code}
           filename={`${slug}.tsx`}
+          language="tsx"
         />
       </TabsContent>
     </Tabs>

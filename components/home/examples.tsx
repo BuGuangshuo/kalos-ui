@@ -245,7 +245,7 @@ function FormPreview() {
         placeholder="you@example.com"
         required
       />
-      <KalosCheckbox label="接收项目动态" defaultChecked />
+      <KalosCheckbox label="接收活动动态" defaultChecked />
       <Button type="submit">保存偏好</Button>
     </form>
   );

@@ -20,8 +20,11 @@ import { Separator } from "@/components/ui/separator";
 import { controlStyles } from "@/components/ui/kalos-styles";
 import { FieldGroup } from "@/components/ui/field";
 import type { KalosCommandMenuProps } from "@/components/ui/kalos-command-menu-panel";
+import type { KalosPopoverProps } from "@/components/ui/kalos-popover-menu";
 import type { KalosFormProps } from "@/registry/kalos/kalos-form";
 import type { KalosFormField } from "@/components/ui/kalos-form-state";
+import { PopoverDemo } from "@/components/popover-demo";
+import type { PopoverExampleVariant } from "@/lib/component-examples";
 
 const formFields: KalosFormField[] = [
   { name: "email", label: "邮箱地址", type: "email", required: true, placeholder: "you@example.com", autoComplete: "email" },
@@ -40,14 +43,11 @@ export interface DemoComponents {
     size?: "default" | "icon";
     loading?: boolean;
     disabled?: boolean;
+    type?: "button" | "submit" | "reset";
     onClick?: () => void;
     "aria-label"?: string;
   }>;
-  KalosPopover: ComponentType<{
-    trigger: string;
-    items?: { value: string; label: string; disabled?: boolean }[];
-    onAction?: (value: string) => void;
-  }>;
+  KalosPopover: ComponentType<KalosPopoverProps>;
   KalosInput: ComponentType<
     InputHTMLAttributes<HTMLInputElement> & {
       label: string;
@@ -101,6 +101,7 @@ export interface DemoComponents {
   }>;
   KalosSelect: ComponentType<{
     label: string;
+    placeholder?: string;
     items: { value: string; label: string }[];
     value?: string;
     onValueChange?: (value: string) => void;
@@ -154,9 +155,9 @@ function ButtonDemo({ KalosButton }: Pick<DemoComponents, "KalosButton">) {
         </KalosButton>
       </div>
       <div className="flex flex-wrap justify-center gap-2">
-        <KalosButton variant="outline" onClick={() => toast("已添加到项目")}>
+        <KalosButton variant="outline" onClick={() => toast("成员已添加")}>
           <Plus data-icon="inline-start" />
-          添加项目
+          添加成员
         </KalosButton>
         <KalosButton variant="ghost" onClick={() => toast("操作已取消")}>
           取消
@@ -181,9 +182,11 @@ export function DemoContent({
   components,
   slug,
   compact = false,
+  popoverVariant,
 }: {
   slug: string;
   compact?: boolean;
+  popoverVariant?: PopoverExampleVariant;
   components: DemoComponents;
 }) {
   const {
@@ -207,6 +210,11 @@ export function DemoContent({
   const [progress, setProgress] = useState(68);
   const [framework, setFramework] = useState("next");
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [contact, setContact] = useState({ name: "", email: "" });
+  const changeDialogOpen = (open: boolean) => {
+    if (open) setContact({ name: "", email: "" });
+    setDialogOpen(open);
+  };
   switch (slug) {
     case "kalos-form":
       return <KalosForm title="成员设置" fields={formFields} defaultValues={{ notifications: true }} aria-label="成员设置" />;
@@ -214,23 +222,14 @@ export function DemoContent({
       return <ButtonDemo KalosButton={KalosButton} />;
     case "kalos-command-menu":
       return <div className="w-full max-w-[560px] p-2"><KalosCommandMenu
-        groups={compact ? [{ label: "项目", items: [{ value: "new", label: "创建项目", icon: <Plus /> }, { value: "settings", label: "项目设置", icon: <Layers /> }] }] : [
-          { label: "项目", items: [{ value: "new", label: "创建项目", icon: <Plus />, description: "React · TypeScript" }, { value: "settings", label: "项目设置", icon: <Layers />, description: "成员、权限与通知" }] },
-          { label: "文档", items: [{ value: "installation", label: "安装指南", icon: <ArrowUpRight />, description: "选择基础库并安装组件源码" }, { value: "archive", label: "归档项目", disabled: true }] },
+        groups={compact ? [{ label: "常用操作", items: [{ value: "new", label: "新建文档", icon: <Plus /> }, { value: "settings", label: "账号设置", icon: <Layers /> }] }] : [
+          { label: "文档", items: [{ value: "new", label: "新建文档", icon: <Plus /> }, { value: "archive", label: "归档文档", disabled: true }] },
+          { label: "设置", items: [{ value: "settings", label: "账号设置", icon: <Layers /> }, { value: "notifications", label: "通知设置", icon: <ArrowUpRight /> }] },
         ]}
-        onRun={value => toast({ new: "已创建项目", settings: "已打开项目设置", installation: "已打开安装指南" }[value] || value)}
+        onRun={value => toast({ new: "文档已创建", settings: "已打开账号设置", notifications: "已打开通知设置" }[value] || value)}
       /></div>;
     case "kalos-popover":
-      return <KalosPopover
-        trigger="更多操作"
-        items={[
-          { value: "edit", label: "编辑项目" },
-          { value: "duplicate", label: "创建副本" },
-          { value: "share", label: "分享项目" },
-          { value: "archive", label: "归档项目", disabled: true },
-        ]}
-        onAction={value => toast.success({ edit: "已打开项目编辑", duplicate: "已创建副本", share: "分享链接已准备就绪" }[value] || value)}
-      />;
+      return <PopoverDemo KalosPopover={KalosPopover} KalosInput={KalosInput} KalosSelect={KalosSelect} KalosButton={KalosButton} variant={popoverVariant} />;
     case "kalos-input":
       return (
         <div className="demo-form">
@@ -240,7 +239,7 @@ export function DemoContent({
             placeholder="you@example.com"
           />
           {!compact ? (
-            <KalosInput label="项目名称" placeholder="输入项目名称" />
+            <KalosInput label="姓名" placeholder="请输入姓名" />
           ) : null}
         </div>
       );
@@ -254,7 +253,7 @@ export function DemoContent({
                 variant="outline"
                 onClick={() => toast("工作空间已准备就绪")}
               >
-                查看项目 <ArrowUpRight data-icon="inline-end" />
+                查看详情 <ArrowUpRight data-icon="inline-end" />
               </KalosButton>
             }
           >
@@ -337,18 +336,18 @@ export function DemoContent({
               {
                 question: "可以自定义这些组件吗？",
                 answer:
-                  "可以。完整源码安装到你的项目中，颜色、间距、圆角与行为都由你掌控。",
+                  "可以。完整源码安装到你的代码目录，颜色、间距、圆角与行为都由你掌控。",
               },
               {
-                question: "如何安装到我的项目？",
+                question: "如何安装组件？",
                 answer: "运行安装命令，在终端选择基础组件库。",
               },
               ...(!compact
                 ? [
                     {
-                      question: "可以用于商业项目吗？",
+                      question: "可以用于商业用途吗？",
                       answer:
-                        "可以。组件以 MIT 许可证开源，支持个人与商业项目。",
+                        "可以。组件以 MIT 许可证开源，支持个人与商业用途。",
                     },
                   ]
                 : []),
@@ -358,27 +357,27 @@ export function DemoContent({
       );
     case "kalos-alert-dialog":
       return <KalosAlertDialog
-        trigger="删除项目"
-        title="删除项目？"
-        description="项目及其数据将永久删除，无法撤销。"
-        actionLabel="删除项目"
-        onConfirm={() => toast.success("项目已删除")}
+        trigger="删除文件"
+        title="删除这个文件？"
+        description="文件将被永久删除，无法撤销。"
+        actionLabel="删除文件"
+        onConfirm={() => toast.success("文件已删除")}
       />;
     case "kalos-dialog":
       return (
         <KalosDialog
           trigger="打开对话框"
-          title="创建项目"
+          title="添加联系人"
           open={dialogOpen}
-          onOpenChange={setDialogOpen}
+          onOpenChange={changeDialogOpen}
           footer={<>
             <KalosButton variant="outline" onClick={() => setDialogOpen(false)}>取消</KalosButton>
-            <KalosButton onClick={() => { setDialogOpen(false); toast.success("项目已创建"); }}>创建项目</KalosButton>
+            <KalosButton onClick={() => { setDialogOpen(false); toast.success("联系人已添加"); }}>保存</KalosButton>
           </>}
         >
           <FieldGroup className={controlStyles.dialogForm}>
-            <KalosInput label="项目名称" defaultValue="Kalos UI" />
-            <KalosInput label="项目标识" defaultValue="kalos-ui" />
+            <KalosInput label="姓名" placeholder="请输入姓名" autoComplete="off" value={contact.name} onChange={event => setContact({ ...contact, name: event.target.value })} />
+            <KalosInput label="邮箱地址" type="email" placeholder="you@example.com" autoComplete="off" value={contact.email} onChange={event => setContact({ ...contact, email: event.target.value })} />
           </FieldGroup>
         </KalosDialog>
       );
@@ -401,7 +400,7 @@ export function DemoContent({
       return (
         <div className="demo-form">
           <KalosProgress
-            label={progress === 100 ? "准备就绪" : "项目准备中"}
+            label={progress === 100 ? "上传完成" : "文件上传中"}
             value={progress}
           />
           <KalosButton
@@ -412,7 +411,7 @@ export function DemoContent({
               )
             }
           >
-            {progress === 100 ? "重新开始" : "继续下一步"}
+            {progress === 100 ? "重新上传" : "继续上传"}
             <ArrowRight data-icon="inline-end" />
           </KalosButton>
         </div>

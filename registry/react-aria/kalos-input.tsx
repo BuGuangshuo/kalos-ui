@@ -44,8 +44,8 @@ export function KalosInput({ label, hint, error, id, type, clearable = true, onC
   }
   return (
     <Field data-invalid={!!error} data-disabled={props.disabled || undefined} className="gap-1.5">
-      <FieldLabel htmlFor={fieldId} className={controlStyles.label}>{label}{props.required ? <span aria-hidden="true" className={controlStyles.requiredMark}>*</span> : null}</FieldLabel>
-      <InputGroup data-invalid={!!error} data-disabled={props.disabled || undefined} className={controlStyles.inputGroup}>
+      <FieldLabel htmlFor={fieldId} onClickCapture={event => { event.preventDefault(); event.stopPropagation(); }} className={controlStyles.label}>{label}{props.required ? <span aria-hidden="true" className={controlStyles.requiredMark}>*</span> : null}</FieldLabel>
+      <InputGroup isInvalid={!!error} isDisabled={props.disabled} isReadOnly={props.readOnly} className={controlStyles.inputGroup}>
         <InputGroupInput {...props} id={fieldId} type={type === "password" && revealed ? "text" : type} value={value} defaultValue={defaultValue}
           ref={element => { inputRef.current = element; if (typeof ref === "function") ref(element); else if (ref) ref.current = element; }}
           className={cn(controlStyles.inputContent, className)} aria-invalid={!!error} aria-describedby={error || hint ? descriptionId : undefined}

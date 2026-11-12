@@ -36,6 +36,7 @@
   --size-element-md: 32px;
   --size-element-lg: 36px;
   --duration-fast: 140ms;
+  --duration-focus: 80ms;
   --duration-medium: 200ms;
   --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
   --font-ui:

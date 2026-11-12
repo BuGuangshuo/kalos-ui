@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
 import { Field } from "@/components/ui/field";
 import { KalosFieldMessage } from "@/components/ui/kalos-field-message";
 import { controlStyles } from "@/components/ui/kalos-styles";
-import { useId, useRef, useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
+import { useSelectFocus } from "@/components/ui/kalos-select-focus";
 import { slidingHighlightClasses, useSlidingHighlight } from "@/components/ui/kalos-highlight";
 import {
   Select,
@@ -45,19 +46,25 @@ export function KalosSelect({
   const [internalValue, setInternalValue] = useState("");
   const currentValue = value ?? internalValue;
   const clearRef = useRef<HTMLDivElement>(null);
+  const focus = useSelectFocus(clearRef, disabled);
+  const { popupRef } = focus;
   const showClear = clearable && !!currentValue && !disabled;
   const change = (next: string) => { setInternalValue(next); onValueChange?.(next); };
   const autoId = useId();
   const id = providedId || autoId;
   const descriptionId = `${id}-description`;
   const highlight = useSlidingHighlight('[role="option"]', '[role="option"][data-highlighted], [role="option"][data-focused], [role="option"][data-state="checked"], [role="option"][aria-selected="true"]', true);
+  const contentRef = useCallback((node: HTMLElement | null) => {
+    popupRef.current = node;
+    highlight(node);
+  }, [popupRef, highlight]);
   return (
     <Field data-invalid={!!error} data-disabled={disabled || undefined} className="gap-1.5">
-      <label htmlFor={id} className={controlStyles.label}>
+      <label htmlFor={id} onClickCapture={event => { event.preventDefault(); event.stopPropagation(); }} className={controlStyles.label}>
         {label}{required ? <span aria-hidden="true" className={controlStyles.requiredMark}>*</span> : null}
       </label>
-      <Select name={name} disabled={disabled} required={required} value={currentValue} onValueChange={change}>
-      <div ref={clearRef} className="group/select-control relative w-full min-w-0">
+      <Select onOpenChange={focus.onOpenChange} name={name} disabled={disabled} required={required} value={currentValue} onValueChange={change}>
+      <div ref={clearRef} data-slot="select-control" data-focus-managed data-focused={focus.focused || undefined} data-invalid={!!error} data-disabled={disabled || undefined} className={cn("group/select-control", controlStyles.selectControl)}>
         <SelectTrigger
           size="default"
           aria-invalid={!!error}
@@ -65,11 +72,11 @@ export function KalosSelect({
           id={id}
           className={cn(controlStyles.selectTrigger, showClear && controlStyles.selectClearable)}
         >
-          <SelectValue placeholder={placeholder} />
+          <SelectValue placeholder={placeholder} className={!currentValue ? controlStyles.selectPlaceholder : undefined} />
         </SelectTrigger>
         {showClear ? <KalosButton type="button" variant="ghost" size="icon" data-slot="select-clear" className={controlStyles.selectClear} aria-label={`清空${label}`} onClick={() => { change(""); clearRef.current?.querySelector<HTMLElement>('[role="combobox"], [data-slot="select-trigger"]')?.focus(); }}><X aria-hidden="true" /></KalosButton> : null}
       </div>
-        <SelectContent ref={highlight} position="popper" align="start" className={cn(slidingHighlightClasses, controlStyles.selectMenu)}>
+        <SelectContent ref={contentRef} onCloseAutoFocus={focus.onCloseAutoFocus} position="popper" align="start" className={cn(slidingHighlightClasses, controlStyles.selectMenu)}>
           <SelectGroup>
             {items.map((item) => (
               <SelectItem key={item.value} value={item.value}>

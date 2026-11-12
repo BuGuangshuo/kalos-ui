@@ -61,7 +61,7 @@
       "name": "kalos-popover",
       "type": "registry:ui",
       "title": "Kalos 浮层",
-      "description": "在触发元素附近展示操作列表或自定义内容，支持键盘导航与背景滑动。",
+      "description": "在触发按钮附近展示说明与表单，支持对齐、键盘操作与焦点返回。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "registryDependencies": [
         "popover",
@@ -124,6 +124,10 @@
         },
         {
           "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-select-focus.ts",
           "type": "registry:ui"
         },
         {
@@ -425,6 +429,10 @@
           "type": "registry:ui"
         },
         {
+          "path": "components/ui/kalos-select-focus.ts",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/kalos/kalos-button.tsx",
           "type": "registry:ui"
         },
@@ -565,6 +573,10 @@
         "avatar"
       ],
       "files": [
+        {
+          "path": "components/ui/kalos-select-focus.ts",
+          "type": "registry:ui"
+        },
         {
           "path": "components/ui/kalos-field-message.tsx",
           "type": "registry:ui"

@@ -72,7 +72,7 @@ function SwitchVignette() {
 }
 
 const tabs = [
-  { label: "概览", text: "12 个活跃项目，3 项待办任务。" },
+  { label: "概览", text: "12 项任务，3 项待办。" },
   { label: "分析", text: "本周页面访问量增长了 25%。" },
   { label: "报告", text: "5 份报告已准备好导出。" },
 ];
@@ -90,7 +90,7 @@ export function TabsVignette() {
         onValueChange={setValue}
         className="motion-vignette-tabs"
       >
-        <TabsList aria-label="项目视图">
+        <TabsList aria-label="内容视图">
           {tabs.map((tab, index) => (
             <TabsTrigger key={tab.label} value={String(index)}>
               {value === String(index) ? (
@@ -125,8 +125,8 @@ export function TabsVignette() {
 
 const questions = [
   ["支持键盘操作吗？", "保留完整的键盘与无障碍交互。"],
-  ["可以自由修改吗？", "源码就在项目中，每一处都可以定制。"],
-  ["如何安装组件？", "使用 shadcn 命令，按需添加到项目。"],
+  ["可以自由修改吗？", "源码就在代码目录中，每一处都可以定制。"],
+  ["如何安装组件？", "运行安装命令，按需添加组件。"],
 ];
 function AccordionVignette() {
   const [value, setValue] = useState("0");
@@ -149,14 +149,14 @@ function AccordionVignette() {
   );
 }
 
-const tasks = ["预订拍摄工作室", "发送项目报价", "选择合适的字体"];
+const tasks = ["预订拍摄工作室", "发送服务报价", "选择合适的字体"];
 function ChecklistVignette() {
   const id = useId();
   const [done, setDone] = useState(0);
   useAutoplay(() => setDone((count) => (count + 1) % 4), 1100, 200);
   return (
     <FieldSet className="motion-vignette-fields">
-      <FieldLegend className="sr-only">项目任务清单</FieldLegend>
+      <FieldLegend className="sr-only">待办任务清单</FieldLegend>
       <FieldGroup className="motion-vignette-fields">
         {tasks.map((task, index) => (
           <Field key={task} orientation="horizontal">
@@ -281,7 +281,7 @@ export function IconsVignette() {
   );
 }
 
-const notifications = ["项目已创建", "更改已保存", "邀请已发送"];
+const notifications = ["文档已创建", "更改已保存", "邀请已发送"];
 function ToastVignette() {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);

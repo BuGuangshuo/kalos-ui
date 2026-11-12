@@ -2,6 +2,7 @@
 import dynamic from "next/dynamic";
 import { KalosForm } from "@/registry/kalos/kalos-form";
 import { DemoContent } from "@/components/demo-content";
+import type { PopoverExampleVariant } from "@/lib/component-examples";
 import { usePrimitive } from "@/components/primitives";
 const BaseDemo = dynamic(() => import("@/components/base-ui-demos"));
 const AriaDemo = dynamic(() => import("@/components/react-aria-demos"));
@@ -59,17 +60,19 @@ const radixComponents = {
 export function ComponentDemo({
   slug,
   compact = false,
+  popoverVariant,
 }: {
   slug: string;
   compact?: boolean;
+  popoverVariant?: PopoverExampleVariant;
 }) {
   const { primitive } = usePrimitive();
   if (primitive === "base-ui")
-    return <BaseDemo slug={slug} compact={compact} />;
+    return <BaseDemo slug={slug} compact={compact} popoverVariant={popoverVariant} />;
   if (primitive === "react-aria")
-    return <AriaDemo slug={slug} compact={compact} />;
+    return <AriaDemo slug={slug} compact={compact} popoverVariant={popoverVariant} />;
   return (
-    <DemoContent components={radixComponents} slug={slug} compact={compact} />
+    <DemoContent components={radixComponents} slug={slug} compact={compact} popoverVariant={popoverVariant} />
   );
 }
 export function HeroShowcase() {
@@ -117,7 +120,7 @@ export function HeroShowcase() {
       <div className="orbit-card orbit-settings">
         <div className="orbit-card-top">
           <span>
-            <Command /> 项目偏好
+            <Command /> 应用偏好
           </span>
           <MoreHorizontal />
         </div>
@@ -125,7 +128,7 @@ export function HeroShowcase() {
         <Separator />
         <KalosSwitch label="消息通知" />
         <Separator />
-        <KalosCheckbox label="与团队分享项目" defaultChecked />
+        <KalosCheckbox label="与团队分享文档" defaultChecked />
       </div>
       <div className="orbit-card orbit-progress">
         <div className="orbit-progress-icon">

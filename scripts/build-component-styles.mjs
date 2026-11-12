@@ -7,8 +7,14 @@ const family = typography.family.replaceAll('"', '').replace(/\s+/g, "_");
 const font = `[font-family:${family}] text-[${typography.controlSize}px] leading-[${typography.controlLineHeight}px]`;
 const focus = "outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0";
 const state = "[&:is([data-checked],[data-selected],[data-state=checked],[data-state=indeterminate],[data-indeterminate])]";
-const fieldVars = vars("text-field", Object.fromEntries(["ink", "surface", "shadow", "shadow-hover", "shadow-focus", "danger-edge", "danger-edge-focus", "danger-surface", "subtle"].map(k => [k, `--ui-tfc-${k}`])));
-const field = `${font} ${focus} ${fieldVars} h-8 rounded-[7px] border-0 bg-[var(--k-surface)]! px-2.5 py-0 text-[color:var(--k-ink)] shadow-[var(--k-shadow)] transition-[box-shadow,background-color] duration-[140ms] ease-[ease] hover:shadow-[var(--k-shadow-hover)] focus-visible:shadow-[var(--k-shadow-focus)] placeholder:text-[color:var(--k-subtle)] aria-invalid:ring-0 aria-invalid:bg-[var(--k-danger-surface)]! aria-invalid:shadow-[0_0_0_1px_var(--k-danger-edge),0_1px_2px_0_rgba(0,0,0,.05)] aria-invalid:focus-visible:shadow-[0_0_0_1px_var(--k-danger-edge-focus),0_1px_2px_0_rgba(0,0,0,.05)] group-data-[invalid=true]/field:bg-[var(--k-danger-surface)]! group-data-[invalid=true]/field:shadow-[0_0_0_1px_var(--k-danger-edge),0_1px_2px_0_rgba(0,0,0,.05)] group-data-[invalid=true]/field:focus-within:shadow-[0_0_0_1px_var(--k-danger-edge-focus),0_1px_2px_0_rgba(0,0,0,.05)] disabled:opacity-40`;
+const fieldVars = vars("text-field", Object.fromEntries(["ink", "surface", "shadow", "shadow-hover", "shadow-focus", "shadow-invalid", "shadow-invalid-focus", "ease", "danger-edge", "danger-edge-focus", "danger-surface", "subtle"].map(k => [k, `--ui-tfc-${k}`])));
+const fieldFocusDuration = `var(--duration-focus,${inventory.defaults["text-field"].focusDuration}ms)`;
+const fieldActive = "[&:is(:focus-within:not([data-focus-managed]),:has([aria-expanded=true]),[data-focused])]";
+const fieldHover = "[&:hover:not(:focus-within:not([data-focus-managed])):not(:has([aria-expanded=true])):not([data-focused]):not([data-invalid=true]):not([data-disabled=true])]";
+const fieldFocused = "[&:not([data-invalid=true]):is(:focus-within:not([data-focus-managed]),:has([aria-expanded=true]),[data-focused])]";
+const fieldInvalidFocused = "[&[data-invalid=true]:is(:focus-within:not([data-focus-managed]),:has([aria-expanded=true]),[data-focused])]";
+const field = `${font} ${focus} ${fieldVars} h-8 rounded-[7px] border-0 bg-[var(--k-surface)]! px-2.5 py-0 text-[color:var(--k-ink)] [--k-control-shadow:var(--k-shadow)] shadow-[var(--k-control-shadow)] ring-0! transition-[box-shadow,background-color] duration-[140ms] ease-[var(--k-ease)] ${fieldHover}:[--k-control-shadow:var(--k-shadow-hover)] ${fieldFocused}:[--k-control-shadow:var(--k-shadow-focus)] ${fieldActive}:duration-[${fieldFocusDuration}] data-[invalid=true]:bg-[var(--k-danger-surface)]! data-[invalid=true]:[--k-control-shadow:var(--k-shadow-invalid)] ${fieldInvalidFocused}:[--k-control-shadow:var(--k-shadow-invalid-focus)] data-[disabled=true]:opacity-40 has-disabled:opacity-40`;
+
 const buttonVars = vars("button", Object.fromEntries(["ink", "solid", "solid-hover", "on-solid", "surface", "shadow", "shadow-hover", "wash", "ease", "danger", "danger-hover", "on-danger"].map(k => [k, `--ui-btnc-${k}`])));
 const menuVars = vars("select", Object.fromEntries(["ink", "menu", "glow", "shadow-menu", "ease"].map(k => [k, `--ui-selc-${k}`])));
 const switchVars = vars("switch", Object.fromEntries(["off", "off-hover", "on", "on-hover", "thumb", "thumb-shadow", "ease"].map(k => [k, `--ui-swc-${k}`])));
@@ -18,8 +24,8 @@ const command = inventory.defaults["command-menu"];
 const commandVars = vars("command-menu", Object.fromEntries(["ink", "surface", "highlight", "muted", "edge", "shadow", "ease"].map(k => [`command-${k}`, k])));
 const dialog = inventory.defaults.dialog;
 const alertDialog = inventory.defaults["alert-dialog"];
-const dialogVars = vars("dialog", { "dialog-edge": "edge", "dialog-shadow": "shadow" });
-const dialogMotion = `duration-[${dialog.duration}ms] ease-[${css(dialog.ease)}] [animation-duration:${dialog.duration}ms] [animation-timing-function:${css(dialog.ease)}]`;
+const dialogVars = `${vars("dialog", { "dialog-edge": "edge" })} ${vars(dialog.tokensFrom, { "dialog-shadow": "--ui-selc-shadow-menu" })}`;
+const dialogMotion = `will-change-[${css(dialog.rasterLayer)}] duration-[${dialog.duration}ms] ease-[${css(dialog.ease)}] [animation-duration:${dialog.duration}ms] [animation-timing-function:${css(dialog.ease)}]`;
 const dialogOverlayMotion = `duration-[${dialog.duration}ms] ease-[${css(dialog.overlayEase)}] [animation-duration:${dialog.duration}ms] [animation-timing-function:${css(dialog.overlayEase)}]`;
 const form = inventory.defaults.form;
 const fieldMessageMotion = inventory.defaults["field-message"];
@@ -35,7 +41,7 @@ const styles = {
   cardContent: "px-5",
   cardFooter: "border-t border-border bg-transparent p-4",
   formCard: `${cardSurface} w-full min-w-0 gap-0 py-0`,
-  inputGroup: `${field} ring-0! flex w-full min-w-0 px-0 focus-within:shadow-[var(--k-shadow-focus)] data-[invalid=true]:bg-[var(--k-danger-surface)]! data-[invalid=true]:shadow-[0_0_0_1px_var(--k-danger-edge)] data-[invalid=true]:focus-within:shadow-[0_0_0_1px_var(--k-danger-edge-focus)] data-[disabled=true]:opacity-40`,
+  inputGroup: `${field} flex w-full min-w-0 px-0`,
   inputContent: `${font} h-full min-w-0 flex-1 rounded-[7px] border-0 bg-transparent! px-2.5 py-0 text-[color:var(--k-ink)] shadow-none outline-none ring-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 aria-invalid:ring-0 disabled:bg-transparent disabled:opacity-100 placeholder:text-[color:var(--k-subtle)]`,
   inputClear: "[&_svg]:size-3! pointer-events-none opacity-0 transition-opacity duration-150 group-hover/input-group:pointer-events-auto group-hover/input-group:opacity-100 group-focus-within/input-group:pointer-events-auto group-focus-within/input-group:opacity-100 focus-visible:pointer-events-auto focus-visible:opacity-100",
   inputAddon: "flex h-full shrink-0 items-center gap-0.5 pr-2",
@@ -73,7 +79,9 @@ const styles = {
   label: `${font} gap-1 font-normal`,
   requiredMark: "ml-0.5 text-destructive",
   field,
-  selectTrigger: `${field} w-full pr-3 data-[state=open]:shadow-[var(--k-shadow-focus)] data-popup-open:shadow-[var(--k-shadow-focus)] data-open:shadow-[var(--k-shadow-focus)] aria-invalid:data-[state=open]:shadow-[0_0_0_1px_var(--k-danger-edge-focus)] aria-invalid:data-popup-open:shadow-[0_0_0_1px_var(--k-danger-edge-focus)] aria-invalid:data-open:shadow-[0_0_0_1px_var(--k-danger-edge-focus)]`,
+  selectControl: `${field} relative w-full min-w-0 px-0`,
+  selectTrigger: `${font} ${focus} h-full w-full min-w-0 rounded-[7px] border-0 bg-transparent! px-2.5 py-0 text-[color:var(--k-ink)] shadow-none ring-0! focus-visible:shadow-none focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:shadow-none disabled:opacity-100 data-placeholder:text-[color:var(--k-subtle)] [&_[data-placeholder]]:text-[color:var(--k-subtle)]`,
+  selectPlaceholder: "text-[color:var(--k-subtle)] data-placeholder:text-[color:var(--k-subtle)]",
   selectMenu: `${font} ${menuVars} rounded-[10px] border-0 ring-0 bg-[var(--k-menu)] p-1 text-[color:var(--k-ink)] shadow-[var(--k-shadow-menu)] before:rounded-[6px] before:bg-[var(--k-glow)] before:duration-[180ms] before:ease-[var(--k-ease)] [&_[role=option]]:min-h-8 [&_[role=option]]:rounded-[6px] [&_[role=option]]:py-1.5 [&_[role=option]]:pl-2 [&_[role=option]]:pr-8 [&_[role=option]]:text-[13px] [&_[role=option]]:leading-5 [&_[role=option]]:text-[color:var(--k-ink)] [&_[data-slot=select-group]]:p-0`,
   commandMenu: `${font} ${commandVars} w-full max-w-[${command.width}px] overflow-hidden rounded-[${command.radius}px] bg-[var(--k-command-surface)] text-[color:var(--k-command-ink)] shadow-[var(--k-command-shadow)]`,
   commandSearch: `flex h-[${command.searchHeight}px] items-center gap-2.5 border-b border-[var(--k-command-edge)] px-[${command.contentInset}px] [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--k-command-muted)]`,

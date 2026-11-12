@@ -10,6 +10,7 @@ import { ComponentDetails, ComponentInstallation, ComponentReference } from "@/c
 import { InstallCommand } from "@/components/site-shell";
 import { PrimitiveCode } from "@/components/primitive-code";
 import { reactExample } from "@/lib/component-examples";
+import { PopoverExamples } from "@/components/popover-examples";
 export const dynamicParams = false;
 export function generateStaticParams() {
   return catalog.map((item) => ({ slug: item.slug }));
@@ -86,8 +87,10 @@ export default async function DetailPage({
             <h2>使用</h2>
             <PrimitiveCode
               radix={reactExample(item)}
+              language="tsx"
             />
           </section>
+          {slug === "kalos-popover" && <PopoverExamples />}
           <ComponentReference slug={slug} />
           <PagePagination
             previous={previous ? { href: `/components/${previous.slug}`, title: previous.title } : { href: "/components", title: "全部组件" }}

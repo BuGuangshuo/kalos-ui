@@ -20,6 +20,7 @@ const registry = {
       { path: "components/ui/kalos-styles.ts", type: "registry:ui" },
       ...(["kalos-form", "kalos-input", "kalos-select", "kalos-checkbox", "kalos-switch"].includes(item.slug) ? [{ path: "components/ui/kalos-field-message.tsx", type: "registry:ui" }] : []),
       ...(["kalos-input", "kalos-form"].includes(item.slug) ? [{ path: "components/ui/input-group.tsx", type: "registry:ui" }] : []),
+      ...(["kalos-select", "kalos-form"].includes(item.slug) ? [{ path: "components/ui/kalos-select-focus.ts", type: "registry:ui" }] : []),
       ...(item.slug === "kalos-select" ? [{ path: "registry/kalos/kalos-button.tsx", type: "registry:ui" }] : []),
       ...(item.slug === "kalos-form" ? ["input", "select", "checkbox", "switch", "button"].map(name => ({ path: `registry/kalos/kalos-${name}.tsx`, type: "registry:ui" })) : []),
       ...(item.slug === "kalos-form" ? [{ path: "components/ui/kalos-form-state.ts", type: "registry:ui" }] : []),
@@ -52,7 +53,7 @@ registry.items.push({
   registryDependencies: [
     ...new Set(catalog.flatMap((item) => [...item.dependencies])),
   ],
-  files: [{ path: "components/ui/kalos-field-message.tsx", type: "registry:ui" }, { path: "components/ui/input-group.tsx", type: "registry:ui" }, { path: "components/ui/kalos-form-state.ts", type: "registry:ui" }, { path: "components/ui/dialog.tsx", type: "registry:ui" }, ...catalog.map((item) => ({
+  files: [{ path: "components/ui/kalos-select-focus.ts", type: "registry:ui" }, { path: "components/ui/kalos-field-message.tsx", type: "registry:ui" }, { path: "components/ui/input-group.tsx", type: "registry:ui" }, { path: "components/ui/kalos-form-state.ts", type: "registry:ui" }, { path: "components/ui/dialog.tsx", type: "registry:ui" }, ...catalog.map((item) => ({
     path: `registry/kalos/${item.slug}.tsx`,
     type: "registry:ui",
   })), { path: "components/ui/kalos-command-menu-panel.tsx", type: "registry:ui" }, { path: "components/ui/kalos-popover-menu.tsx", type: "registry:ui" }, { path: "components/ui/kalos-highlight.ts", type: "registry:ui" }, { path: "components/ui/kalos-styles.ts", type: "registry:ui" }],

@@ -99,7 +99,7 @@ function ProgressIndicator({
   return (
     <span
       data-slot="progress-indicator"
-      className={cn("h-full bg-primary transition-all duration-300", className)}
+      className={cn("h-full rounded-full bg-primary transition-all duration-300", className)}
       style={{
         ...style,
         width: `${isIndeterminate ? 100 : (percentage ?? 0)}%`,

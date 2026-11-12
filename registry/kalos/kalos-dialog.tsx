@@ -39,6 +39,12 @@ export function KalosDialog({
         </Button>
       </DialogTrigger>
       <DialogContent
+        tabIndex={-1}
+        onOpenAutoFocus={event => {
+          event.preventDefault();
+          const content = event.currentTarget as HTMLElement;
+          if (!content.contains(document.activeElement)) content.focus();
+        }}
         {...(description ? {} : { "aria-describedby": undefined })}
         className={`${controlStyles.font} ${controlStyles.dialogLayout} focus-visible:outline-none focus-visible:ring-0 [&_button:focus-visible]:outline-none [&_button:focus-visible]:ring-0`}
       >

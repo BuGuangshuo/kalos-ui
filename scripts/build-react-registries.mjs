@@ -29,6 +29,7 @@ for (const [backend, label, prefix, dependency] of [
       await collect(`registry/${backend}/${match[1]}.tsx`, files);
     }
     if (content.includes("@/components/ui/kalos-field-message")) await collect("components/ui/kalos-field-message.tsx", files);
+    if (content.includes("@/components/ui/kalos-select-focus")) await collect("components/ui/kalos-select-focus.ts", files);
     if (content.includes("@/components/ui/kalos-form-state")) await collect("components/ui/kalos-form-state.ts", files);
     return files;
   }
