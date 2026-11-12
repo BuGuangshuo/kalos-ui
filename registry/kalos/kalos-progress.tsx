@@ -22,6 +22,7 @@ export function KalosProgress({
         </span>
       </div>
       <Progress
+        className="[&_[data-slot=progress-indicator]]:rounded-full"
         value={percent}
         aria-label={label}
         aria-valuenow={percent}
