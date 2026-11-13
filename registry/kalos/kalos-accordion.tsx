@@ -13,7 +13,7 @@ export function KalosAccordion({
   items: { question: string; answer: ReactNode }[];
 }) {
   return (
-    <Accordion type="single" collapsible className={controlStyles.font}>
+    <Accordion className={controlStyles.font} multiple={false}>
       {items.map((item, index) => (
         <AccordionItem key={index} value={String(index)}>
           <AccordionTrigger className="py-3 text-[13px] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-transparent focus-visible:after:border-transparent">

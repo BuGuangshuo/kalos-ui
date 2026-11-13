@@ -24,6 +24,7 @@ import { installerCommand, type InstallationMode } from "@/lib/installer";
 import { CopyButton } from "@/components/copy-button";
 import { BrandLogo } from "@/components/brand";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { KalosTooltipProvider } from "@/registry/kalos/kalos-tooltip";
 import { GlobalSearch } from "@/components/global-search";
 import { SiteNavigation } from "@/components/site-navigation";
 const HomeShell = dynamic(() =>
@@ -116,13 +117,13 @@ export function InstallCommand({ slug = "kalos-button", manager = "npm", mode = 
 export function BundleInstall() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button className="pill-button">安装组件库</Button>
+      <DialogTrigger render={<Button className="pill-button" />}>
+        安装组件库
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>将 Kalos UI 添加到项目</DialogTitle>
         <DialogDescription>
-          在项目根目录运行，安装器会识别框架，并在终端引导选择基础组件库。
+          在项目根目录运行，安装器会识别框架并安装 Base UI 组件源码。
           全部 {catalog.length} 个组件及所需基础组件会自动安装。
         </DialogDescription>
         <InstallCommand slug="kalos-all" />
@@ -134,6 +135,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const home = usePathname() === "/";
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+      <KalosTooltipProvider>
       {home ? (
         <HomeShell>{children}</HomeShell>
       ) : (
@@ -143,6 +145,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </>
       )}
       <Toaster position="bottom-right" />
+      </KalosTooltipProvider>
     </ThemeProvider>
   );
 }

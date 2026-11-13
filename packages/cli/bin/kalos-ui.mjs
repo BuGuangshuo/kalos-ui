@@ -2,7 +2,7 @@
 import { parseArgs } from "node:util";
 import { install, selectMode } from "../lib/installer.mjs";
 
-const help = `Kalos UI — 在终端选择组件基础库并安装源码
+const help = `Kalos UI — 安装 Base UI 组件源码
 
 用法：
   kalos-ui init [项目名] [选项]    创建前端项目并安装组件库
@@ -12,7 +12,7 @@ const help = `Kalos UI — 在终端选择组件基础库并安装源码
 不指定组件时安装全部组件；也可使用 add button card 或 add theme。
 
 选项：
-  --base <radix|base|aria>  指定 React 基础库，跳过选择步骤
+  --base <base>            可选；默认使用 Base UI
   --template <名称>         init 脚手架：next / vite / react-router
   --name <项目名>           init 新项目名称
   --package-manager <名称>  init 包管理器：npm / pnpm / yarn / bun

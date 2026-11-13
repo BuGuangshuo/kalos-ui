@@ -1,0 +1,100 @@
+.kalos-avatar[data-slot="avatar"], .kalos-avatar-count {
+  --avatar-size: 32px;
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  font-size: calc(var(--avatar-size) * .36);
+  font-weight: 400;
+  line-height: 1;
+  vertical-align: middle;
+  user-select: none;
+  isolation: isolate;
+}
+.kalos-avatar[data-slot="avatar"]::after { display: none; }
+.kalos-avatar[data-shape="square"] { border-radius: calc(var(--avatar-size) * .24); }
+.kalos-avatar[data-size="20"], .kalos-avatar-count[data-size="20"] { font-size: 8.5px; }
+.kalos-avatar[data-size="24"], .kalos-avatar-count[data-size="24"] { font-size: 10px; }
+.kalos-avatar[data-size="40"], .kalos-avatar-count[data-size="40"] { font-size: 14px; }
+.kalos-avatar [data-slot="avatar-fallback"], .kalos-avatar [data-slot="avatar-image"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+.kalos-avatar [data-slot="avatar-fallback"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--k-avatar-fill);
+  color: var(--k-avatar-muted);
+  font-size: inherit;
+  line-height: inherit;
+}
+.kalos-avatar[data-tone] [data-slot="avatar-fallback"] {
+  background: hsl(var(--avatar-hue) var(--k-avatar-bg-s) var(--k-avatar-bg-l));
+  color: hsl(var(--avatar-hue) var(--k-avatar-fg-s) var(--k-avatar-fg-l));
+}
+.kalos-avatar[data-tone="0"] { --avatar-hue: 214; }
+.kalos-avatar[data-tone="1"] { --avatar-hue: 152; }
+.kalos-avatar[data-tone="2"] { --avatar-hue: 40; }
+.kalos-avatar[data-tone="3"] { --avatar-hue: 22; }
+.kalos-avatar[data-tone="4"] { --avatar-hue: 330; }
+.kalos-avatar[data-tone="5"] { --avatar-hue: 268; }
+.kalos-avatar[data-tone="6"] { --avatar-hue: 174; }
+.kalos-avatar[data-tone="7"] { --avatar-hue: 196; }
+.kalos-avatar[data-kind="agent"] [data-slot="avatar-fallback"] {
+  background: var(--k-avatar-tile);
+  box-shadow: inset 0 0 0 .5px var(--k-avatar-edge);
+}
+.kalos-avatar [data-slot="avatar-fallback"] > svg { width: 55%; height: 55%; }
+.kalos-avatar [data-slot="avatar-image"] {
+  z-index: 1;
+  object-fit: cover;
+}
+.kalos-avatar [data-slot="avatar-image"]:not([data-state="loading"]):not([data-state="error"]) {
+  animation: kalos-avatar-reveal var(--k-avatar-image-duration) ease-out;
+}
+.kalos-avatar [data-slot="avatar-image"][data-state="loading"] { opacity: 0; }
+.kalos-avatar [data-slot="avatar-image"][data-state="error"] { display: none; }
+.kalos-avatar-status {
+  position: absolute;
+  z-index: 2;
+  inset-inline-end: 0;
+  bottom: 0;
+  width: calc(var(--avatar-size) * .25);
+  height: calc(var(--avatar-size) * .25);
+  border-radius: 50%;
+  background: var(--k-avatar-online);
+  box-shadow: 0 0 0 1.5px var(--avatar-ring, var(--k-avatar-ring));
+}
+.kalos-avatar-status[data-status="away"] { background: var(--k-avatar-away); }
+.kalos-avatar-status[data-status="busy"] { background: var(--k-avatar-busy); }
+.kalos-avatar-mark {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(var(--avatar-size) * .05);
+  width: 50%;
+  height: 50%;
+}
+.kalos-avatar-mark > span { border-radius: .5px; background: var(--k-avatar-mark); opacity: .18; }
+.kalos-avatar-mark > [data-lit] { opacity: .85; }
+.kalos-avatar-mark[data-working] > span { animation: kalos-avatar-twinkle var(--k-avatar-working-duration) ease-in-out infinite; }
+.kalos-avatar-stack { display: inline-flex; align-items: center; isolation: isolate; }
+.kalos-avatar-stack > .kalos-avatar ~ .kalos-avatar,
+.kalos-avatar-stack > .kalos-avatar-count { margin-inline-start: calc(var(--avatar-size) * -.25); }
+.kalos-avatar-stack > .kalos-avatar,
+.kalos-avatar-count { box-shadow: 0 0 0 2px var(--avatar-ring, var(--k-avatar-ring)); }
+.kalos-avatar-count {
+  background: linear-gradient(var(--k-avatar-fill), var(--k-avatar-fill)), var(--avatar-ring, var(--k-avatar-ring));
+  color: var(--k-avatar-muted);
+  font-variant-numeric: tabular-nums;
+}
+.kalos-avatar-stack:not(:has(> .kalos-avatar)) > .kalos-avatar-count { margin-inline-start: 0; }
+@keyframes kalos-avatar-reveal { from { opacity: 0; } to { opacity: 1; } }
+@keyframes kalos-avatar-twinkle { 0%, 100% { opacity: .85; } 50% { opacity: .18; } }

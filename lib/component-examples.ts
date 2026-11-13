@@ -1,4 +1,10 @@
+import { avatarExample } from "@/lib/avatar-examples";
+import { dropdownMenuExample } from "@/lib/dropdown-menu-examples";
 import type { Item } from "@/lib/catalog";
+import { segmentedControlExample } from "@/lib/segmented-control-examples";
+import { basicTableExample } from "@/lib/table-examples";
+import { skeletonExample, spinnerExample } from "@/lib/loading-examples";
+import { datePickerExample, dateRangePickerExample, timePickerExample } from "@/lib/date-time-examples";
 
 export type PopoverExampleVariant = "default" | "basic" | "align" | "form";
 
@@ -85,6 +91,84 @@ export default function Example() {
 }
 
 export function reactExample(item: Item) {
+  if (item.slug === "kalos-date-picker") return datePickerExample();
+  if (item.slug === "kalos-date-range-picker") return dateRangePickerExample();
+  if (item.slug === "kalos-time-picker") return timePickerExample();
+  if (item.slug === "kalos-skeleton") return skeletonExample();
+  if (item.slug === "kalos-spinner") return spinnerExample();
+  if (item.slug === "kalos-tooltip") return `"use client";
+
+import { Search } from "lucide-react";
+import { KalosTooltip, KalosTooltipProvider } from "@/components/ui/kalos-tooltip";
+import { KalosButton } from "@/components/ui/kalos-button";
+
+export default function Example() {
+  return <KalosTooltipProvider>
+    <KalosTooltip content="搜索记录" shortcut="⌘K" side="bottom">
+      <KalosButton variant="outline" size="icon" aria-label="搜索记录"><Search /></KalosButton>
+    </KalosTooltip>
+  </KalosTooltipProvider>;
+}`;
+  if (item.slug === "kalos-avatar-stack") return avatarExample();
+  if (item.slug === "kalos-dropdown-menu") return dropdownMenuExample();
+  if (item.slug === "kalos-card") return `"use client";
+
+import { MoreHorizontal } from "lucide-react";
+import { KalosCard } from "@/components/ui/kalos-card";
+import { KalosButton } from "@/components/ui/kalos-button";
+
+function ActivityIcon() {
+  return <span aria-hidden="true" className="grid size-10 place-items-center rounded-lg bg-muted">
+    <style>{\`@keyframes card-activity-pixel { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }\`}</style>
+    <span className="grid size-4 grid-cols-[repeat(3,3px)] auto-rows-[3px] place-content-center gap-[1.5px]">
+      {Array.from({ length: 9 }, (_, index) => <i key={index} className="rounded-[0.75px] bg-[var(--k-card-activity)]" style={{
+        opacity: index === 1 || index === 7 ? 0 : 1,
+        animation: index === 1 || index === 7 ? undefined : "card-activity-pixel 1.2s ease-in-out infinite both",
+        animationDelay: (Math.floor(index / 3) + index % 3) * 120 + "ms",
+      }} />)}
+    </span>
+  </span>;
+}
+
+export default function Example() {
+  return <div className="w-full max-w-[400px]">
+    <KalosCard
+      as="section"
+      aria-label="文档资料"
+      title="文档资料"
+      description="最近 30 天"
+      icon={<ActivityIcon />}
+      action={<KalosButton variant="ghost" size="icon" aria-label="查看文档信息" onClick={() => window.alert("142 份文档，已使用 4.2 GB 存储空间")}><MoreHorizontal /></KalosButton>}
+      footer={<>
+        <span>2 分钟前同步</span>
+        <span className="ms-auto"><KalosButton onClick={() => window.alert("已打开文档资料")}>打开</KalosButton></span>
+      </>}
+    >
+      <dl className="grid grid-cols-3 gap-3">
+        <div><dt className="text-xs text-muted-foreground">文档</dt><dd className="text-base tabular-nums">142</dd></div>
+        <div><dt className="text-xs text-muted-foreground">已同步</dt><dd className="text-base tabular-nums">96%</dd></div>
+        <div><dt className="text-xs text-muted-foreground">存储</dt><dd className="text-base tabular-nums">4.2 GB</dd></div>
+      </dl>
+    </KalosCard>
+  </div>;
+}`;
+  if (item.slug === "kalos-segmented-control") return segmentedControlExample();
+  if (item.slug === "kalos-table") return basicTableExample();
+  if (item.slug === "kalos-number-input") return `"use client";
+
+import { useState } from "react";
+import { KalosNumberInput } from "@/components/ui/kalos-number-input";
+
+export default function Example() {
+  const [files, setFiles] = useState<number | null>(3);
+
+  return <form className="flex flex-col gap-4">
+    <KalosNumberInput label="文件数量" name="files" value={files} onValueChange={setFiles} min={1} max={20} />
+    <KalosNumberInput label="上传限额" name="limit" defaultValue={250} min={10} max={1000} step={10} unit="MB" />
+    <KalosNumberInput label="打印费用" name="cost" prefix="¥" defaultValue={25} min={0} max={100} step={0.5} formatOptions={{ minimumFractionDigits: 2, maximumFractionDigits: 2 }} />
+    <KalosNumberInput label="缩放比例" name="scale" defaultValue={0.75} min={0.1} max={2} step={0.05} formatOptions={{ style: "percent", maximumFractionDigits: 0 }} />
+  </form>;
+}`;
   if (item.slug === "kalos-popover") return popoverExample();
   if (item.slug === "kalos-form") return `"use client";
 

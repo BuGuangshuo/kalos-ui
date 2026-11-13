@@ -4,13 +4,12 @@ import prompts from "prompts";
 import spawn from "cross-spawn";
 
 export const manifest = JSON.parse(await readFile(new URL("../manifest.json", import.meta.url), "utf8"));
-const bases = [
-  { value: "radix", title: "Radix UI" },
-  { value: "base", title: "Base UI" },
-  { value: "aria", title: "React Aria" },
-];
-const backend = { radix: "radix", base: "base-ui", aria: "react-aria" };
-const aliases = { radix: "radix", base: "base", "base-ui": "base", aria: "aria", "react-aria": "aria" };
+function requireBase(value) {
+  if (value !== undefined && value !== "base" && value !== "base-ui") {
+    throw new Error("Kalos UI 仅支持 Base UI；--base 可省略或设为 base。");
+  }
+  return "base";
+}
 const frameworks = [
   { value: "next", title: "Next.js" },
   { value: "vite", title: "React + Vite" },
@@ -39,9 +38,9 @@ async function exists(path) {
 
 export function detectBase(config, pkg) {
   const style = config?.style || "";
-  for (const base of bases) if (style.startsWith(`${base.value}-`)) return base.value;
+  for (const base of ["base", "radix", "aria"]) if (style.startsWith(`${base}-`)) return base;
   if (["default", "new-york"].includes(style)) return "radix";
-  const deps = { ...pkg.dependencies, ...pkg.devDependencies };
+  const deps = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
   const detected = [
     deps["@base-ui/react"] && "base",
     deps["react-aria-components"] && "aria",
@@ -109,7 +108,7 @@ export async function selectMode(options = {}, hooks = {}) {
   const hasProject = await exists(join(resolve(options.cwd || process.cwd()), "package.json"));
   if (!interactive) {
     if (hasProject) return "add";
-    throw new Error("新建项目请使用 init，并指定 --template、--base 和 --name。");
+    throw new Error("新建项目请使用 init，并指定 --template 和 --name。");
   }
   return (hooks.choose || choose)({
     message: "选择安装方式",
@@ -150,10 +149,7 @@ async function createProjectPlan(options, hooks) {
   let framework = options.template || options.framework;
   if (!framework && interactive) framework = await select({ message: "选择前端脚手架", choices: templates });
   if (!templates.some((item) => item.value === framework)) throw new Error("新建项目请通过 --template next、vite 或 react-router 选择脚手架。");
-  let base = options.base ? aliases[options.base] : undefined;
-  if (options.base && !base) throw new Error("--base 仅支持 radix、base 或 aria。");
-  if (!base && interactive) base = await select({ message: "选择基础组件库", choices: bases });
-  if (!backend[base]) throw new Error("新建项目请通过 --base radix、base 或 aria 指定基础库。");
+  const base = requireBase(options.base);
   let name = options.name;
   if (name === undefined && interactive) name = await (hooks.input || input)({ message: "项目名称", initial: "my-app", validate: validateName });
   if (name === undefined) throw new Error("新建项目请通过 --name 指定项目名称。");
@@ -165,7 +161,7 @@ async function createProjectPlan(options, hooks) {
   if (manager === undefined && interactive) manager = await select({ message: "选择包管理器", choices: managers.map(value => ({ title: value, value })) });
   manager ??= "npm";
   if (!managers.includes(manager)) throw new Error("--package-manager 仅支持 npm、pnpm、yarn 或 bun。");
-  const urls = components.map(component => `${registry}/r/${backend[base]}/${component}.json`);
+  const urls = components.map(component => `${registry}/r/${component}.json`);
   const init = ["init", ...urls, "--name", name, "--template", framework, "--base", base, "--preset", "nova", "--no-monorepo", "--no-reinstall"];
   if (options.yes) init.push("--yes");
   return {
@@ -197,26 +193,13 @@ export async function createInstallPlan(options = {}, hooks = {}) {
   }
   if (!frameworks.some((item) => item.value === framework)) throw new Error(`--framework 仅支持 ${frameworkOptions}。`);
 
-  let base;
+  const base = requireBase(options.base);
   const current = detectBase(config, pkg);
-  if (options.base) {
-    base = aliases[options.base];
-    if (!base) throw new Error("--base 仅支持 radix、base 或 aria。");
-  } else if (interactive) {
-    base = await select({
-      message: "选择要安装的基础组件库",
-      choices: bases.map((item) => ({ ...item, description: item.value === current ? "当前项目使用的基础库" : undefined })),
-      initial: Math.max(0, bases.findIndex((item) => item.value === current)),
-    });
-  } else {
-    base = current;
-    if (!base) throw new Error("非交互环境请通过 --base radix、--base base 或 --base aria 指定基础库。");
-  }
-  if (!backend[base]) throw new Error("请选择有效的基础组件库。");
   if (current && current !== base) {
-    const label = bases.find((item) => item.value === current).title;
-    throw new Error(`当前项目已配置 ${label}，请选择同一基础库。切换基础库请先在目标项目完成迁移，再运行安装器。`);
+    const label = current === "radix" ? "Radix UI" : "React Aria";
+    throw new Error(`当前项目已配置 ${label}，Kalos UI 仅支持 Base UI。请先完成基础库迁移，再运行安装器。`);
   }
+  if (config && !current) throw new Error("无法确认现有 components.json 使用 Base UI。请先将项目迁移并配置为 base-* 风格，再运行安装器。");
 
   const registry = registryOrigin(options.registry);
   const manager = await detectManager(cwd, pkg);
@@ -227,8 +210,7 @@ export async function createInstallPlan(options = {}, hooks = {}) {
     if (options.yes) init.push("--yes");
     commands.push(runner(manager, "shadcn", init));
   }
-  const family = backend[base];
-  const urls = components.map((name) => `${registry}/r/${family}/${name}.json`);
+  const urls = components.map((name) => `${registry}/r/${name}.json`);
   commands.push(runner(manager, "shadcn", ["add", ...urls, ...(options.yes ? ["--yes"] : [])]));
   return { mode: "add", cwd, framework, base, manager, registry, components, commands };
 }
@@ -250,8 +232,7 @@ export function runCommand({ command, args, manager }, cwd) {
 export async function install(options = {}, hooks = {}) {
   const plan = await createInstallPlan(options, hooks);
   const log = hooks.log || console.log;
-  const label = bases.find((item) => item.value === plan.base).title;
-  log(`\nKalos UI · ${frameworks.find((item) => item.value === plan.framework).title} · ${label}\n`);
+  log(`\nKalos UI · ${frameworks.find((item) => item.value === plan.framework).title} · Base UI\n`);
   if (plan.mode === "init") log(`新建项目：${plan.projectDir}\n`);
   let staging;
   try {

@@ -23,14 +23,14 @@ export default function DocsPage() {
         <header className="docs-title"><h1>快速开始</h1></header>
         <section id="installation">
           <h2>新建项目</h2>
-          <p>运行命令，选择脚手架、基础库、项目名和包管理器。</p>
+          <p>运行命令，选择脚手架、项目名和包管理器，默认安装 Base UI 组件。</p>
           <InstallCommand mode="init" slug="kalos-all" />
         </section>
         <section id="existing-project">
           <h2>已有项目</h2>
           <p>在项目根目录运行，沿用现有主题、目录和路径别名。</p>
           <InstallCommand slug="kalos-all" />
-          <p>已有项目需配置 TypeScript、Tailwind CSS 和路径别名。</p>
+          <p>已有项目需配置 TypeScript、Tailwind CSS 和路径别名；组件配置使用 Base UI。</p>
         </section>
         <section id="frameworks">
           <h2>框架接入</h2>
@@ -73,7 +73,7 @@ export default function DocsPage() {
               filename="项目结构"
               language="text"
               code={
-                "registry/kalos/      Radix 组件源码\nregistry/base-ui/    Base UI 组件源码\nregistry/react-aria/ React Aria 组件源码\nskills/kalos-ui/     可安装的 AI Skill\nlib/catalog.ts      组件目录与依赖\ndesign/tokens.json  共享语义设计变量\npublic/r/radix/     Radix 注册表 JSON\npublic/r/base-ui/   Base UI 注册表 JSON\npublic/r/react-aria/ React Aria 注册表 JSON"
+                "registry/kalos/      Base UI 组件源码\nskills/kalos-ui/     可安装的 AI Skill\nlib/catalog.ts      组件目录与依赖\ndesign/tokens.json  共享语义设计变量\npublic/r/           Base UI 注册表 JSON"
               }
             />
             <ol>
@@ -93,7 +93,7 @@ export default function DocsPage() {
           <section id="license">
             <h2>开源许可</h2>
             <p>
-              Kalos UI 使用 MIT 许可证，支持个人与商业项目。组件交互基础来自{" "}
+              Kalos UI 使用 MIT 许可证，支持个人与商业项目。组件交互基础来自 Base UI，源码分发使用{" "}
               <a href="https://ui.shadcn.com/" target="_blank" rel="noreferrer">
                 shadcn/ui
               </a>

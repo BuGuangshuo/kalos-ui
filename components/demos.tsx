@@ -1,11 +1,13 @@
 "use client";
-import dynamic from "next/dynamic";
 import { KalosForm } from "@/registry/kalos/kalos-form";
 import { DemoContent } from "@/components/demo-content";
+import type { NumberInputExampleVariant } from "@/lib/number-input-examples";
+import type { SegmentedExampleVariant } from "@/lib/segmented-control-examples";
+import { KalosDropdownMenu } from "@/registry/kalos/kalos-dropdown-menu";
+import type { DropdownExampleVariant } from "@/lib/dropdown-menu-examples";
+import type { TableExampleVariant } from "@/lib/table-examples";
+import { KalosTable } from "@/registry/kalos/kalos-table";
 import type { PopoverExampleVariant } from "@/lib/component-examples";
-import { usePrimitive } from "@/components/primitives";
-const BaseDemo = dynamic(() => import("@/components/base-ui-demos"));
-const AriaDemo = dynamic(() => import("@/components/react-aria-demos"));
 import {
   Plus,
   Code2,
@@ -17,20 +19,22 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { KalosButton } from "@/registry/kalos/kalos-button";
+import { KalosHoverCard } from "@/registry/kalos/kalos-hover-card";
 import { KalosPopover } from "@/registry/kalos/kalos-popover";
 import { KalosCommandMenu } from "@/registry/kalos/kalos-command-menu";
+import { KalosNumberInput } from "@/registry/kalos/kalos-number-input";
 import { KalosInput } from "@/registry/kalos/kalos-input";
 import { KalosCard } from "@/registry/kalos/kalos-card";
 import { KalosBadge } from "@/registry/kalos/kalos-badge";
 import { KalosSwitch } from "@/registry/kalos/kalos-switch";
 import { KalosCheckbox } from "@/registry/kalos/kalos-checkbox";
-import { KalosTabs } from "@/registry/kalos/kalos-tabs";
+import { KalosSegmentedControl } from "@/registry/kalos/kalos-segmented-control";
 import { KalosAccordion } from "@/registry/kalos/kalos-accordion";
 import { KalosAlertDialog } from "@/registry/kalos/kalos-alert-dialog";
 import { KalosDialog } from "@/registry/kalos/kalos-dialog";
 import { KalosSelect } from "@/registry/kalos/kalos-select";
 import { KalosProgress } from "@/registry/kalos/kalos-progress";
-import { KalosAvatarStack } from "@/registry/kalos/kalos-avatar-stack";
+import { KalosAvatar, KalosAvatarStack } from "@/registry/kalos/kalos-avatar-stack";
 import { Separator } from "@/components/ui/separator";
 const people = [
   { name: "Alan Bu" },
@@ -39,40 +43,48 @@ const people = [
   { name: "周宁" },
   { name: "吴昕" },
 ];
-const radixComponents = {
+const components = {
   KalosForm,
+  KalosDropdownMenu,
+  KalosTable,
   KalosButton,
   KalosInput,
+  KalosNumberInput,
+  KalosHoverCard,
   KalosPopover,
   KalosCommandMenu,
   KalosCard,
   KalosBadge,
   KalosSwitch,
   KalosCheckbox,
-  KalosTabs,
+  KalosSegmentedControl,
   KalosAccordion,
   KalosDialog,
   KalosAlertDialog,
   KalosSelect,
   KalosProgress,
+  KalosAvatar,
   KalosAvatarStack,
 };
 export function ComponentDemo({
   slug,
   compact = false,
   popoverVariant,
+  tableVariant,
+  segmentedVariant,
+  numberVariant,
+  dropdownVariant,
 }: {
   slug: string;
   compact?: boolean;
   popoverVariant?: PopoverExampleVariant;
+  tableVariant?: TableExampleVariant;
+  segmentedVariant?: SegmentedExampleVariant;
+  numberVariant?: NumberInputExampleVariant;
+  dropdownVariant?: DropdownExampleVariant;
 }) {
-  const { primitive } = usePrimitive();
-  if (primitive === "base-ui")
-    return <BaseDemo slug={slug} compact={compact} popoverVariant={popoverVariant} />;
-  if (primitive === "react-aria")
-    return <AriaDemo slug={slug} compact={compact} popoverVariant={popoverVariant} />;
   return (
-    <DemoContent components={radixComponents} slug={slug} compact={compact} popoverVariant={popoverVariant} />
+    <DemoContent components={components} slug={slug} compact={compact} popoverVariant={popoverVariant} tableVariant={tableVariant} segmentedVariant={segmentedVariant} numberVariant={numberVariant} dropdownVariant={dropdownVariant} />
   );
 }
 export function HeroShowcase() {

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
-import { PrimitiveSwitcher } from "@/components/primitives";
-import { PrimitiveCode } from "@/components/primitive-code";
 import { DocsPagination } from "@/components/page-pagination";
 import { site } from "@/lib/site";
 
@@ -14,7 +12,7 @@ const links = [
 ];
 
 export default function RegistryPage() {
-  const configuration = (family: string) => JSON.stringify({ registries: { "@kalos-ui": `${site.url}/r/${family}/{name}.json` } }, null, 2);
+  const configuration = JSON.stringify({ registries: { "@kalos-ui": `${site.url}/r/{name}.json` } }, null, 2);
   return <div className="workbench">
     <Sidebar active="registry" />
     <div className="docs-grid">
@@ -27,7 +25,7 @@ export default function RegistryPage() {
             <table className="props-table">
               <thead><tr><th>字段</th><th>用途</th></tr></thead>
               <tbody>
-                <tr><td><code>style</code></td><td>当前基础库与组件风格。沿用已有值，避免混用不同基础库。</td></tr>
+                <tr><td><code>style</code></td><td>Base UI 组件风格，例如 base-nova。</td></tr>
                 <tr><td><code>rsc</code></td><td>是否启用 React Server Components，用于处理客户端指令。</td></tr>
                 <tr><td><code>tsx</code></td><td>是否生成 TypeScript 组件源码。</td></tr>
                 <tr><td><code>tailwind.css</code></td><td>全局 CSS 入口，主题变量与共享样式写入此文件。</td></tr>
@@ -40,10 +38,9 @@ export default function RegistryPage() {
         </section>
         <section id="namespace">
           <h2>添加命名空间</h2>
-          <p>需要通过 <code>@kalos-ui</code> 安装时，选择项目当前的基础库，将下方 <code>registries</code> 字段合并到已有配置。</p>
-          <PrimitiveSwitcher />
-          <PrimitiveCode filename="components.json" radix={configuration("radix")} base={configuration("base-ui")} aria={configuration("react-aria")} />
-          <p><code>{"{name}"}</code> 会替换为组件条目名，例如 <code>kalos-button</code>。三种地址分别提供 Radix UI、Base UI 和 React Aria 源码；切换这里的示例不会迁移项目的基础库。</p>
+          <p>需要通过 <code>@kalos-ui</code> 安装时，将下方 <code>registries</code> 字段合并到已有配置。</p>
+          <CodeBlock filename="components.json" language="json" code={configuration} />
+          <p><code>{"{name}"}</code> 会替换为组件条目名，例如 <code>kalos-button</code>。注册表统一提供 Base UI 源码。</p>
         </section>
         <section id="install">
           <h2>安装组件</h2>
@@ -58,9 +55,9 @@ export default function RegistryPage() {
         </section>
         <section id="custom-registry">
           <h2>自定义地址</h2>
-          <p>自行部署注册表后，将域名替换为部署地址，保留基础库路径和 <code>{"{name}.json"}</code> 占位符。例如：</p>
-          <CodeBlock filename="components.json" code={JSON.stringify({ registries: { "@kalos-ui": "https://ui.example.com/r/radix/{name}.json" } }, null, 2)} />
-          <p>注册表地址必须能从终端访问，并返回 JSON。出现找不到组件的错误时，检查域名、基础库目录与组件名是否一致。</p>
+          <p>自行部署注册表后，将域名替换为部署地址，保留 /r/ 路径和 <code>{"{name}.json"}</code> 占位符。例如：</p>
+          <CodeBlock filename="components.json" language="json" code={JSON.stringify({ registries: { "@kalos-ui": "https://ui.example.com/r/{name}.json" } }, null, 2)} />
+          <p>注册表地址必须能从终端访问，并返回 JSON。出现找不到组件的错误时，检查域名、路径与组件名是否一致。</p>
         </section>
         <DocsPagination current="/docs/registry" />
       </article>

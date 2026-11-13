@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   redirects() {
     return [
+      { source: "/components/kalos-tabs", destination: "/components/kalos-segmented-control", permanent: true },
       {
         source: "/components/pop-:name",
         destination: "/components/kalos-:name",

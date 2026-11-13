@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { DocsPagination } from "@/components/page-pagination";
 import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
 export const metadata: Metadata = { title: "Skills" };
@@ -23,6 +24,7 @@ export default function SkillsPage() {
             的编程工具提供项目上下文：识别框架、选对注册表、阅读组件
             API，并使用已有的设计变量构建界面。
           </p>
+          <p>需要让 AI 工具直接检索和读取注册表时，查看<Link href="/docs/mcp">MCP 配置</Link>。</p>
           <section id="install">
             <h2>安装 Skill</h2>
             <p>在你的项目目录运行，按提示选择使用的 AI 工具：</p>
@@ -44,11 +46,11 @@ export default function SkillsPage() {
             <h3>识别项目，选择正确的组件</h3>
             <p>
               读取 package.json、components.json 与现有导入，识别项目框架，
-              进一步识别 Radix UI、Base UI 或 React Aria，选择对应注册表地址与组件 API。
+              使用统一的 Base UI 注册表地址与组件 API。
             </p>
             <h3>从基础组件组合界面</h3>
             <p>
-              提供按钮、输入框、卡片、徽标、开关、复选框、选项卡、折叠面板、对话框、选择器、进度条、头像组、浮层和命令菜单的使用指导。按需安装源码，保留你的目录、别名与现有组件。
+              提供按钮、输入框、卡片、徽标、开关、复选框、分段控制器、折叠面板、对话框、选择器、进度条、头像组、浮层和命令菜单的使用指导。按需安装源码，保留你的目录、别名与现有组件。
             </p>
             <h3>保持项目风格</h3>
             <p>
@@ -65,7 +67,7 @@ export default function SkillsPage() {
               filename="给 AI 助手的提示"
               language="text"
               code={
-                "使用 Kalos UI，帮我做一个包含姓名、邮箱和消息开关的偏好设置表单。\n\n用 Kalos UI 的对话框完成添加联系人流程，保留现有主题和键盘操作。\n\n给保存按钮增加加载、成功和失败反馈，连接已有的保存接口。\n\n当前是 React + Vite 项目，保留现有路径别名与 Tailwind 配置。\n\n在 React Router 路由页面中加入设置表单，沿用 ~/ 别名。\n\n当前项目使用 Base UI，请从 /r/base-ui/ 安装组件。\n\n使用 React Aria 版按钮，用 onPress 连接保存操作。"
+                "使用 Kalos UI，帮我做一个包含姓名、邮箱和消息开关的偏好设置表单。\n\n用 Kalos UI 的对话框完成添加联系人流程，保留现有主题和键盘操作。\n\n给保存按钮增加加载、成功和失败反馈，连接已有的保存接口。\n\n当前是 React + Vite 项目，保留现有路径别名与 Tailwind 配置。\n\n在 React Router 路由页面中加入设置表单，沿用 ~/ 别名。\n\n使用 Base UI 组件，保留现有主题与目录。"
               }
             />
             <p>

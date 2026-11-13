@@ -33,12 +33,18 @@ export function GlobalSearch() {
     window.addEventListener("keydown", shortcut);
     return () => window.removeEventListener("keydown", shortcut);
   }, []);
-  return <Dialog open={open} onOpenChange={changeOpen}>
-    <DialogTrigger asChild><button type="button" className="global-search-trigger" aria-label="打开全站搜索" title="搜索（⌘/Ctrl+K）"><Search aria-hidden="true" /></button></DialogTrigger>
+  return <Dialog open={open} onOpenChange={(next, details) => {
+    if (!next && details.reason === "escape-key" && query) {
+      details.cancel();
+      setQuery("");
+      return;
+    }
+    changeOpen(next);
+  }}>
+    <DialogTrigger render={<button type="button" className="global-search-trigger" aria-label="打开全站搜索" title="搜索（⌘/Ctrl+K）" />}><Search aria-hidden="true" /></DialogTrigger>
     <DialogContent
       ref={panel} className="global-command-dialog translate-x-0 translate-y-0" showCloseButton={false}
-      onEscapeKeyDown={event => { event.preventDefault(); if (query) setQuery(""); else changeOpen(false); }}
-      onOpenAutoFocus={event => { event.preventDefault(); panel.current?.querySelector<HTMLInputElement>('input[role="combobox"]')?.focus(); }}
+      initialFocus={() => panel.current?.querySelector<HTMLInputElement>('input[role="combobox"]') ?? panel.current}
     >
       <DialogTitle className="sr-only">全站搜索</DialogTitle>
       <DialogDescription className="sr-only">搜索页面正文，选择结果后跳转到对应章节。</DialogDescription>

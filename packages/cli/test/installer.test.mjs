@@ -17,71 +17,55 @@ async function project(t, { framework = "next", style, manager = "npm", dependen
   return cwd;
 }
 
-for (const [base, backend] of [["radix", "radix"], ["base", "base-ui"], ["aria", "react-aria"]]) {
-  test(`an existing Next.js project selects ${base} before component initialization and installation`, async (t) => {
-    const cwd = await project(t);
-    let prompted = false;
+test("interactive and noninteractive installs default to Base UI without a library prompt", async t => {
+  const cwd = await project(t);
+  for (const interactive of [true, false]) {
     const plan = await createInstallPlan({ cwd, registry: "http://localhost:3000" }, {
-      interactive: true,
-      choose: async (question) => {
-        prompted = true;
-        assert.deepEqual(question.choices.map((choice) => choice.value), ["radix", "base", "aria"]);
-        return base;
-      },
+      interactive, choose: () => assert.fail("must not prompt for a primitive"),
     });
-    assert.ok(prompted);
+    assert.equal(plan.base, "base");
     assert.equal(plan.commands.length, 2);
-    assert.deepEqual(plan.commands[0].args.slice(2, 5), ["init", "--base", base]);
-    assert.ok(plan.commands[1].args.includes(`http://localhost:3000/r/${backend}/kalos-all.json`));
+    assert.deepEqual(plan.commands[0].args.slice(2, 5), ["init", "--base", "base"]);
+    assert.ok(plan.commands[1].args.includes("http://localhost:3000/r/kalos-all.json"));
     await assert.rejects(access(join(cwd, "components.json")));
-  });
-}
+  }
+});
 
-test("configured projects preserve theme and aliases and only add requested components", async (t) => {
-  const cwd = await project(t, { style: "aria-nova", manager: "pnpm" });
+test("configured Base UI projects preserve theme and aliases and only add requested components", async t => {
+  const cwd = await project(t, { style: "base-nova", manager: "pnpm" });
   const before = await readFile(join(cwd, "components.json"), "utf8");
   const plan = await createInstallPlan({ cwd, components: ["button", "kalos-card"], yes: true }, {
-    interactive: true,
-    choose: async ({ initial }) => { assert.equal(initial, 2); return "aria"; },
+    interactive: true, choose: () => assert.fail("must not prompt for a primitive"),
   });
   assert.equal(plan.commands.length, 1);
   assert.equal(plan.commands[0].command, "pnpm");
   assert.ok(plan.commands[0].args.includes("--yes"));
-  assert.ok(plan.commands[0].args.some((arg) => arg.endsWith("/react-aria/kalos-button.json")));
-  assert.ok(plan.commands[0].args.some((arg) => arg.endsWith("/react-aria/kalos-card.json")));
+  assert.ok(plan.commands[0].args.some(arg => arg.endsWith("/r/kalos-button.json")));
+  assert.ok(plan.commands[0].args.some(arg => arg.endsWith("/r/kalos-card.json")));
   assert.equal(await readFile(join(cwd, "components.json"), "utf8"), before);
 });
 
-test("a conflicting selection stops before running commands or modifying configuration", async (t) => {
-  const cwd = await project(t, { style: "radix-nova" });
-  const before = await readFile(join(cwd, "components.json"), "utf8");
-  await assert.rejects(install({ cwd, base: "base" }, {
-    interactive: false,
-    run: async () => assert.fail("must not install into a different configured base"),
-  }), /当前项目已配置 Radix UI/);
-  assert.equal(await readFile(join(cwd, "components.json"), "utf8"), before);
-});
+for (const [style, label] of [["radix-nova", "Radix UI"], ["new-york", "Radix UI"], ["aria-nova", "React Aria"]]) {
+  test(`retired ${style} configuration is rejected before commands run`, async t => {
+    const cwd = await project(t, { style });
+    const before = await readFile(join(cwd, "components.json"), "utf8");
+    await assert.rejects(install({ cwd }, { interactive: false, run: () => assert.fail("must not install") }), new RegExp(label));
+    assert.equal(await readFile(join(cwd, "components.json"), "utf8"), before);
+  });
+}
 
-test("noninteractive installs require an explicit base for a project without component configuration", async (t) => {
-  const cwd = await project(t);
-  await assert.rejects(createInstallPlan({ cwd, yes: true }, { interactive: false }), /--base/);
-});
+for (const base of ["radix", "aria", "react-aria", "unknown"]) {
+  test(`retired or invalid --base ${base} is rejected for both modes`, async t => {
+    const cwd = await project(t);
+    for (const mode of ["init", "add"]) {
+      await assert.rejects(install({ mode, cwd, template: mode === "init" ? "vite" : undefined, name: mode === "init" ? "new-app" : undefined, base }, { interactive: false, run: () => assert.fail("must not install") }), /仅支持 Base UI/);
+    }
+  });
+}
 
-test("noninteractive installs reuse a configured base", async (t) => {
-  const cwd = await project(t, { style: "base-nova" });
-  const plan = await createInstallPlan({ cwd }, { interactive: false });
-  assert.equal(plan.base, "base");
-  assert.equal(plan.commands.length, 1);
-});
-
-test("cancelling the library selector does not launch an installer", async (t) => {
-  const cwd = await project(t);
-  await assert.rejects(install({ cwd }, {
-    interactive: true,
-    choose: async () => { throw Object.assign(new Error("cancelled"), { code: "CANCELLED" }); },
-    run: async () => assert.fail("must not install after cancellation"),
-  }), { code: "CANCELLED" });
-  await assert.rejects(access(join(cwd, "components.json")));
+test("unrecognized existing component configuration is not silently migrated", async t => {
+  const cwd = await project(t, { style: "custom" });
+  await assert.rejects(createInstallPlan({ cwd }), /无法确认/);
 });
 
 const integrations = [
@@ -91,7 +75,7 @@ const integrations = [
 ];
 
 for (const [framework, dependencies] of integrations) {
-  for (const [base, family] of [["radix", "radix"], ["base", "base-ui"], ["aria", "react-aria"]]) {
+  for (const [base] of [["base", "base-ui"]]) {
     test(`${framework} initializes and installs ${base} with the matching template`, async (t) => {
       const cwd = await project(t, { dependencies });
       const plan = await createInstallPlan({ cwd, base, components: ["button", "dialog"] }, { interactive: false });
@@ -102,8 +86,8 @@ for (const [framework, dependencies] of integrations) {
       const init = plan.commands[0].args;
       assert.equal(init[init.indexOf("--template") + 1], framework);
       assert.equal(init[init.indexOf("--preset") + 1], "nova");
-      assert.ok(plan.commands[1].args.some(arg => arg.endsWith(`/r/${family}/kalos-button.json`)));
-      assert.ok(plan.commands[1].args.some(arg => arg.endsWith(`/r/${family}/kalos-dialog.json`)));
+      assert.ok(plan.commands[1].args.some(arg => arg.endsWith(`/r/kalos-button.json`)));
+      assert.ok(plan.commands[1].args.some(arg => arg.endsWith(`/r/kalos-dialog.json`)));
       await assert.rejects(access(join(cwd, "components.json")));
     });
   }
@@ -124,12 +108,12 @@ for (const [framework, dependencies] of integrations) {
         assert.equal(directory, cwd);
         assert.ok(args.includes("add"));
         assert.ok(!args.includes("init"));
-        assert.ok(args.some(arg => arg.endsWith("/r/base-ui/kalos-input.json")));
+        assert.ok(args.some(arg => arg.endsWith("/r/kalos-input.json")));
       },
     });
     assert.equal(ran, 1);
     assert.equal(await readFile(join(cwd, "components.json"), "utf8"), before);
-    await assert.rejects(createInstallPlan({ cwd, base: "radix" }), /当前项目已配置 Base UI/);
+    await assert.rejects(createInstallPlan({ cwd, base: "radix" }), /仅支持 Base UI/);
   });
 }
 
@@ -146,7 +130,7 @@ test("detection handles SWC, router library mode and peer dependencies without c
 for (const framework of ["next", "vite", "react-router"]) {
   test(`--framework ${framework} supports projects with dependencies managed outside the package`, async (t) => {
     const cwd = await project(t, { dependencies: {} });
-    const plan = await createInstallPlan({ cwd, framework, base: "radix" }, { interactive: false });
+    const plan = await createInstallPlan({ cwd, framework, base: "base" }, { interactive: false });
     assert.equal(plan.framework, framework);
   });
 }
@@ -155,7 +139,7 @@ for (const framework of ["vue", "nuxt"]) {
   test(`${framework} projects are rejected before prompting or running commands, including with an override`, async (t) => {
     const cwd = await project(t, { framework });
     for (const override of [undefined, "vite"]) {
-      await assert.rejects(install({ cwd, framework: override, base: "radix" }, {
+      await assert.rejects(install({ cwd, framework: override, base: "base" }, {
         interactive: true,
         choose: async () => assert.fail("unsupported projects must not prompt"),
         run: async () => assert.fail("unsupported projects must not install"),
@@ -170,7 +154,7 @@ test("retired configuration and unsupported framework flags cannot install React
   await assert.rejects(createInstallPlan({ cwd: retired, framework: "vite", base: "base" }), /不再支持 Vue/);
   const cwd = await project(t);
   for (const framework of ["react", "vue", "svelte", "start", "laravel", "astro"]) {
-    await assert.rejects(createInstallPlan({ cwd, framework, base: "radix" }), /--framework 仅支持/);
+    await assert.rejects(createInstallPlan({ cwd, framework, base: "base" }), /--framework 仅支持/);
   }
 });
 
@@ -181,7 +165,7 @@ test("dry-run only describes actions, including when the project path contains s
   await mkdir(cwd);
   await copyFile(join(directory, "package.json"), join(cwd, "package.json"));
   const output = [];
-  const plan = await install({ cwd, base: "radix", dryRun: true }, {
+  const plan = await install({ cwd, base: "base", dryRun: true }, {
     interactive: false,
     run: async () => assert.fail("dry-run must not spawn commands"),
     log: (line) => output.push(line),
@@ -198,7 +182,7 @@ test("unknown components and invalid registry addresses fail before installation
 });
 
 for (const template of ["next", "vite", "react-router"]) {
-  for (const [base, family] of [["radix", "radix"], ["base", "base-ui"], ["aria", "react-aria"]]) {
+  for (const [base] of [["base", "base-ui"]]) {
     test(`init creates a ${template} / ${base} plan with the full library and theme`, async (t) => {
       const cwd = await project(t);
       const plan = await createInstallPlan({ mode: "init", cwd, template, base, name: "my-app", registry: "http://localhost:3000" }, { interactive: false });
@@ -212,14 +196,14 @@ for (const template of ["next", "vite", "react-router"]) {
       assert.ok(args.includes("--no-monorepo"));
       assert.ok(args.includes("--no-reinstall"));
       assert.ok(!args.includes("--force"));
-      assert.ok(args.includes(`http://localhost:3000/r/${family}/kalos-all.json`));
-      assert.ok(args.includes(`http://localhost:3000/r/${family}/kalos-theme.json`));
+      assert.ok(args.includes(`http://localhost:3000/r/kalos-all.json`));
+      assert.ok(args.includes(`http://localhost:3000/r/kalos-theme.json`));
       await assert.rejects(access(plan.projectDir));
     });
   }
 }
 
-test("interactive init collects scaffold, base, project name and package manager before writing anything", async (t) => {
+test("interactive init collects scaffold, project name and package manager before writing anything", async (t) => {
   const cwd = await project(t);
   const questions = [];
   const plan = await createInstallPlan({ mode: "init", cwd }, {
@@ -227,13 +211,13 @@ test("interactive init collects scaffold, base, project name and package manager
     choose: async question => {
       questions.push(question.message);
       if (question.message === "选择前端脚手架") assert.deepEqual(question.choices.map(choice => choice.value), ["next", "vite", "react-router"]);
-      return { "选择前端脚手架": "vite", "选择基础组件库": "aria", "选择包管理器": "pnpm" }[question.message];
+      return { "选择前端脚手架": "vite", "选择包管理器": "pnpm" }[question.message];
     },
     input: async question => { questions.push(question.message); return "my-project"; },
   });
-  assert.deepEqual(questions, ["选择前端脚手架", "选择基础组件库", "项目名称", "选择包管理器"]);
+  assert.deepEqual(questions, ["选择前端脚手架", "项目名称", "选择包管理器"]);
   assert.equal(plan.commands[0].command, "pnpm");
-  assert.equal(plan.base, "aria");
+  assert.equal(plan.base, "base");
   assert.deepEqual(await readdir(cwd), ["package.json"]);
 });
 
@@ -259,7 +243,7 @@ test("init stages the new scaffold separately and moves it without modifying the
 
 test("init refuses existing destinations and invalid names without launching commands", async (t) => {
   const cwd = await project(t);
-  const options = { mode: "init", cwd, template: "vite", base: "radix" };
+  const options = { mode: "init", cwd, template: "vite", base: "base" };
   for (const name of ["../outside", "/tmp/elsewhere", ".", "..", "two words", "UPPERCASE", "node_modules"]) {
     await assert.rejects(createInstallPlan({ ...options, name }), /项目名/);
   }
@@ -271,7 +255,7 @@ test("init refuses existing destinations and invalid names without launching com
 
 test("failed init cleans its staging files and never creates the requested project", async (t) => {
   const cwd = await project(t);
-  await assert.rejects(install({ mode: "init", cwd, template: "vite", base: "radix", name: "my-app" }, {
+  await assert.rejects(install({ mode: "init", cwd, template: "vite", base: "base", name: "my-app" }, {
     interactive: false,
     log() {},
     run: async (_command, directory) => {
@@ -284,7 +268,7 @@ test("failed init cleans its staging files and never creates the requested proje
 
 test("init dry-run and cancellation leave the filesystem unchanged", async (t) => {
   const cwd = await project(t);
-  await install({ mode: "init", cwd, template: "react-router", base: "aria", name: "my-app", dryRun: true }, {
+  await install({ mode: "init", cwd, template: "react-router", base: "base", name: "my-app", dryRun: true }, {
     interactive: false, log() {}, run: () => assert.fail("dry-run must not run"),
   });
   await assert.rejects(install({ mode: "init", cwd }, {
@@ -295,18 +279,18 @@ test("init dry-run and cancellation leave the filesystem unchanged", async (t) =
   assert.deepEqual(await readdir(cwd), ["package.json"]);
 });
 
-test("noninteractive init requires explicit scaffold, base and project name", async (t) => {
+test("noninteractive init requires explicit scaffold and project name", async (t) => {
   const cwd = await project(t);
   await assert.rejects(createInstallPlan({ mode: "init", cwd }, { interactive: false }), /--template/);
-  await assert.rejects(createInstallPlan({ mode: "init", cwd, template: "vite" }, { interactive: false }), /--base/);
-  await assert.rejects(createInstallPlan({ mode: "init", cwd, template: "vite", base: "radix" }, { interactive: false }), /--name/);
-  await assert.rejects(createInstallPlan({ mode: "init", cwd, template: "vue", base: "radix", name: "my-app" }, { interactive: false }), /--template/);
+  await assert.rejects(createInstallPlan({ mode: "init", cwd, template: "vite" }, { interactive: false }), /--name/);
+  await assert.rejects(createInstallPlan({ mode: "init", cwd, template: "vite", base: "base" }, { interactive: false }), /--name/);
+  await assert.rejects(createInstallPlan({ mode: "init", cwd, template: "vue", base: "base", name: "my-app" }, { interactive: false }), /--template/);
 });
 
 test("add never scaffolds a project in an empty directory", async (t) => {
   const cwd = await project(t);
   await rm(join(cwd, "package.json"));
-  await assert.rejects(install({ mode: "add", cwd, framework: "vite", base: "radix" }, { run: () => assert.fail("add must not create a project") }), /已有 React 项目/);
+  await assert.rejects(install({ mode: "add", cwd, framework: "vite", base: "base" }, { run: () => assert.fail("add must not create a project") }), /已有 React 项目/);
   assert.deepEqual(await readdir(cwd), []);
 });
 
@@ -332,7 +316,7 @@ test("unsupported frameworks cannot be detected as Vite or installed through an 
     const cwd = await project(t, { dependencies, style: "radix-nova" });
     const before = await readFile(join(cwd, "components.json"), "utf8");
     for (const framework of [undefined, "vite"]) {
-      await assert.rejects(install({ cwd, framework, base: "radix" }, {
+      await assert.rejects(install({ cwd, framework, base: "base" }, {
         interactive: true,
         choose: () => assert.fail("unsupported projects must not prompt"),
         run: () => assert.fail("unsupported projects must not install"),
@@ -345,7 +329,7 @@ test("unsupported frameworks cannot be detected as Vite or installed through an 
 test("init refuses unsupported scaffold flags without creating a project", async (t) => {
   const cwd = await project(t);
   for (const template of ["react", "start", "laravel", "astro"]) {
-    await assert.rejects(install({ mode: "init", cwd, template, base: "radix", name: "my-app" }, {
+    await assert.rejects(install({ mode: "init", cwd, template, base: "base", name: "my-app" }, {
       interactive: false,
       run: () => assert.fail("unsupported templates must not run"),
     }), /--template next、vite 或 react-router/);

@@ -1,6 +1,6 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { copyFile, mkdir, mkdtemp, readFile, rm, writeFile, chmod } from "node:fs/promises";
+import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, writeFile, chmod } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve, join } from "node:path";
 import { catalog } from "../lib/catalog.ts";
@@ -21,6 +21,7 @@ try {
   await mkdir("public/cli", { recursive: true });
   const output = `public/cli/kalos-ui-${pkg.version}.tgz`;
   await copyFile(join(temporary, filename), output);
+  await Promise.all((await readdir("public/cli")).filter(name => /^kalos-ui-.*\.tgz$/.test(name) && name !== `kalos-ui-${pkg.version}.tgz`).map(name => rm(join("public/cli", name))));
   console.log(`Built interactive installer: ${output}`);
 } finally {
   await rm(temporary, { recursive: true, force: true });

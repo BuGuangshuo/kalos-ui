@@ -1,0 +1,43 @@
+/* Component styles are distributed with kalos-styles.ts by styles:build. */
+.kalos-segment { --segment-height: 28px; --segment-padding-x: 10px; --segment-gap: 8px; --segment-icon: 16px; display: inline-flex; min-width: 0; max-width: 100%; vertical-align: middle; border-radius: var(--segment-radius); font-weight: 400; }
+.kalos-segment[data-size=sm] { --segment-height: 24px; --segment-padding-x: 8px; --segment-gap: 6px; --segment-icon: 14px; font-size: 12px; line-height: 16px; }
+.kalos-segment[data-size=lg] { --segment-height: 32px; --segment-padding-x: 12px; }
+.kalos-segment[data-full] { display: flex; width: 100%; }
+.kalos-segment[data-disabled] { opacity: .4; }
+.kalos-segment__scroller { min-width: 0; flex: 1; overflow: auto hidden; padding: 2px; border-radius: inherit; overscroll-behavior-x: contain; scrollbar-width: none; mask-image: linear-gradient(to right, transparent, #000 var(--segment-fade-left, 0px), #000 calc(100% - var(--segment-fade-right, 0px)), transparent); }
+.kalos-segment__scroller::-webkit-scrollbar { display: none; }
+.kalos-segment__positioner { position: relative; width: max-content; min-width: 100%; }
+.kalos-segment__track { position: relative; display: flex; align-items: center; width: max-content; min-width: 100%; isolation: isolate; user-select: none; touch-action: pan-y; }
+.kalos-segment[data-overflow] .kalos-segment__track { touch-action: pan-x pan-y; }
+.kalos-segment[data-full] .kalos-segment__track { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max-content, 1fr); }
+.kalos-segment__option { position: relative; z-index: 1; display: flex; flex: none; align-items: center; justify-content: center; height: var(--segment-height); padding: 0 var(--segment-padding-x); border: 0; border-radius: var(--segment-pill-radius); background: transparent; font: inherit; line-height: inherit; color: var(--k-text); white-space: nowrap; outline: none; cursor: pointer; transition: color 90ms ease, background-color 90ms ease; }
+.kalos-segment__option[data-active] { color: var(--k-ink); }
+.kalos-segment__option:is(:disabled, [aria-disabled=true], [data-disabled]) { opacity: .4; cursor: not-allowed; }
+.kalos-segment__option:is(:focus-visible, [data-focus-visible]), .kalos-segment__option:has(input:focus-visible) { outline: 2px solid var(--k-focus); outline-offset: -2px; }
+.kalos-segment:not([data-variant=underline]) .kalos-segment__option:not([data-active]):not(:disabled):not([aria-disabled=true]):not([data-disabled]):hover { background: var(--k-wash); color: var(--k-hover-text); }
+.kalos-segment__content { display: inline-flex; flex: none; align-items: center; gap: 6px; }
+.kalos-segment__icon { display: grid; place-items: center; width: var(--segment-icon); height: var(--segment-icon); color: inherit; }
+.kalos-segment__icon svg, .kalos-segment__icon img { width: 100%; height: 100%; object-fit: contain; }
+.kalos-segment__count { display: inline-grid; place-items: center; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 4px; background: var(--k-fill); font-size: 11px; line-height: 16px; font-variant-numeric: tabular-nums; animation: kalos-segment-count 200ms var(--k-ease) both; }
+.kalos-segment__option[data-active] .kalos-segment__count { background: var(--k-card); box-shadow: 0 0 0 .5px var(--k-line); color: var(--k-ink); }
+.kalos-segment__badge { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; border-radius: 4px; background: var(--k-accent-soft); color: var(--k-accent); font-size: 11px; line-height: 16px; }
+.kalos-segment[data-size=sm] .kalos-segment__content { gap: 5px; }
+.kalos-segment[data-size=sm] .kalos-segment__count { min-width: 14px; height: 14px; padding: 0 3px; font-size: 10px; line-height: 14px; }
+.kalos-segment[data-size=sm] .kalos-segment__badge { height: 16px; padding: 0 5px; font-size: 10px; }
+.kalos-segment__indicator { position: absolute; z-index: 0; top: 0; bottom: 0; left: 0; right: 100%; border-radius: var(--segment-pill-radius); background: var(--k-fill); pointer-events: none; opacity: 0; transition: left 200ms var(--k-ease), right 200ms var(--k-ease), scale 120ms var(--k-ease), opacity 120ms ease; }
+.kalos-segment__indicator[data-direction=right] { transition-duration: 220ms, 160ms, 120ms, 120ms; }
+.kalos-segment__indicator[data-direction=left] { transition-duration: 160ms, 220ms, 120ms, 120ms; }
+.kalos-segment[data-pressed]:not([data-variant=underline]) .kalos-segment__indicator { scale: .97; }
+.kalos-segment[data-variant=buttons] .kalos-segment__track { gap: var(--segment-gap); }
+.kalos-segment[data-variant=buttons] .kalos-segment__option { box-shadow: inset 0 0 0 .5px var(--k-line); }
+.kalos-segment[data-variant=tray] { background: var(--k-track); }
+.kalos-segment[data-variant=tray] .kalos-segment__option { height: calc(var(--segment-height) - 4px); }
+.kalos-segment[data-variant=tray] .kalos-segment__indicator { background: var(--k-card); box-shadow: var(--k-card-shadow); }
+.kalos-segment[data-variant=underline] { --segment-padding-x: 2px; border-radius: 0; box-shadow: inset 0 -.5px var(--k-line); }
+.kalos-segment[data-variant=underline] .kalos-segment__scroller { padding: 0; }
+.kalos-segment[data-variant=underline] .kalos-segment__track { gap: 20px; }
+.kalos-segment[data-variant=underline] .kalos-segment__option { height: calc(var(--segment-height) + 6px); }
+.kalos-segment[data-variant=underline] .kalos-segment__indicator { top: auto; height: 1.5px; border-radius: 1.5px 1.5px 0 0; background: var(--k-ink); }
+.kalos-segment[data-variant=underline] .kalos-segment__option:hover { background: transparent; }
+@keyframes kalos-segment-count { from { opacity: 0; transform: translateY(2px); filter: blur(2px); } to { opacity: 1; transform: none; filter: none; } }
+@media (hover: none) and (pointer: coarse) { .kalos-segment[data-size] { --segment-height: 44px; } .kalos-segment[data-size=lg] { --segment-height: 48px; } }

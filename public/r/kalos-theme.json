@@ -23,6 +23,9 @@
       "secondary-foreground": "rgba(0, 0, 0, 0.88)",
       "selection-background": "#b3d4fc",
       "selection-foreground": "#14253d",
+      "skeleton-fill": "rgba(0, 0, 0, 0.06)",
+      "skeleton-sheen": "rgba(255, 255, 255, 0.7)",
+      "sidebar-scrollbar-thumb": "#d6d6d6",
       "radius": "0.75rem"
     },
     "dark": {
@@ -43,7 +46,10 @@
       "secondary": "#1c1c1e",
       "secondary-foreground": "rgba(255, 255, 255, 0.9)",
       "selection-background": "#264c73",
-      "selection-foreground": "#f5f9ff"
+      "selection-foreground": "#f5f9ff",
+      "skeleton-fill": "rgba(255, 255, 255, 0.09)",
+      "skeleton-sheen": "rgba(255, 255, 255, 0.06)",
+      "sidebar-scrollbar-thumb": "#666666"
     }
   },
   "css": {

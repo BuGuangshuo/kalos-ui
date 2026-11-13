@@ -380,9 +380,6 @@ export function ExamplesSection() {
       <motion.div {...reveal(2)} className="motion-skill-command">
         <CopyCommand kind="skill" id="skill-command" />
         <p>装好 Skill，就可以向 AI 描述你的想法。</p>
-        <Link href="/docs/skills">
-          查看 Skill 文档 <ArrowRight />
-        </Link>
       </motion.div>
       <motion.div {...reveal(3)} ref={ref} className="motion-example-window">
         <LayoutGroup id="home-scenarios">

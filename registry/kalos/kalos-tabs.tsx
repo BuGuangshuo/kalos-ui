@@ -3,7 +3,12 @@ import { controlStyles } from "@/components/ui/kalos-styles";
 import { slidingHighlightClasses, useSlidingHighlight } from "@/components/ui/kalos-highlight";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/components/ui/tabs";
 export function KalosTabs({
   items,
   defaultValue,

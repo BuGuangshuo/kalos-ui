@@ -5,14 +5,14 @@ description: Install, compose, and customize Kalos UI components in Next.js, Vit
 
 # Kalos UI
 
-Kalos UI is a React source registry for Next.js, Vite and React Router. Its components inherit the host project's shadcn semantic variables. Documentation: https://kalos-ui-six.vercel.app/docs/getting-started
+Kalos UI is a Base UI React source registry for Next.js, Vite and React Router. Its components inherit the host project's shadcn semantic variables. Documentation: https://kalos-ui-six.vercel.app/docs/getting-started
 
 ## Unified installer
 
-The website serves `https://kalos-ui-six.vercel.app/cli/kalos-ui-0.2.0.tgz`.
+The website serves `https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz`.
 
-- **New project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.2.0.tgz init`. Select the scaffold (Next.js, Vite or React Router), primitive base, project name and package manager. In automation, supply `init my-app --template vite --base radix --package-manager npm --yes`. The installer creates a new subdirectory and configures TypeScript, Tailwind CSS, aliases, all components and the Kalos theme. Existing destinations are refused.
-- **Existing project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.2.0.tgz add [components...]`. Detect the framework and preserve the existing theme, directories, aliases and primitive base. Use `add button card` for individual components and `--base radix`, `--base base` or `--base aria` for noninteractive installs. Do not apply the optional theme unless requested.
+- **New project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz init`. Select the scaffold (Next.js, Vite or React Router), project name and package manager. In automation, supply `init my-app --template vite --package-manager npm --yes`. The installer creates a new subdirectory and configures TypeScript, Tailwind CSS, aliases, all components and the Kalos theme. Existing destinations are refused.
+- **Existing project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz add [components...]`. Detect the framework and preserve the existing theme, directories and aliases. Use `add button card` for individual components. Interactive and noninteractive installs default to Base UI. Do not apply the optional theme unless requested.
 
 Without a subcommand, the terminal offers both modes. `--dry-run` previews without modifying files or creating directories. Never run `init` to add components to an existing app; do not change frameworks or silently migrate primitive bases.
 
@@ -22,13 +22,9 @@ Direct registry URLs below remain supported for explicit installs and advanced c
 
 Read `package.json`, `components.json`, and nearby component imports. Follow the project's package manager and aliases. All supported frameworks share the React registry. Do not change frameworks to install a component. For manual detection overrides, use `--framework next`, `--framework vite` or `--framework react-router`.
 
-| Framework          | CLI                 | Registry URL                                             | Source import                                        |
-| ------------------ | ------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
-| React / Radix      | `shadcn@latest`     | `https://kalos-ui-six.vercel.app/r/radix/{name}.json`      | named TSX export                                     |
-| React / Base UI    | `shadcn@latest`     | `https://kalos-ui-six.vercel.app/r/base-ui/{name}.json`    | named TSX export                                     |
-| React / React Aria | `shadcn@latest`     | `https://kalos-ui-six.vercel.app/r/react-aria/{name}.json` | named TSX export                                     |
+All components use Base UI and the canonical registry URL `https://kalos-ui-six.vercel.app/r/{name}.json`. The `/r/base-ui/` path is an alias for the same source.
 
-For a new project, use Kalos init to configure the scaffold. For an existing project, check its TypeScript, Tailwind and alias configuration before running Kalos add. Detect the React primitive base from components.json style (radix-_, base-_, aria-\*), package dependencies and imports. Use `init --template next|vite|react-router --base radix|base|aria --name my-app` to create a project with the chosen library. Prefer an existing project’s base; do not silently migrate it. Preserve an existing theme and configuration. Read [references/components.md](references/components.md) for the component names and framework-specific APIs before composing a screen.
+For a new project, use `init my-app --template next|vite|react-router --yes`. For an existing project, check TypeScript, Tailwind, aliases and Base UI configuration before running `add`. Other primitive configurations must be migrated before installation; never silently rewrite them. Read [references/components.md](references/components.md) before composing a screen.
 
 ### Framework setup
 
@@ -41,15 +37,10 @@ The installer delegates framework-specific initialization to shadcn. Existing `c
 Install only the needed component, for example:
 
 ```sh
-# React / Radix
-npx shadcn@latest add https://kalos-ui-six.vercel.app/r/radix/kalos-button.json
-# React / Base UI
-npx shadcn@latest add https://kalos-ui-six.vercel.app/r/base-ui/kalos-button.json
-# React / React Aria
-npx shadcn@latest add https://kalos-ui-six.vercel.app/r/react-aria/kalos-button.json
+npx shadcn@latest add https://kalos-ui-six.vercel.app/r/kalos-button.json
 ```
 
-Each backend provides all components, `kalos-all.json`, and `kalos-theme.json`. Choose one backend per project: the Kalos filenames are shared. Base UI and React Aria bundle their matching foundation source under collision-free `kalos-base-*` / `kalos-aria-*` names and do not depend on Radix. Legacy `/r/{name}.json` URLs still resolve to Radix. `kalos-all.json` installs all components. `kalos-theme.json` installs the optional neutral theme; apply it only when the user wants a theme change. Read the installed source before editing. Keep the host project's import aliases and existing component choices.
+`kalos-all.json` installs all components and their Base UI foundations. `kalos-theme.json` installs the optional neutral theme; apply it only when requested. Read the installed source before editing. Preserve the host project's aliases and configuration.
 
 ## Compose and customize
 

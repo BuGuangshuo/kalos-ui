@@ -1,6 +1,6 @@
 "use client";
 import { controlStyles } from "@/components/ui/kalos-styles";
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 export function KalosDialog({
   trigger,
+  triggerProps,
   title,
   description,
   children,
@@ -20,7 +21,8 @@ export function KalosDialog({
   open,
   onOpenChange,
 }: {
-  trigger: string;
+  trigger: ReactNode;
+  triggerProps?: { variant?: "outline" | "ghost"; size?: "default" | "icon"; "aria-label"?: string };
   title: string;
   description?: string;
   children: ReactNode;
@@ -28,26 +30,16 @@ export function KalosDialog({
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) {
+  const contentRef = useRef<HTMLDivElement>(null);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        <Button
-          className={`${controlStyles.button} ${controlStyles.buttonSurface}`}
-          variant="outline"
-        >
-          {trigger}
-        </Button>
+      <DialogTrigger render={<Button variant={triggerProps?.variant ?? "outline"} {...triggerProps} className={`${controlStyles.button} ${triggerProps?.variant === "ghost" ? controlStyles.buttonGhost : controlStyles.buttonSurface}`} />}>
+        {trigger}
       </DialogTrigger>
-      <DialogContent
-        tabIndex={-1}
-        onOpenAutoFocus={event => {
-          event.preventDefault();
-          const content = event.currentTarget as HTMLElement;
-          if (!content.contains(document.activeElement)) content.focus();
-        }}
-        {...(description ? {} : { "aria-describedby": undefined })}
-        className={`${controlStyles.font} ${controlStyles.dialogLayout} focus-visible:outline-none focus-visible:ring-0 [&_button:focus-visible]:outline-none [&_button:focus-visible]:ring-0`}
-      >
+      <DialogContent ref={contentRef} initialFocus={() => {
+        const content = contentRef.current;
+        return content?.contains(document.activeElement) ? document.activeElement as HTMLElement : content;
+      }} className={`${controlStyles.font} ${controlStyles.dialogLayout} focus-visible:outline-none focus-visible:ring-0 [&_button:focus-visible]:outline-none [&_button:focus-visible]:ring-0`}>
         <DialogHeader className={controlStyles.dialogHeader}>
           <DialogTitle>{title}</DialogTitle>
           {description ? (

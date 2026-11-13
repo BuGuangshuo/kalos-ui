@@ -7,10 +7,16 @@ export function CopyButton({
   value,
   label = "复制",
   compact = false,
+  ariaLabel,
+  variant = "ghost",
+  className,
 }: {
   value: string;
   label?: string;
   compact?: boolean;
+  ariaLabel?: string;
+  variant?: "ghost" | "default";
+  className?: string;
 }) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -22,9 +28,10 @@ export function CopyButton({
   );
   return (
     <Button
-      variant="ghost"
+      variant={variant}
+      className={className}
       size={compact ? "icon" : "sm"}
-      aria-label={copied ? "已复制" : label}
+      aria-label={copied ? "已复制" : ariaLabel ?? label}
       onClick={async () => {
         try {
           await navigator.clipboard.writeText(value);

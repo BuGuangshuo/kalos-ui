@@ -2,16 +2,8 @@ import type { Metadata } from "next";
 import { DocsPagination } from "@/components/page-pagination";
 import { Sidebar, CodeBlock, OnThisPage } from "@/components/docs-parts";
 import tokens from "@/design/tokens.json";
+import { designSections } from "@/lib/docs-navigation";
 export const metadata: Metadata = { title: "设计系统" };
-const links = [
-  { id: "colors", title: "颜色与主题" },
-  { id: "spacing", title: "间距" },
-  { id: "size", title: "组件尺寸" },
-  { id: "radius", title: "圆角" },
-  { id: "typography", title: "排版" },
-  { id: "motion", title: "动效与焦点" },
-  { id: "usage", title: "使用变量" },
-];
 function TokenTable({ rows }: { rows: [string, string, string?][] }) {
   return (
     <div className="token-table-wrap">
@@ -50,7 +42,7 @@ export default function TokensPage() {
           </header>
           <p className="tokens-intro">
             语义变量维护在 <code>design/tokens.json</code>，控件状态维护在 <code>design/component-tokens.json</code>。
-            三种 React 基础库与 Figma 共用这些颜色、尺寸和字体规则。
+            Base UI 组件与 Figma 共用这些颜色、尺寸和字体规则。
           </p>
           <section id="colors">
             <h2>颜色与主题</h2>
@@ -158,7 +150,7 @@ export default function TokensPage() {
             <p>选项背景连续滑动，开关与复选框通过短过渡表达状态变化。</p>
           </section>
           <section id="usage">
-            <h2>在项目中使用</h2>
+            <h2>使用变量</h2>
             <CodeBlock
               filename="globals.css"
               language="css"
@@ -169,7 +161,7 @@ export default function TokensPage() {
           </section>
           <DocsPagination current="/docs/tokens" />
         </article>
-        <OnThisPage links={links} />
+        <OnThisPage links={designSections} />
       </div>
     </div>
   );

@@ -1,6 +1,4 @@
 "use client";
-import { catalog } from "@/lib/catalog";
-
 import Link from "next/link";
 import { use, useEffect, useState, useSyncExternalStore } from "react";
 import {
@@ -133,7 +131,7 @@ export function CopyCommand({
   );
 }
 
-const libraryWords = ["shadcn/ui", "Base UI", "Radix UI", "React Aria"];
+const libraryWords = ["Kalos UI", "Base UI", "Template"];
 function CyclingLibrary({ done }: { done: boolean }) {
   const words = libraryWords;
   const [index, setIndex] = useState(0);
@@ -154,14 +152,13 @@ function CyclingLibrary({ done }: { done: boolean }) {
     };
   }, [done, reduce, words]);
   return (
-    <motion.span
-      layout
-      className="motion-library-word"
-      aria-hidden="true"
-      transition={{ type: "spring", stiffness: 200, damping: 28 }}
-    >
-      <AnimatePresence mode="popLayout" initial={false}>
+    <span className="motion-library-word" aria-hidden="true">
+      <span className="motion-library-measure">
+        {words.map(word => <span key={word}>{word}</span>)}
+      </span>
+      <AnimatePresence initial={false}>
         <motion.span
+          className="motion-library-current"
           key={words[index % words.length]}
           initial={{ opacity: 0, y: "65%", filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -171,7 +168,7 @@ function CyclingLibrary({ done }: { done: boolean }) {
           {words[index % words.length]}
         </motion.span>
       </AnimatePresence>
-    </motion.span>
+    </span>
   );
 }
 
@@ -243,15 +240,10 @@ export function MotionHero() {
         </span>
       </h1>
       <motion.p {...rise(5)} className="motion-hero-subtitle">
-        {catalog.length} 个 React 组件，支持 Next.js、Vite 和 React Router。
-        <br className="motion-desktop-break" />
-        按需安装源码，自由调整样式和交互。
+        精美优雅的React组件，按需安装源码，自由调整样式和交互。
       </motion.p>
       <motion.div {...rise(6)} className="motion-hero-install">
         <div className="hero-init-command"><CopyCommand mode="init" id="hero-init-command" /></div>
-        <p className="motion-install-hint">
-          在终端选择脚手架、基础组件库、项目名和包管理器。
-        </p>
         <div className="motion-hero-actions">
           <Link href="/docs/getting-started" className="motion-primary-link">
             开始使用
@@ -262,25 +254,13 @@ export function MotionHero() {
         </div>
       </motion.div>
       <motion.div {...rise(7)} className="motion-stack-logos">
-            <span>
-              <svg viewBox="0 0 17 24" fill="currentColor" aria-hidden="true">
-                <path d="M9.5001 7.01537C9.2245 6.99837 9 7.22385 9 7.49999V23C13.4183 23 17 19.4183 17 15C17 10.7497 13.6854 7.27351 9.5001 7.01537Z" />
-                <path d="M8 9.8V12V23C3.58172 23 0 19.0601 0 14.2V12V1C4.41828 1 8 4.93989 8 9.8Z" />
-              </svg>
-              Base UI
-            </span>
-            <span>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M11.52 24a7.68 7.68 0 0 1-7.68-7.68 7.68 7.68 0 0 1 7.68-7.68V24Zm0-24v7.68H3.84V0h7.68Zm4.8 7.68a3.84 3.84 0 1 1 0-7.68 3.84 3.84 0 0 1 0 7.68Z" />
-              </svg>
-              Radix UI
-            </span>
-            <span>
-              <svg viewBox="200 206 800 790" fill="currentColor" aria-hidden="true">
-                <path d="M720.67 205.995C867.583 205.995 986.679 325.091 986.68 472.003C986.68 590.753 908.865 691.325 801.446 725.521L979.312 948.055C994.438 966.98 980.963 995 956.736 995H795.612C778.743 995 762.715 987.629 751.734 974.823L697.365 911.421L493.126 653.39C457.134 607.918 489.518 540.979 547.511 540.977L720.67 540.971C758.758 540.971 789.635 510.091 789.635 472.003C789.634 433.915 758.758 403.038 720.67 403.038H429.939C404.955 403.038 388.623 391.886 373.994 373.623L277.349 252.966C262.194 234.045 275.664 205.996 299.905 205.995H720.67Z M396.605 720.706C407.798 705.406 430.443 704.843 442.381 719.568L503.816 797.018H502.786L535.569 838.934C548.074 854.358 549.943 877.191 538.047 893.09L476.638 972.545C465.692 986.707 448.803 995 430.903 995H242.276C218.18 995 204.665 967.248 219.523 948.278L337.992 797.018H337.923L396.605 720.706Z" />
-              </svg>
-              React Aria
-            </span>
+        <span>
+          <svg viewBox="0 0 17 24" fill="currentColor" aria-hidden="true">
+            <path d="M9.5001 7.01537C9.2245 6.99837 9 7.22385 9 7.49999V23C13.4183 23 17 19.4183 17 15C17 10.7497 13.6854 7.27351 9.5001 7.01537Z" />
+            <path d="M8 9.8V12V23C3.58172 23 0 19.0601 0 14.2V12V1C4.41828 1 8 4.93989 8 9.8Z" />
+          </svg>
+          Base UI
+        </span>
       </motion.div>
     </section>
   );

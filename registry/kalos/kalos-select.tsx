@@ -63,7 +63,17 @@ export function KalosSelect({
       <label htmlFor={id} onClickCapture={event => { event.preventDefault(); event.stopPropagation(); }} className={controlStyles.label}>
         {label}{required ? <span aria-hidden="true" className={controlStyles.requiredMark}>*</span> : null}
       </label>
-      <Select onOpenChange={focus.onOpenChange} name={name} disabled={disabled} required={required} value={currentValue} onValueChange={change}>
+      <Select
+        onOpenChange={focus.onOpenChange}
+        name={name}
+        disabled={disabled}
+        required={required}
+        items={items}
+        value={currentValue}
+        onValueChange={(next) => {
+          if (next !== null) change(next);
+        }}
+      >
       <div ref={clearRef} data-slot="select-control" data-focus-managed data-focused={focus.focused || undefined} data-invalid={!!error} data-disabled={disabled || undefined} className={cn("group/select-control", controlStyles.selectControl)}>
         <SelectTrigger
           size="default"
@@ -76,7 +86,7 @@ export function KalosSelect({
         </SelectTrigger>
         {showClear ? <KalosButton type="button" variant="ghost" size="icon" data-slot="select-clear" className={controlStyles.selectClear} aria-label={`清空${label}`} onClick={() => { change(""); clearRef.current?.querySelector<HTMLElement>('[role="combobox"], [data-slot="select-trigger"]')?.focus(); }}><X aria-hidden="true" /></KalosButton> : null}
       </div>
-        <SelectContent ref={contentRef} onCloseAutoFocus={focus.onCloseAutoFocus} position="popper" align="start" className={cn(slidingHighlightClasses, controlStyles.selectMenu)}>
+        <SelectContent ref={contentRef} finalFocus={focus.finalFocus} alignItemWithTrigger={false} align="start" className={cn(slidingHighlightClasses, controlStyles.selectMenu)}>
           <SelectGroup>
             {items.map((item) => (
               <SelectItem key={item.value} value={item.value}>

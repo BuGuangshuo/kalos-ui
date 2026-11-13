@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ArrowUpRight, Layers } from "lucide-react";
 import { catalog, categories } from "@/lib/catalog";
-import { ComponentDemo } from "@/components/demos";
+import { CatalogPreview } from "@/components/catalog-preview";
 import { LibrarySidebar } from "@/components/library-sidebar";
 import { PagePagination } from "@/components/page-pagination";
 import {
@@ -54,9 +54,7 @@ export function CatalogGrid() {
                 <div className="component-grid">
                   {group.map((item) => (
                     <article className="component-card" key={item.slug}>
-                      <div className="component-preview">
-                        <ComponentDemo slug={item.slug} compact />
-                      </div>
+                      <CatalogPreview slug={item.slug} />
                       <Link
                         href={`/components/${item.slug}`}
                         className="component-card-label"

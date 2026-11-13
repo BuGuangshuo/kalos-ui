@@ -3,7 +3,7 @@ export { CodeBlock } from "@/components/code-block";
 export function OnThisPage({
   links,
 }: {
-  links: { id: string; title: string }[];
+  links: readonly { id: string; title: string }[];
 }) {
   return (
     <aside className="page-outline">

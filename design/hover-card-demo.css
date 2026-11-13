@@ -1,0 +1,186 @@
+.kalos-hover-demo {
+  width:100%;
+  font-family:var(--font-sans);
+  color:var(--hvc-ink);
+  -webkit-font-smoothing:antialiased;
+  grid-template-columns:minmax(0,var(--hvc-card-width));
+  place-content:center;
+  font-size:13px;
+  line-height:20px;
+  display:grid}
+.kalos-hover-demo__card {
+  box-sizing:border-box;
+  background:var(--hvc-surface);
+  border-radius:10px;
+  min-width:0;
+  padding:4px 0 8px;
+  box-shadow:var(--hvc-shadow)}
+.kalos-hover-demo__head {
+  align-items:center;
+  height:40px;
+  padding:0 16px;
+  display:flex}
+.kalos-hover-demo__title {
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  color:var(--hvc-subtle);
+  margin:0;
+  font-size:10px;
+  font-weight:500;
+  line-height:16px}
+.kalos-hover-demo__feed {
+  margin:0;
+  padding:0;
+  list-style:none}
+.kalos-hover-demo__entry {
+  box-sizing:border-box;
+  align-items:flex-start;
+  gap:10px;
+  min-height:44px;
+  padding:12px 16px;
+  display:flex}
+.kalos-hover-demo__entry>.kalos-hover-demo__mark {
+  margin-top:2px}
+.kalos-hover-demo__text {
+  color:var(--hvc-muted);
+  overflow-wrap:anywhere;
+  flex:1;
+  min-width:0;
+  margin:0}
+.kalos-hover-demo__when {
+  color:var(--hvc-faint);
+  font-variant-numeric:tabular-nums;
+  flex:none;
+  font-size:12px}
+.kalos-hover-demo__link {
+  color:var(--hvc-ink);
+  text-underline-offset:3px;
+  border-radius:3px;
+  font-weight:500;
+  -webkit-text-decoration:underline dotted var(--hvc-faint);
+  text-decoration:underline dotted var(--hvc-faint);
+  transition:text-decoration-color .12s}
+.kalos-hover-demo__link:hover {
+  text-decoration-color:var(--hvc-muted)}
+.kalos-hover-demo__link--file {
+  font-family:ui-monospace,SF Mono,Menlo,monospace;
+  font-size:12px;
+  font-weight:400}
+.kalos-hover-demo__link:focus-visible,.kalos-hover-demo__open:focus-visible {
+  outline:2px solid var(--hvc-focus);
+  outline-offset:2px}
+.kalos-hover-demo__mark {
+  flex:none;
+  grid-template-columns:repeat(3,3px);
+  grid-auto-rows:3px;
+  place-content:center;
+  gap:1.5px;
+  width:16px;
+  height:16px;
+  display:grid}
+.kalos-hover-demo__mark i {
+  background:var(--hvc-mark);
+  opacity:0;
+  border-radius:.75px}
+.kalos-hover-demo__mark i[data-on] {
+  opacity:1}
+.kalos-hover-demo__mark[data-busy] i[data-on] {
+  animation:var(--hvc-mark-duration) ease-in-out infinite both kalos-hover-demo-pixel}
+@keyframes kalos-hover-demo-pixel {
+  0%,to {
+  opacity:1}
+50% {
+  opacity:.2}
+}
+.kalos-hover-demo__preview {
+  gap:10px;
+  min-width:0;
+  display:grid}
+.kalos-hover-demo__who {
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  display:flex}
+.kalos-hover-demo__tile {
+  color:var(--hvc-subtle);
+  background:var(--hvc-tile);
+  border-radius:8px;
+  flex:none;
+  place-items:center;
+  width:32px;
+  height:32px;
+  display:grid}
+.kalos-hover-demo__tile[data-kind=code] {
+  color:var(--hvc-code)}
+.kalos-hover-demo__tile[data-kind=csv] {
+  color:var(--hvc-csv)}
+.kalos-hover-demo__names {
+  min-width:0;
+  display:grid}
+.kalos-hover-demo__name {
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  color:var(--hvc-strong);
+  font-weight:500;
+  overflow:hidden}
+.kalos-hover-demo__sub {
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  color:var(--hvc-subtle);
+  font-size:12px;
+  line-height:16px;
+  overflow:hidden}
+.kalos-hover-demo__about,.kalos-hover-demo__line {
+  color:var(--hvc-muted);
+  margin:0}
+.kalos-hover-demo__line {
+  color:var(--hvc-subtle);
+  font-variant-numeric:tabular-nums;
+  font-size:12px;
+  line-height:16px}
+.kalos-hover-demo__facts {
+  gap:4px;
+  margin:0;
+  padding-top:10px;
+  display:grid;
+  box-shadow:inset 0 .5px var(--hvc-edge)}
+.kalos-hover-demo__facts>div {
+  justify-content:space-between;
+  gap:12px;
+  font-size:12px;
+  line-height:16px;
+  display:flex}
+.kalos-hover-demo__facts dt {
+  color:var(--hvc-subtle)}
+.kalos-hover-demo__facts dd {
+  color:var(--hvc-ink);
+  text-align:end;
+  font-variant-numeric:tabular-nums;
+  margin:0}
+.kalos-hover-demo__open {
+  color:var(--hvc-ink);
+  border-radius:6px;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  height:28px;
+  font-weight:500;
+  text-decoration:none;
+  display:inline-flex;
+  box-shadow:var(--hvc-action-shadow)}
+.kalos-hover-demo__open:hover {
+  background:var(--hvc-action-hover)}
+.kalos-hover-demo__open svg {
+  color:var(--hvc-subtle)}
+
+.kalos-hover-demo-popup { font-family:var(--font-sans); font-size:13px; line-height:20px; background:var(--hvc-popup-surface); box-shadow:var(--hvc-popup-shadow); }
+.component-docs-panel .detail-content .kalos-hover-demo a.kalos-hover-demo__link { text-decoration:underline dotted var(--hvc-faint); text-underline-offset:3px; }
+.component-docs-panel .detail-content .kalos-hover-demo a.kalos-hover-demo__link:hover { text-decoration-color:var(--hvc-muted); }
+.component-docs-panel .detail-preview:has(.kalos-hover-demo:not([data-compact])) { display:flex; flex-direction:row; align-items:flex-start; justify-content:center; min-height:500px; padding:64px 24px 40px; }
+.kalos-hover-demo[data-compact] { zoom:.55; grid-template-columns:var(--hvc-card-width); }
+@media (width <= 560px) { .component-docs-panel .detail-preview:has(.kalos-hover-demo:not([data-compact])) { min-height:500px; padding:48px 12px 24px; } }
+@media (pointer:coarse) { .kalos-hover-demo__open { height:36px; } }
+
+.kalos-hover-demo__text:has(.kalos-hover-demo__link--file) { line-height:21px; }
+.kalos-hover-demo-popup:is([data-state=closed],[data-ending-style],[data-exiting]) { animation:none; transition:none; }
+.kalos-hover-demo__link--file { line-height:20px; }

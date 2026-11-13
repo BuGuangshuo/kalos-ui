@@ -1,0 +1,9 @@
+.kalos-spinner {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+  animation: kalos-spinner-turn var(--kalos-spinner-duration) linear infinite;
+}
+@keyframes kalos-spinner-turn {
+  to { rotate: 360deg; }
+}

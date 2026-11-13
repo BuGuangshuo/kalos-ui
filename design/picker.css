@@ -1,0 +1,94 @@
+.kalos-picker { min-width: 0; gap: 6px; }
+.kalos-picker-label { display: flex; align-items: baseline; gap: 8px; }
+.kalos-picker-label > span { color: var(--picker-muted); font-size: 12px; }
+.kalos-picker-control { display: flex; align-items: center; }
+.kalos-picker-trigger { display: flex; align-items: center; justify-content: start; gap: 8px; cursor: pointer; text-align: start; }
+.kalos-picker-trigger:disabled { cursor: not-allowed; }
+.kalos-picker-trigger > svg, .kalos-time-control > svg { width: 14px; height: 14px; flex: none; color: var(--picker-muted); }
+.kalos-picker-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-variant-numeric: tabular-nums; animation: kalos-picker-value 240ms var(--picker-ease) both; }
+.kalos-picker-value[data-empty] { color: var(--picker-faint); animation: none; }
+.kalos-picker-chevron { transition: rotate 200ms var(--picker-ease); }
+[aria-expanded="true"] .kalos-picker-chevron { rotate: 180deg; }
+.kalos-picker-positioner { z-index: var(--picker-layer, 50); }
+.kalos-picker-popup { box-sizing: border-box; max-width: calc(100vw - 16px); border-radius: var(--picker-radius); background: var(--picker-surface); color: var(--picker-ink); box-shadow: var(--picker-shadow); outline: none; transform-origin: var(--transform-origin); transition: opacity var(--picker-duration) var(--picker-ease), transform var(--picker-duration) var(--picker-ease); }
+.kalos-picker-popup[data-starting-style], .kalos-picker-popup[data-ending-style] { opacity: 0; transform: translateY(-3px) scale(0.95); }
+.kalos-picker-popup[data-side="top"][data-starting-style], .kalos-picker-popup[data-side="top"][data-ending-style] { transform: translateY(3px) scale(0.95); }
+.kalos-date-popup { width: calc(var(--picker-cell) * 7 + 24px); padding: 10px 12px; }
+.kalos-calendar { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.kalos-calendar[data-months="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kalos-calendar-nav { position: absolute; z-index: 1; inset: 0 0 auto; display: flex; height: 32px; justify-content: space-between; pointer-events: none; }
+.kalos-calendar-nav button { display: grid; width: 28px; height: 28px; place-items: center; flex: none; padding: 0; border: 0; border-radius: 6px; background: transparent; color: var(--picker-muted); cursor: pointer; pointer-events: auto; transition: background 120ms ease; }
+.kalos-calendar-nav button:hover:not(:disabled) { background: var(--picker-wash); color: var(--picker-ink); }
+.kalos-calendar-nav button:disabled { opacity: 0.3; cursor: default; }
+.kalos-calendar-nav svg { width: 14px; height: 14px; }
+.kalos-calendar-title { display: flex; height: 32px; align-items: center; justify-content: center; padding-inline: 28px; font-weight: 500; white-space: nowrap; }
+.kalos-calendar-grid { display: grid; row-gap: 2px; }
+.kalos-calendar-month { min-width: 0; animation: kalos-calendar-forward 260ms var(--picker-ease) both; }
+.kalos-calendar-month[data-direction="-1"] { animation-name: kalos-calendar-back; }
+.kalos-calendar-weekdays, .kalos-calendar-week { display: grid; grid-template-columns: repeat(7, minmax(0, var(--picker-cell))); justify-content: center; }
+.kalos-calendar-weekdays > span { height: 24px; text-align: center; color: var(--picker-muted); font-size: 11px; line-height: 24px; font-weight: 400; }
+.kalos-calendar-cell { position: relative; display: grid; min-width: 0; height: var(--picker-cell); }
+.kalos-calendar-cell > button { position: relative; display: grid; min-width: 0; margin: 2px; padding: 0; place-items: center; border: 0; border-radius: 6px; background: transparent; color: var(--picker-ink); font: inherit; font-size: 13px; font-variant-numeric: tabular-nums; cursor: pointer; transition: color 120ms ease, background-color 120ms ease, transform 160ms var(--picker-ease); }
+.kalos-calendar-cell > button:hover:not([aria-disabled="true"]):not([data-selected]) { background: var(--picker-wash); }
+.kalos-calendar-cell > button:active:not([aria-disabled="true"]) { transform: scale(0.94); }
+.kalos-calendar-cell > button[data-outside] { color: var(--picker-muted); }
+.kalos-calendar-cell > button[aria-disabled="true"] { color: var(--picker-faint); cursor: default; }
+.kalos-calendar-cell > button[aria-current="date"] { color: var(--picker-accent); }
+.kalos-calendar-cell > button[aria-current="date"]::after { content: ""; position: absolute; bottom: 3px; left: calc(50% - 2px); width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+.kalos-calendar-cell > button[data-selected] { color: var(--picker-on-chip); background: var(--picker-chip); animation: kalos-calendar-pick 380ms var(--picker-ease) both; }
+.kalos-calendar-cell > button[data-selected][aria-current="date"]::after { background: var(--picker-today-selected); }
+.kalos-picker-popup :is(button, [tabindex]):focus-visible { outline: 2px solid var(--picker-focus); outline-offset: -2px; }
+.kalos-range-popup .kalos-calendar { gap: 24px; }
+.kalos-range-popup .kalos-calendar-cell { background: transparent; box-shadow: none; }
+.kalos-range-popup .kalos-calendar-cell { --picker-band: var(--picker-range); }
+.kalos-range-popup .kalos-calendar-cell[data-preview] { --picker-band: var(--picker-preview); }
+.kalos-range-popup .kalos-calendar-cell::before { content: ""; position: absolute; inset: 2px 0; border-radius: inherit; pointer-events: none; }
+.kalos-range-popup .kalos-calendar-cell[data-range]::before { background: var(--picker-band); }
+.kalos-range-popup .kalos-calendar-cell[data-range][data-start]::before { background: linear-gradient(to right, transparent 50%, var(--picker-band) 50%); }
+.kalos-range-popup .kalos-calendar-cell[data-range][data-end]::before { background: linear-gradient(to right, var(--picker-band) 50%, transparent 50%); }
+.kalos-range-popup .kalos-calendar-cell[data-range][data-start][data-end]::before { background: transparent; }
+.kalos-range-popup .kalos-calendar-cell[data-range][data-preview][data-end]:not(:has(> button[data-selected]))::before { background: var(--picker-band); inset-inline-end: 2px; border-start-end-radius: 6px; border-end-end-radius: 6px; }
+.kalos-range-popup .kalos-calendar-cell[data-range][data-preview][data-start]:not(:has(> button[data-selected]))::before { background: var(--picker-band); inset-inline-start: 2px; border-start-start-radius: 6px; border-end-start-radius: 6px; }
+.kalos-range-popup .kalos-calendar-cell[data-range][data-preview] > button:hover:not([data-selected]) { background: transparent; }
+.kalos-range-popup .kalos-calendar-cell[data-row-start]::before { border-start-start-radius: 6px; border-end-start-radius: 6px; }
+.kalos-range-popup .kalos-calendar-cell[data-row-end]::before { border-start-end-radius: 6px; border-end-end-radius: 6px; }
+.kalos-range-field { width: fit-content; max-width: 100%; }
+.kalos-range-control:has([data-slot="select-clear"]):is(:hover, :focus-within) .kalos-picker-chevron { opacity: 0; }
+.kalos-range-control:is(:hover, :focus-within) [data-slot="select-clear"] { opacity: 1; }
+.kalos-range-popup { width: var(--picker-range-width); overflow: hidden; }
+.kalos-range-main { display: grid; grid-template-columns: 140px minmax(0, 1fr); }
+.kalos-range-presets { display: flex; min-width: 0; flex-direction: column; gap: 2px; padding: 6px 4px; border-inline-end: 1px solid var(--picker-edge); }
+.kalos-range-presets button { min-height: 28px; padding: 4px 10px; border: 0; border-radius: 6px; background: transparent; color: var(--picker-muted); font: inherit; font-size: 13px; text-align: start; white-space: nowrap; cursor: pointer; transition: background-color 140ms ease, color 140ms ease; }
+.kalos-range-presets button[aria-pressed="true"], .kalos-range-presets button:hover:not(:disabled) { background: var(--picker-range); color: var(--picker-ink); }
+.kalos-range-presets button:disabled { opacity: 0.35; cursor: default; }
+.kalos-range-calendars { min-width: 0; padding: 10px 12px; }
+.kalos-range-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-top: 1px solid var(--picker-edge); }
+.kalos-range-summary { display: flex; min-width: 0; flex-wrap: wrap; align-items: baseline; gap: 8px; font-size: 13px; }
+.kalos-range-summary > span:last-child { font-size: 12px; color: var(--picker-muted); }
+.kalos-range-actions { display: flex; margin-inline-start: auto; flex: none; gap: 8px; }
+.kalos-time-control { gap: 0; padding-inline: 10px 4px; }
+.kalos-time-control input { padding-inline: 8px; }
+.kalos-time-toggle { display: grid; width: 24px; height: 24px; flex: none; place-items: center; padding: 0; border: 0; border-radius: 6px; color: var(--picker-muted); background: transparent; cursor: pointer; }
+.kalos-time-toggle svg { width: 14px; height: 14px; }
+.kalos-time-toggle:hover:not(:disabled) { background: var(--picker-wash); }
+.kalos-time-popup { width: var(--anchor-width); min-width: 120px; overflow: hidden; }
+.kalos-time-list { position: relative; box-sizing: border-box; max-height: min(256px, var(--available-height, 256px)); overflow-y: auto; overscroll-behavior: contain; padding: 4px; border-radius: var(--picker-radius); box-shadow: none; }
+.kalos-time-option { display: flex; align-items: center; min-height: 32px; gap: 8px; padding: 6px 8px; border-radius: 6px; font-size: 13px; font-variant-numeric: tabular-nums; cursor: pointer; outline: none; }
+.kalos-time-check { position: absolute; inset-inline-end: 8px; display: grid; place-items: center; }
+.kalos-time-check svg { width: 14px; height: 14px; }
+.kalos-time-check path { stroke-dasharray: 24; animation: kalos-picker-check 200ms ease both; }
+@keyframes kalos-picker-value { from { opacity: 0; translate: 0 3px; } }
+@keyframes kalos-calendar-forward { from { opacity: 0; translate: 12px 0; } }
+@keyframes kalos-calendar-back { from { opacity: 0; translate: -12px 0; } }
+@keyframes kalos-calendar-pick { 0% { scale: 0.82; } 60% { scale: 1.06; } 100% { scale: 1; } }
+@keyframes kalos-picker-check { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+@media (max-width: 600px) {
+  .kalos-range-main { display: flex; flex-direction: column; }
+  .kalos-range-presets { flex-direction: row; overflow-x: auto; border-inline-end: 0; border-bottom: 1px solid var(--picker-edge); }
+  .kalos-range-footer { align-items: stretch; flex-direction: column; }
+  .kalos-range-actions { width: 100%; justify-content: end; }
+}
+@media (pointer: coarse) {
+  .kalos-picker-popup { --picker-cell: 40px; }
+  .kalos-time-option { min-height: 40px; }
+}

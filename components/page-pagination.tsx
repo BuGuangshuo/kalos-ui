@@ -8,11 +8,11 @@ type PageLink = { href: string; title: string };
 export function PagePagination({ previous, next }: { previous?: PageLink; next?: PageLink }) {
   return (
     <nav className="page-pagination" aria-label="章节导航">
-      {previous ? <Button asChild variant="ghost" className="page-pagination-previous">
-        <Link href={previous.href} rel="prev" aria-label={`上一章：${previous.title}`}><ArrowLeft data-icon="inline-start" />{previous.title}</Link>
+      {previous ? <Button nativeButton={false} render={<Link href={previous.href} rel="prev" aria-label={`上一章：${previous.title}`} />} variant="ghost" className="page-pagination-previous">
+        <ArrowLeft data-icon="inline-start" />{previous.title}
       </Button> : null}
-      {next ? <Button asChild variant="ghost" className="page-pagination-next">
-        <Link href={next.href} rel="next" aria-label={`下一章：${next.title}`}>{next.title}<ArrowRight data-icon="inline-end" /></Link>
+      {next ? <Button nativeButton={false} render={<Link href={next.href} rel="next" aria-label={`下一章：${next.title}`} />} variant="ghost" className="page-pagination-next">
+        {next.title}<ArrowRight data-icon="inline-end" />
       </Button> : null}
     </nav>
   );

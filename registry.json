@@ -9,11 +9,11 @@
       "title": "Kalos 按钮",
       "description": "用于触发操作，提供主要、次要、轮廓、危险和加载状态。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "button"
-      ],
       "dependencies": [
+        "@base-ui/react",
         "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
         "lucide-react"
       ],
       "files": [
@@ -24,6 +24,10 @@
         {
           "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
         }
       ]
     },
@@ -33,9 +37,10 @@
       "title": "Kalos 命令菜单",
       "description": "在分组列表中搜索并执行操作，支持匹配上下文、键盘导航和连续滑动的选中背景。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [],
       "dependencies": [
+        "@base-ui/react",
         "@fontsource/roboto",
+        "cn",
         "lucide-react"
       ],
       "files": [
@@ -44,11 +49,42 @@
           "type": "registry:ui"
         },
         {
+          "path": "components/ui/kalos-command-menu-panel.tsx",
+          "type": "registry:ui"
+        },
+        {
           "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-command-menu-panel.tsx",
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-dropdown-menu",
+      "type": "registry:ui",
+      "title": "Kalos 下拉菜单",
+      "description": "通过按钮展开操作与选项，支持图标、快捷键提示、单选、复选和子菜单。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-dropdown-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-dropdown-menu-shared.tsx",
           "type": "registry:ui"
         },
         {
@@ -63,16 +99,23 @@
       "title": "Kalos 浮层",
       "description": "在触发按钮附近展示说明与表单，支持对齐、键盘操作与焦点返回。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "popover",
-        "button"
-      ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn"
       ],
       "files": [
         {
           "path": "registry/kalos/kalos-popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/popover.tsx",
           "type": "registry:ui"
         },
         {
@@ -95,19 +138,13 @@
       "title": "Kalos 表单",
       "description": "组合文本、密码、选择器、复选框和开关，提供字段校验、保存与取消。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "input",
-        "field",
-        "select",
-        "checkbox",
-        "switch",
-        "button",
-        "card"
-      ],
       "dependencies": [
+        "@base-ui/react",
         "@fontsource/roboto",
-        "motion",
-        "lucide-react"
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
       ],
       "files": [
         {
@@ -115,7 +152,31 @@
           "type": "registry:ui"
         },
         {
+          "path": "components/ui/card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-form-state.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-input.tsx",
           "type": "registry:ui"
         },
         {
@@ -127,11 +188,11 @@
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-select-focus.ts",
+          "path": "components/ui/input.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/kalos/kalos-input.tsx",
+          "path": "components/ui/button.tsx",
           "type": "registry:ui"
         },
         {
@@ -139,7 +200,27 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-select-focus.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/kalos/kalos-checkbox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/checkbox.tsx",
           "type": "registry:ui"
         },
         {
@@ -147,15 +228,7 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/kalos/kalos-button.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "components/ui/kalos-form-state.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "components/ui/kalos-highlight.ts",
+          "path": "components/ui/switch.tsx",
           "type": "registry:ui"
         }
       ]
@@ -166,15 +239,13 @@
       "title": "Kalos 文本输入",
       "description": "将标签、输入、说明和校验提示组合在一起。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "input",
-        "field",
-        "button"
-      ],
       "dependencies": [
+        "@base-ui/react",
         "@fontsource/roboto",
-        "motion",
-        "lucide-react"
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
       ],
       "files": [
         {
@@ -182,7 +253,68 @@
           "type": "registry:ui"
         },
         {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-number-input",
+      "type": "registry:ui",
+      "title": "Kalos 数字输入",
+      "description": "输入和调整数值，支持步进、范围限制、单位与本地化格式。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-number-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
           "type": "registry:ui"
         },
         {
@@ -190,7 +322,210 @@
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/input-group.tsx",
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-number-input-parts.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-number-input-model.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-date-picker",
+      "type": "registry:ui",
+      "title": "Kalos 日期选择器",
+      "description": "在日历中选择一天，支持日期限制、禁选日、键盘导航与本地日期表单提交。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-date-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-calendar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-date-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-picker-field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-select-focus.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-picker-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-date-range-picker",
+      "type": "registry:ui",
+      "title": "Kalos 日期范围选择器",
+      "description": "使用快捷区间或双月日历选择日期范围，支持悬停选区预览，点击应用后生效。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-date-range-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-calendar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-date-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-picker-field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-select-focus.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-picker-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-time-picker",
+      "type": "registry:ui",
+      "title": "Kalos 时间选择器",
+      "description": "输入或从列表选择时间，支持 12 / 24 小时制、步进、时间限制和连续滑动的选中背景。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-time-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-picker-field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-date-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-time-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-select-focus.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-picker-styles.ts",
           "type": "registry:ui"
         }
       ]
@@ -199,13 +534,12 @@
       "name": "kalos-card",
       "type": "registry:ui",
       "title": "Kalos 卡片",
-      "description": "为相关信息与操作提供清晰、紧凑的内容容器。",
+      "description": "组合标题、图标、内容与底部操作，支持整卡点击和选中状态。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "card"
-      ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn"
       ],
       "files": [
         {
@@ -214,6 +548,88 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-hover-card",
+      "type": "registry:ui",
+      "title": "Kalos 悬停卡片",
+      "description": "悬停或键盘聚焦时预览联系人、文件等内容，支持延迟显示、方向对齐与边缘避让。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-hover-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-hover-card-shared.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-table",
+      "type": "registry:ui",
+      "title": "Kalos 表格",
+      "description": "以行列结构展示数据，支持编辑、排序与筛选。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-table.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-table-view.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-table-cell.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-tooltip-shared.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-table-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
           "type": "registry:ui"
         }
       ]
@@ -224,11 +640,11 @@
       "title": "Kalos 徽标",
       "description": "使用简洁的标记展示状态、类别与附加信息。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "badge"
-      ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn"
       ],
       "files": [
         {
@@ -237,6 +653,10 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/badge.tsx",
           "type": "registry:ui"
         }
       ]
@@ -247,11 +667,11 @@
       "title": "Kalos 开关",
       "description": "在两个互斥状态间切换，适用于立即生效的设置。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "switch"
-      ],
       "dependencies": [
+        "@base-ui/react",
         "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
         "motion"
       ],
       "files": [
@@ -260,11 +680,27 @@
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-styles.ts",
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
           "type": "registry:ui"
         },
         {
           "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/switch.tsx",
           "type": "registry:ui"
         }
       ]
@@ -275,11 +711,12 @@
       "title": "Kalos 复选框",
       "description": "选择一个或多个选项，支持选中与不确定状态。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "checkbox"
-      ],
       "dependencies": [
+        "@base-ui/react",
         "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
         "motion"
       ],
       "files": [
@@ -288,38 +725,53 @@
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-styles.ts",
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
           "type": "registry:ui"
         },
         {
           "path": "components/ui/kalos-field-message.tsx",
           "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "kalos-tabs",
-      "type": "registry:ui",
-      "title": "Kalos 选项卡",
-      "description": "在同一上下文中切换相关内容，支持键盘操作。",
-      "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "tabs"
-      ],
-      "dependencies": [
-        "@fontsource/roboto"
-      ],
-      "files": [
-        {
-          "path": "registry/kalos/kalos-tabs.tsx",
-          "type": "registry:ui"
         },
         {
           "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-highlight.ts",
+          "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-segmented-control",
+      "type": "registry:ui",
+      "title": "Kalos 分段控制器",
+      "description": "在一组选项间即时切换，支持独立按钮、轨道与下划线，以及图标、数量和徽标。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-segmented-control.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-segmented-control-view.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
@@ -330,11 +782,11 @@
       "title": "Kalos 折叠面板",
       "description": "按需展开详细内容，在有限空间中保持信息层次。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "accordion"
-      ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn",
+        "lucide-react"
       ],
       "files": [
         {
@@ -343,6 +795,10 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/accordion.tsx",
           "type": "registry:ui"
         }
       ]
@@ -353,12 +809,12 @@
       "title": "Kalos 对话框",
       "description": "让用户专注于当前任务，包含焦点管理与关闭行为。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "dialog",
-        "button"
-      ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react"
       ],
       "files": [
         {
@@ -367,6 +823,10 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
           "type": "registry:ui"
         },
         {
@@ -381,16 +841,19 @@
       "title": "Kalos 确认对话框",
       "description": "在执行重要操作前请求确认，打开时聚焦取消，点击遮罩不会关闭。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "alert-dialog",
-        "button"
-      ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn"
       ],
       "files": [
         {
           "path": "registry/kalos/kalos-alert-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
           "type": "registry:ui"
         },
         {
@@ -405,15 +868,13 @@
       "title": "Kalos 选择器",
       "description": "从一组候选项中进行选择，支持键盘导航与选中反馈。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "select",
-        "field",
-        "button"
-      ],
       "dependencies": [
+        "@base-ui/react",
         "@fontsource/roboto",
-        "motion",
-        "lucide-react"
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
       ],
       "files": [
         {
@@ -421,7 +882,27 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
           "type": "registry:ui"
         },
         {
@@ -433,11 +914,37 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/kalos/kalos-button.tsx",
+          "path": "components/ui/kalos-highlight.ts",
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-highlight.ts",
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-tooltip",
+      "type": "registry:ui",
+      "title": "Kalos 文字提示",
+      "description": "悬停或键盘聚焦时显示简短提示，支持快捷键、相邻提示免等待与边缘避让。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-tooltip-shared.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
         }
       ]
@@ -448,11 +955,10 @@
       "title": "Kalos 进度条",
       "description": "清晰地展示任务进展，支持数值、标题与辅助说明。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "progress"
-      ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn"
       ],
       "files": [
         {
@@ -462,20 +968,65 @@
         {
           "path": "components/ui/kalos-styles.ts",
           "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-skeleton",
+      "type": "registry:ui",
+      "title": "Kalos 骨架屏",
+      "description": "在内容加载时保留文字、图标与列表的布局，支持同步扫光和延迟淡入。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-skeleton.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-loading-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-spinner",
+      "type": "registry:ui",
+      "title": "Kalos 加载指示器",
+      "description": "用持续旋转的细圆弧表示正在进行的操作，支持尺寸、跟随文字颜色与加载状态播报。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-spinner.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-loading-styles.ts",
+          "type": "registry:ui"
         }
       ]
     },
     {
       "name": "kalos-avatar-stack",
       "type": "registry:ui",
-      "title": "Kalos 头像组",
-      "description": "以紧凑的头像组合展示成员，包含姓名回退和溢出数量。",
+      "title": "Kalos 头像",
+      "description": "照片与柔和配色的姓名头像，支持状态、圆角方形、像素动画和头像组。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
-      "registryDependencies": [
-        "avatar"
-      ],
       "dependencies": [
-        "@fontsource/roboto"
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn"
       ],
       "files": [
         {
@@ -484,6 +1035,14 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/avatar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-avatar-shared.tsx",
           "type": "registry:ui"
         }
       ]
@@ -521,6 +1080,9 @@
           "secondary-foreground": "rgba(0, 0, 0, 0.88)",
           "selection-background": "#b3d4fc",
           "selection-foreground": "#14253d",
+          "skeleton-fill": "rgba(0, 0, 0, 0.06)",
+          "skeleton-sheen": "rgba(255, 255, 255, 0.7)",
+          "sidebar-scrollbar-thumb": "#d6d6d6",
           "radius": "0.75rem"
         },
         "dark": {
@@ -541,7 +1103,10 @@
           "secondary": "#1c1c1e",
           "secondary-foreground": "rgba(255, 255, 255, 0.9)",
           "selection-background": "#264c73",
-          "selection-foreground": "#f5f9ff"
+          "selection-foreground": "#f5f9ff",
+          "skeleton-fill": "rgba(255, 255, 255, 0.09)",
+          "skeleton-sheen": "rgba(255, 255, 255, 0.06)",
+          "sidebar-scrollbar-thumb": "#666666"
         }
       }
     },
@@ -549,32 +1114,86 @@
       "name": "kalos-all",
       "type": "registry:block",
       "title": "Kalos UI 完整组件库",
-      "description": "一次安装全部 16 个组件。",
+      "description": "一次安装全部 26 个 Base UI 组件。",
       "dependencies": [
-        "lucide-react",
+        "@base-ui/react",
         "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
         "motion"
-      ],
-      "registryDependencies": [
-        "button",
-        "popover",
-        "input",
-        "field",
-        "select",
-        "checkbox",
-        "switch",
-        "card",
-        "badge",
-        "tabs",
-        "accordion",
-        "dialog",
-        "alert-dialog",
-        "progress",
-        "avatar"
       ],
       "files": [
         {
-          "path": "components/ui/kalos-select-focus.ts",
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-command-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-command-menu-panel.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-dropdown-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-dropdown-menu-shared.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-popover-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-form.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-form-state.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-input.tsx",
           "type": "registry:ui"
         },
         {
@@ -586,63 +1205,7 @@
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-form-state.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "components/ui/dialog.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-button.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-command-menu.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-popover.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-form.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-input.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-card.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-badge.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-switch.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-checkbox.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-tabs.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-accordion.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-dialog.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-alert-dialog.tsx",
+          "path": "components/ui/input.tsx",
           "type": "registry:ui"
         },
         {
@@ -650,7 +1213,163 @@
           "type": "registry:ui"
         },
         {
+          "path": "components/ui/kalos-select-focus.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-checkbox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-switch.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/switch.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-number-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-number-input-parts.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-number-input-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-date-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-calendar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-date-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-picker-field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-picker-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-date-range-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-time-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-time-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-hover-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-hover-card-shared.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-table.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-table-view.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-table-cell.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-tooltip-shared.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-table-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-badge.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-segmented-control.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-segmented-control-view.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-accordion.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/accordion.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-alert-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/kalos/kalos-progress.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/progress.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-skeleton.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-loading-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-spinner.tsx",
           "type": "registry:ui"
         },
         {
@@ -658,19 +1377,11 @@
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-command-menu-panel.tsx",
+          "path": "components/ui/avatar.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-popover-menu.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "components/ui/kalos-highlight.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "components/ui/kalos-styles.ts",
+          "path": "components/ui/kalos-avatar-shared.tsx",
           "type": "registry:ui"
         }
       ]

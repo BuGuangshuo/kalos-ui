@@ -3,7 +3,8 @@
 import { Code2, Eye } from "lucide-react";
 import { ComponentDemo } from "@/components/demos";
 import { CodeBlock } from "@/components/code-block";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { DocTabsList as TabsList, DocTabsTrigger as TabsTrigger } from "@/components/doc-tabs";
 import { popoverExample } from "@/lib/component-examples";
 
 const examples = [
@@ -16,10 +17,12 @@ export function PopoverExamples() {
   return examples.map(({ variant, title }) => <section id={`popover-${variant}`} key={variant}>
     <h2>{title}</h2>
     <Tabs defaultValue="preview" className="detail-tabs">
-      <TabsList className="detail-view-tabs" aria-label={`${title}视图`}>
-        <TabsTrigger value="preview"><Eye data-icon="inline-start" />预览</TabsTrigger>
-        <TabsTrigger value="code"><Code2 data-icon="inline-start" />代码</TabsTrigger>
-      </TabsList>
+      <div className="detail-preview-toolbar">
+        <TabsList className="detail-view-tabs" aria-label={`${title}视图`}>
+          <TabsTrigger value="preview"><Eye data-icon="inline-start" />预览</TabsTrigger>
+          <TabsTrigger value="code"><Code2 data-icon="inline-start" />使用</TabsTrigger>
+        </TabsList>
+      </div>
       <TabsContent value="preview">
         <div className="detail-preview">
           <div className="detail-preview-surface" data-component="kalos-popover">

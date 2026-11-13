@@ -1,0 +1,34 @@
+.kalos-skeleton {
+  position: relative;
+  display: block;
+  flex: none;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: var(--kalos-skeleton-radius);
+  background: var(--kalos-skeleton-fill);
+}
+.kalos-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--kalos-skeleton-sheen), transparent);
+  translate: -100% 0;
+  animation: kalos-skeleton-sweep var(--kalos-skeleton-duration) var(--kalos-skeleton-ease) infinite;
+}
+.kalos-skeleton-line {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+}
+.kalos-loading {
+  animation: kalos-skeleton-enter var(--kalos-skeleton-fade-duration) ease var(--kalos-skeleton-delay) both;
+}
+@keyframes kalos-skeleton-sweep {
+  60%, 100% { translate: 100% 0; }
+}
+@keyframes kalos-skeleton-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

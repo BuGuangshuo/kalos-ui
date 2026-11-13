@@ -9,13 +9,14 @@ import {
 } from "react";
 import {
   ArrowRight,
-  Check,
   Plus,
   ArrowUpRight,
   Layers,
   Heart,
 } from "lucide-react";
 import { toast } from "sonner";
+import { AvatarDemo } from "@/components/avatar-demo";
+import type { KalosAvatarProps, KalosAvatarStackProps } from "@/components/ui/kalos-avatar-shared";
 import { Separator } from "@/components/ui/separator";
 import { controlStyles } from "@/components/ui/kalos-styles";
 import { FieldGroup } from "@/components/ui/field";
@@ -23,8 +24,30 @@ import type { KalosCommandMenuProps } from "@/components/ui/kalos-command-menu-p
 import type { KalosPopoverProps } from "@/components/ui/kalos-popover-menu";
 import type { KalosFormProps } from "@/registry/kalos/kalos-form";
 import type { KalosFormField } from "@/components/ui/kalos-form-state";
+import { HoverCardActivityDemo } from "@/components/hover-card-activity-demo";
+import type { KalosHoverCardProps } from "@/components/ui/kalos-hover-card-shared";
 import { PopoverDemo } from "@/components/popover-demo";
+import { SegmentedControlDemo } from "@/components/segmented-control-demo";
+import type { KalosSegmentedControlProps } from "@/components/ui/kalos-segmented-control-view";
+import type { NumberInputExampleVariant } from "@/lib/number-input-examples";
+import type { SegmentedExampleVariant } from "@/lib/segmented-control-examples";
+import { TableDemo } from "@/components/table-demo";
+import { TooltipDemo } from "@/components/tooltip-demo";
+import { SkeletonDemo } from "@/components/skeleton-demo";
+import { SpinnerDemo } from "@/components/spinner-demo";
+import { DatePickerDemo, DateRangePickerDemo, TimePickerDemo } from "@/components/date-time-demo";
+import type { KalosTableProps } from "@/components/ui/kalos-table-model";
+import type { TableExampleVariant } from "@/lib/table-examples";
 import type { PopoverExampleVariant } from "@/lib/component-examples";
+import { CardDemo } from "@/components/card-demo";
+import type { KalosCardProps } from "@/registry/kalos/kalos-card";
+
+import { DropdownMenuDemo } from "@/components/dropdown-menu-demo";
+import type { KalosDropdownMenuProps } from "@/components/ui/kalos-dropdown-menu-shared";
+import type { DropdownExampleVariant } from "@/lib/dropdown-menu-examples";
+
+import { NumberInputDemo } from "@/components/number-input-demo";
+import type { KalosNumberInputProps } from "@/components/ui/kalos-number-input-model";
 
 const formFields: KalosFormField[] = [
   { name: "email", label: "邮箱地址", type: "email", required: true, placeholder: "you@example.com", autoComplete: "email" },
@@ -35,6 +58,9 @@ const formFields: KalosFormField[] = [
 ];
 
 export interface DemoComponents {
+  KalosNumberInput: ComponentType<KalosNumberInputProps>;
+  KalosDropdownMenu: ComponentType<KalosDropdownMenuProps>;
+  KalosTable: ComponentType<KalosTableProps>;
   KalosForm: ComponentType<KalosFormProps>;
   KalosCommandMenu: ComponentType<KalosCommandMenuProps>;
   KalosButton: ComponentType<{
@@ -47,6 +73,7 @@ export interface DemoComponents {
     onClick?: () => void;
     "aria-label"?: string;
   }>;
+  KalosHoverCard: ComponentType<KalosHoverCardProps>;
   KalosPopover: ComponentType<KalosPopoverProps>;
   KalosInput: ComponentType<
     InputHTMLAttributes<HTMLInputElement> & {
@@ -55,12 +82,7 @@ export interface DemoComponents {
       error?: string;
     }
   >;
-  KalosCard: ComponentType<{
-    title: string;
-    description?: string;
-    children: ReactNode;
-    footer?: ReactNode;
-  }>;
+  KalosCard: ComponentType<KalosCardProps>;
   KalosBadge: ComponentType<{
     status?: "neutral" | "success" | "warning";
     children: ReactNode;
@@ -75,15 +97,13 @@ export interface DemoComponents {
     description?: string;
     defaultChecked?: boolean;
   }>;
-  KalosTabs: ComponentType<{
-    items: { value: string; label: string; content: ReactNode }[];
-    defaultValue?: string;
-  }>;
+  KalosSegmentedControl: ComponentType<KalosSegmentedControlProps>;
   KalosAccordion: ComponentType<{
     items: { question: string; answer: ReactNode }[];
   }>;
   KalosAlertDialog: ComponentType<{
-    trigger: string;
+    trigger: ReactNode;
+    triggerProps?: { variant?: "outline" | "ghost"; size?: "default" | "icon"; "aria-label"?: string };
     title: string;
     description: string;
     actionLabel?: string;
@@ -91,7 +111,8 @@ export interface DemoComponents {
     onConfirm?: () => void;
   }>;
   KalosDialog: ComponentType<{
-    trigger: string;
+    trigger: ReactNode;
+    triggerProps?: { variant?: "outline" | "ghost"; size?: "default" | "icon"; "aria-label"?: string };
     title: string;
     description?: string;
     children: ReactNode;
@@ -111,18 +132,9 @@ export interface DemoComponents {
     value: number;
     description?: string;
   }>;
-  KalosAvatarStack: ComponentType<{
-    people: { name: string; image?: string }[];
-    max?: number;
-  }>;
+  KalosAvatar: ComponentType<KalosAvatarProps>;
+  KalosAvatarStack: ComponentType<KalosAvatarStackProps>;
 }
-const people = [
-  { name: "Alan Bu" },
-  { name: "陈晓" },
-  { name: "林舟" },
-  { name: "周宁" },
-  { name: "吴昕" },
-];
 function ButtonDemo({ KalosButton }: Pick<DemoComponents, "KalosButton">) {
   const [loading, setLoading] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -183,28 +195,41 @@ export function DemoContent({
   slug,
   compact = false,
   popoverVariant,
+  tableVariant,
+  segmentedVariant,
+  numberVariant,
+  dropdownVariant,
 }: {
   slug: string;
   compact?: boolean;
   popoverVariant?: PopoverExampleVariant;
+  tableVariant?: TableExampleVariant;
+  segmentedVariant?: SegmentedExampleVariant;
+  numberVariant?: NumberInputExampleVariant;
+  dropdownVariant?: DropdownExampleVariant;
   components: DemoComponents;
 }) {
   const {
+    KalosDropdownMenu,
     KalosForm,
+    KalosTable,
     KalosButton,
     KalosInput,
+    KalosNumberInput,
+    KalosHoverCard,
     KalosPopover,
     KalosCommandMenu,
     KalosCard,
     KalosBadge,
     KalosSwitch,
     KalosCheckbox,
-    KalosTabs,
+    KalosSegmentedControl,
     KalosAccordion,
     KalosDialog,
     KalosAlertDialog,
     KalosSelect,
     KalosProgress,
+    KalosAvatar,
     KalosAvatarStack,
   } = components;
   const [progress, setProgress] = useState(68);
@@ -216,6 +241,22 @@ export function DemoContent({
     setDialogOpen(open);
   };
   switch (slug) {
+    case "kalos-date-picker":
+      return <DatePickerDemo />;
+    case "kalos-date-range-picker":
+      return <DateRangePickerDemo compact={compact} />;
+    case "kalos-time-picker":
+      return <TimePickerDemo />;
+    case "kalos-skeleton":
+      return <SkeletonDemo />;
+    case "kalos-spinner":
+      return <SpinnerDemo />;
+    case "kalos-tooltip":
+      return <TooltipDemo compact={compact} />;
+    case "kalos-dropdown-menu":
+      return <DropdownMenuDemo KalosDropdownMenu={KalosDropdownMenu} components={{ KalosTable, KalosDialog, KalosButton, KalosInput }} variant={dropdownVariant} compact={compact} />;
+    case "kalos-table":
+      return <TableDemo KalosTable={KalosTable} KalosDropdownMenu={KalosDropdownMenu} KalosButton={KalosButton} KalosDialog={KalosDialog} KalosAlertDialog={KalosAlertDialog} KalosInput={KalosInput} variant={tableVariant} compact={compact} />;
     case "kalos-form":
       return <KalosForm title="成员设置" fields={formFields} defaultValues={{ notifications: true }} aria-label="成员设置" />;
     case "kalos-button":
@@ -228,8 +269,12 @@ export function DemoContent({
         ]}
         onRun={value => toast({ new: "文档已创建", settings: "已打开账号设置", notifications: "已打开通知设置" }[value] || value)}
       /></div>;
+    case "kalos-hover-card":
+      return <HoverCardActivityDemo KalosHoverCard={KalosHoverCard} compact={compact} />;
     case "kalos-popover":
       return <PopoverDemo KalosPopover={KalosPopover} KalosInput={KalosInput} KalosSelect={KalosSelect} KalosButton={KalosButton} variant={popoverVariant} />;
+    case "kalos-number-input":
+      return <NumberInputDemo Control={KalosNumberInput} KalosButton={KalosButton} variant={numberVariant} compact={compact} />;
     case "kalos-input":
       return (
         <div className="demo-form">
@@ -244,26 +289,7 @@ export function DemoContent({
         </div>
       );
     case "kalos-card":
-      return (
-        <div className="demo-card">
-          <KalosCard
-            title="设计工作空间"
-            footer={
-              <KalosButton
-                variant="outline"
-                onClick={() => toast("工作空间已准备就绪")}
-              >
-                查看详情 <ArrowUpRight data-icon="inline-end" />
-              </KalosButton>
-            }
-          >
-            <div className="card-project-visual">
-              <Layers />
-              <span>Kalos UI</span>
-            </div>
-          </KalosCard>
-        </div>
-      );
+      return <CardDemo KalosCard={KalosCard} KalosButton={KalosButton} />;
     case "kalos-badge":
       return (
         <div className="badge-demo">
@@ -290,44 +316,8 @@ export function DemoContent({
           <KalosCheckbox label="邀请成员" />
         </div>
       );
-    case "kalos-tabs":
-      return (
-        <div className="demo-form">
-          <KalosTabs
-            items={[
-              {
-                value: "overview",
-                label: "概览",
-                content: (
-                  <div className="tabs-copy">
-                    <Layers />
-                    <strong>14 个组件</strong>
-                  </div>
-                ),
-              },
-              {
-                value: "activity",
-                label: "动态",
-                content: (
-                  <div className="tabs-copy">
-                    <Check />
-                    <strong>所有更改已同步</strong>
-                  </div>
-                ),
-              },
-              {
-                value: "settings",
-                label: "设置",
-                content: (
-                  <div className="tabs-copy">
-                    <KalosSwitch label="自动保存" defaultChecked />
-                  </div>
-                ),
-              },
-            ]}
-          />
-        </div>
-      );
+    case "kalos-segmented-control":
+      return <SegmentedControlDemo Control={KalosSegmentedControl} variant={segmentedVariant} />;
     case "kalos-accordion":
       return (
         <div className="demo-form">
@@ -340,7 +330,7 @@ export function DemoContent({
               },
               {
                 question: "如何安装组件？",
-                answer: "运行安装命令，在终端选择基础组件库。",
+                answer: "运行安装命令，按需添加 Base UI 组件。",
               },
               ...(!compact
                 ? [
@@ -417,11 +407,7 @@ export function DemoContent({
         </div>
       );
     case "kalos-avatar-stack":
-      return (
-        <div className="avatar-demo">
-          <KalosAvatarStack people={people} />
-        </div>
-      );
+      return <AvatarDemo KalosAvatar={KalosAvatar} KalosAvatarStack={KalosAvatarStack} compact={compact} />;
     default:
       return null;
   }

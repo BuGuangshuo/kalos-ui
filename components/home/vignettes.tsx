@@ -133,10 +133,8 @@ function AccordionVignette() {
   useAutoplay(() => setValue((v) => String((Number(v) + 1) % 3)), 2000, 600);
   return (
     <Accordion
-      type="single"
-      collapsible
-      value={value}
-      onValueChange={setValue}
+      value={value ? [value] : []}
+      onValueChange={next => setValue(next[0] ?? "")}
       className="motion-vignette-accordion"
     >
       {questions.map(([question, answer], index) => (
@@ -341,7 +339,7 @@ function ProgressVignette() {
 
 export const VIGNETTES: { title: string; Vignette: ComponentType }[] = [
   { title: "开关 Switch", Vignette: SwitchVignette },
-  { title: "选项卡 Tabs", Vignette: TabsVignette },
+  { title: "分段控制器 Segmented", Vignette: TabsVignette },
   { title: "折叠面板 Accordion", Vignette: AccordionVignette },
   { title: "复选框 Checkbox", Vignette: ChecklistVignette },
   { title: "数字滚动 Sliding Number", Vignette: CounterVignette },

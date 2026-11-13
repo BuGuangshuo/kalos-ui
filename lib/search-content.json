@@ -4,7 +4,7 @@
     "href": "/docs/getting-started#installation",
     "section": "文档",
     "paragraphs": [
-      "运行命令，选择脚手架、基础库、项目名和包管理器。"
+      "运行命令，选择脚手架、项目名和包管理器，默认安装 Base UI 组件。"
     ]
   },
   {
@@ -13,7 +13,7 @@
     "section": "文档",
     "paragraphs": [
       "在项目根目录运行，沿用现有主题、目录和路径别名。",
-      "已有项目需配置 TypeScript、Tailwind CSS 和路径别名。"
+      "已有项目需配置 TypeScript、Tailwind CSS 和路径别名；组件配置使用 Base UI。"
     ]
   },
   {
@@ -58,7 +58,7 @@
     "href": "/docs/getting-started#license",
     "section": "文档",
     "paragraphs": [
-      "Kalos UI 使用 MIT 许可证，支持个人与商业项目。组件交互基础来自 shadcn/ui 。"
+      "Kalos UI 使用 MIT 许可证，支持个人与商业项目。组件交互基础来自 Base UI，源码分发使用 shadcn/ui 。"
     ]
   },
   {
@@ -74,8 +74,8 @@
     "href": "/docs/registry#namespace",
     "section": "文档",
     "paragraphs": [
-      "需要通过 安装时，选择项目当前的基础库，将下方 字段合并到已有配置。",
-      "会替换为组件条目名，例如 。三种地址分别提供 Radix UI、Base UI 和 React Aria 源码；切换这里的示例不会迁移项目的基础库。"
+      "需要通过 安装时，将下方 字段合并到已有配置。",
+      "会替换为组件条目名，例如 。注册表统一提供 Base UI 源码。"
     ]
   },
   {
@@ -93,8 +93,154 @@
     "href": "/docs/registry#custom-registry",
     "section": "文档",
     "paragraphs": [
-      "自行部署注册表后，将域名替换为部署地址，保留基础库路径和 占位符。例如：",
-      "注册表地址必须能从终端访问，并返回 JSON。出现找不到组件的错误时，检查域名、基础库目录与组件名是否一致。"
+      "自行部署注册表后，将域名替换为部署地址，保留 /r/ 路径和 占位符。例如：",
+      "注册表地址必须能从终端访问，并返回 JSON。出现找不到组件的错误时，检查域名、路径与组件名是否一致。"
+    ]
+  },
+  {
+    "title": "MCP 配置",
+    "href": "/docs/mcp",
+    "section": "文档",
+    "paragraphs": [
+      "Kalos UI 通过 shadcn MCP 接入 AI 编程工具，可检索组件、查看组件信息与依赖并生成安装命令。MCP 服务在你的项目目录中运行，组件统一使用 Base UI。"
+    ]
+  },
+  {
+    "title": "MCP 配置 · 配置注册表",
+    "href": "/docs/mcp#registry",
+    "section": "文档",
+    "paragraphs": [
+      "先完成快速开始中的项目配置，再将以下命名空间合并到项目根目录的 components.json，保留其他字段。",
+      "选择下面对应的客户端配置。MCP 服务会读取当前项目的注册表、路径别名与安装目录。"
+    ]
+  },
+  {
+    "title": "MCP 配置 · Claude Code",
+    "href": "/docs/mcp#claude",
+    "section": "文档",
+    "paragraphs": [
+      "在项目目录中运行以下命令，然后重新打开 Claude Code，通过 /mcp 确认 shadcn 已连接。",
+      "也可以将以下内容合并到项目的 .mcp.json："
+    ]
+  },
+  {
+    "title": "MCP 配置 · Codex",
+    "href": "/docs/mcp#codex",
+    "section": "文档",
+    "paragraphs": [
+      "将以下配置合并到项目的 .codex/config.toml。Codex 仅在受信任项目中加载项目级 MCP 配置；重新打开项目后，通过 /mcp 检查连接。"
+    ]
+  },
+  {
+    "title": "MCP 配置 · Cursor",
+    "href": "/docs/mcp#cursor",
+    "section": "文档",
+    "paragraphs": [
+      "在项目目录中运行，随后在 Cursor 的 MCP 设置中启用 shadcn。",
+      "手动配置时，将以下内容合并到项目的 .cursor/mcp.json："
+    ]
+  },
+  {
+    "title": "MCP 配置 · 验证与使用",
+    "href": "/docs/mcp#use",
+    "section": "文档",
+    "paragraphs": [
+      "连接后，先让 AI 列出 @kalos-ui 中的组件，再查看一个组件的信息与依赖。安装前核对项目使用 Base UI，确认生成命令指向 Kalos UI 注册表。完整源码随安装命令写入项目，也可从组件详情页查看。",
+      "已克隆本仓库时，也可以运行 npm run mcp:config，生成三个客户端的项目级配置并更新 Kalos UI 注册表地址；已有其他 MCP 服务和自定义 shadcn 配置会保留。"
+    ]
+  },
+  {
+    "title": "MCP 配置 · 连接排查",
+    "href": "/docs/mcp#troubleshooting",
+    "section": "文档",
+    "paragraphs": [
+      "找不到 @kalos-ui：确认 AI 工具打开的是包含 components.json 的项目目录，并检查命名空间地址。",
+      "首次启动超时：先在终端执行 npx shadcn@latest --help 完成 CLI 下载，再重新连接 MCP。",
+      "Codex 未显示服务：确认项目已受信任、TOML 格式正确，并重新打开项目。",
+      "组件未安装：MCP 提供组件信息和安装命令；在 AI 工具中确认实际安装操作，并查看终端结果。",
+      "协议与客户端配置参考 shadcn MCP 和 OpenAI Docs。"
+    ]
+  },
+  {
+    "title": "更新日志",
+    "href": "/docs/changelog",
+    "section": "文档",
+    "paragraphs": [
+      "组件、安装器与文档的更新。历史日期以 Git 记录为准。"
+    ]
+  },
+  {
+    "title": "更新日志 · v0.3.1 — 组件扩展与安装升级待发布",
+    "href": "/docs/changelog#unreleased",
+    "section": "文档",
+    "paragraphs": [
+      "新增日期、时间、表格和加载反馈等组件，统一安装入口，并更新 AI 工具栏与文档体验。",
+      "新增 Date Picker、Date Range Picker 和 Time Picker。星期按一至日显示，支持日期与时间限制、键盘操作和弹层动画；日期范围支持悬停预览，仅在应用后保存，关闭时丢弃未应用的选择，并支持清空。",
+      "骨架屏保留内容布局，提供同步扫光与延迟淡入；加载指示器使用持续旋转的细圆弧，跟随文字颜色，并支持多种尺寸。",
+      "新增可排序、筛选和编辑的表格。默认示例增加 Options 操作，与 Dropdown Menu 共用菜单项；提供带表格线模式，合并单元格采用表格线。单元格文字溢出时显示省略号，仅在实际溢出时通过 Tooltip 展示完整内容。",
+      "新增 Dropdown Menu、Number Input、Hover Card 和 Tooltip；分段控制器独立为 Segmented Control，更新头像与卡片示例。悬停卡片初始保持关闭，悬停或键盘聚焦时展开。",
+      "基础库统一为 Base UI，移除 Radix UI 与 React Aria 的实现、依赖和切换入口。安装器保留宿主项目的主题、目录与别名；已有其他基础库的项目需先手动迁移。",
+      "组件工具栏增加主题切换、刷新、Claude、Codex、Cursor、v0、MCP 与复制。AI 入口携带经过 URL 编码的中文提示词，主题切换沿用顶部导航的圆形展开动画。",
+      "新增 MCP 配置文档及 Claude Code、Codex、Cursor 的项目配置；通过 shadcn MCP 检索组件、查看信息与依赖并生成安装命令。",
+      "组件总览自动缩放较大的表单、表格和分段控制器；Dropdown Menu 使用独立“更多菜单”按钮预览；组件详情的安装介绍省略基础库名称。",
+      "首页轮播改为 Kalos UI、Base UI、Template，固定轮播区域宽度，前面的文字保持原位；精简首页介绍与 Skill 文档入口。",
+      "设计基础导航按章节滚动定位，“在项目中使用”改为“使用变量”；左侧导航使用细浅灰滚动条，长菜单保持单行，切换页面时保留滚动位置。",
+      "组件详情统一使用英文主标题与中文小标题；API 表格内单个标签完整展示且不换行，较长的使用代码限制高度并支持滚动。",
+      "新增更新日志导航及历史记录，按更新主题介绍功能并展示组件预览；每次部署前整理更新清单，经过审核确认后再部署。"
+    ]
+  },
+  {
+    "title": "更新日志 · v0.2.0 — 搜索与浮层修复",
+    "href": "/docs/changelog#v0-2-0-fixes",
+    "section": "文档",
+    "paragraphs": [
+      "修复全站搜索命中设计系统章节时的异常。",
+      "统一当时各基础库的 Popover 退出动画，并同步到可安装源码。"
+    ]
+  },
+  {
+    "title": "更新日志 · v0.2.0 — 初始化安装器与 Form",
+    "href": "/docs/changelog#v0-2-0",
+    "section": "文档",
+    "paragraphs": [
+      "安装器新增 init，可创建 Next.js、Vite、React Router 项目，选择项目名与包管理器并安装完整组件库；add 继续支持已有项目。",
+      "新增表单组件，支持字段校验、错误反馈与可选提示，完整安装清单扩展为 16 个组件。",
+      "整合快速开始中的安装、框架接入和组件用法，注册表配置拆为独立文档，增加上一章与下一章导航。",
+      "调整 Popover 的基础内容、对齐和筛选表单示例，统一控件样式；修复可安装进度条未完成一端的圆角。"
+    ]
+  },
+  {
+    "title": "更新日志 · v0.1.2 — Alert Dialog",
+    "href": "/docs/changelog#v0-1-2",
+    "section": "文档",
+    "paragraphs": [
+      "新增确认对话框，支持取消、确认及受控打开状态，完整安装清单扩展为 15 个组件。",
+      "Dialog 增加底部操作区与受控状态；统一组件尺寸、圆角、阴影和聚焦样式。"
+    ]
+  },
+  {
+    "title": "更新日志 · v0.1.1 — Command Menu 与 Popover",
+    "href": "/docs/changelog#v0-1-1",
+    "section": "文档",
+    "paragraphs": [
+      "完整安装清单加入 Command Menu 与 Popover，从 12 个组件扩展为 14 个；品牌更名为 Kalos UI，更新圆盘标志、字标与网站资源，首页及导航加入圆形主题切换效果。"
+    ]
+  },
+  {
+    "title": "更新日志 · v0.1.0 — 按需安装组件源码",
+    "href": "/docs/changelog#v0-1-0",
+    "section": "文档",
+    "paragraphs": [
+      "提供站点托管的 CLI 安装包，可向已有项目按需安装组件，保留已有主题与路径别名，并支持 dry-run 查看安装命令。",
+      "完整安装清单包含 Button、Input、Card、Badge、Switch、Checkbox、Tabs、Accordion、Dialog、Select、Progress、Avatar Stack，共 12 个组件。"
+    ]
+  },
+  {
+    "title": "更新日志 · 2026年11月 — 网站初版",
+    "href": "/docs/changelog#initial",
+    "section": "文档",
+    "paragraphs": [
+      "建立组件注册表、组件预览与中文文档，提供源码和安装入口；加入首页开场动画、轨道卡片、交互演示与 AI Skill。"
     ]
   },
   {
@@ -103,7 +249,7 @@
     "section": "设计系统",
     "paragraphs": [
       "用一套共享的语义规则，保持组件、页面与设计稿的一致。",
-      "语义变量维护在 ，控件状态维护在 。 三种 React 基础库与 Figma 共用这些颜色、尺寸和字体规则。"
+      "语义变量维护在 ，控件状态维护在 。 Base UI 组件与 Figma 共用这些颜色、尺寸和字体规则。"
     ]
   },
   {
@@ -152,7 +298,8 @@
     "section": "Skills",
     "paragraphs": [
       "让你的 AI 助手理解 Kalos UI，从组件安装到细节打磨。",
-      "Kalos UI Skill 为 Codex、Claude Code、Cursor 等支持 Agent Skills 的编程工具提供项目上下文：识别框架、选对注册表、阅读组件 API，并使用已有的设计变量构建界面。"
+      "Kalos UI Skill 为 Codex、Claude Code、Cursor 等支持 Agent Skills 的编程工具提供项目上下文：识别框架、选对注册表、阅读组件 API，并使用已有的设计变量构建界面。",
+      "需要让 AI 工具直接检索和读取注册表时，查看MCP 配置。"
     ]
   },
   {
@@ -170,8 +317,8 @@
     "href": "/docs/skills#included",
     "section": "Skills",
     "paragraphs": [
-      "读取 package.json、components.json 与现有导入，识别项目框架， 进一步识别 Radix UI、Base UI 或 React Aria，选择对应注册表地址与组件 API。",
-      "提供按钮、输入框、卡片、徽标、开关、复选框、选项卡、折叠面板、对话框、选择器、进度条、头像组、浮层和命令菜单的使用指导。按需安装源码，保留你的目录、别名与现有组件。",
+      "读取 package.json、components.json 与现有导入，识别项目框架， 使用统一的 Base UI 注册表地址与组件 API。",
+      "提供按钮、输入框、卡片、徽标、开关、复选框、分段控制器、折叠面板、对话框、选择器、进度条、头像组、浮层和命令菜单的使用指导。按需安装源码，保留你的目录、别名与现有组件。",
       "使用语义颜色和一致的圆角、间距，沿用项目里的主题与组件规范。需要加载反馈、列表过渡等细节时，也会优先复用现有的实现方式。",
       "保持标签关联、焦点管理、键盘操作、禁用与加载状态，并检查窄屏布局与受影响的交互。"
     ]
@@ -198,8 +345,7 @@
     "href": "/",
     "section": "页面",
     "paragraphs": [
-      "个 React 组件，支持 Next.js、Vite 和 React Router。 按需安装源码，自由调整样式和交互。",
-      "在终端选择脚手架、基础组件库、项目名和包管理器。"
+      "精美优雅的React组件，按需安装源码，自由调整样式和交互。"
     ]
   },
   {
@@ -229,8 +375,7 @@
       "尺寸；同时支持基础组件的其他尺寸",
       "显示加载状态并禁用操作",
       "禁用按钮",
-      "点击或键盘激活时调用",
-      "React Aria 的统一激活事件"
+      "点击或键盘激活时调用"
     ]
   },
   {
@@ -257,6 +402,39 @@
       "空输入提示",
       "搜索框及结果列表的可访问名称",
       "没有匹配项时的文案"
+    ]
+  },
+  {
+    "title": "Dropdown Menu 下拉菜单",
+    "href": "/components/kalos-dropdown-menu",
+    "section": "组件",
+    "paragraphs": [
+      "通过按钮展开操作与选项，支持图标、快捷键提示、单选、复选和子菜单。"
+    ]
+  },
+  {
+    "title": "Dropdown Menu 下拉菜单 · API",
+    "href": "/components/kalos-dropdown-menu#api",
+    "section": "组件",
+    "paragraphs": [
+      "触发按钮内容；图标按钮必须通过 triggerProps 提供可访问名称",
+      "触发按钮样式、尺寸与可访问名称；trigger 是按钮内容，不嵌套另一个按钮",
+      "菜单项；value 在当前菜单内唯一，label 用于显示与字符跳转；空数组显示空状态",
+      "可选图标和补充说明；省略时不占位",
+      "右侧快捷键提示；不会注册全局快捷键，需由调用方绑定",
+      "checked 默认独立复选，同一分组可选多项；仅 type=radio 在同组内单选；在 onSelect 中更新 checked",
+      "选择后保持菜单打开，适合连续切换复选项",
+      "嵌套子菜单；父项只负责展开，操作回调由末级菜单项触发",
+      "危险色、禁用状态与项目前分隔线；禁用项不参与键盘导航或触发回调",
+      "激活该项时回调；随后调用菜单的 onAction",
+      "操作或选择项的统一回调，包含子菜单末级项",
+      "可选的菜单标题和顶部内容；header 仅放展示内容",
+      "与触发按钮对齐；空间不足时由基础库翻转位置",
+      "菜单宽度及浮层容器的布局类；默认最小宽度 180px",
+      "没有菜单项时显示的内容",
+      "受控或非受控打开状态",
+      "禁用触发按钮",
+      "菜单的可访问名称，默认使用 title 或触发按钮名称"
     ]
   },
   {
@@ -338,11 +516,115 @@
     ]
   },
   {
+    "title": "Number Input 数字输入",
+    "href": "/components/kalos-number-input",
+    "section": "组件",
+    "paragraphs": [
+      "输入和调整数值，支持步进、范围限制、单位与本地化格式。"
+    ]
+  },
+  {
+    "title": "Number Input 数字输入 · API",
+    "href": "/components/kalos-number-input#api",
+    "section": "组件",
+    "paragraphs": [
+      "控件的可见标签",
+      "受控数值或初始值；null 表示空值",
+      "解析输入与步进时触发；details 提供 reason、cancel 与 direction",
+      "Base UI 原生确认回调，在失焦、键盘步进或松开加减按钮时触发",
+      "允许的数值范围；输入确认时自动限制范围",
+      "普通步进和 Page Up / Page Down 的步进量；step 必须大于 0",
+      "数值前的符号或装饰图标、数值后的单位",
+      "数字显示与解析使用的语言地区，如 de-DE",
+      "小数位、千位分隔、货币或百分比；百分比 0.25 显示为 25%",
+      "必要的输入约束或校验错误，错误优先",
+      "禁用、只读和必填状态",
+      "表单提交原始数字，不含千位符、前缀和单位；form 支持外部表单关联",
+      "字段容器或输入本体的布局样式",
+      "输入元素引用；仅显式指定 autoFocus 才自动聚焦"
+    ]
+  },
+  {
+    "title": "Date Picker 日期选择器",
+    "href": "/components/kalos-date-picker",
+    "section": "组件",
+    "paragraphs": [
+      "在日历中选择一天，支持日期限制、禁选日、键盘导航与本地日期表单提交。"
+    ]
+  },
+  {
+    "title": "Date Picker 日期选择器 · API",
+    "href": "/components/kalos-date-picker#api",
+    "section": "组件",
+    "paragraphs": [
+      "受控日期或初始日期，null 展示占位；使用本地日期，不按 UTC 字符串解析",
+      "选择一天后返回本地零点的 Date，并关闭日历",
+      "可选日期的首尾，包含当天；max 早于 min 时忽略 max",
+      "禁选工作日以外等自定义日期；保留可见日期与键盘浏览",
+      "日期与月份格式；默认周一开始，星期栏显示一、二、三、四、五、六、日",
+      "字段标签、空值与可选标记；点击标签不聚焦或展开",
+      "必要提示、优先展示的错误、禁用和必填语义；必填值由提交逻辑检查",
+      "通过隐藏字段提交本地 YYYY-MM-DD",
+      "当天标记与受控、非受控打开状态",
+      "字段标识、容器布局、无可见标签时的名称及触发按钮引用"
+    ]
+  },
+  {
+    "title": "Date Range Picker 日期范围选择器",
+    "href": "/components/kalos-date-range-picker",
+    "section": "组件",
+    "paragraphs": [
+      "使用快捷区间或双月日历选择日期范围，支持悬停选区预览，点击应用后生效。"
+    ]
+  },
+  {
+    "title": "Date Range Picker 日期范围选择器 · API",
+    "href": "/components/kalos-date-range-picker#api",
+    "section": "组件",
+    "paragraphs": [
+      "受控范围或初始范围；KalosDateRange 包含 start、end 两个 Date",
+      "点击应用时返回所选范围；点击清空时立即返回 null；取消保留原值",
+      "允许清空已应用的范围与快捷项记录；清空后恢复占位和未选择状态",
+      "每项包含 id、label、range(today)；初始化不选中快捷项，应用后保留所选快捷项",
+      "限制可选日期；today 同时作为快捷区间与当天标记的参考",
+      "日期格式与一周起点；星期栏默认为一至日，窄屏展示一个月",
+      "弹层打开状态；未应用的临时选择在关闭后丢弃，下次打开恢复初始或最近应用的范围",
+      "直接嵌入范围面板，不展示触发器；保留应用与取消的草稿交互",
+      "以 name.start 和 name.end 提交 YYYY-MM-DD；修改草稿不影响已提交范围",
+      "标签关联、可选提示、错误与禁用状态；无标签时可用 aria-label 命名"
+    ]
+  },
+  {
+    "title": "Time Picker 时间选择器",
+    "href": "/components/kalos-time-picker",
+    "section": "组件",
+    "paragraphs": [
+      "输入或从列表选择时间，支持 12 / 24 小时制、步进、时间限制和连续滑动的选中背景。"
+    ]
+  },
+  {
+    "title": "Time Picker 时间选择器 · API",
+    "href": "/components/kalos-time-picker#api",
+    "section": "组件",
+    "paragraphs": [
+      "24 小时制 HH:mm 或空值；输入的展示格式与提交格式分离",
+      "选取或确认有效输入后返回 HH:mm；清空返回 null，无效输入恢复原值",
+      "候选时间的分钟间隔，从 min 开始；手动输入可使用其他有效分钟",
+      "HH:mm 时间边界；max 早于 min 时忽略 max",
+      "展示使用 12 或 24 小时制；提交始终为 HH:mm，支持 930、9:30 pm、21.30 等输入",
+      "标签、占位和可选标记；点击标签不聚焦或打开",
+      "错误优先展示；禁用与只读时不能修改",
+      "通过 Base UI Combobox 原生表单字段提交 HH:mm",
+      "受控或非受控列表状态，焦点保留在文本输入框",
+      "字段标识、容器布局、无标签名称与输入框引用"
+    ]
+  },
+  {
     "title": "Card 卡片",
     "href": "/components/kalos-card",
     "section": "组件",
     "paragraphs": [
-      "为相关信息与操作提供清晰、紧凑的内容容器。"
+      "组合标题、图标、内容与底部操作，支持整卡点击和选中状态。"
     ]
   },
   {
@@ -350,10 +632,81 @@
     "href": "/components/kalos-card#api",
     "section": "组件",
     "paragraphs": [
-      "卡片标题",
-      "仅在需要补充信息时显示",
-      "卡片内容",
-      "底部操作区"
+      "卡片标题；interactive 时在标题中放置链接或按钮，点击区域会覆盖整张卡片",
+      "标题下方的可选说明；省略时不占位",
+      "标题前的图标或图标容器",
+      "与标题首行居中对齐的独立操作",
+      "卡片内容；省略时不保留内容区间距",
+      "底部状态与操作；使用 margin-inline-start: auto 将操作推至右侧，窄屏自动换行",
+      "启用悬停阴影与标题点击区域；其他控件仍可独立操作，禁用标题按钮保留原生禁用行为",
+      "以灰色填充和加深边缘表示选中；同时在标题按钮或链接上提供 aria-pressed 或 aria-current",
+      "根元素；在列表中使用 li",
+      "根据页面层级选择标题元素；选项卡片可使用 p",
+      "原生属性、事件、ARIA 属性及 className 传递给根元素"
+    ]
+  },
+  {
+    "title": "Hover Card 悬停卡片",
+    "href": "/components/kalos-hover-card",
+    "section": "组件",
+    "paragraphs": [
+      "悬停或键盘聚焦时预览联系人、文件等内容，支持延迟显示、方向对齐与边缘避让。"
+    ]
+  },
+  {
+    "title": "Hover Card 悬停卡片 · API",
+    "href": "/components/kalos-hover-card#api",
+    "section": "组件",
+    "paragraphs": [
+      "一个可聚焦的链接或按钮；自定义组件须转发 ref 与事件属性；预览不会替代原有操作",
+      "卡片内容；null、undefined、布尔值或空字符串不渲染预览；必要信息应同时出现在链接目标中",
+      "卡片的可访问名称",
+      "首选方向，空间不足时自动避让",
+      "与触发元素的对齐方式",
+      "卡片与触发元素的间距，单位 px",
+      "悬停或键盘聚焦后打开的等待时间，单位 ms",
+      "鼠标离开后关闭的等待时间，单位 ms；移入卡片会保持打开",
+      "卡片宽度；指定后解除 320px 限制，窄屏两侧至少保留 16px",
+      "受控打开状态；省略 open 时由基础库管理",
+      "关闭预览；保留子元素原本的链接或按钮操作",
+      "卡片容器的样式类"
+    ]
+  },
+  {
+    "title": "Table 表格",
+    "href": "/components/kalos-table",
+    "section": "组件",
+    "paragraphs": [
+      "以行列结构展示数据，支持编辑、排序与筛选。"
+    ]
+  },
+  {
+    "title": "Table 表格 · API",
+    "href": "/components/kalos-table#api",
+    "section": "组件",
+    "paragraphs": [
+      "bordered 显示行列分隔线；合并单元格保留完整的跨列边缘",
+      "列的 key 唯一；包含 label、icon、width、type、editable、sortable、filterable、colSpan、options 和 format",
+      "横向合并单元格；覆盖的列不再渲染，合并数限制在当前行剩余列范围内",
+      "在列标题旁显示筛选按钮；按该列的值筛选，多列条件共同生效，选择全部清除当前列筛选",
+      "所有列默认左对齐；标题列显示行图标；数字使用等宽数字；日期按时间排序；链接仅允许 HTTP/HTTPS。文字超出列宽时缩略，仅实际溢出时显示完整文字提示，编辑时关闭提示",
+      "锁定列或限定标签选项；编辑、粘贴和清空均遵循列约束",
+      "自定义单元格显示，排序与编辑仍使用原始值",
+      "受控数据或挂载时的初始数据；每行必须有唯一 id，可选 icon，其他字段对应列 key；替换整份初始数据时使用 key 重新挂载",
+      "编辑、粘贴、清空、新增、删除、撤销和重做时返回全部行；受控 rows 需要在此更新",
+      "表格上方的标题栏及图标；可编辑时显示撤销与重做",
+      "没有可见标题时为表格命名",
+      "分别开启编辑、复选框选择与列排序；连续点击排序在升序、降序、原始顺序间切换",
+      "开启行首拖拽手柄；支持鼠标、触控和键盘排序，完成后通过 onRowsChange 返回新顺序",
+      "初始排序列与方向",
+      "按标签文字映射浅深主题语义颜色；未指定时为灰色",
+      "复选框变化后返回选中行的稳定 id",
+      "与数据列一一对应的汇总单元格；选择列与操作列自动留空",
+      "末列的操作内容；默认示例使用编辑与更多菜单，和 Dropdown Menu 共用操作项",
+      "末列的可见标题与可访问名称",
+      "操作列宽度，单位 px；与普通列使用相同的宽度分配规则",
+      "可选表格说明、新增按钮文字和空数据反馈",
+      "阅读方向与容器布局样式；窄屏在表格内横向滚动"
     ]
   },
   {
@@ -414,25 +767,36 @@
       "受控选中状态",
       "初始状态",
       "选中状态变化时调用",
-      "禁用复选框",
-      "部分选中状态"
+      "部分选中状态",
+      "禁用复选框"
     ]
   },
   {
-    "title": "Tabs 选项卡",
-    "href": "/components/kalos-tabs",
+    "title": "Segmented 分段控制器",
+    "href": "/components/kalos-segmented-control",
     "section": "组件",
     "paragraphs": [
-      "在同一上下文中切换相关内容，支持键盘操作。"
+      "在一组选项间即时切换，支持独立按钮、轨道与下划线，以及图标、数量和徽标。"
     ]
   },
   {
-    "title": "Tabs 选项卡 · API",
-    "href": "/components/kalos-tabs#api",
+    "title": "Segmented 分段控制器 · API",
+    "href": "/components/kalos-segmented-control#api",
     "section": "组件",
     "paragraphs": [
-      "标签与对应内容",
-      "初始激活项"
+      "选项；value 必填，label、icon、count、badge、disabled、ariaLabel、controls 可选",
+      "图标选项必须提供可访问名称",
+      "kind=tabs 时关联外部面板的 ID；面板由调用方渲染并按 value 显隐",
+      "受控选中值，与 onChange 配合",
+      "非受控初始值",
+      "点击、拖拽或键盘切换时回调新值",
+      "独立按钮、浅灰轨道或下划线",
+      "高度 24 / 28 / 32px；触屏至少 40px",
+      "等宽选项填满容器，宽度不足时在内部横向滚动",
+      "单选组或切换内容面板的标签页",
+      "禁用整个分段控制器",
+      "为整组选项命名",
+      "根容器样式"
     ]
   },
   {
@@ -464,7 +828,8 @@
     "href": "/components/kalos-dialog#api",
     "section": "组件",
     "paragraphs": [
-      "触发按钮文本",
+      "触发按钮文字或图标",
+      "触发按钮外观；图标按钮必须提供 aria-label",
       "对话框标题与可访问名称",
       "仅在需要补充信息时显示",
       "对话框内容",
@@ -486,7 +851,8 @@
     "href": "/components/kalos-alert-dialog#api",
     "section": "组件",
     "paragraphs": [
-      "触发按钮文本",
+      "触发按钮文字或图标",
+      "触发按钮外观；图标按钮必须提供 aria-label",
       "确认对话框标题",
       "操作的影响或不可恢复的结果",
       "确认按钮文字",
@@ -520,6 +886,30 @@
     ]
   },
   {
+    "title": "Tooltip 文字提示",
+    "href": "/components/kalos-tooltip",
+    "section": "组件",
+    "paragraphs": [
+      "悬停或键盘聚焦时显示简短提示，支持快捷键、相邻提示免等待与边缘避让。"
+    ]
+  },
+  {
+    "title": "Tooltip 文字提示 · API",
+    "href": "/components/kalos-tooltip#api",
+    "section": "组件",
+    "paragraphs": [
+      "简短的文字提示；不放链接、按钮或表单，空内容不显示浮层",
+      "单个可接收 ref 和事件的触发元素；图标按钮保留自己的可访问名称",
+      "可选快捷键提示，不注册全局快捷键",
+      "首选方向和对齐方式；空间不足时翻转并保持在窗口内",
+      "与触发元素的距离及悬停延迟，单位 px / ms；键盘聚焦立即显示",
+      "受控或非受控打开状态",
+      "禁用提示；保留触发元素原有操作",
+      "浮层的布局类",
+      "包裹应用或工具栏；同组相邻提示在 300ms 内免等待切换"
+    ]
+  },
+  {
     "title": "Progress 进度条",
     "href": "/components/kalos-progress",
     "section": "组件",
@@ -538,20 +928,74 @@
     ]
   },
   {
-    "title": "Avatar Group 头像组",
-    "href": "/components/kalos-avatar-stack",
+    "title": "Skeleton 骨架屏",
+    "href": "/components/kalos-skeleton",
     "section": "组件",
     "paragraphs": [
-      "以紧凑的头像组合展示成员，包含姓名回退和溢出数量。"
+      "在内容加载时保留文字、图标与列表的布局，支持同步扫光和延迟淡入。"
     ]
   },
   {
-    "title": "Avatar Group 头像组 · API",
+    "title": "Skeleton 骨架屏 · API",
+    "href": "/components/kalos-skeleton#api",
+    "section": "组件",
+    "paragraphs": [
+      "占位形状宽度；数字按 px，字符串支持 CSS 长度，最大不超过父容器",
+      "占位形状自身的高度，数字按 px",
+      "圆角；传 50% 可展示圆形头像占位",
+      "将形状居中放入行高盒，保留真实文字的行高；true 使用 1lh，也可传入 20 等高度",
+      "原生 span 属性；开启 line 时作用于外层行高盒，形状对屏幕阅读器隐藏",
+      "加载区域的可访问名称；使用 role=status 和 aria-busy，仅播报一次区域状态",
+      "使用真实内容的布局包裹占位形状；150ms 后淡入，数据就绪时替换整个加载区域",
+      "通过 --kalos-skeleton-duration、--kalos-skeleton-delay 和 --kalos-skeleton-fade-duration 调整扫光、等待与淡入时长"
+    ]
+  },
+  {
+    "title": "Spinner 加载指示器",
+    "href": "/components/kalos-spinner",
+    "section": "组件",
+    "paragraphs": [
+      "用持续旋转的细圆弧表示正在进行的操作，支持尺寸、跟随文字颜色与加载状态播报。"
+    ]
+  },
+  {
+    "title": "Spinner 加载指示器 · API",
+    "href": "/components/kalos-spinner#api",
+    "section": "组件",
+    "paragraphs": [
+      "图标宽高，单位 px；圆环与旋转圆弧同比缩放",
+      "独立使用时提供加载状态名称；有名称时使用 role=status，无名称时作为装饰图标隐藏",
+      "布局与颜色；圆环使用 currentColor，继承文字颜色，浅深主题自动适配",
+      "原生 SVG 属性与元素引用；支持 aria-label / aria-labelledby 提供可访问名称",
+      "旋转一周的时长，保持匀速循环；可在组件的 style 或 CSS 中调整"
+    ]
+  },
+  {
+    "title": "Avatar 头像",
+    "href": "/components/kalos-avatar-stack",
+    "section": "组件",
+    "paragraphs": [
+      "照片与柔和配色的姓名头像，支持状态、圆角方形、像素动画和头像组。"
+    ]
+  },
+  {
+    "title": "Avatar 头像 · API",
     "href": "/components/kalos-avatar-stack#api",
     "section": "组件",
     "paragraphs": [
-      "成员及头像地址；无图片时显示姓名缩写",
-      "可见头像数量，其余显示为计数"
+      "姓名、可访问名称与缩写；未传时显示人物轮廓",
+      "照片地址；加载时与加载失败时显示姓名头像",
+      "头像和头像组的尺寸，单位 px",
+      "圆形或圆角方形；像素头像默认为方形",
+      "在线、离开或忙碌，同时加入可访问名称",
+      "姓名头像或 3×3 像素头像",
+      "决定配色与像素图案；传入稳定 ID 可在改名后保留外观",
+      "像素头像的标记颜色",
+      "播放像素头像的波浪闪烁动画",
+      "成员列表，支持单个头像的属性；image 保留为 src 的兼容属性",
+      "可见头像数量，可设为 0；其余显示为 +N，超过 99 时显示 99+",
+      "已知的成员总数，用于只加载部分成员时计算剩余数量",
+      "传到对应头像或头像组的根节点；--avatar-ring 可匹配所在表面颜色"
     ]
   }
 ]

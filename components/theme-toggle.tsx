@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, type ComponentProps } from "react";
 import { flushSync } from "react-dom";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const revealDuration = 650;
 const revealEasing = "cubic-bezier(0.65, 0, 0.35, 1)";
 
-export function ThemeToggle({ className }: { className?: string }) {
+export function ThemeToggle({ className, onClick, ...props }: ComponentProps<typeof Button>) {
   const { setTheme } = useTheme();
   const maskId = `theme-moon-${useId()}`;
   const activeTransition = useRef<ViewTransition | null>(null);
@@ -96,7 +96,11 @@ export function ThemeToggle({ className }: { className?: string }) {
       size="icon"
       aria-label="切换深浅主题"
       className={cn("theme-toggle", className)}
-      onClick={(event) => void toggleTheme(event.currentTarget)}
+      {...props}
+      onClick={(event) => {
+        onClick?.(event);
+        if (!event.defaultPrevented) void toggleTheme(event.currentTarget);
+      }}
     >
       <svg viewBox="0 0 24 24" className="theme-toggle-icon" aria-hidden="true">
         <mask id={maskId}>

@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "radix-nova",
+  "style": "base-nova",
   "rsc": true,
   "tsx": true,
   "tailwind": {
@@ -22,6 +22,7 @@
   "menuColor": "default",
   "menuAccent": "subtle",
   "registries": {
-    "@animateicons": "https://animateicons.in/r/{name}.json"
+    "@animateicons": "https://animateicons.in/r/{name}.json",
+    "@kalos-ui": "https://kalos-ui-six.vercel.app/r/{name}.json"
   }
 }
