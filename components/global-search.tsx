@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { BookOpen, Home, Layers, Palette, Search, Sparkles } from "lucide-react";
+import { BookOpen, Home, Layers, Palette, Search, Sparkles, type LucideIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { KalosCommandMenu } from "@/registry/kalos/kalos-command-menu";
-import { highlightMatches, searchSite } from "@/lib/search";
+import { highlightMatches, searchSite, type SearchSection } from "@/lib/search";
 
-const icons = { 组件: Layers, 文档: BookOpen, 设计变量: Palette, Skills: Sparkles, 页面: Home };
+const icons = { 组件: Layers, 文档: BookOpen, 设计系统: Palette, Skills: Sparkles, 页面: Home } satisfies Record<SearchSection, LucideIcon>;
 export function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");

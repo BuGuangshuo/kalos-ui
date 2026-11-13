@@ -1,7 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { extractPageParagraphs } from "./build-search-index.mjs";
-import { contextSnippet, highlightMatches, searchSite, searchEntries } from "../lib/search.ts";
+import { contextSnippet, highlightMatches, searchSite, searchEntries, searchSections } from "../lib/search.ts";
+
+test("built index uses supported search sections", () => {
+  for (const entry of searchEntries) {
+    assert.ok(searchSections.includes(entry.section), `${entry.href}: unsupported section ${entry.section}`);
+  }
+});
 
 test("extracts prose and links while excluding headings, navigation, code and attributes", () => {
   const source = '<article><h1>HeadingOnly</h1><nav><p>NavigationOnly</p></nav><p>保留 <Link href="/SecretHref">你的项目</Link> 与主题。</p><section id="install"><h2>SectionOnly</h2><p>正文含有路径别名。</p><CodeBlock code="CodeOnly"/><pre><code>PreOnly</code></pre><p>运行 <code>InlineOnly</code> 后继续。</p><ul><li>不会改写已有样式。</li></ul></section></article>';

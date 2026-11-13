@@ -1,6 +1,7 @@
 import content from "./search-content.json" with { type: "json" };
 
-export type SearchSection = "组件" | "文档" | "设计变量" | "Skills" | "页面";
+export const searchSections = ["组件", "文档", "设计系统", "Skills", "页面"] as const;
+export type SearchSection = (typeof searchSections)[number];
 export type SearchEntry = { title: string; href: string; section: SearchSection; paragraphs: string[] };
 export type SearchResult = Omit<SearchEntry, "paragraphs"> & { context: string };
 export const searchEntries = content as SearchEntry[];
