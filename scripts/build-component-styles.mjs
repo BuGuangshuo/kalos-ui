@@ -27,6 +27,9 @@ const alertDialog = inventory.defaults["alert-dialog"];
 const dialogVars = `${vars("dialog", { "dialog-edge": "edge" })} ${vars(dialog.tokensFrom, { "dialog-shadow": "--ui-selc-shadow-menu" })}`;
 const dialogMotion = `will-change-[${css(dialog.rasterLayer)}] duration-[${dialog.duration}ms] ease-[${css(dialog.ease)}] [animation-duration:${dialog.duration}ms] [animation-timing-function:${css(dialog.ease)}]`;
 const dialogOverlayMotion = `duration-[${dialog.duration}ms] ease-[${css(dialog.overlayEase)}] [animation-duration:${dialog.duration}ms] [animation-timing-function:${css(dialog.overlayEase)}]`;
+const popover = inventory.defaults.popover;
+const popoverEase = `var(--k-ease,${css(inventory.components[popover.tokensFrom].light["--ui-selc-ease"])})`;
+const popoverMotion = `will-change-[${css(popover.rasterLayer)}] duration-[${popover.duration}ms] ease-[${popoverEase}] [animation-duration:${popover.duration}ms] [animation-timing-function:${popoverEase}]`;
 const form = inventory.defaults.form;
 const fieldMessageMotion = inventory.defaults["field-message"];
 const cardVars = vars("text-field", { "card-surface": "--ui-tfc-surface", "card-ink": "--ui-tfc-ink", "card-shadow": "--ui-tfc-shadow" });
@@ -96,6 +99,9 @@ const styles = {
   commandFooter: `flex min-h-10 flex-wrap items-center gap-x-4 gap-y-1 border-t border-[var(--k-command-edge)] px-[${command.contentInset}px] py-2 text-[12px] text-[color:var(--k-command-muted)] [&>span]:inline-flex [&>span]:items-center [&>span]:gap-1`,
   commandKey: "inline-flex min-w-5 items-center justify-center rounded border border-[var(--k-command-edge)] px-1 text-[11px] font-normal leading-4",
   popover: `${font} ${menuVars} w-64 max-w-[calc(100vw-24px)] rounded-[10px] border-0 bg-[var(--k-menu)] p-1 text-[color:var(--k-ink)] shadow-[var(--k-shadow-menu)] ring-0 outline-none`,
+  popoverRadixMotion: `${popoverMotion} data-open:animate-in data-open:fade-in-0 data-open:zoom-in-${popover.scale * 100} data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-${popover.scale * 100}`,
+  popoverBaseMotion: `${popoverMotion} transition-[opacity,scale] data-starting-style:scale-${popover.scale * 100} data-starting-style:opacity-0 data-ending-style:scale-${popover.scale * 100} data-ending-style:opacity-0`,
+  popoverAriaMotion: `${popoverMotion} transition-[opacity,scale] data-entering:scale-${popover.scale * 100} data-entering:opacity-0 data-exiting:scale-${popover.scale * 100} data-exiting:opacity-0`,
   popoverList: `${font} ${menuVars} before:rounded-[6px] before:bg-[var(--k-glow)] before:duration-[180ms] before:ease-[var(--k-ease)]`,
   popoverItem: "relative z-10 flex min-h-8 w-full items-center rounded-[6px] border-0 bg-transparent! px-2 py-1.5 text-left text-[13px] font-normal leading-5 outline-none disabled:cursor-not-allowed disabled:opacity-40",
   button: `${font} ${focus} ${buttonVars} rounded-[6px] border-0 font-normal transition-[background-color,color,box-shadow,transform,opacity] duration-[140ms] ease-[var(--k-ease)] active:scale-[.97] disabled:opacity-40`,

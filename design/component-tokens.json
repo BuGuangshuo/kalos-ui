@@ -1291,6 +1291,9 @@
       "itemRadius": 6,
       "itemHeight": 32,
       "highlightDuration": 180,
+      "duration": 180,
+      "scale": 0.95,
+      "rasterLayer": "transform, scale, opacity",
       "tokensFrom": "select"
     },
     "command-menu": {
