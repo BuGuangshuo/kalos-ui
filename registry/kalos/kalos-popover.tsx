@@ -13,7 +13,7 @@ export function KalosPopover(props: KalosPopoverProps) {
     <PopoverTrigger asChild>
       <Button variant="outline" disabled={disabled} className={`${controlStyles.button} ${controlStyles.buttonSurface}`}>{trigger}</Button>
     </PopoverTrigger>
-    <PopoverContent align={align} sideOffset={8} className={cn(controlStyles.popover, contentClassName)} aria-label={label} tabIndex={-1} onOpenAutoFocus={event => {
+    <PopoverContent align={align} sideOffset={8} className={cn(controlStyles.popover, controlStyles.popoverRadixMotion, contentClassName)} aria-label={label} tabIndex={-1} onOpenAutoFocus={event => {
       event.preventDefault();
       const content = event.currentTarget as HTMLElement;
       if (!content.contains(document.activeElement)) content.focus();
