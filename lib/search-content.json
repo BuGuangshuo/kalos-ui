@@ -170,8 +170,8 @@
     ]
   },
   {
-    "title": "更新日志 · v0.3.1 — 组件扩展与安装升级待发布",
-    "href": "/docs/changelog#unreleased",
+    "title": "更新日志 · v0.3.1 — 组件扩展与安装升级",
+    "href": "/docs/changelog#v0-3-1",
     "section": "文档",
     "paragraphs": [
       "新增日期、时间、表格和加载反馈等组件，统一安装入口，并更新 AI 工具栏与文档体验。",

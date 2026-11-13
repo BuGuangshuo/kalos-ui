@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Sidebar, OnThisPage } from "@/components/docs-parts";
 import { DocsPagination } from "@/components/page-pagination";
-import { Badge } from "@/components/ui/badge";
 import { ChangelogPreview } from "@/components/changelog-preview";
 
 export const metadata: Metadata = { title: "更新日志" };
 
 const links = [
-  { id: "unreleased", title: "v0.3.1 · 待发布" },
+  { id: "v0-3-1", title: "v0.3.1" },
   { id: "v0-2-0-fixes", title: "v0.2.0 · 后续修复" },
   { id: "v0-2-0", title: "v0.2.0" },
   { id: "v0-1-2", title: "v0.1.2" },
@@ -26,8 +25,9 @@ export default function ChangelogPage() {
           <p>组件、安装器与文档的更新。历史日期以 Git 记录为准。</p>
         </header>
 
-        <section id="unreleased" className="changelog-entry">
-          <h2>v0.3.1 — 组件扩展与安装升级<Badge variant="secondary">待发布</Badge></h2>
+        <section id="v0-3-1" className="changelog-entry">
+          <h2>v0.3.1 — 组件扩展与安装升级</h2>
+          <div className="changelog-meta"><time dateTime="2026-11-13">2026年11月13日</time><span>正式发布</span></div>
           <p>新增日期、时间、表格和加载反馈等组件，统一安装入口，并更新 AI 工具栏与文档体验。</p>
 
           <div className="changelog-block">
