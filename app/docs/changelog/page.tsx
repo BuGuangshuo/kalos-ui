@@ -6,7 +6,7 @@ import { ChangelogPreview } from "@/components/changelog-preview";
 export const metadata: Metadata = { title: "更新日志" };
 
 const links = [
-  { id: "v0-3-4", title: "v0.3.4 · 待发布" },
+  { id: "v0-3-4", title: "v0.3.4" },
   { id: "v0-3-3", title: "v0.3.3" },
   { id: "v0-3-2", title: "v0.3.2" },
   { id: "v0-3-1", title: "v0.3.1" },
@@ -30,10 +30,10 @@ export default function ChangelogPage() {
 
         <section id="v0-3-4" className="changelog-entry">
           <h2>v0.3.4 — Table 内嵌分页</h2>
-          <div className="changelog-meta"><span>待发布</span></div>
+          <div className="changelog-meta"><time dateTime="2026-11-16">2026年11月16日</time><span>正式发布</span></div>
           <p>修复分页器与表格分离的问题：Table 新增 pagination 插槽，分页器位于表格容器底部，共用背景、圆角和外框。scrollAreaProps 支持限制内容区高度；仅表格内容滚动，分页区保持可见。翻页与切换每页条数时重置内容区滚动位置，并保留分页控件焦点。</p>
           <p>同步更新分页示例、完整 TSX 用法、API 与 AI Skill；新增属性均可选，现有 Table 调用无需修改。</p>
-          <p>验证：Lint、类型检查、完整构建与 Table / Pagination 的 11 项测试通过；已在桌面和 390px 窄屏核验容器外框、独立滚动、翻页焦点、每页条数切换与末页边界。</p>
+          <p>验证：Lint、类型检查、完整构建与 Table / Pagination 的 11 项测试通过；已在桌面和 390px 窄屏核验容器外框、独立滚动、翻页焦点、每页条数切换与末页边界。正式站点的内嵌分页和 Table 注册表已核验；Figwrite 已同步并读回核验 15 个分页变体及浅深主题布局。</p>
         </section>
 
         <section id="v0-3-3" className="changelog-entry">
