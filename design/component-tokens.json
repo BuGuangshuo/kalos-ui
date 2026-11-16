@@ -1249,8 +1249,8 @@
         "blue-wash": "#edf4ff",
         "green-ink": "#008a46",
         "green-wash": "#eef9f2",
-        "amber-ink": "#a86700",
-        "amber-wash": "#fff7e6",
+        "amber-ink": "#9c5d15",
+        "amber-wash": "#fef2e3",
         "gray-ink": "#666666",
         "gray-wash": "#f3f3f3"
       },
@@ -1272,11 +1272,12 @@
         "blue-wash": "#202e43",
         "green-ink": "#82d7a6",
         "green-wash": "#20382c",
-        "amber-ink": "#efc875",
-        "amber-wash": "#3b3221",
+        "amber-ink": "#f4a64d",
+        "amber-wash": "#3e2d19",
         "gray-ink": "#b5b5bb",
         "gray-wash": "#303034"
-      }
+      },
+      "warningBase": "#f19021"
     },
     "dropdown-menu": {
       "light": {
@@ -1482,6 +1483,44 @@
         "focus": "rgba(77, 141, 255, 0.8)",
         "shadow": "0 0 0 0.5px rgba(255, 255, 255, 0.12), 0 12px 32px -8px rgba(0, 0, 0, 0.6)",
         "ease": "cubic-bezier(0.22, 1, 0.36, 1)"
+      }
+    },
+    "badge": {
+      "source": "https://www.affectui.com/components/badge",
+      "light": {
+        "danger-ink": "#c4320a",
+        "danger-wash": "rgba(240, 68, 56, 0.08)"
+      },
+      "dark": {
+        "danger-ink": "#ff8a7a",
+        "danger-wash": "rgba(255, 107, 95, 0.14)"
+      },
+      "tokensFrom": "table",
+      "toneMapping": {
+        "neutral": "gray",
+        "info": "blue",
+        "success": "green",
+        "warning": "amber",
+        "purple": "violet",
+        "pink": "pink"
+      },
+      "onSolid": "#ffffff"
+    },
+    "pagination": {
+      "source": "https://www.affectui.com/components/pagination",
+      "light": {
+        "ink": "rgba(0, 0, 0, 0.88)",
+        "muted": "rgba(0, 0, 0, 0.55)",
+        "hover": "rgba(0, 0, 0, 0.035)",
+        "selected": "rgba(0, 0, 0, 0.055)",
+        "focus": "rgba(0, 96, 226, 0.7)"
+      },
+      "dark": {
+        "ink": "rgba(255, 255, 255, 0.9)",
+        "muted": "rgba(255, 255, 255, 0.55)",
+        "hover": "rgba(255, 255, 255, 0.06)",
+        "selected": "rgba(255, 255, 255, 0.09)",
+        "focus": "rgba(77, 141, 255, 0.8)"
       }
     }
   },
@@ -1800,6 +1839,29 @@
       "rangeWidth": 652,
       "layer": 50,
       "weekStartsOn": 1
+    },
+    "badge": {
+      "height-sm": 18,
+      "height-md": 20,
+      "font-sm": 11,
+      "font-md": 12,
+      "radius-sm": 4,
+      "radius-md": 4,
+      "live-duration": 1800,
+      "defaultSize": "md",
+      "padding-x": 6,
+      "gap": 4,
+      "line-height": 20,
+      "dot-size": 5,
+      "dot-space": 1.5
+    },
+    "pagination": {
+      "height": 32,
+      "radius": 6,
+      "gap": 2,
+      "duration": 140,
+      "collapseWidth": 520,
+      "maxSiblings": 5
     }
   },
   "typographyOverride": {

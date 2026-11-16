@@ -139,11 +139,11 @@ export const catalog = [
     title: "徽标",
     english: "Badge",
     category: "反馈",
-    description: "使用简洁的标记展示状态、类别与附加信息。",
+    description: "用轻量色彩标记状态与类别，支持圆点、图标和计数。",
     dependencies: ["badge"],
     props:
-      'status?: "neutral" | "success" | "warning"；children: ReactNode。所有状态采用黑白语义配色。',
-    usage: '<KalosBadge status="success">已完成</KalosBadge>',
+      'tone?: "neutral" | "info" | "success" | "warning" | "danger" | "purple" | "pink"；variant?: "soft" | "solid" | "ghost"；size?: "sm" | "md"；dot?: boolean；live?: boolean；icon?: ReactNode；count?: number；max?: number；children?: ReactNode。保留 status 兼容属性。',
+    usage: '<KalosBadge tone="info" live>进行中</KalosBadge>',
   },
   {
     slug: "kalos-switch",
@@ -177,6 +177,16 @@ export const catalog = [
     dependencies: [],
     props: 'options: KalosSegmentOption[]；value?: string；defaultValue?: string；onChange?: (value: string) => void；variant?: "buttons" | "tray" | "underline"；size?: "sm" | "md" | "lg"；fullWidth?: boolean；kind?: "radio" | "tabs"；disabled?: boolean。',
     usage: '<KalosSegmentedControl aria-label="显示方式" defaultValue="list" options={[{ value: "list", label: "列表" }, { value: "board", label: "看板" }]} />',
+  },
+  {
+    slug: "kalos-pagination",
+    title: "分页器",
+    english: "Pagination",
+    category: "导航",
+    description: "分页浏览列表与表格，支持总条数、页码省略、每页条数和简洁模式。",
+    dependencies: [],
+    props: "page: number；onPageChange；total?；pageSize?；pageCount?；pageSizes?；onPageSizeChange?；siblings?；compact?；disabled?。",
+    usage: '<KalosPagination aria-label="文档分页" page={page} onPageChange={setPage} total={1284} pageSize={20} />',
   },
   {
     slug: "kalos-accordion",

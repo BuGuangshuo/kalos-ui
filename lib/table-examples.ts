@@ -1,7 +1,8 @@
-export type TableExampleVariant = "data" | "basic" | "bordered" | "footer" | "actions" | "merged" | "reorder" | "filters";
+export type TableExampleVariant = "data" | "basic" | "bordered" | "footer" | "actions" | "merged" | "reorder" | "filters" | "pagination";
 
 export const tableExampleVariants = [
   { variant: "basic", title: "基础表格" },
+  { variant: "pagination", title: "分页表格" },
   { variant: "bordered", title: "表格线" },
   { variant: "footer", title: "汇总行" },
   { variant: "actions", title: "行操作" },
@@ -32,7 +33,10 @@ export default function Example() {
 }
 
 /** Read the real demo definitions on the server so examples include their SVG icons and data. */
-export function tableExample(variant: TableExampleVariant, demoSource: string, optionsSource = "") {
+export function tableExample(variant: TableExampleVariant, demoSource: string, optionsSource = "", paginationSource = "") {
+  if (variant === "pagination") return paginationSource
+    .replaceAll("@/registry/kalos/", "@/components/ui/")
+    .replace("export function TablePaginationDemo()", "export default function Example()");
   const importTable = 'import { KalosTable, type KalosTableColumn, type KalosTableRow } from "@/components/ui/kalos-table";';
   if (variant === "data") {
     const definitions = demoSource.slice(demoSource.indexOf("export function StackBrandIcon"), demoSource.indexOf("const invoiceColumns"));

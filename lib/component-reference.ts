@@ -5,6 +5,19 @@ const optionalDescription: Row = ["description", "string", "—", "仅在需要�
 const label: Row = ["label", "string", "—", "控件的可见标签"];
 
 const references: Record<string, Reference> = {
+  "kalos-pagination": { props: [
+    ["page", "number", "—", "必填，当前页码，从 1 开始；显示时限制在有效页数内"],
+    ["onPageChange", "(page: number) => void", "—", "必填，翻页或切换每页条数时更新受控页码；点击当前页和禁用按钮不触发"],
+    ["total", "number", "—", "数据总条数，优先于 pageCount；显示共多少条，空数据展示共 0 条"],
+    ["pageSize", "number", "20", "每页条数；与 total 一起计算总页数"],
+    ["pageCount", "number", "1", "未提供 total 时使用总页数，并显示第几页 / 共几页"],
+    ["pageSizes", "number[]", "—", "在页码后显示条数选择器，选项带条单位，无可见标签；自动加入当前条数，去重排序并忽略无效值"],
+    ["onPageSizeChange", "(pageSize: number) => void", "—", "先更新每页条数，再通过 onPageChange 定位到包含原首条记录的页；未传时条数选择器禁用"],
+    ["siblings", "number", "1", "当前页两侧的相邻页数，支持 0–5；最多展示 2 × siblings + 5 个页码或省略号槽位"],
+    ["compact", "boolean", "false", "仅展示总条数与前后翻页；可选的每页条数选择器仍保留"],
+    ["disabled", "boolean", "false", "禁用全部操作，保留总条数与布局"],
+    ["aria-label / className / style / ref", "原生 nav 属性", "分页导航 / —", "为同一页面的不同列表命名，并支持容器布局与引用；容器宽度不超过 520px 时隐藏页码"],
+  ], keyboard: [["Tab / Shift + Tab", "依次在上一页、页码、下一页和条数选择器之间移动焦点"], ["Enter / Space", "激活聚焦页码或翻页按钮；页码重排后保留焦点"], ["↑ / ↓ / Enter / Escape", "操作每页条数选择器，选择或取消后返回触发器"]] },
   "kalos-date-picker": { props: [
     ["value / defaultValue", "Date | null", "— / null", "受控日期或初始日期，null 展示占位；使用本地日期，不按 UTC 字符串解析"],
     ["onChange", "(date: Date) => void", "—", "选择一天后返回本地零点的 Date，并关闭日历"],
@@ -223,7 +236,17 @@ const references: Record<string, Reference> = {
     ["titleAs", '\"h2\" | \"h3\" | \"h4\" | \"p\"', "h3", "根据页面层级选择标题元素；选项卡片可使用 p"],
     ["...props", 'ComponentProps<"div">', "—", "原生属性、事件、ARIA 属性及 className 传递给根元素"],
   ], keyboard: [["Tab / Shift + Tab", "依次聚焦标题中的链接或按钮，以及其他独立操作；交互标题的焦点轮廓覆盖整卡"], ["Enter", "激活聚焦的标题链接或按钮"], ["Space", "激活聚焦的标题按钮"]] },
-  "kalos-badge": { props: [["status", '"neutral" | "success" | "warning"', "neutral", "状态语义"], ["children", "ReactNode", "—", "状态名称"]], keyboard: [] },
+  "kalos-badge": { props: [
+    ["variant", '"soft" | "solid" | "ghost"', "soft", "soft：浅色背景与状态色文字；solid：全色背景与白色文字；ghost：无背景、无外框。三种均保留圆点、图标与计数"],
+    ["tone", '"neutral" | "info" | "success" | "warning" | "danger" | "purple" | "pink"', "neutral", "灰、蓝、绿、橙、紫、粉与 Table 共用配色；warning 基于 #f19021，danger 保留失败红色；自动适配浅深主题"],
+    ["size", '"sm" | "md"', "md", "默认与 Table 一致：20px 高、12px 文字、4px 圆角、左右 6px；小号高 18px、文字 11px"],
+    ["dot / live", "boolean", "false", "前置圆点；live 自动显示圆点，并以 1800ms 周期播放呼吸光晕"],
+    ["icon", "ReactNode", "—", "前置图标，例如 <Clock />；继承状态颜色，对屏幕阅读器隐藏，优先于圆点"],
+    ["count / max", "number", "— / 99", "计数模式替代文本与图标；超过上限显示 99+。数值向下取整、负数归零，非有限 count 不渲染；非有限 max 使用 99"],
+    ["children", "ReactNode", "—", "状态或类别名称；长文本单行省略，省略时可用 title 提供完整内容"],
+    ["status", '"neutral" | "success" | "warning"', "—", "兼容旧属性，传入时默认带圆点；tone 优先决定颜色，可用 dot=false 取消圆点"],
+    ["render / className / style / ref / ...span props", "Base UI Badge 属性", "—", "保留 Base UI render 组合与原生 span 属性；独立计数使用 aria-label 说明含义"],
+  ], keyboard: [] },
   "kalos-accordion": { props: [["items", "{ question: string; answer: ReactNode }[]", "—", "标题与展开内容；一次展开一项"]], keyboard: [["Enter / Space", "展开或收起当前项"], ["↑ / ↓", "移动到相邻标题"], ["Home / End", "移动到首项或末项"]] },
   "kalos-alert-dialog": { props: [["trigger", "ReactNode", "—", "触发按钮文字或图标"], ["triggerProps", '{ variant?: "outline" | "ghost"; size?: "default" | "icon"; "aria-label"?: string }', "—", "触发按钮外观；图标按钮必须提供 aria-label"], ["title", "string", "—", "确认对话框标题"], ["description", "string", "—", "操作的影响或不可恢复的结果"], ["actionLabel", "string", "确认", "确认按钮文字"], ["cancelLabel", "string", "取消", "取消按钮文字"], ["onConfirm", "() => void", "—", "仅确认时调用；取消、Esc 和遮罩点击不会触发"], ["open", "boolean", "—", "受控打开状态"], ["onOpenChange", "(open: boolean) => void", "—", "打开状态变化时调用"]], keyboard: [["Enter / Space", "打开或激活当前按钮"], ["Tab / Shift + Tab", "在确认与取消之间移动焦点"], ["Esc", "取消并返回触发按钮"]] },
   "kalos-dialog": { props: [["trigger", "ReactNode", "—", "触发按钮文字或图标"], ["triggerProps", '{ variant?: "outline" | "ghost"; size?: "default" | "icon"; "aria-label"?: string }', "—", "触发按钮外观；图标按钮必须提供 aria-label"], ["title", "string", "—", "对话框标题与可访问名称"], optionalDescription, ["children", "ReactNode", "—", "对话框内容"], ["footer", "ReactNode", "—", "底部操作区"], ["open", "boolean", "—", "受控打开状态"], ["onOpenChange", "(open: boolean) => void", "—", "打开状态变化时调用"]], keyboard: [["Enter / Space", "打开对话框"], ["Tab / Shift + Tab", "在对话框内移动焦点"], ["Esc", "关闭并返回触发按钮"]] },

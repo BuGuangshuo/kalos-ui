@@ -228,7 +228,21 @@ await writeFile("components/hover-card-demo-styles.ts", `// Generated from desig
 const loadingLicense = await readFile("AFFECTUI-LICENSE.md", "utf8");
 await writeFile("components/ui/kalos-loading-styles.ts", `// Generated from design/component-tokens.json, design/skeleton.css and design/spinner.css.\n/*\n${loadingLicense}\n*/\nexport const skeletonDefaults = ${JSON.stringify(skeleton)} as const;\nexport const spinnerDefaults = ${JSON.stringify(spinner)} as const;\nexport const skeletonCss = ${JSON.stringify(skeletonCss)};\nexport const spinnerCss = ${JSON.stringify(spinnerCss)};\n`);
 await writeFile("components/loading-demo-styles.ts", `// Generated from design/component-tokens.json.\nexport const loadingDemoSettings = ${JSON.stringify(loadingDemo)} as const;\n`);
+const badgeTokens = mode => ({ ...Object.fromEntries(Object.entries(inventory.components.badge.toneMapping).flatMap(([tone, source]) => ["ink", "wash"].map(part => [`${tone}-${part}`, inventory.components[inventory.components.badge.tokensFrom][mode][`${source}-${part}`]]))), ...Object.fromEntries(Object.entries(inventory.components.badge.toneMapping).map(([tone, source]) => [`${tone}-solid`, tone === "warning" ? inventory.components.table.warningBase : inventory.components[inventory.components.badge.tokensFrom].light[`${source}-ink`]])), "danger-solid": inventory.components.badge.light["danger-ink"], "on-solid": inventory.components.badge.onSolid, "warning-base": inventory.components.table.warningBase, ...inventory.components.badge[mode] });
+const badgeCss = [
+  `.kalos-badge{font-family:${inventory.font.family};${Object.entries(badgeTokens("light")).map(([key, value]) => `--badge-${key}:${value}`).join(";")};${Object.entries(inventory.defaults.badge).filter(([, value]) => typeof value === "number").map(([key, value]) => `--badge-${key}:${value}${key.endsWith("duration") ? "ms" : "px"}`).join(";")}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-badge{${Object.entries(badgeTokens("dark")).map(([key, value]) => `--badge-${key}:${value}`).join(";")}}`,
+  await readFile("design/badge.css", "utf8"),
+].join("\n");
+await writeFile("components/ui/kalos-badge-styles.ts", `// Generated from design/component-tokens.json and design/badge.css.\n/*\n${loadingLicense}\n*/\nexport const badgeCss = ${JSON.stringify(badgeCss)};\n`);
 console.log("Generated shared component styles from measured tokens.");
+const pagination = inventory.defaults.pagination;
+const paginationCss = [
+  `.kalos-pagination{font-family:${inventory.font.family};font-size:${inventory.font.controlSize}px;line-height:${inventory.font.controlLineHeight}px;${Object.entries(inventory.components.pagination.light).map(([key, value]) => `--pg-${key}:${value}`).join(";")};--pg-size:${pagination.height}px;--pg-radius:${pagination.radius}px;--pg-gap:${pagination.gap}px;--pg-duration:${pagination.duration}ms}`,
+  `:where(.dark,[data-theme=dark]) .kalos-pagination{${Object.entries(inventory.components.pagination.dark).map(([key, value]) => `--pg-${key}:${value}`).join(";")}}`,
+  (await readFile("design/pagination.css", "utf8")).replace("max-width:520px", `max-width:${pagination.collapseWidth}px`),
+].join("\n");
+await writeFile("components/ui/kalos-pagination-styles.ts", `// Generated from design/component-tokens.json and design/pagination.css.\n/*\n${loadingLicense}\n*/\nexport const paginationCss = ${JSON.stringify(paginationCss)};\n`);
 const picker = inventory.defaults.picker;
 const pickerCss = [
   `.kalos-picker,.kalos-picker-popup{font-family:${inventory.font.family};font-size:${inventory.font.controlSize}px;line-height:${inventory.font.controlLineHeight}px;${Object.entries(inventory.components.picker.light).map(([key, value]) => `--picker-${key}:${value}`).join(";")};--picker-cell:${picker.cell}px;--picker-radius:${picker.radius}px;--picker-duration:${picker.duration}ms;--picker-range-width:${picker.rangeWidth}px;--picker-layer:${picker.layer}}`,

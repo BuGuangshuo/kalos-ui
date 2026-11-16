@@ -41,6 +41,9 @@ import type { TableExampleVariant } from "@/lib/table-examples";
 import type { PopoverExampleVariant } from "@/lib/component-examples";
 import { CardDemo } from "@/components/card-demo";
 import type { KalosCardProps } from "@/registry/kalos/kalos-card";
+import { BadgeDemo } from "@/components/badge-demo";
+import { PaginationDemo } from "@/components/pagination-demo";
+import type { KalosBadgeProps } from "@/registry/kalos/kalos-badge";
 
 import { DropdownMenuDemo } from "@/components/dropdown-menu-demo";
 import type { KalosDropdownMenuProps } from "@/components/ui/kalos-dropdown-menu-shared";
@@ -83,10 +86,7 @@ export interface DemoComponents {
     }
   >;
   KalosCard: ComponentType<KalosCardProps>;
-  KalosBadge: ComponentType<{
-    status?: "neutral" | "success" | "warning";
-    children: ReactNode;
-  }>;
+  KalosBadge: ComponentType<KalosBadgeProps>;
   KalosSwitch: ComponentType<{
     label: string;
     description?: string;
@@ -241,6 +241,8 @@ export function DemoContent({
     setDialogOpen(open);
   };
   switch (slug) {
+    case "kalos-pagination":
+      return <PaginationDemo compact={compact} />;
     case "kalos-date-picker":
       return <DatePickerDemo />;
     case "kalos-date-range-picker":
@@ -291,15 +293,7 @@ export function DemoContent({
     case "kalos-card":
       return <CardDemo KalosCard={KalosCard} KalosButton={KalosButton} />;
     case "kalos-badge":
-      return (
-        <div className="badge-demo">
-          <div className="flex flex-wrap justify-center gap-2">
-            <KalosBadge status="success">已完成</KalosBadge>
-            <KalosBadge>进行中</KalosBadge>
-            <KalosBadge status="warning">待审核</KalosBadge>
-          </div>
-        </div>
-      );
+      return <BadgeDemo KalosBadge={KalosBadge} />;
     case "kalos-switch":
       return (
         <div className="demo-form">

@@ -5,6 +5,7 @@ Use the slug with the Base UI registry URL in SKILL.md. React named exports use 
 | Slug             | Shared purpose and props                            |
 | ---------------- | --------------------------------------------------- |
 | kalos-button       | `loading`, `disabled`, underlying Button attributes |
+| kalos-pagination | controlled `page` / `onPageChange`, `total` / `pageSize` or `pageCount`, `pageSizes` / `onPageSizeChange`, `siblings` (0–5), `compact`, `disabled`; Chinese total count and labels, responsive page numbers |
 | kalos-command-menu | grouped commands, optional context, controlled query, onRun/onClose |
 | kalos-hover-card | `content`, one focusable child, side/align/offset, delays, width, controlled open, disabled |
 | kalos-dropdown-menu | `trigger`, `triggerProps`, recursive `items`, icons/shortcuts, controlled radio/checkbox choices, `keepOpen`, submenus, danger/disabled/divider, `onAction`, controlled open |
@@ -17,7 +18,7 @@ Use the slug with the Base UI registry URL in SKILL.md. React named exports use 
 | kalos-time-picker | HH:mm/null value, onChange, step/min/max, 12/24 hour display, typed time normalization, label/hint/error, readOnly/disabled; Base UI editable Combobox |
 | kalos-card         | `title`, optional `description` / `icon` / `action` / content / `footer`; `interactive`, `selected`, `as`, `titleAs` |
 | kalos-table        | `columns`, controlled `rows` or `defaultRows`, `title`/`icon`, colored `tagTones`, `editable`, `selectable`, `sortable`, `footer`, `rowActions`/`rowActionsLabel`/`rowActionsWidth`, `onRowsChange`/`onSelectionChange` |
-| kalos-badge        | `status`: neutral / success / warning               |
+| kalos-badge        | `tone`: neutral / info / success / warning / danger / purple / pink；`variant`: soft（浅色底＋状态色文字）/ solid（全色底＋白字）/ ghost（无背景、无外框）；`size`、`dot`、`live`、`icon`、`count`、`max`；兼容 `status` |
 | kalos-switch       | `label`, `description`, `error`, disabled/name               |
 | kalos-checkbox     | `label`, `description`, `error`, disabled/name               |
 | kalos-segmented-control | options; value/defaultValue; onChange; buttons/tray/underline; sm/md/lg; radio/tabs |

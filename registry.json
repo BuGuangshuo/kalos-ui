@@ -638,11 +638,10 @@
       "name": "kalos-badge",
       "type": "registry:ui",
       "title": "Kalos 徽标",
-      "description": "使用简洁的标记展示状态、类别与附加信息。",
+      "description": "用轻量色彩标记状态与类别，支持圆点、图标和计数。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "dependencies": [
         "@base-ui/react",
-        "@fontsource/roboto",
         "class-variance-authority",
         "cn"
       ],
@@ -652,11 +651,11 @@
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/kalos-styles.ts",
+          "path": "components/ui/badge.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "components/ui/badge.tsx",
+          "path": "components/ui/kalos-badge-styles.ts",
           "type": "registry:ui"
         }
       ]
@@ -772,6 +771,79 @@
         },
         {
           "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-pagination",
+      "type": "registry:ui",
+      "title": "Kalos 分页器",
+      "description": "分页浏览列表与表格，支持总条数、页码省略、每页条数和简洁模式。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-pagination.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-select-focus.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-pagination-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-pagination-model.ts",
           "type": "registry:ui"
         }
       ]
@@ -1114,7 +1186,7 @@
       "name": "kalos-all",
       "type": "registry:block",
       "title": "Kalos UI 完整组件库",
-      "description": "一次安装全部 26 个 Base UI 组件。",
+      "description": "一次安装全部 27 个 Base UI 组件。",
       "dependencies": [
         "@base-ui/react",
         "@fontsource/roboto",
@@ -1321,11 +1393,27 @@
           "type": "registry:ui"
         },
         {
+          "path": "components/ui/kalos-badge-styles.ts",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/kalos/kalos-segmented-control.tsx",
           "type": "registry:ui"
         },
         {
           "path": "components/ui/kalos-segmented-control-view.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-pagination.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-pagination-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-pagination-model.ts",
           "type": "registry:ui"
         },
         {

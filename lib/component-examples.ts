@@ -1,3 +1,5 @@
+import { badgeExample } from "@/lib/badge-examples";
+import { paginationExample } from "@/lib/pagination-examples";
 import { avatarExample } from "@/lib/avatar-examples";
 import { dropdownMenuExample } from "@/lib/dropdown-menu-examples";
 import type { Item } from "@/lib/catalog";
@@ -91,6 +93,8 @@ export default function Example() {
 }
 
 export function reactExample(item: Item) {
+  if (item.slug === "kalos-pagination") return paginationExample();
+  if (item.slug === "kalos-badge") return badgeExample();
   if (item.slug === "kalos-date-picker") return datePickerExample();
   if (item.slug === "kalos-date-range-picker") return dateRangePickerExample();
   if (item.slug === "kalos-time-picker") return timePickerExample();

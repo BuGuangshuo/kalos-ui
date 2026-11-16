@@ -10,6 +10,7 @@ import { tableExampleVariants } from "@/lib/table-examples";
 export function TableExamples({ examples }: { examples: Record<string, string> }) {
   return tableExampleVariants.map(({ variant, title }) => <section id={`table-${variant}`} key={variant}>
     <h2>{title}</h2>
+    {variant === "pagination" ? <p>同时安装 Table 与 Pagination；示例按当前页和每页条数截取联系人数据。</p> : null}
     <Tabs defaultValue="preview" className="detail-tabs">
       <div className="detail-preview-toolbar">
         <TabsList className="detail-view-tabs" aria-label={`${title}视图`}>

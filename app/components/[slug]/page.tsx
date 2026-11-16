@@ -12,6 +12,8 @@ import { CodeBlock } from "@/components/code-block";
 import { reactExample } from "@/lib/component-examples";
 import { hoverCardActivityExample } from "@/lib/hover-card-examples";
 import { PopoverExamples } from "@/components/popover-examples";
+import { BadgeExamples } from "@/components/badge-examples";
+import { PaginationExamples } from "@/components/pagination-examples";
 import { SegmentedControlExamples } from "@/components/segmented-control-examples";
 import { DropdownMenuExamples } from "@/components/dropdown-menu-examples";
 import { NumberInputExamples } from "@/components/number-input-examples";
@@ -44,13 +46,14 @@ export default async function DetailPage({
   const { slug } = await params;
   const item = catalog.find((item) => item.slug === slug);
   if (!item) notFound();
-  const [source, hoverCardDemoSource, tableDemoSource, tableOptionsSource] = await Promise.all([
+  const [source, hoverCardDemoSource, tableDemoSource, tableOptionsSource, tablePaginationSource] = await Promise.all([
     slug === "kalos-command-menu"
       ? readFile(path.join(process.cwd(), "components/ui/kalos-command-menu-panel.tsx"), "utf8")
       : readFile(path.join(process.cwd(), "registry/kalos", `${item.slug}.tsx`), "utf8"),
     slug === "kalos-hover-card" ? readFile(path.join(process.cwd(), "components/hover-card-activity-demo.tsx"), "utf8") : "",
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-demo.tsx"), "utf8") : "",
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-row-options.tsx"), "utf8") : "",
+    slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-pagination-demo.tsx"), "utf8") : "",
   ]);
   const index = catalog.indexOf(item);
   const previous = catalog[index - 1],
@@ -102,7 +105,9 @@ export default async function DetailPage({
           {slug === "kalos-segmented-control" && <SegmentedControlExamples />}
           {slug === "kalos-dropdown-menu" && <DropdownMenuExamples />}
           {slug === "kalos-popover" && <PopoverExamples />}
-          {slug === "kalos-table" && <TableExamples examples={Object.fromEntries(tableExampleVariants.map(({ variant }) => [variant, tableExample(variant, tableDemoSource, tableOptionsSource)]))} />}
+          {slug === "kalos-badge" && <BadgeExamples />}
+          {slug === "kalos-pagination" && <PaginationExamples />}
+          {slug === "kalos-table" && <TableExamples examples={Object.fromEntries(tableExampleVariants.map(({ variant }) => [variant, tableExample(variant, tableDemoSource, tableOptionsSource, tablePaginationSource)]))} />}
           <ComponentReference slug={slug} />
           <PagePagination
             previous={previous ? { href: `/components/${previous.slug}`, title: previous.title } : { href: "/components", title: "全部组件" }}

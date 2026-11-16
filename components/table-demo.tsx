@@ -7,6 +7,7 @@ import type { DemoComponents } from "@/components/demo-content";
 import { FieldGroup } from "@/components/ui/field";
 import type { TableExampleVariant } from "@/lib/table-examples";
 import { StackRowOptions } from "@/components/table-row-options";
+import { TablePaginationDemo } from "@/components/table-pagination-demo";
 import { toast } from "sonner";
 
 export function StackBrandIcon({ name }: { name: string }) {
@@ -204,6 +205,7 @@ export function TableDemo({ KalosTable, KalosDropdownMenu, KalosButton, KalosDia
     onDelete={() => { setTools(current => current.filter(item => item.id !== row.id)); toast.success("记录已删除"); }}
   />;
   if (compact) return <div className="table-compact-demo"><KalosTable title="Design Stack" icon={<StackTitleIcon />} columns={stackColumns} rows={tools} tagTones={stackTones} rowActions={options} rowActionsLabel="Options" rowActionsWidth={84} className="max-w-[804px]" /></div>;
+  if (variant === "pagination") return <TablePaginationDemo />;
   if (variant === "basic" || variant === "footer" || variant === "bordered") return <KalosTable variant={variant === "bordered" ? "bordered" : "default"} columns={invoiceColumns} defaultRows={invoices} aria-label="近期账单" tagTones={{ 已支付: "green", 待支付: "amber", 未支付: "gray" }} footer={variant === "footer" ? ["合计", null, null, "¥750.00"] : undefined} />;
   if (variant === "merged") return <KalosTable variant="bordered" columns={mergedColumns} defaultRows={mergedRows} aria-label="文件归档与合并单元格" tagTones={{ Figma: "violet", "PDF / SVG": "blue", CSV: "green", Markdown: "gray" }} />;
   if (variant === "reorder") return <KalosTable columns={reorderColumns} defaultRows={reorderRows} aria-label="可拖拽文件" tagTones={{ PDF: "blue", Figma: "violet", CSV: "green", Markdown: "gray" }} reorderable />;
