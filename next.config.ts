@@ -3,21 +3,6 @@ const nextConfig: NextConfig = {
   redirects() {
     return [
       { source: "/components/kalos-tabs", destination: "/components/kalos-segmented-control", permanent: true },
-      {
-        source: "/components/pop-:name",
-        destination: "/components/kalos-:name",
-        permanent: true,
-      },
-      {
-        source: "/r/pop-:name.json",
-        destination: "/r/kalos-:name.json",
-        permanent: true,
-      },
-      {
-        source: "/r/:backend/pop-:name.json",
-        destination: "/r/:backend/kalos-:name.json",
-        permanent: true,
-      },
     ];
   },
   turbopack: {

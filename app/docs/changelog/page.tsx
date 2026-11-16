@@ -6,6 +6,7 @@ import { ChangelogPreview } from "@/components/changelog-preview";
 export const metadata: Metadata = { title: "更新日志" };
 
 const links = [
+  { id: "unreleased", title: "v0.3.2 · 待发布" },
   { id: "v0-3-1", title: "v0.3.1" },
   { id: "v0-2-0-fixes", title: "v0.2.0 · 后续修复" },
   { id: "v0-2-0", title: "v0.2.0" },
@@ -24,6 +25,16 @@ export default function ChangelogPage() {
           <h1>更新日志</h1>
           <p>组件、安装器与文档的更新。历史日期以 Git 记录为准。</p>
         </header>
+
+        <section id="unreleased" className="changelog-entry">
+          <h2>v0.3.2 — 组件预览与旧路由清理 · 待发布</h2>
+          <ul className="changelog-list">
+            <li>修复 Segmented 在缩放预览中的高亮偏移与宽度异常，覆盖按钮、滑块和下划线样式，以及 Skeleton 的 Data / Loading 切换；溢出选项聚焦时仍正确滚动到可见区域。</li>
+            <li>对齐 Skeleton 列表图标与首行占位条，并同步调整 Data 状态的图标位置。</li>
+            <li>移除旧品牌组件页与注册表地址的兼容重定向，统一使用 Kalos UI 地址。</li>
+            <li>更新部署规范：按用户发布指令直接提交、推送和部署，无需额外人工审核；保留发布前验证与更新日志维护。</li>
+          </ul>
+        </section>
 
         <section id="v0-3-1" className="changelog-entry">
           <h2>v0.3.1 — 组件扩展与安装升级</h2>

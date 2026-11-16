@@ -4543,8 +4543,11 @@
 .spinner-demo-row:last-child {
   border-bottom: 0;
 }
-.skeleton-demo-row > :is(svg, [data-slot="skeleton"]) {
-  margin-top: 2px;
+.skeleton-demo-row > svg {
+  margin-top: 3px;
+}
+.skeleton-demo-row > [data-slot="skeleton"] {
+  margin-top: 5px;
 }
 .skeleton-demo-text {
   display: flex;
@@ -4574,9 +4577,6 @@
   line-height: 20px;
   color: var(--k-loading-demo-faint);
   white-space: nowrap;
-}
-.skeleton-demo-row > [data-slot="skeleton"].skeleton-demo-time {
-  margin-top: 6px;
 }
 .skeleton-demo-mark { flex: none; }
 .skeleton-demo-mark[data-tone="blue"] { color: var(--k-loading-demo-mark-blue); }

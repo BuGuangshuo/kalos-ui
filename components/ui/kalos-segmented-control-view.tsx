@@ -156,11 +156,14 @@ export function SegmentedControlView({
             active)
           : active;
       const rect = target.getBoundingClientRect();
-      const x = rect.left - groupRect.left;
+      // The preview may scale an ancestor; the indicator needs unscaled CSS coordinates.
+      const width = parseFloat(getComputedStyle(group).width) || group.offsetWidth;
+      const scaleX = groupRect.width / width || 1;
+      const x = (rect.left - groupRect.left) / scaleX;
       const previous = parseFloat(indicator.style.left) || 0;
       indicator.dataset.direction = x > previous ? "right" : "left";
       indicator.style.left = `${x}px`;
-      indicator.style.right = `${groupRect.width - x - rect.width}px`;
+      indicator.style.right = `${width - x - rect.width / scaleX}px`;
       indicator.style.opacity = "1";
       if (!indicator.dataset.ready) {
         indicator.style.transition = "none";
@@ -195,13 +198,13 @@ export function SegmentedControlView({
     if (active && scroll.scrollWidth > scroll.clientWidth + 1) {
       const a = active.getBoundingClientRect(),
         s = scroll.getBoundingClientRect();
+      const scaleX = s.width / scroll.offsetWidth || 1;
       if (a.left < s.left || a.right > s.right)
         scroll.scrollTo({
           left:
             scroll.scrollLeft +
-            a.left -
-            s.left -
-            (scroll.clientWidth - a.width) / 2,
+            (a.left - s.left) / scaleX -
+            (scroll.clientWidth - a.width / scaleX) / 2,
           behavior: "smooth",
         });
     }

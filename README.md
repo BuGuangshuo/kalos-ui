@@ -53,7 +53,7 @@ Logo 使用 `pnpm dlx shadcn@latest add @animateicons/lu-disc-3` 安装的圆盘
 在准备存放项目的目录运行：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz init
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.2.tgz init
 ```
 
 依次选择 Next.js、Vite 或 React Router 脚手架、项目名和包管理器，默认使用 Base UI。安装器自动配置 TypeScript、Tailwind CSS 与路径别名，并安装完整组件库和 Kalos 主题。新项目创建在独立子目录中，已有目录不会被覆盖。
@@ -61,7 +61,7 @@ npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz init
 脚本中可直接指定全部选项：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz init my-app --template vite --package-manager npm --yes
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.2.tgz init my-app --template vite --package-manager npm --yes
 ```
 
 完成后进入项目目录并运行 `npm run dev`，或所选包管理器对应的开发命令。
@@ -71,19 +71,19 @@ npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz init my-app --templat
 在项目根目录运行，安装全部组件或按需安装：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz add
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz add button card
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.2.tgz add
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.2.tgz add button card
 ```
 
 自动识别 Next.js、React + Vite 和 React Router 以及包管理器，保留主题、目录和别名，统一使用 Base UI。尚无组件配置时先引导配置；项目需已具备 TypeScript、Tailwind CSS 与路径别名。组件以源码形式安装，不会迁移宿主框架或基础库。
 
 ```bash
 # 脚本和 CI 默认使用 Base UI
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz add --yes
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.2.tgz add --yes
 # 只预览，不创建目录或修改项目
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz add --dry-run
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.2.tgz add --dry-run
 # 可选 Kalos 主题
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz add theme
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.2.tgz add theme
 ```
 
 不带子命令时，终端会提供“新建项目”和“安装到已有项目”两种入口。`init` 使用 `--template next|vite|react-router` 指定脚手架；`add` 可使用 `--framework next|vite|react-router` 覆盖自动识别。
@@ -114,8 +114,8 @@ npx shadcn@latest add https://kalos-ui-six.vercel.app/r/kalos-all.json
 需要手动指定项目类型时：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz add --framework vite
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.1.tgz add --framework react-router
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.2.tgz add --framework vite
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.2.tgz add --framework react-router
 ```
 
 ## AI Skill
@@ -143,7 +143,7 @@ npm run mcp:config
 1. 在 `registry/kalos/` 添加组件源码。
 2. 在 `lib/catalog.ts` 中添加描述、shadcn 依赖、Props 与使用示例。
 3. 在 `components/demos.tsx` 添加交互预览。
-4. 执行 `npm run build` 并整理更新清单；按下方部署审核流程确认后再推送或部署。
+4. 执行 `npm run build` 并整理更新清单；完成必要验证后，按用户要求直接推送或部署。
 
 `registry.json`、`public/registry*.json`、`public/r/**/*.json` 由构建生成，请勿直接修改生成文件。源码只需要维护一份。
 
@@ -165,7 +165,7 @@ design/tokens.json    共享语义设计变量
 
 Vercel 导入此 GitHub 仓库，框架选择 Next.js，Node.js 选择 24.x；默认构建命令为 `npm run build`。站点与注册表地址统一读取 `lib/site.ts`，默认使用 `https://kalos-ui-six.vercel.app`；自定义域名时设置 `NEXT_PUBLIC_SITE_URL`。
 
-每次部署前，先整理版本更新清单、兼容性影响与验证结果，并将内容列入[更新日志](app/docs/changelog/page.tsx)的“待发布”部分。用户审核并明确回复“没问题”后，才执行对应部署，包括会触发 Vercel 自动部署的推送或合并。部署成功后再记录实际部署日期；完整规范见 [AGENTS.md](AGENTS.md#更新日志与部署审核)。
+每次部署前，完成本地验证，整理版本更新清单、兼容性影响与验证结果，并将内容列入[更新日志](app/docs/changelog/page.tsx)的“待发布”部分。用户要求提交、推送或部署时直接执行，无需额外人工审核或再次确认；会触发 Vercel 自动部署的推送或合并同样适用。部署成功后再记录实际部署日期；完整规范见 [AGENTS.md](AGENTS.md#更新日志与部署)。
 
 组件使用 Base UI API，包括 render 组合、indeterminate 复选框状态和 NumberField 原生回调。
 
