@@ -6,7 +6,8 @@ import { ChangelogPreview } from "@/components/changelog-preview";
 export const metadata: Metadata = { title: "更新日志" };
 
 const links = [
-  { id: "v0-3-3", title: "v0.3.3 · 待发布" },
+  { id: "v0-3-4", title: "v0.3.4 · 待发布" },
+  { id: "v0-3-3", title: "v0.3.3" },
   { id: "v0-3-2", title: "v0.3.2" },
   { id: "v0-3-1", title: "v0.3.1" },
   { id: "v0-2-0-fixes", title: "v0.2.0 · 后续修复" },
@@ -27,9 +28,17 @@ export default function ChangelogPage() {
           <p>组件、安装器与文档的更新。历史日期以 Git 记录为准。</p>
         </header>
 
+        <section id="v0-3-4" className="changelog-entry">
+          <h2>v0.3.4 — Table 内嵌分页</h2>
+          <div className="changelog-meta"><span>待发布</span></div>
+          <p>修复分页器与表格分离的问题：Table 新增 pagination 插槽，分页器位于表格容器底部，共用背景、圆角和外框。scrollAreaProps 支持限制内容区高度；仅表格内容滚动，分页区保持可见。翻页与切换每页条数时重置内容区滚动位置，并保留分页控件焦点。</p>
+          <p>同步更新分页示例、完整 TSX 用法、API 与 AI Skill；新增属性均可选，现有 Table 调用无需修改。</p>
+          <p>验证：Lint、类型检查、完整构建与 Table / Pagination 的 11 项测试通过；已在桌面和 390px 窄屏核验容器外框、独立滚动、翻页焦点、每页条数切换与末页边界。</p>
+        </section>
+
         <section id="v0-3-3" className="changelog-entry">
           <h2>v0.3.3 — Pagination 与 Badge 中文预览</h2>
-          <div className="changelog-meta"><span>待发布</span></div>
+          <div className="changelog-meta"><time dateTime="2026-11-16">2026年11月16日</time><span>正式发布</span></div>
           <p>Badge 默认采用 Table 标签的 20px 高度、12px 文字、4px 圆角和左右 6px 内边距，共享浅深主题配色；警告色统一为 #f19021 橙色体系，灰、蓝、绿、紫、粉色与 Table 一致；失败使用独立的红色，粉色单独展示草稿状态。提供浅色底配状态色文字、全色底配白字、无背景三种变体，以及小号尺寸、圆点、呼吸动效、前置图标和封顶计数；补充全色与无背景预览及可复制代码。预览改为中文任务列表，包含时钟、暂停图标与 99+ 计数。</p>
           <p>保留旧版 status 属性与 Base UI render 组合；默认外观改为轻量圆角标签，原有调用无需迁移。</p>
           <div className="changelog-block">
@@ -37,7 +46,7 @@ export default function ChangelogPage() {
             <p>新增分页器与中文文档列表预览，显示总条数，支持首页与末页、省略页码、每页条数和简洁模式。条数选择器位于页码后，隐藏可见标签，选项显示为 20条、50条、100条。改变每页条数时保留原首条记录所在页；窄容器自动收起页码，支持浅深主题和键盘焦点。详情保留默认与简洁模式预览，不展示条目范围。新增组件不影响现有调用。</p>
             <p>Table 详情新增分页表格示例，使用 67 条联系人数据演示翻页、每页条数切换和末页边界，附可复制的完整 TSX 代码。</p>
             <p>安装器升级至 0.3.3，支持按需安装 Pagination，并将其纳入完整组件库。Figwrite 已同步分页器、浅深主题变量与 Table 分页原型；设计稿内的表格滚动暂未配置。</p>
-            <p>发布验证：Lint、TypeScript 与 80 项测试通过；已核验注册表与安装器 dry-run，以及桌面和窄屏的翻页、条数切换、末页边界与布局。</p>
+            <p>发布验证：Lint、TypeScript、80 项测试与完整生产构建通过；已核验注册表与安装器 dry-run，以及桌面和窄屏的翻页、条数切换、末页边界与布局。正式站点已核验 Table 分页交互，线上注册表与 0.3.3 安装包和本地生成产物一致。</p>
             <ChangelogPreview slug="kalos-pagination" caption={false} />
           </div>
         </section>

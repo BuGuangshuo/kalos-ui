@@ -122,6 +122,7 @@ const styles = {
   tableLink: "block min-w-0 max-w-full truncate underline! decoration-current/30 underline-offset-3 hover:text-[color:var(--k-table-ink)] focus-visible:outline-1 focus-visible:outline-[var(--k-table-focus)]",
   tableToolbarButton: "inline-flex size-7 shrink-0 items-center justify-center rounded-[6px] bg-transparent text-[color:var(--k-table-muted)] transition-colors duration-150 hover:bg-[var(--k-table-hover)] hover:text-[color:var(--k-table-ink)] focus-visible:outline-1 focus-visible:outline-[var(--k-table-focus)] disabled:pointer-events-none disabled:opacity-30 [&>svg]:size-3.5",
   tableFooter: `flex min-h-[${table.footerHeight}px] items-center justify-between gap-3 border-t border-[var(--k-table-edge)] px-[${table.cellPadding}px] py-1.5 text-[12px] text-[color:var(--k-table-muted)]`,
+  tablePagination: `border-t border-[var(--k-table-edge)] p-[${table.cellPadding}px]`,
   tableAdd: "inline-flex h-7 items-center gap-2 rounded-[6px] px-1 text-[13px] transition-colors duration-150 hover:bg-[var(--k-table-hover)] hover:text-[color:var(--k-table-ink)] focus-visible:outline-1 focus-visible:outline-[var(--k-table-focus)] [&>svg]:size-3",
   tableSummary: "border-t border-[var(--k-table-edge)] bg-[var(--k-table-hover)] text-[color:var(--k-table-ink)] [&_td]:px-3.5 [&_td]:py-3 [&_td]:text-[13px] [&_td]:font-medium",
   tableEmpty: "h-24 px-4 text-center text-[color:var(--k-table-muted)]",

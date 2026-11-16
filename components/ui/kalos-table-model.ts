@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 
 export type KalosTableTone = "gray" | "violet" | "pink" | "blue" | "green" | "amber";
 export type KalosTableRow = { id: string; icon?: ReactNode; [key: string]: string | number | ReactNode };
@@ -33,6 +33,8 @@ export type KalosTableProps = {
   defaultSort?: { key: string; direction: "ascending" | "descending" };
   tagTones?: Record<string, KalosTableTone>;
   footer?: ReactNode[];
+  pagination?: ReactNode;
+  scrollAreaProps?: ComponentProps<"div">;
   rowActions?: (row: KalosTableRow) => ReactNode;
   rowActionsLabel?: string;
   rowActionsWidth?: number;

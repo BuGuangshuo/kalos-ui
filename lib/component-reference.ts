@@ -132,6 +132,8 @@ const references: Record<string, Reference> = {
     ["tagTones", 'Record<string, "gray" | "violet" | "pink" | "blue" | "green" | "amber">', "{}", "按标签文字映射浅深主题语义颜色；未指定时为灰色"],
     ["onSelectionChange", "(ids: string[]) => void", "—", "复选框变化后返回选中行的稳定 id"],
     ["footer", "ReactNode[]", "—", "与数据列一一对应的汇总单元格；选择列与操作列自动留空"],
+    ["pagination", "ReactNode", "—", "表格容器内的底部分页区，与表格共用背景、圆角和外框；可传入 KalosPagination，页码与数据由调用方控制"],
+    ["scrollAreaProps", 'ComponentProps<"div">', "—", "表格滚动区的原生属性，可用 style.maxHeight 限制内容高度；分页区保持可见，key 可在换页时重置滚动位置"],
     ["rowActions", "(row: KalosTableRow) => ReactNode", "—", "末列的操作内容；默认示例使用编辑与更多菜单，和 Dropdown Menu 共用操作项"],
     ["rowActionsLabel", "string", "操作", "末列的可见标题与可访问名称"],
     ["rowActionsWidth", "number", "160", "操作列宽度，单位 px；与普通列使用相同的宽度分配规则"],

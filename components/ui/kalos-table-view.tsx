@@ -93,7 +93,8 @@ export function KalosTableView({ Grid = NativeTableGrid, Check, TagSelect, ...pr
   TagSelect: ComponentType<TableTagSelectProps>;
 }) {
   const { columns, rows: controlledRows, defaultRows = [], onRowsChange, title, icon, caption, editable = false,
-    selectable = false, sortable = false, reorderable = false, tagTones = {}, footer, rowActions, addRowLabel = "添加行", emptyMessage = "暂无数据", dir, className } = props;
+    selectable = false, sortable = false, reorderable = false, tagTones = {}, footer, pagination, rowActions, addRowLabel = "添加行", emptyMessage = "暂无数据", dir, className } = props;
+  const { key: scrollKey, className: scrollClassName, ...scrollAreaProps } = props.scrollAreaProps ?? {};
   const [internalRows, setRows] = useState(defaultRows);
   const rows = controlledRows ?? internalRows;
   const [sort, setSort] = useState<{ key: string; direction: "ascending" | "descending" } | null>(props.defaultSort ?? null);
@@ -348,7 +349,7 @@ export function KalosTableView({ Grid = NativeTableGrid, Check, TagSelect, ...pr
   }));
 
   return <div ref={root} dir={dir} className={cn(styles.table, props.variant === "bordered" && styles.tableBordered, className)} data-slot="kalos-table" data-variant={props.variant ?? "default"} onKeyDown={event => {
-    if (event.target instanceof HTMLElement && event.target.closest("input,select,textarea")) return;
+    if (event.target instanceof HTMLElement && event.target.closest('input,select,textarea,[data-slot="kalos-table-pagination"]')) return;
     if ((event.metaKey || event.ctrlKey) && ["z", "y"].includes(event.key.toLowerCase()) && editable) {
       event.preventDefault(); travel(event.shiftKey || event.key.toLowerCase() === "y" ? "redo" : "undo");
     }
@@ -374,7 +375,7 @@ export function KalosTableView({ Grid = NativeTableGrid, Check, TagSelect, ...pr
         <button type="button" className={styles.tableToolbarButton} aria-label="重做" title="重做 (⌘/Ctrl+Shift+Z)" disabled={!history.future.length} onClick={() => travel("redo")}><Redo2 /></button>
       </div> : null}
     </div> : null}
-    <div className={styles.tableScroll}><Grid label={label} descriptionId={caption ? captionId : undefined} interactive={interactive} minWidth={headers.reduce((sum, header) => sum + header.width, 0)} headers={headers} rows={gridRows} onReorder={reorderable ? (ids, targetId, position) => {
+    <div key={scrollKey} {...scrollAreaProps} data-slot="kalos-table-scroll" className={cn(styles.tableScroll, scrollClassName)}><Grid label={label} descriptionId={caption ? captionId : undefined} interactive={interactive} minWidth={headers.reduce((sum, header) => sum + header.width, 0)} headers={headers} rows={gridRows} onReorder={reorderable ? (ids, targetId, position) => {
       const reordered = reorderTableRows(visible, ids, targetId, position);
       const visibleIds = new Set(visible.map(row => row.id));
       let index = 0;
@@ -404,6 +405,7 @@ export function KalosTableView({ Grid = NativeTableGrid, Check, TagSelect, ...pr
       </div>
       <span className="shrink-0 tabular-nums">{range ? `${tableColumnName(range.end.column)}${range.end.row + 1}` : `${tableColumnName(0)}${rows.length + 1}`}</span>
     </div> : null}
+    {pagination ? <div data-slot="kalos-table-pagination" className={styles.tablePagination}>{pagination}</div> : null}
     {caption ? <p id={captionId} className="px-3.5 py-2 text-xs text-muted-foreground">{caption}</p> : null}
     <span role="status" aria-live="polite" className="sr-only">{status}</span>
   </div>;

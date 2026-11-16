@@ -27,12 +27,10 @@ export function TablePaginationDemo() {
   const start = (page - 1) * pageSize;
   const rows = contacts.slice(start, start + pageSize);
 
-  return <div className="flex w-full min-w-0 max-w-[720px] flex-col gap-3">
-    <div key={`${page}-${pageSize}`} className="max-h-[316px] overflow-auto rounded-xl p-px">
-      <KalosTable aria-label="分页联系人" columns={columns} rows={rows}
-        tagTones={{ 设计部: "violet", 研发部: "blue", 运营部: "green" }} />
-    </div>
-    <KalosPagination aria-label="联系人表格分页" page={page} onPageChange={setPage}
-      total={contacts.length} pageSize={pageSize} pageSizes={pageSizes} onPageSizeChange={setPageSize} />
-  </div>;
+  return <KalosTable aria-label="分页联系人" columns={columns} rows={rows}
+    tagTones={{ 设计部: "violet", 研发部: "blue", 运营部: "green" }}
+    scrollAreaProps={{ key: `${page}-${pageSize}`, style: { maxHeight: 316 } }}
+    pagination={<KalosPagination aria-label="联系人表格分页" page={page} onPageChange={setPage}
+      total={contacts.length} pageSize={pageSize} pageSizes={pageSizes} onPageSizeChange={setPageSize} />}
+  />;
 }

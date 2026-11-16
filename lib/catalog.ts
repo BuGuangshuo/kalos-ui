@@ -131,7 +131,7 @@ export const catalog = [
     category: "内容展示",
     description: "以行列结构展示数据，支持编辑、排序与筛选。",
     dependencies: ["checkbox", "select"],
-    props: "columns: KalosTableColumn[]；rows?: KalosTableRow[]；defaultRows?: KalosTableRow[]；title?；icon?；editable?；selectable?；sortable?；reorderable?；tagTones?；footer?；rowActions?；rowActionsLabel?；rowActionsWidth?；onRowsChange?。",
+    props: "columns: KalosTableColumn[]；rows?: KalosTableRow[]；defaultRows?: KalosTableRow[]；title?；icon?；editable?；selectable?；sortable?；reorderable?；tagTones?；footer?；pagination?: ReactNode；scrollAreaProps?: ComponentProps<\"div\">；rowActions?；rowActionsLabel?；rowActionsWidth?；onRowsChange?。",
     usage: '<KalosTable aria-label="联系人" columns={[{ key: "name", label: "姓名", type: "title" }, { key: "email", label: "邮箱地址" }]} defaultRows={[{ id: "1", name: "陈晓", email: "chen@example.com" }]} />',
   },
   {
