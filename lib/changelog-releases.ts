@@ -39,12 +39,9 @@ export const changelogReleases = {
   },
 } satisfies Record<string, Release>;
 
-export function getNewComponentRelease(releases: Readonly<Record<string, Release>>) {
-  const entry = Object.entries(releases).find(([, release]) => release.releasedOn && release.newComponents.length > 0);
-  if (!entry) return;
-
-  const [version, release] = entry;
-  return { version, slugs: new Set(release.newComponents) };
+export function getNewComponentSlugs(releases: Readonly<Record<string, Release>>) {
+  const release = Object.values(releases).find(({ releasedOn, newComponents }) => releasedOn && newComponents.length > 0);
+  return new Set(release?.newComponents);
 }
 
-export const newComponentRelease = getNewComponentRelease(changelogReleases);
+export const newComponentSlugs = getNewComponentSlugs(changelogReleases);

@@ -4,13 +4,12 @@ import { useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Search, ArrowUpRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { catalog, categories } from "@/lib/catalog";
-import { newComponentRelease } from "@/lib/changelog-releases";
+import { newComponentSlugs } from "@/lib/changelog-releases";
 import { site } from "@/lib/site";
 import { designSections } from "@/lib/docs-navigation";
 import { KalosBadge } from "@/registry/kalos/kalos-badge";
 
 const sidebarScrollPositions = { components: 0, docs: 0 };
-const newComponentLabel = newComponentRelease ? `v${newComponentRelease.version} 新增` : undefined;
 
 function subscribeHash(onChange: () => void) {
   window.addEventListener("hashchange", onChange);
@@ -90,10 +89,10 @@ export function LibrarySidebar({
                   >
                     <span>{item.english}</span>
                     <small title={item.title}>{item.title}</small>
-                    {newComponentRelease?.slugs.has(item.slug) ? (
+                    {newComponentSlugs.has(item.slug) ? (
                       <>
-                        <KalosBadge tone="info" variant="ghost" size="sm" dot className="px-0!" aria-hidden="true" title={newComponentLabel} />
-                        <span className="sr-only">{newComponentLabel}</span>
+                        <KalosBadge tone="info" variant="ghost" size="sm" dot className="px-0!" aria-hidden="true" />
+                        <span className="sr-only">新增组件</span>
                       </>
                     ) : null}
                   </Link>

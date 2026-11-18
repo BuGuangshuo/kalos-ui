@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { getNewComponentRelease } from "../lib/changelog-releases.ts";
+import { getNewComponentSlugs } from "../lib/changelog-releases.ts";
 
 const previousRelease = { releasedOn: "2026-11-18", newComponents: ["kalos-combobox"] };
 const pendingRelease = { releasedOn: null, newComponents: ["kalos-test"] };
@@ -8,7 +8,7 @@ const patchRelease = { releasedOn: "2026-11-19", newComponents: [] };
 
 test("keeps the last published component badges across patches and pending releases", () => {
   const releases = { "0.3.7": pendingRelease, "0.3.6": patchRelease, "0.3.5": previousRelease };
-  assert.deepEqual(getNewComponentRelease(releases), { version: "0.3.5", slugs: new Set(["kalos-combobox"]) });
+  assert.deepEqual(getNewComponentSlugs(releases), new Set(["kalos-combobox"]));
 });
 
 test("replaces the previous badges when a release with new components is published", () => {
@@ -17,9 +17,9 @@ test("replaces the previous badges when a release with new components is publish
     "0.3.6": patchRelease,
     "0.3.5": previousRelease,
   };
-  assert.deepEqual(getNewComponentRelease(releases), { version: "0.3.7", slugs: new Set(["kalos-test"]) });
+  assert.deepEqual(getNewComponentSlugs(releases), new Set(["kalos-test"]));
 });
 
 test("omits badges when no published release introduced components", () => {
-  assert.equal(getNewComponentRelease({ "0.3.7": pendingRelease, "0.3.6": patchRelease }), undefined);
+  assert.equal(getNewComponentSlugs({ "0.3.7": pendingRelease, "0.3.6": patchRelease }).size, 0);
 });
