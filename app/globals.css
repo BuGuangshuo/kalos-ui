@@ -4867,6 +4867,17 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
   border-radius: 12px;
   background: var(--background);
 }
+.changelog-preview[data-full-preview] .component-preview {
+  height: auto;
+  min-height: 300px;
+}
+.changelog-preview[data-full-preview] .catalog-preview-viewport {
+  height: auto;
+}
+.changelog-preview[data-full-preview][data-component="kalos-dropzone"] .component-preview {
+  align-items: flex-start;
+  min-height: 520px;
+}
 .changelog-preview[data-component="kalos-date-range-picker"] .component-preview {
   height: 380px;
 }
