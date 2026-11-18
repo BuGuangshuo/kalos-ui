@@ -166,6 +166,22 @@
         }
       ]
     },
+    "combobox": {
+      "light": {
+        "muted": "rgba(0,0,0,0.52)",
+        "chip": "rgba(0,0,0,0.065)",
+        "highlight": "rgba(0,0,0,0.06)",
+        "removing": "rgba(0,0,0,0.12)",
+        "icon-edge": "rgba(0,0,0,0.07)"
+      },
+      "dark": {
+        "muted": "rgba(255,255,255,0.57)",
+        "chip": "rgba(255,255,255,0.095)",
+        "highlight": "rgba(255,255,255,0.085)",
+        "removing": "rgba(255,255,255,0.17)",
+        "icon-edge": "rgba(255,255,255,0.10)"
+      }
+    },
     "select": {
       "light": {
         "--ui-selc-title": "rgba(0, 0, 0, 0.88)",
@@ -1522,9 +1538,113 @@
         "selected": "rgba(255, 255, 255, 0.09)",
         "focus": "rgba(77, 141, 255, 0.8)"
       }
+    },
+    "drawer": {
+      "light": {
+        "overlay": "rgb(0 0 0 / 0.1)"
+      },
+      "dark": {
+        "overlay": "rgb(0 0 0 / 0.4)"
+      }
+    },
+    "notification": {
+      "light": {
+        "surface": "#ffffff",
+        "ink": "rgba(0, 0, 0, 0.88)",
+        "muted": "rgba(0, 0, 0, 0.61)",
+        "art": "rgba(0, 0, 0, 0.09)",
+        "accent": "rgba(0, 96, 226, 0.7)",
+        "accent-wash": "rgba(0, 96, 226, 0.05)",
+        "shadow": "0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05)"
+      },
+      "dark": {
+        "surface": "#1c1c1e",
+        "ink": "rgba(255, 255, 255, 0.9)",
+        "muted": "rgba(255, 255, 255, 0.62)",
+        "art": "rgba(255, 255, 255, 0.12)",
+        "accent": "rgba(77, 141, 255, 0.8)",
+        "accent-wash": "rgba(77, 141, 255, 0.1)",
+        "shadow": "0 0 0 0.5px rgba(255, 255, 255, 0.14), 0 1px 2px rgba(0, 0, 0, 0.4)"
+      }
+    },
+    "dropzone": {
+      "themeMapping": {
+        "surface": "card",
+        "inset": "background",
+        "ink": "card-foreground",
+        "muted": "muted-foreground",
+        "edge": "border",
+        "dash": "input",
+        "hover": "accent",
+        "track": "muted",
+        "danger": "destructive"
+      },
+      "tokensFrom": "table",
+      "colorMapping": {
+        "accent": "brand",
+        "accent-wash": "selected",
+        "focus": "focus",
+        "shadow": "shadow",
+        "image": "violet-ink",
+        "image-wash": "violet-wash",
+        "success": "green-ink",
+        "word": "blue-ink",
+        "video": "amber-ink"
+      }
+    },
+    "stepper-form": {
+      "light": {
+        "progress": "#2563eb"
+      },
+      "dark": {
+        "progress": "#6798ff"
+      }
+    },
+    "toast": {
+      "light": {
+        "surface": "#ffffff",
+        "ink": "#17202b",
+        "muted": "#7b8898",
+        "shadow": "0 4px 12px #00000014",
+        "brand": "#165dff",
+        "success": "#18b596",
+        "warning": "#f19021",
+        "error": "#ff3e27",
+        "on-status": "#ffffff",
+        "focus": "#165dff",
+        "button-edge": "#e3e9ef",
+        "button-surface": "#ffffff",
+        "hover": "#f3f5f8"
+      },
+      "dark": {
+        "surface": "#202020",
+        "ink": "#ededed",
+        "muted": "#a1a1a1",
+        "shadow": "0 4px 12px #00000040",
+        "brand": "#2f6fef",
+        "success": "#18b596",
+        "warning": "#f19021",
+        "error": "#ff3e27",
+        "on-status": "#ffffff",
+        "focus": "#5b8cff",
+        "button-edge": "#404040",
+        "button-surface": "#171717",
+        "hover": "#262626"
+      }
     }
   },
   "defaults": {
+    "otp-input": {
+      "slotWidth": 42,
+      "slotHeight": 44,
+      "gap": 6,
+      "separatorWidth": 8,
+      "focusSlideDuration": 260,
+      "digitDuration": 280,
+      "shakeDuration": 390,
+      "clearDuration": 180,
+      "morphDuration": 460
+    },
     "button": {
       "height": 32,
       "radius": 6,
@@ -1540,13 +1660,49 @@
       "lineHeight": 20,
       "focusDuration": 80
     },
+    "combobox": {
+      "popupDuration": 240,
+      "popupOffset": 6,
+      "popupShift": 4,
+      "popupScale": 0.98,
+      "resizeDuration": 300,
+      "tagDuration": 260,
+      "countDuration": 200,
+      "checkDuration": 380,
+      "checkFadeDuration": 160,
+      "ease": [0.22, 1, 0.36, 1],
+      "checkEase": [0.34, 1.56, 0.64, 1],
+      "maxListHeight": 300,
+      "emptyPaddingTop": 16,
+      "emptyPaddingBottom": 6,
+      "footerHeight": 32,
+      "tagHeight": 24,
+      "tagGap": 4,
+      "tagRadius": 6,
+      "avatarSize": 20,
+      "tagAvatarSize": 16
+    },
     "select": {
       "height": 32,
+      "smallHeight": 28,
+      "largeHeight": 36,
       "radius": 7,
       "paddingLeft": 10,
       "paddingRight": 8,
       "menuRadius": 10,
       "menuPadding": 4,
+      "menuMinWidth": 180,
+      "menuMaxHeight": 288,
+      "menuDuration": 200,
+      "menuOffset": 4,
+      "menuScale": 0.98,
+      "iconSize": 16,
+      "optionIconSize": 14,
+      "indicatorSize": 14,
+      "chevronSize": 12,
+      "chevronDuration": 240,
+      "checkDuration": 280,
+      "checkDelay": 40,
       "itemHeight": 32,
       "itemRadius": 6,
       "itemPadding": [
@@ -1599,6 +1755,17 @@
       "scale": 0.95,
       "rasterLayer": "transform, scale, opacity",
       "tokensFrom": "select"
+    },
+    "color-picker": {
+      "width": 264,
+      "radius": 12,
+      "padding": 14,
+      "gap": 14,
+      "planeHeight": 152,
+      "touchPlaneHeight": 176,
+      "duration": 220,
+      "scale": 0.96,
+      "shift": 4
     },
     "command-menu": {
       "width": 600,
@@ -1657,6 +1824,20 @@
       "padding": 20,
       "radius": 12,
       "footerPadding": 16
+    },
+    "stepper-form": {
+      "width": 480,
+      "radius": 12,
+      "padding": 20,
+      "narrowPadding": 14,
+      "compactWidth": 390,
+      "trackHeight": 2,
+      "successIconSize": 32,
+      "successMarkSize": 16,
+      "duration": 300,
+      "slide": 28,
+      "shake": 260,
+      "ease": [0.22, 1, 0.36, 1]
     },
     "control-action": {
       "size": 24,
@@ -1862,6 +2043,58 @@
       "duration": 140,
       "collapseWidth": 520,
       "maxSiblings": 5
+    },
+    "drawer": {
+      "width": 400,
+      "radius": 12,
+      "duration": 450,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "tokensFrom": "select"
+    },
+    "text-area": {
+      "tokensFrom": "text-field",
+      "minRows": 3,
+      "maxRows": 10,
+      "lineHeight": 20,
+      "paddingX": 10,
+      "paddingY": 8,
+      "radius": 7,
+      "resizeSize": 20,
+      "previewWidth": 400
+    },
+    "notification": {
+      "width": 400,
+      "textInsetRight": 64,
+      "radius": 12,
+      "offset": 24,
+      "layer": 60,
+      "peek": 12,
+      "scaleStep": 0.05,
+      "duration": 460,
+      "exitDuration": 320
+    },
+    "dropzone": {
+      "width": 520,
+      "radius": 12,
+      "innerRadius": 10,
+      "duration": 260,
+      "fanDuration": 420,
+      "progressCollapseDuration": 320,
+      "ease": [0.22, 1, 0.36, 1]
+    },
+    "toast": {
+      "timeout": 3000,
+      "limit": 3,
+      "radius": 9999,
+      "minHeight": 40,
+      "paddingX": 14,
+      "paddingY": 6,
+      "gap": 10,
+      "viewportWidth": 512,
+      "top": 20,
+      "duration": 300,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "source": "CostScope/src/components/ui/toast.tsx and src/index.css"
     }
   },
   "typographyOverride": {

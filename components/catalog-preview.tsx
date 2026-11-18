@@ -1,9 +1,9 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import { ComponentDemo } from "@/components/demos";
 
-export function CatalogPreview({ slug }: { slug: string }) {
+export function CatalogPreview({ slug, compact = true, children }: { slug: string; compact?: boolean; children?: ReactNode }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -29,7 +29,7 @@ export function CatalogPreview({ slug }: { slug: string }) {
   return <div className="component-preview" data-component={slug}>
     <div className="catalog-preview-viewport" ref={viewportRef}>
       <div className="catalog-preview-content" ref={contentRef}>
-        <ComponentDemo slug={slug} compact />
+        {children ?? <ComponentDemo slug={slug} compact={compact} />}
       </div>
     </div>
   </div>;

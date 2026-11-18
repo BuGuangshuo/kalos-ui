@@ -18,6 +18,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Toaster } from "@/components/ui/sonner";
+import { KalosToaster } from "@/registry/kalos/kalos-toast";
 import { catalog } from "@/lib/catalog";
 import { site } from "@/lib/site";
 import { installerCommand, type InstallationMode } from "@/lib/installer";
@@ -145,6 +146,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </>
       )}
       <Toaster position="bottom-right" />
+      <KalosToaster />
       </KalosTooltipProvider>
     </ThemeProvider>
   );

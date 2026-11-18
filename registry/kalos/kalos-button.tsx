@@ -26,7 +26,7 @@ export function KalosButton({
         props.className,
       )}
       disabled={disabled || loading}
-      aria-busy={loading || undefined}
+      aria-busy={loading || props["aria-busy"] || undefined}
     >
       {loading ? (
         <Loader2 data-icon="inline-start" className="animate-spin" />

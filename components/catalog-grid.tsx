@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowUpRight, Layers } from "lucide-react";
 import { catalog, categories } from "@/lib/catalog";
 import { CatalogPreview } from "@/components/catalog-preview";
+import { DropdownMenuPanelPreview } from "@/components/dropdown-menu-demo";
 import { LibrarySidebar } from "@/components/library-sidebar";
 import { PagePagination } from "@/components/page-pagination";
 import {
@@ -54,7 +55,9 @@ export function CatalogGrid() {
                 <div className="component-grid">
                   {group.map((item) => (
                     <article className="component-card" key={item.slug}>
-                      <CatalogPreview slug={item.slug} />
+                      <CatalogPreview slug={item.slug} compact={item.slug !== "kalos-otp-input"}>
+                        {item.slug === "kalos-dropdown-menu" ? <DropdownMenuPanelPreview /> : null}
+                      </CatalogPreview>
                       <Link
                         href={`/components/${item.slug}`}
                         className="component-card-label"

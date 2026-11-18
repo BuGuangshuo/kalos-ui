@@ -1,4 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 const inventory = JSON.parse(await readFile("design/component-tokens.json", "utf8"));
 const css = (value) => value.replace(/\s+/g, "_");
 const vars = (component, mapping) => ["light", "dark"].flatMap((mode) => Object.entries(mapping).map(([name, source]) => `${mode === "dark" ? "dark:" : ""}[--k-${name}:${css(inventory.components[component][mode][source])}]`)).join(" ");
@@ -16,10 +17,14 @@ const fieldActive = "[&:is(:focus-within:not([data-focus-managed]),:has([aria-ex
 const fieldHover = "[&:hover:not(:focus-within:not([data-focus-managed])):not(:has([aria-expanded=true])):not([data-focused]):not([data-invalid=true]):not([data-disabled=true])]";
 const fieldFocused = "[&:not([data-invalid=true]):is(:focus-within:not([data-focus-managed]),:has([aria-expanded=true]),[data-focused])]";
 const fieldInvalidFocused = "[&[data-invalid=true]:is(:focus-within:not([data-focus-managed]),:has([aria-expanded=true]),[data-focused])]";
-const field = `${font} ${focus} ${fieldVars} h-8 rounded-[7px] border-0 bg-[var(--k-surface)]! px-2.5 py-0 text-[color:var(--k-ink)] [--k-control-shadow:var(--k-shadow)] shadow-[var(--k-control-shadow)] ring-0! transition-[box-shadow,background-color] duration-[140ms] ease-[var(--k-ease)] ${fieldHover}:[--k-control-shadow:var(--k-shadow-hover)] ${fieldFocused}:[--k-control-shadow:var(--k-shadow-focus)] ${fieldActive}:duration-[${fieldFocusDuration}] data-[invalid=true]:bg-[var(--k-danger-surface)]! data-[invalid=true]:[--k-control-shadow:var(--k-shadow-invalid)] ${fieldInvalidFocused}:[--k-control-shadow:var(--k-shadow-invalid-focus)] data-[disabled=true]:opacity-40 has-disabled:opacity-40`;
+const fieldSurface = `${font} ${focus} ${fieldVars} h-8 rounded-[7px] border-0 bg-[var(--k-surface)]! px-2.5 py-0 text-[color:var(--k-ink)] [--k-control-shadow:var(--k-shadow)] shadow-[var(--k-control-shadow)] ring-0!`;
+const fieldInvalid = "data-[invalid=true]:bg-[var(--k-danger-surface)]! data-[invalid=true]:[--k-control-shadow:var(--k-shadow-invalid)]";
+const fieldDisabled = "data-[disabled=true]:opacity-40 has-disabled:opacity-40";
+const field = `${fieldSurface} transition-[box-shadow,background-color] duration-[140ms] ease-[var(--k-ease)] ${fieldHover}:[--k-control-shadow:var(--k-shadow-hover)] ${fieldFocused}:[--k-control-shadow:var(--k-shadow-focus)] ${fieldActive}:duration-[${fieldFocusDuration}] ${fieldInvalid} ${fieldInvalidFocused}:[--k-control-shadow:var(--k-shadow-invalid-focus)] ${fieldDisabled}`;
 
 const buttonVars = vars("button", Object.fromEntries(["ink", "solid", "solid-hover", "on-solid", "surface", "shadow", "shadow-hover", "wash", "ease", "danger", "danger-hover", "on-danger"].map(k => [k, `--ui-btnc-${k}`])));
 const menuVars = vars("select", Object.fromEntries(["ink", "menu", "glow", "shadow-menu", "ease"].map(k => [k, `--ui-selc-${k}`])));
+const selectTextVars = vars("select", { "select-description": "--ui-selc-subtle", "select-disabled": "--ui-selc-faint" });
 const select = inventory.defaults.select;
 const dropdown = inventory.defaults["dropdown-menu"];
 const dropdownVars = vars("dropdown-menu", { "dropdown-danger": "danger", "dropdown-danger-highlight": "danger-highlight", "dropdown-muted": "muted", "dropdown-focus": "focus" });
@@ -65,6 +70,7 @@ const cardTargetAfter = `${cardTarget}:after`;
 const validationVars = vars("text-field", { "validation-edge": "--ui-tfc-danger-edge" });
 const validation = `${validationVars} aria-invalid:ring-0 data-invalid:ring-0 aria-invalid:shadow-[0_0_0_1px_var(--k-validation-edge)] data-invalid:shadow-[0_0_0_1px_var(--k-validation-edge)]`;
 const action = `inline-flex size-6 shrink-0 items-center justify-center rounded-full border-0 bg-transparent! p-0! text-muted-foreground shadow-none transition-[background-color,box-shadow,color,opacity] duration-150 hover:bg-transparent! hover:shadow-none hover:text-foreground focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-ring focus-visible:ring-0 disabled:opacity-40 [&_svg]:size-3.5`;
+const textArea = inventory.defaults["text-area"];
 const numberInput = inventory.defaults["number-input"];
 const table = inventory.defaults.table;
 const tableVars = vars("table", Object.fromEntries(Object.keys(inventory.components.table.light).map(key => [`table-${key}`, key])));
@@ -92,7 +98,8 @@ const styles = {
   tableText: "block min-w-0 max-w-full truncate",
   tableTitle: `flex min-h-[${table.titleHeight}px] items-center justify-between gap-3 border-b border-[var(--k-table-edge)] px-4 py-2 [&_svg]:size-4`,
   tableHeading: "flex min-w-0 items-center gap-2 font-medium text-[14px] [&>svg]:shrink-0 [&>svg]:text-[var(--k-table-brand)]",
-  tableScroll: "w-full overflow-x-auto overscroll-x-contain",
+  tableHeader: "w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none]",
+  tableScroll: "w-full overflow-auto overscroll-x-contain",
   tableGrid: "w-full table-fixed border-collapse text-left text-[13px] leading-5 outline-none",
   tableHead: `h-[${table.headHeight}px] border-b border-[var(--k-table-edge)] px-[${table.cellPadding}px] text-left text-[12px] font-normal text-[color:var(--k-table-muted)] outline-none`,
   tableSort: "flex h-full w-full min-w-0 items-center gap-2 bg-transparent text-inherit outline-none focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-[var(--k-table-focus)] [&>svg]:size-3 [&>svg]:shrink-0",
@@ -142,13 +149,22 @@ const styles = {
   numberAffix: "shrink-0 text-[color:var(--k-subtle)] [&>svg]:size-3.5",
   numberActions: `flex h-full shrink-0 items-center gap-[${numberInput.actionGap}px] px-1`,
   numberAction: `${buttonVars} inline-flex size-[${numberInput.actionSize}px] shrink-0 touch-none select-none items-center justify-center rounded-[${numberInput.actionRadius}px] border-0 bg-transparent! p-0! text-[color:var(--k-subtle)] shadow-none! outline-none transition-colors duration-150 hover:bg-[var(--k-wash)]! hover:text-[color:var(--k-ink)] focus-visible:outline-1 focus-visible:outline-ring aria-disabled:opacity-30 data-disabled:opacity-30 disabled:opacity-30 [&_svg]:size-3.5`,
+  textAreaField: "min-w-0 gap-1.5",
+  textAreaSurface: `${field.replace("h-8", "h-auto").replace("px-2.5 py-0", "p-0")} relative w-full min-w-0`,
+  textAreaInput: `${font} box-border resize-none rounded-[${textArea.radius}px] border-0 bg-transparent px-[${textArea.paddingX}px] py-[${textArea.paddingY}px] text-[color:var(--k-ink)] shadow-none placeholder:text-[color:var(--k-subtle)] disabled:cursor-not-allowed`,
+  textAreaWithResize: "pb-5",
+  textAreaResize: `absolute right-0 bottom-0 inline-flex size-[${textArea.resizeSize}px] touch-none select-none items-center justify-center rounded-br-[${textArea.radius}px] border-0 bg-transparent p-0 text-[color:var(--k-subtle)] outline-none hover:text-[color:var(--k-ink)] focus-visible:outline-1 focus-visible:outline-ring cursor-ns-resize [&_svg]:size-3`,
+  textAreaMeta: "flex min-w-0 items-start justify-between gap-3",
+  textAreaCount: "ml-auto shrink-0 text-xs leading-[18px] tabular-nums text-muted-foreground",
+  textAreaOptional: "text-xs font-normal text-muted-foreground",
+  textAreaDemo: `${cardSurface} flex w-full max-w-[${textArea.previewWidth}px] flex-col gap-5 p-5`,
   inputGroup: `${field} flex w-full min-w-0 px-0`,
   inputContent: `${font} h-full min-w-0 flex-1 rounded-[7px] border-0 bg-transparent! px-2.5 py-0 text-[color:var(--k-ink)] shadow-none outline-none ring-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 aria-invalid:ring-0 disabled:bg-transparent disabled:opacity-100 placeholder:text-[color:var(--k-subtle)]`,
   inputClear: "[&_svg]:size-3! pointer-events-none opacity-0 transition-opacity duration-150 group-hover/input-group:pointer-events-auto group-hover/input-group:opacity-100 group-focus-within/input-group:pointer-events-auto group-focus-within/input-group:opacity-100 focus-visible:pointer-events-auto focus-visible:opacity-100",
   inputAddon: "flex h-full shrink-0 items-center gap-0.5 pr-2",
   inputAction: action,
-  selectClearable: "[&>svg]:transition-opacity [&>svg]:duration-150 [&>svg]:group-has-[[data-slot=select-clear]:hover]/select-control:opacity-0 [&>svg]:group-has-[:focus-visible]/select-control:opacity-0",
-  selectClear: `${action} [&_svg]:size-3! absolute top-1 right-2 opacity-0 hover:opacity-100 group-has-[:focus-visible]/select-control:opacity-100 focus-visible:opacity-100`,
+  selectClearable: "[&>[data-slot=select-icon]>svg]:transition-opacity [&>[data-slot=select-icon]>svg]:duration-150 not-data-popup-open:[&>[data-slot=select-icon]>svg]:group-has-[[data-slot=select-clear]:hover]/select-control:opacity-0 not-data-popup-open:[&>[data-slot=select-icon]>svg]:group-has-[:focus-visible]/select-control:opacity-0",
+  selectClear: `${action} [&_svg]:size-3! absolute inset-y-0 right-1 my-auto opacity-0 hover:opacity-100 group-has-[:focus-visible]/select-control:opacity-100 focus-visible:opacity-100 group-has-[[data-popup-open]]/select-control:invisible`,
   formHeader: `px-[${form.padding}px] pt-[${form.padding}px] pb-0`,
   formTitle: "text-[14px] font-medium leading-5",
   formContent: `min-w-0 p-[${form.padding}px]`,
@@ -176,10 +192,18 @@ const styles = {
   label: `${font} gap-1 font-normal`,
   requiredMark: "ml-0.5 text-destructive",
   field,
-  selectControl: `${field} relative w-full min-w-0 px-0`,
-  selectTrigger: `${font} ${focus} h-full w-full min-w-0 rounded-[7px] border-0 bg-transparent! px-2.5 py-0 text-[color:var(--k-ink)] shadow-none ring-0! focus-visible:shadow-none focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:shadow-none disabled:opacity-100 data-placeholder:text-[color:var(--k-subtle)] [&_[data-placeholder]]:text-[color:var(--k-subtle)]`,
+  selectControl: `${field} relative w-full min-w-0 px-0 data-[size=sm]:h-[${select.smallHeight}px] data-[size=md]:h-[${select.height}px] data-[size=lg]:h-[${select.largeHeight}px]`,
+  selectControlStatic: `${fieldSurface} ${fieldInvalid} ${fieldDisabled} relative w-full min-w-0 px-0`,
+  selectTrigger: `${font} ${focus} h-full w-full min-w-0 gap-2 rounded-[${select.radius}px] border-0 bg-transparent! pl-[${select.paddingLeft}px] pr-[${select.paddingRight}px] py-0 text-[color:var(--k-ink)] shadow-none ring-0! focus-visible:shadow-none focus-visible:ring-0 aria-invalid:ring-0 aria-invalid:shadow-none disabled:opacity-100 data-placeholder:text-[color:var(--k-subtle)] [&_[data-placeholder]]:text-[color:var(--k-subtle)]`,
   selectPlaceholder: "text-[color:var(--k-subtle)] data-placeholder:text-[color:var(--k-subtle)]",
-  selectMenu: `${font} ${menuVars} rounded-[${select.menuRadius}px] border-0 ring-0 bg-[var(--k-menu)] p-[${select.menuPadding}px] text-[color:var(--k-ink)] shadow-[var(--k-shadow-menu)] before:rounded-[${select.itemRadius}px] before:bg-[var(--k-glow)] before:duration-[${select.highlightDuration}ms] before:ease-[var(--k-ease)] [&_[role=option]]:min-h-[${select.itemHeight}px] [&_[role=option]]:rounded-[${select.itemRadius}px] [&_[role=option]]:py-[${select.itemPadding[0]}px] [&_[role=option]]:pl-[${select.itemPadding[1]}px] [&_[role=option]]:pr-8 [&_[role=option]]:text-[13px] [&_[role=option]]:leading-5 [&_[role=option]]:text-[color:var(--k-ink)] [&_[data-slot=select-group]]:p-0`,
+  selectOptionIcon: `grid size-[${select.iconSize}px] shrink-0 place-items-center text-muted-foreground group-data-disabled/select-option:text-[color:var(--k-select-disabled)] [&>svg]:size-[${select.optionIconSize}px]! [&>img]:size-[${select.optionIconSize}px]`,
+  selectOptionLabel: "truncate group-aria-selected/select-option:font-medium group-data-disabled/select-option:text-[color:var(--k-select-disabled)]",
+  selectOptionDescription: "truncate text-xs leading-4 text-[color:var(--k-select-description)]",
+  selectChevron: `pointer-events-none grid size-[${select.iconSize}px] shrink-0 place-items-center text-muted-foreground transition-[rotate] duration-[${select.chevronDuration}ms] ease-[${css(inventory.components.select.light["--ui-selc-ease"])}] data-popup-open:rotate-180 [&>svg]:size-[${select.chevronSize}px]!`,
+  selectIndicator: `pointer-events-none absolute inset-y-0 right-2 flex w-[${select.iconSize}px] items-center justify-center [&>svg]:size-[${select.indicatorSize}px]!`,
+  selectTick: `[stroke-dasharray:1] [stroke-dashoffset:0] transition-[stroke-dashoffset] duration-[${select.checkDuration}ms] delay-[${select.checkDelay}ms] ease-[${css(inventory.components.select.light["--ui-selc-ease"])}] starting:[stroke-dashoffset:1]`,
+  selectPopup: `min-w-[min(${select.menuMinWidth}px,calc(100vw-16px))] max-w-[calc(100vw-16px)] overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:thin] max-h-[min(var(--available-height),${select.menuMaxHeight}px)] data-[align-trigger=false]:transition-[opacity,translate,scale] data-[align-trigger=false]:duration-[${select.menuDuration}ms] data-[align-trigger=false]:ease-[${css(inventory.components.select.light["--ui-selc-ease"])}] data-[align-trigger=false]:data-starting-style:opacity-0 data-[align-trigger=false]:data-ending-style:opacity-0 data-[align-trigger=false]:data-starting-style:scale-[${select.menuScale}] data-[align-trigger=false]:data-ending-style:scale-[${select.menuScale}] data-[align-trigger=false]:data-starting-style:translate-y-[-${select.menuOffset}px] data-[align-trigger=false]:data-ending-style:translate-y-[-${select.menuOffset}px] data-[align-trigger=false]:data-[side=top]:data-starting-style:translate-y-[${select.menuOffset}px] data-[align-trigger=false]:data-[side=top]:data-ending-style:translate-y-[${select.menuOffset}px]`,
+  selectMenu: `${font} ${menuVars} ${selectTextVars} rounded-[${select.menuRadius}px] border-0 ring-0 bg-[var(--k-menu)] p-[${select.menuPadding}px] text-[color:var(--k-ink)] shadow-[var(--k-shadow-menu)] before:rounded-[${select.itemRadius}px] before:bg-[var(--k-glow)] before:duration-[${select.highlightDuration}ms] before:ease-[var(--k-ease)] [&_[role=option]]:min-h-[${select.itemHeight}px] [&_[role=option]]:rounded-[${select.itemRadius}px] [&_[role=option]]:py-[${select.itemPadding[0]}px] [&_[role=option]]:pl-[${select.itemPadding[1]}px] [&_[role=option]]:pr-8 [&_[role=option]]:text-[13px] [&_[role=option]]:leading-5 [&_[role=option]]:text-[color:var(--k-ink)] [&_[data-slot=select-group]]:p-0`,
   commandMenu: `${font} ${commandVars} w-full max-w-[${command.width}px] overflow-hidden rounded-[${command.radius}px] bg-[var(--k-command-surface)] text-[color:var(--k-command-ink)] shadow-[var(--k-command-shadow)]`,
   commandSearch: `flex h-[${command.searchHeight}px] items-center gap-2.5 border-b border-[var(--k-command-edge)] px-[${command.contentInset}px] [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--k-command-muted)]`,
   commandInput: "h-full min-w-0 flex-1 border-0 bg-transparent p-0 text-[13px] font-normal leading-5 outline-none placeholder:text-[var(--k-command-muted)]",
@@ -200,7 +224,7 @@ const styles = {
   dropdownPanel: `${font} ${menuVars} ${dropdownVars} relative isolate z-50 min-w-[${dropdown.minWidth}px] max-w-[calc(100vw-32px)] max-h-[var(--available-height,calc(100dvh-32px))] overflow-y-auto rounded-[${dropdown.radius}px] border-0 bg-[var(--k-menu)] p-[${dropdown.padding}px] text-[color:var(--k-ink)] shadow-[var(--k-shadow-menu)] outline-none before:rounded-[${dropdown.itemRadius}px] before:bg-[var(--k-glow)] before:duration-[${dropdown.highlightDuration}ms] before:ease-[var(--k-ease)] [&:has([data-danger]:is([data-highlighted],[data-focused],:focus))]:before:bg-[var(--k-dropdown-danger-highlight)]`,
   dropdownPositioner: "z-50 outline-none",
   dropdownItem: `relative z-10 flex min-h-[${dropdown.itemHeight}px] w-full cursor-default select-none items-center gap-2 rounded-[${dropdown.itemRadius}px] border-0 bg-transparent px-2 py-[${dropdown.itemPaddingY}px] text-left text-[13px] font-normal leading-5 outline-none data-disabled:pointer-events-none data-disabled:opacity-40 data-[danger=true]:text-[color:var(--k-dropdown-danger)] focus-visible:shadow-[inset_0_0_0_1px_var(--k-dropdown-focus)] [@media(pointer:coarse)]:min-h-[${dropdown.touchItemHeight}px]`,
-  dropdownTrigger: "inline-flex h-8 shrink-0 items-center justify-center gap-2 px-2.5 [&_svg]:size-4 focus-visible:shadow-[0_0_0_2px_var(--k-wash)]",
+  dropdownTrigger: "inline-flex h-8 shrink-0 items-center justify-center gap-2 px-2.5 [&_svg]:size-4 data-popup-open:bg-[var(--k-wash)] focus-visible:shadow-[0_0_0_2px_var(--k-wash)]",
   dropdownIcon: `flex size-[${dropdown.iconSize}px] shrink-0 items-center justify-center text-[color:var(--k-dropdown-muted)] [[data-danger=true]_&]:text-current [&>svg]:size-full`,
   dropdownChevron: `size-[${dropdown.iconSize}px] shrink-0 text-[color:var(--k-dropdown-muted)]`,
   dropdownDescription: "block text-xs leading-[18px] text-[color:var(--k-dropdown-muted)]",
@@ -224,7 +248,7 @@ const styles = {
   tabsList: `${font} ${tabVars} h-7! rounded-[8px] border-0 bg-[var(--k-track)] p-0.5 text-[color:var(--k-text)] before:rounded-[6px] before:bg-[var(--k-card)] before:shadow-[var(--k-card-shadow)] before:duration-200 before:ease-[var(--k-ease)]`,
   tabsTrigger: `${focus} relative z-10 h-6 min-h-0 rounded-[6px] border-0 bg-transparent! px-2.5 py-0 text-[13px] font-normal leading-5 text-[color:var(--k-text)] data-active:text-[color:var(--k-ink)] data-selected:text-[color:var(--k-ink)] data-[state=active]:text-[color:var(--k-ink)] data-active:bg-transparent! data-selected:bg-transparent! data-[state=active]:bg-transparent! data-active:shadow-none! data-selected:shadow-none! data-[state=active]:shadow-none!`,
 };
-await writeFile("components/ui/kalos-styles.ts", `// Generated from design/component-tokens.json by scripts/build-component-styles.mjs.\nimport "@fontsource/roboto/latin-400.css";\nimport "@fontsource/roboto/latin-500.css";\nexport const controlStyles = ${JSON.stringify(styles, null, 2)} as const;\nexport const hoverCardDefaults = ${JSON.stringify(hoverCard)} as const;\nexport const fieldMessageMotion = ${JSON.stringify(fieldMessageMotion)} as const;\nexport const numberInputSettings = ${JSON.stringify(numberInput)} as const;\nexport const avatarCss = ${JSON.stringify(avatarCss)};\nexport const segmentedControlCss = ${JSON.stringify(segmentedControlCss)};\n`);
+await writeFile("components/ui/kalos-styles.ts", `// Generated from design/component-tokens.json by scripts/build-component-styles.mjs.\nimport "@fontsource/roboto/latin-400.css";\nimport "@fontsource/roboto/latin-500.css";\nexport const controlStyles = ${JSON.stringify(styles, null, 2)} as const;\nexport const hoverCardDefaults = ${JSON.stringify(hoverCard)} as const;\nexport const fieldMessageMotion = ${JSON.stringify(fieldMessageMotion)} as const;\nexport const textAreaDefaults = ${JSON.stringify(textArea)} as const;\nexport const numberInputSettings = ${JSON.stringify(numberInput)} as const;\nexport const avatarCss = ${JSON.stringify(avatarCss)};\nexport const segmentedControlCss = ${JSON.stringify(segmentedControlCss)};\n`);
 await writeFile("components/hover-card-demo-styles.ts", `// Generated from design/component-tokens.json and design/hover-card-demo.css.\nexport const hoverCardDemoCss = ${JSON.stringify(hoverCardDemoCss)};\n`);
 const loadingLicense = await readFile("AFFECTUI-LICENSE.md", "utf8");
 await writeFile("components/ui/kalos-loading-styles.ts", `// Generated from design/component-tokens.json, design/skeleton.css and design/spinner.css.\n/*\n${loadingLicense}\n*/\nexport const skeletonDefaults = ${JSON.stringify(skeleton)} as const;\nexport const spinnerDefaults = ${JSON.stringify(spinner)} as const;\nexport const skeletonCss = ${JSON.stringify(skeletonCss)};\nexport const spinnerCss = ${JSON.stringify(spinnerCss)};\n`);
@@ -251,3 +275,128 @@ const pickerCss = [
   await readFile("design/picker.css", "utf8"),
 ].join("\n");
 await writeFile("components/ui/kalos-picker-styles.ts", `// Generated from design/component-tokens.json and design/picker.css.\n/*\n${loadingLicense}\n*/\nexport const pickerCss = ${JSON.stringify(pickerCss)};\n`);
+
+const drawer = inventory.defaults.drawer;
+const drawerTokens = Object.fromEntries(["light", "dark"].map(mode => [mode, {
+  surface: inventory.components[drawer.tokensFrom][mode]["--ui-selc-menu"],
+  ink: inventory.components[drawer.tokensFrom][mode]["--ui-selc-ink"],
+  shadow: inventory.components[drawer.tokensFrom][mode]["--ui-selc-shadow-menu"],
+  ...inventory.components.drawer[mode],
+}]));
+const drawerCss = [
+  `.kalos-drawer-popup,.kalos-drawer-overlay{${Object.entries(drawerTokens.light).map(([key, value]) => `--kalos-drawer-${key}:${value}`).join(";")};--kalos-drawer-width:${drawer.width}px;--kalos-drawer-radius:${drawer.radius}px;--kalos-drawer-duration:${drawer.duration}ms;--kalos-drawer-ease:${drawer.ease}}`,
+  `:where(.dark,[data-theme=dark]) :is(.kalos-drawer-popup,.kalos-drawer-overlay){${Object.entries(drawerTokens.dark).map(([key, value]) => `--kalos-drawer-${key}:${value}`).join(";")}}`,
+  await readFile("design/drawer.css", "utf8"),
+].join("\n");
+await writeFile("components/ui/kalos-drawer-styles.ts", `// Generated from design/component-tokens.json and design/drawer.css.\nexport const drawerCss = ${JSON.stringify(drawerCss)};\n`);
+
+const toast = inventory.defaults.toast;
+const toastCss = [
+  `.kalos-toast,.kalos-toast-viewport{${Object.entries({ radius: toast.radius, "min-height": toast.minHeight, "padding-x": toast.paddingX, "padding-y": toast.paddingY, gap: toast.gap, "viewport-width": toast.viewportWidth, top: toast.top }).map(([key, value]) => `--kalos-toast-${key}:${value}px`).join(";")};--kalos-toast-duration:${toast.duration}ms;--kalos-toast-font:${inventory.font.family};--kalos-toast-ease:${toast.ease};${Object.entries(inventory.components.toast.light).map(([key, value]) => `--kalos-toast-${key}:${value}`).join(";")}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-toast{${Object.entries(inventory.components.toast.dark).map(([key, value]) => `--kalos-toast-${key}:${value}`).join(";")}}`,
+  await readFile("design/toast.css", "utf8"),
+].join("\n");
+await writeFile("components/ui/kalos-toast-styles.ts", `// Generated from design/component-tokens.json and design/toast.css.\nimport "@fontsource/roboto/latin-400.css";\nexport const toastDefaults = ${JSON.stringify(toast)} as const;\nexport const toastCss = ${JSON.stringify(toastCss)};\n`);
+
+const notification = inventory.defaults.notification;
+const notificationCss = [
+  `.kalos-notification{font-family:${inventory.font.family};font-size:${inventory.font.controlSize}px;line-height:${inventory.font.controlLineHeight}px;${Object.entries(inventory.components.notification.light).map(([key, value]) => `--nt-${key}:${value}`).join(";")};--nt-width:${notification.width}px;--nt-text-inset-right:${notification.textInsetRight}px;--nt-radius:${notification.radius}px;--nt-offset:${notification.offset}px;--nt-layer:${notification.layer}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-notification{${Object.entries(inventory.components.notification.dark).map(([key, value]) => `--nt-${key}:${value}`).join(";")}}`,
+  await readFile("design/notification.css", "utf8"),
+].join("\n");
+const notificationStyleHref = `kalos-notification-${createHash("sha256").update(notificationCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-notification-styles.ts", `// Generated from design/component-tokens.json and design/notification.css.\n/*\n${loadingLicense}\n*/\nexport const notificationDefaults = ${JSON.stringify(notification)} as const;\nexport const notificationStyleHref = ${JSON.stringify(notificationStyleHref)};\nexport const notificationCss = ${JSON.stringify(notificationCss)};\n`);
+
+const otp = inventory.defaults["otp-input"];
+const otpField = inventory.defaults["text-field"];
+const otpFieldKeys = ["ink", "surface", "shadow", "shadow-hover", "shadow-focus", "ease", "faint", "wash", "danger",
+  "danger-surface", "shadow-invalid", "shadow-invalid-focus", "success", "muted"];
+const otpFieldTokens = mode => otpFieldKeys
+  .map(key => `--otp-${key}:${inventory.components["text-field"][mode][`--ui-tfc-${key}`]}`).join(";");
+const otpCss = [
+  `.kalos-otp{font:${typography.controlSize}px/${typography.controlLineHeight}px ${typography.family};${otpFieldTokens("light")};--otp-slot-width:${otp.slotWidth}px;--otp-height:${otp.slotHeight}px;--otp-radius:${otpField.radius}px;--otp-gap:${otp.gap}px;--otp-separator:${otp.separatorWidth}px;--otp-focus-in:${otpField.focusDuration}ms;--otp-focus-slide:${otp.focusSlideDuration}ms;--otp-digit-in:${otp.digitDuration}ms;--otp-shake:${otp.shakeDuration}ms;--otp-clear:${otp.clearDuration}ms;--otp-morph:${otp.morphDuration}ms}`,
+  `:where(.dark,[data-theme=dark]) .kalos-otp{${otpFieldTokens("dark")}}`,
+  await readFile("design/otp-input.css", "utf8"),
+].join("\n");
+const otpStyleHref = `kalos-otp-input-${createHash("sha256").update(otpCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-otp-input-styles.ts", `// Generated from design/component-tokens.json and design/otp-input.css.\n/*\n${loadingLicense}\n*/\nimport "@fontsource/roboto/latin-400.css";\nexport const otpDefaults = ${JSON.stringify(otp)} as const;\nexport const otpStyleHref = ${JSON.stringify(otpStyleHref)};\nexport const otpCss = ${JSON.stringify(otpCss)};\n`);
+
+const colorPicker = inventory.defaults["color-picker"];
+const colorPickerCss = [
+  `.kalos-color-panel,.kalos-color-popup{--color-panel-width:${colorPicker.width}px;--color-panel-radius:${colorPicker.radius}px;--color-panel-padding:${colorPicker.padding}px;--color-panel-gap:${colorPicker.gap}px;--color-plane-height:${colorPicker.planeHeight}px;--color-plane-touch-height:${colorPicker.touchPlaneHeight}px;--color-popup-duration:${colorPicker.duration}ms;--color-popup-scale:${colorPicker.scale};--color-popup-shift:${colorPicker.shift}px}`,
+  await readFile("design/color-picker.css", "utf8"),
+].join("\n");
+const colorPickerStyleHref = `kalos-color-picker-${createHash("sha256").update(colorPickerCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-color-picker-styles.ts", `// Generated from design/component-tokens.json and design/color-picker.css.\nexport const colorPickerStyleHref = ${JSON.stringify(colorPickerStyleHref)};\nexport const colorPickerCss = ${JSON.stringify(colorPickerCss)};\n`);
+
+const combobox = inventory.defaults.combobox;
+const comboboxColors = vars("combobox", Object.fromEntries(
+  Object.keys(inventory.components.combobox.light).map(key => [`combobox-${key}`, key]),
+));
+const comboboxSelected = vars("table", { "combobox-selected": "brand" });
+const comboboxEase = `cubic-bezier(${combobox.ease.join(",")})`;
+const comboboxStyles = {
+  label: "pl-0.5 text-[color:var(--k-combobox-muted)]",
+  colors: comboboxColors,
+  control: "flex items-center px-1! [&:not([data-pointer-focus]):has(input:focus-visible)>button]:bg-accent [&:not([data-pointer-focus]):has(input:focus-visible)>button]:text-foreground",
+  input: "h-6 min-w-0 flex-1 border-0 bg-transparent px-1.5 py-0 outline-none placeholder:text-[color:var(--k-subtle)] disabled:cursor-not-allowed [@media(pointer:coarse)]:text-base",
+  action: "flex size-6 shrink-0 items-center justify-center rounded-[6px] text-[color:var(--k-combobox-muted)] outline-none transition-colors duration-140 enabled:hover:bg-accent enabled:hover:text-foreground",
+  chevron: "size-3 transition-transform duration-200 [button[data-popup-open]_&]:rotate-180",
+  tags: "relative flex h-full min-w-0 flex-1 items-center overflow-clip [clip-margin:1px]",
+  tagTrack: "grid min-w-0 shrink-0 grid-cols-[minmax(0,1fr)]",
+  tag: `flex h-[${combobox.tagHeight}px] w-max max-w-full min-w-0 items-center gap-1.5 rounded-[${combobox.tagRadius}px] bg-[var(--k-combobox-chip)] pr-1 pl-1.5 text-[13px] leading-5 outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-ring [&>[data-slot=avatar]]:[--avatar-size:${combobox.tagAvatarSize}px]! [&>[data-slot=avatar]]:text-[7px]!`,
+  initialAvatar: "[&_[data-slot=avatar-fallback]>span]:[text-box:trim-both_cap_alphabetic]",
+  tagExit: "bg-[var(--k-combobox-removing)]",
+  more: `shrink-0 px-1.5 mr-[${combobox.tagGap}px] text-xs text-[color:var(--k-combobox-muted)]`,
+  remove: "flex size-4 shrink-0 items-center justify-center rounded-[4px] text-[color:var(--k-combobox-muted)] transition-colors enabled:hover:bg-background enabled:hover:text-foreground [&>svg]:size-3",
+  measure: `flex w-max items-center gap-[${combobox.tagGap}px]`,
+  popup: `${comboboxColors} ${comboboxSelected} w-(--anchor-width) max-w-(--available-width) origin-(--transform-origin) p-0! outline-none transition-[opacity,scale,translate] duration-[${combobox.popupDuration}ms] ease-[${comboboxEase}] data-anchor-hidden:invisible data-starting-style:scale-[${combobox.popupScale}] data-starting-style:opacity-0 data-ending-style:scale-[${combobox.popupScale}] data-ending-style:opacity-0 data-[side=bottom]:data-starting-style:-translate-y-[${combobox.popupShift}px] data-[side=bottom]:data-ending-style:-translate-y-[${combobox.popupShift}px] data-[side=top]:data-starting-style:translate-y-[${combobox.popupShift}px] data-[side=top]:data-ending-style:translate-y-[${combobox.popupShift}px]`,
+  viewport: `overflow-hidden rounded-[inherit] transition-[height] duration-[${combobox.resizeDuration}ms] ease-[${comboboxEase}]`,
+  scroll: `max-h-[min(${combobox.maxListHeight}px,calc(var(--available-height)-${combobox.footerHeight}px))] overflow-y-auto overscroll-contain before:top-0! before:left-0! before:translate-x-[var(--kalos-highlight-x,0px)] before:translate-y-[var(--kalos-highlight-y,0px)] before:rounded-[${select.itemRadius}px] before:bg-[var(--k-combobox-highlight)] before:transition-[translate,height,width,opacity] before:[transition-duration:${select.highlightDuration}ms,${select.highlightDuration}ms,${select.highlightDuration}ms,140ms] before:ease-out`,
+  group: "px-2 py-1 text-[10px] leading-4 tracking-[0.025em] text-[color:var(--k-combobox-muted)]",
+  item: "flex cursor-default items-center gap-2 pr-7! outline-none data-disabled:opacity-40 data-disabled:data-highlighted:ring-1 data-disabled:data-highlighted:ring-inset data-disabled:data-highlighted:ring-border [@media(pointer:coarse)]:min-h-11!",
+  hint: "min-w-0 truncate text-xs text-[color:var(--k-combobox-muted)]",
+  empty: `text-center text-[color:var(--k-combobox-muted)] [&:not(:empty)]:px-3 [&:not(:empty)]:pt-[${combobox.emptyPaddingTop}px] [&:not(:empty)]:pb-[${combobox.emptyPaddingBottom}px]`,
+  indicator: `pointer-events-none absolute inset-y-0 right-2 flex scale-100 items-center text-[color:var(--k-combobox-selected)] opacity-100 transition-[opacity,scale] [transition-duration:${combobox.checkFadeDuration}ms,${combobox.checkDuration}ms] [transition-timing-function:ease,cubic-bezier(${combobox.checkEase.join(",")})] [[aria-selected=false]_&]:scale-[0.4] [[aria-selected=false]_&]:opacity-0 [[aria-selected=false]_&]:[transition-duration:120ms,160ms] [&>svg]:size-4`,
+  icon: "flex shrink-0 items-center justify-center text-[color:var(--k-combobox-muted)] [&>svg]:size-3.5",
+  createIcon: "flex size-5 shrink-0 items-center justify-center rounded-[6px] text-[color:var(--k-combobox-muted)] shadow-[inset_0_0_0_0.5px_var(--k-combobox-icon-edge)] [&>svg]:size-3",
+  dot: "ml-0.5 size-2 shrink-0 rounded-full",
+  measureAvatar: `size-[${combobox.tagAvatarSize}px] shrink-0`,
+  match: "rounded-[2px] bg-[color-mix(in_srgb,var(--selection-background)_64%,transparent)] text-inherit",
+  footer: `flex h-[${combobox.footerHeight}px] items-center justify-between gap-1 rounded-b-[inherit] border-t border-[var(--k-combobox-icon-edge)] px-3 text-xs leading-4 text-[color:var(--k-combobox-muted)]`,
+  shortcuts: "flex items-center gap-1 [@media(pointer:coarse)]:hidden",
+  key: "inline-grid size-[18px] place-items-center rounded-[5px] font-[inherit] text-xs leading-none shadow-[inset_0_0_0_0.5px_var(--k-combobox-icon-edge)]",
+};
+await writeFile("components/ui/kalos-combobox-styles.ts", `// Generated from design/component-tokens.json.
+export const comboboxDefaults = ${JSON.stringify(combobox)} as const;
+export const comboboxStyles = ${JSON.stringify(comboboxStyles, null, 2)} as const;
+`);
+
+const dropzone = inventory.defaults.dropzone;
+const dropzoneColors = inventory.components.dropzone;
+const themeTokens = JSON.parse(await readFile("design/tokens.json", "utf8"));
+const dropzoneVars = (mode) => {
+  const palette = inventory.components[dropzoneColors.tokensFrom][mode];
+  return [
+    ...Object.entries(dropzoneColors.themeMapping).map(([name, source]) => [name, `var(--${source}, ${themeTokens[mode][source]})`]),
+    ...Object.entries(dropzoneColors.colorMapping).map(([name, source]) => [name, palette[source]]),
+    ["document-wash", inventory.components.badge[mode]["danger-wash"]],
+  ].map(([name, value]) => `--kalos-dz-${name}:${value}`).join(";");
+};
+const dropzoneCss = [
+  `.kalos-dropzone{font-family:${inventory.font.family};font-size:${inventory.font.controlSize}px;line-height:${inventory.font.controlLineHeight}px;${dropzoneVars("light")};--kalos-dz-width:${dropzone.width}px;--kalos-dz-radius:${dropzone.radius}px;--kalos-dz-inner-radius:${dropzone.innerRadius}px;--kalos-dz-duration:${dropzone.duration}ms;--kalos-dz-fan-duration:${dropzone.fanDuration}ms;--kalos-dz-progress-collapse:${dropzone.progressCollapseDuration}ms;--kalos-dz-ease:cubic-bezier(${dropzone.ease.join(",")})}`,
+  `:where(.dark,[data-theme=dark]) .kalos-dropzone{${dropzoneVars("dark")}}`,
+  await readFile("design/dropzone.css", "utf8"),
+].join("\n");
+const dropzoneStyleHref = `kalos-dropzone-${createHash("sha256").update(dropzoneCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-dropzone-styles.ts", `// Generated from design tokens and design/dropzone.css.\nimport "@fontsource/roboto/latin-400.css";\nimport "@fontsource/roboto/latin-500.css";\nexport const dropzoneDefaults = ${JSON.stringify(dropzone)} as const;\nexport const dropzoneStyleHref = ${JSON.stringify(dropzoneStyleHref)};\nexport const dropzoneCss = ${JSON.stringify(dropzoneCss)};\n`);
+
+const stepper = inventory.defaults["stepper-form"];
+const stepperColors = inventory.components["stepper-form"];
+const stepperCss = [
+  `.kalos-stepper{font-family:${inventory.font.family};font-size:${inventory.font.controlSize}px;line-height:${inventory.font.controlLineHeight}px;--kalos-stepper-width:${stepper.width}px;--kalos-stepper-radius:${stepper.radius}px;--kalos-stepper-padding:${stepper.padding}px;--kalos-stepper-narrow-padding:${stepper.narrowPadding}px;--kalos-stepper-track-height:${stepper.trackHeight}px;--kalos-stepper-success-icon:${stepper.successIconSize}px;--kalos-stepper-success-mark:${stepper.successMarkSize}px;--kalos-stepper-progress:${stepperColors.light.progress};--kalos-stepper-duration:${stepper.duration}ms;--kalos-stepper-ease:cubic-bezier(${stepper.ease.join(",")})}`,
+  `:where(.dark,[data-theme=dark]) .kalos-stepper{--kalos-stepper-progress:${stepperColors.dark.progress}}`,
+  (await readFile("design/stepper-form.css", "utf8")).replace("STEPPER_COMPACT_WIDTH", `${stepper.compactWidth}px`),
+].join("\n");
+const stepperStyleHref = `kalos-stepper-form-${createHash("sha256").update(stepperCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-stepper-form-styles.ts", `// Generated from design/component-tokens.json and design/stepper-form.css.\nexport const stepperDefaults = ${JSON.stringify(stepper)} as const;\nexport const stepperStyleHref = ${JSON.stringify(stepperStyleHref)};\nexport const stepperCss = ${JSON.stringify(stepperCss)};\n`);

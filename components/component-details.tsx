@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Code2, Eye } from "lucide-react";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { DocTabsList as TabsList, DocTabsTrigger as TabsTrigger } from "@/components/doc-tabs";
+import { ComboboxDemo } from "@/components/combobox-demo";
 import { ComponentDemo } from "@/components/demos";
 import { CodeBlock } from "@/components/docs-parts";
 import { ComponentToolbar } from "@/components/component-toolbar";
@@ -71,7 +72,7 @@ export function ComponentDetails({
       </div>
       <TabsContent value="preview">
         <div className="detail-preview">
-          <div className="detail-preview-surface" data-component={slug}><ComponentDemo key={revision} slug={slug} /></div>
+          <div className="detail-preview-surface" data-component={slug}>{slug === "kalos-combobox" ? <ComboboxDemo key={revision} initialOpen /> : <ComponentDemo key={revision} slug={slug} />}</div>
         </div>
       </TabsContent>
       <TabsContent value="code">

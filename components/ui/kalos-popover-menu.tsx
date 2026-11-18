@@ -7,7 +7,8 @@ import { slidingHighlightClasses, useSlidingHighlight } from "@/components/ui/ka
 
 export type KalosPopoverItem = { value: string; label: string; disabled?: boolean };
 export type KalosPopoverProps = {
-  trigger: string;
+  trigger: ReactNode;
+  triggerProps?: { variant?: "outline" | "ghost"; size?: "default" | "icon"; "aria-label"?: string };
   label?: string;
   items?: KalosPopoverItem[];
   children?: ReactNode;
@@ -29,7 +30,7 @@ export function usePopoverState({ open, defaultOpen = false, onOpenChange }: Kal
 }
 
 export function KalosPopoverMenu({ label, items, onAction }: {
-  label: string;
+  label?: string;
   items: KalosPopoverItem[];
   onAction: (value: string) => void;
 }) {

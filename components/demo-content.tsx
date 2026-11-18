@@ -23,10 +23,12 @@ import { FieldGroup } from "@/components/ui/field";
 import type { KalosCommandMenuProps } from "@/components/ui/kalos-command-menu-panel";
 import type { KalosPopoverProps } from "@/components/ui/kalos-popover-menu";
 import type { KalosFormProps } from "@/registry/kalos/kalos-form";
+import type { KalosSelectProps } from "@/registry/kalos/kalos-select";
 import type { KalosFormField } from "@/components/ui/kalos-form-state";
 import { HoverCardActivityDemo } from "@/components/hover-card-activity-demo";
 import type { KalosHoverCardProps } from "@/components/ui/kalos-hover-card-shared";
 import { PopoverDemo } from "@/components/popover-demo";
+import { SelectDemo } from "@/components/select-demo";
 import { SegmentedControlDemo } from "@/components/segmented-control-demo";
 import type { KalosSegmentedControlProps } from "@/components/ui/kalos-segmented-control-view";
 import type { NumberInputExampleVariant } from "@/lib/number-input-examples";
@@ -42,6 +44,10 @@ import type { PopoverExampleVariant } from "@/lib/component-examples";
 import { CardDemo } from "@/components/card-demo";
 import type { KalosCardProps } from "@/registry/kalos/kalos-card";
 import { BadgeDemo } from "@/components/badge-demo";
+import { DrawerDemo } from "@/components/drawer-demo";
+import { ToastDemo } from "@/components/toast-demo";
+import { StepperFormDemo } from "@/components/stepper-form-demo";
+import { NotificationDemo } from "@/components/notification-demo";
 import { PaginationDemo } from "@/components/pagination-demo";
 import type { KalosBadgeProps } from "@/registry/kalos/kalos-badge";
 
@@ -49,7 +55,12 @@ import { DropdownMenuDemo } from "@/components/dropdown-menu-demo";
 import type { KalosDropdownMenuProps } from "@/components/ui/kalos-dropdown-menu-shared";
 import type { DropdownExampleVariant } from "@/lib/dropdown-menu-examples";
 
+import { ComboboxDemo } from "@/components/combobox-demo";
+import { TextAreaDemo } from "@/components/text-area-demo";
+import { ColorPickerDemo } from "@/components/color-picker-demo";
+import { DropzoneDemo } from "@/components/dropzone-demo";
 import { NumberInputDemo } from "@/components/number-input-demo";
+import { OtpInputDemo } from "@/components/otp-input-demo";
 import type { KalosNumberInputProps } from "@/components/ui/kalos-number-input-model";
 
 const formFields: KalosFormField[] = [
@@ -120,13 +131,7 @@ export interface DemoComponents {
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
   }>;
-  KalosSelect: ComponentType<{
-    label: string;
-    placeholder?: string;
-    items: { value: string; label: string }[];
-    value?: string;
-    onValueChange?: (value: string) => void;
-  }>;
+  KalosSelect: ComponentType<KalosSelectProps>;
   KalosProgress: ComponentType<{
     label: string;
     value: number;
@@ -233,7 +238,6 @@ export function DemoContent({
     KalosAvatarStack,
   } = components;
   const [progress, setProgress] = useState(68);
-  const [framework, setFramework] = useState("next");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [contact, setContact] = useState({ name: "", email: "" });
   const changeDialogOpen = (open: boolean) => {
@@ -256,9 +260,11 @@ export function DemoContent({
     case "kalos-tooltip":
       return <TooltipDemo compact={compact} />;
     case "kalos-dropdown-menu":
-      return <DropdownMenuDemo KalosDropdownMenu={KalosDropdownMenu} components={{ KalosTable, KalosDialog, KalosButton, KalosInput }} variant={dropdownVariant} compact={compact} />;
+      return <DropdownMenuDemo KalosDropdownMenu={KalosDropdownMenu} variant={dropdownVariant} compact={compact} />;
     case "kalos-table":
       return <TableDemo KalosTable={KalosTable} KalosDropdownMenu={KalosDropdownMenu} KalosButton={KalosButton} KalosDialog={KalosDialog} KalosAlertDialog={KalosAlertDialog} KalosInput={KalosInput} variant={tableVariant} compact={compact} />;
+    case "kalos-stepper-form":
+      return <StepperFormDemo />;
     case "kalos-form":
       return <KalosForm title="成员设置" fields={formFields} defaultValues={{ notifications: true }} aria-label="成员设置" />;
     case "kalos-button":
@@ -274,9 +280,19 @@ export function DemoContent({
     case "kalos-hover-card":
       return <HoverCardActivityDemo KalosHoverCard={KalosHoverCard} compact={compact} />;
     case "kalos-popover":
-      return <PopoverDemo KalosPopover={KalosPopover} KalosInput={KalosInput} KalosSelect={KalosSelect} KalosButton={KalosButton} variant={popoverVariant} />;
+      return <PopoverDemo KalosPopover={KalosPopover} KalosInput={KalosInput} KalosSelect={KalosSelect} KalosButton={KalosButton} variant={popoverVariant} compact={compact} />;
     case "kalos-number-input":
       return <NumberInputDemo Control={KalosNumberInput} KalosButton={KalosButton} variant={numberVariant} compact={compact} />;
+    case "kalos-otp-input":
+      return <OtpInputDemo compact={compact} />;
+    case "kalos-combobox":
+      return <ComboboxDemo />;
+    case "kalos-text-area":
+      return <TextAreaDemo compact={compact} />;
+    case "kalos-color-picker":
+      return <ColorPickerDemo compact={compact} />;
+    case "kalos-dropzone":
+      return <DropzoneDemo compact={compact} />;
     case "kalos-input":
       return (
         <div className="demo-form">
@@ -347,6 +363,12 @@ export function DemoContent({
         actionLabel="删除文件"
         onConfirm={() => toast.success("文件已删除")}
       />;
+    case "kalos-drawer":
+      return <DrawerDemo />;
+    case "kalos-toast":
+      return <ToastDemo />;
+    case "kalos-notification":
+      return <NotificationDemo compact={compact} />;
     case "kalos-dialog":
       return (
         <KalosDialog
@@ -366,20 +388,7 @@ export function DemoContent({
         </KalosDialog>
       );
     case "kalos-select":
-      return (
-        <div className="demo-form">
-          <KalosSelect
-            label="开发框架"
-            value={framework}
-            onValueChange={setFramework}
-            items={[
-              { value: "next", label: "Next.js" },
-              { value: "react", label: "React + Vite" },
-              { value: "remix", label: "React Router" },
-            ]}
-          />
-        </div>
-      );
+      return <SelectDemo compact={compact} />;
     case "kalos-progress":
       return (
         <div className="demo-form">

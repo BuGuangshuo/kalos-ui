@@ -3,7 +3,8 @@
 import * as React from "react";
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { cn } from "cn";
-import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { controlStyles } from "@/components/ui/kalos-styles";
 
 const Select = SelectPrimitive.Root;
 
@@ -21,7 +22,7 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
   return (
     <SelectPrimitive.Value
       data-slot="select-value"
-      className={cn("flex flex-1 text-left", className)}
+      className={cn("flex min-w-0 flex-1 text-start", className)}
       {...props}
     />
   );
@@ -47,10 +48,11 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon
-        render={
-          <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
-        }
-      />
+        data-slot="select-icon"
+        className={controlStyles.selectChevron}
+      >
+        <ChevronDownIcon strokeWidth={1.8} />
+      </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );
 }
@@ -63,6 +65,8 @@ function SelectContent({
   align = "center",
   alignOffset = 0,
   alignItemWithTrigger = true,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
   ...props
 }: SelectPrimitive.Popup.Props &
   Pick<
@@ -83,13 +87,14 @@ function SelectContent({
           data-slot="select-content"
           data-align-trigger={alignItemWithTrigger}
           className={cn(
-            "relative isolate z-50 max-h-(--available-height) w-(--anchor-width) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-[10px] bg-popover text-popover-foreground shadow-[0_6px_24px_-6px_color-mix(in_srgb,var(--foreground)_18%,transparent)] ring-1 ring-foreground/10 duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            "relative isolate z-50 w-(--anchor-width) origin-(--transform-origin) rounded-[10px] bg-popover text-popover-foreground shadow-[0_6px_24px_-6px_color-mix(in_srgb,var(--foreground)_18%,transparent)] ring-1 ring-foreground/10",
+            controlStyles.selectPopup,
             className,
           )}
           {...props}
         >
           <SelectScrollUpButton />
-          <SelectPrimitive.List>{children}</SelectPrimitive.List>
+          <SelectPrimitive.List aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>{children}</SelectPrimitive.List>
           <SelectScrollDownButton />
         </SelectPrimitive.Popup>
       </SelectPrimitive.Positioner>
@@ -119,20 +124,18 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-1.5 rounded-[5px] py-1.5 pr-8 pl-2 text-[13px] outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "group/select-option relative flex w-full cursor-default items-center gap-2 rounded-[5px] py-1.5 pr-8 pl-2 text-[13px] outline-hidden select-none focus:bg-accent data-disabled:pointer-events-none data-disabled:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className,
       )}
       {...props}
     >
-      <SelectPrimitive.ItemText className="flex flex-1 shrink-0 gap-2 whitespace-nowrap">
+      <SelectPrimitive.ItemText className="flex min-w-0 flex-1 items-center gap-2">
         {children}
       </SelectPrimitive.ItemText>
-      <SelectPrimitive.ItemIndicator
-        render={
-          <span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center" />
-        }
-      >
-        <CheckIcon className="pointer-events-none" />
+      <SelectPrimitive.ItemIndicator data-slot="select-indicator" aria-hidden="true" className={controlStyles.selectIndicator}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <path className={controlStyles.selectTick} pathLength={1} d="M5 12.5 9.5 17 19 7" />
+        </svg>
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   );

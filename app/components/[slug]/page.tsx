@@ -12,11 +12,18 @@ import { CodeBlock } from "@/components/code-block";
 import { reactExample } from "@/lib/component-examples";
 import { hoverCardActivityExample } from "@/lib/hover-card-examples";
 import { PopoverExamples } from "@/components/popover-examples";
+import { DrawerExamples } from "@/components/drawer-examples";
+import { NotificationExamples } from "@/components/notification-examples";
 import { BadgeExamples } from "@/components/badge-examples";
 import { PaginationExamples } from "@/components/pagination-examples";
 import { SegmentedControlExamples } from "@/components/segmented-control-examples";
 import { DropdownMenuExamples } from "@/components/dropdown-menu-examples";
 import { NumberInputExamples } from "@/components/number-input-examples";
+import { TextAreaExamples } from "@/components/text-area-examples";
+import { ColorPickerExamples } from "@/components/color-picker-examples";
+import { DropzoneExamples } from "@/components/dropzone-examples";
+import { ToastExamples } from "@/components/toast-examples";
+import { toasterSetupExample } from "@/lib/toast-examples";
 import { TableExamples } from "@/components/table-examples";
 import { tableExample, tableExampleVariants } from "@/lib/table-examples";
 import { componentPrompt } from "@/lib/component-prompt";
@@ -46,7 +53,7 @@ export default async function DetailPage({
   const { slug } = await params;
   const item = catalog.find((item) => item.slug === slug);
   if (!item) notFound();
-  const [source, hoverCardDemoSource, tableDemoSource, tableOptionsSource, tablePaginationSource] = await Promise.all([
+  const [source, hoverCardDemoSource, tableDemoSource, tableOptionsSource, tablePaginationSource, stepperDemoSource] = await Promise.all([
     slug === "kalos-command-menu"
       ? readFile(path.join(process.cwd(), "components/ui/kalos-command-menu-panel.tsx"), "utf8")
       : readFile(path.join(process.cwd(), "registry/kalos", `${item.slug}.tsx`), "utf8"),
@@ -54,7 +61,11 @@ export default async function DetailPage({
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-demo.tsx"), "utf8") : "",
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-row-options.tsx"), "utf8") : "",
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-pagination-demo.tsx"), "utf8") : "",
+    slug === "kalos-stepper-form" ? readFile(path.join(process.cwd(), "components/stepper-form-demo.tsx"), "utf8") : "",
   ]);
+  const example = stepperDemoSource
+    ? stepperDemoSource.replace("@/registry/kalos/kalos-stepper-form", "@/components/ui/kalos-stepper-form").trim()
+    : reactExample(item);
   const index = catalog.indexOf(item);
   const previous = catalog[index - 1],
     next = catalog[index + 1];
@@ -86,25 +97,38 @@ export default async function DetailPage({
                 name: `${item.title} ${item.english}`,
                 description: item.description,
                 installation: installerCommand(site.url, "npm", item.slug),
-                example: reactExample(item),
+                example,
                 docsUrl: `${site.url}/components/${item.slug}`,
                 registryUrl: `${site.url}/r/${item.slug}.json`,
               })}
             />
           </section>
           <ComponentInstallation slug={slug} />
+          {slug === "kalos-toast" ? <section id="toaster-setup">
+            <h2>接入应用</h2>
+            <p>在应用根部放置一次 KalosToaster，再从客户端调用 toast。默认位于页面顶部居中，3 秒后关闭。</p>
+            <CodeBlock code={toasterSetupExample} language="tsx" />
+          </section> : null}
           <section id="usage">
             <h2>使用</h2>
+            {slug === "kalos-dropzone" ? <p>将示例中的 <code>/api/uploads</code> 替换为你的上传端点，并在服务端校验文件类型与大小。省略 <code>onUpload</code> 时使用本地模拟进度。</p> : null}
+            {slug === "kalos-drawer" ? <p>表单示例还需安装 Input、Select、Time Picker、Range Picker 与 Checkbox：运行安装命令时追加 input select time-picker date-range-picker checkbox。示例计时器演示初始化与确认加载，实际接入时由数据请求与保存操作控制。</p> : null}
             {slug === "kalos-table" ? <p>默认示例的 Options 使用 Dropdown Menu、Dialog、Input 和 Button；同时安装这些组件，并运行 npm install sonner 以显示操作结果。已有 Toaster 时复用原有入口。</p> : null}
             <CodeBlock
-              code={slug === "kalos-hover-card" ? hoverCardActivityExample(hoverCardDemoSource) : slug === "kalos-table" ? tableExample("data", tableDemoSource, tableOptionsSource) : reactExample(item)}
+              code={slug === "kalos-hover-card" ? hoverCardActivityExample(hoverCardDemoSource) : slug === "kalos-table" ? tableExample("data", tableDemoSource, tableOptionsSource) : example}
               language="tsx"
             />
           </section>
           {slug === "kalos-number-input" && <NumberInputExamples />}
+          {slug === "kalos-text-area" && <TextAreaExamples />}
+          {slug === "kalos-dropzone" && <DropzoneExamples />}
+          {slug === "kalos-color-picker" && <ColorPickerExamples />}
+          {slug === "kalos-toast" && <ToastExamples />}
           {slug === "kalos-segmented-control" && <SegmentedControlExamples />}
           {slug === "kalos-dropdown-menu" && <DropdownMenuExamples />}
           {slug === "kalos-popover" && <PopoverExamples />}
+          {slug === "kalos-drawer" && <DrawerExamples />}
+          {slug === "kalos-notification" && <NotificationExamples />}
           {slug === "kalos-badge" && <BadgeExamples />}
           {slug === "kalos-pagination" && <PaginationExamples />}
           {slug === "kalos-table" && <TableExamples examples={Object.fromEntries(tableExampleVariants.map(({ variant }) => [variant, tableExample(variant, tableDemoSource, tableOptionsSource, tablePaginationSource)]))} />}

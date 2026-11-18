@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useLayoutEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ComponentType, type ReactNode, type UIEvent } from "react";
 import { Reorder, useDragControls } from "motion/react";
 import { ArrowUp, GripVertical, Plus, Redo2, Trash2, Undo2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -20,13 +20,31 @@ export type TableGridModel = {
   onReorder?: (ids: string[], targetId: string, position: "before" | "after") => void;
   footer?: ReactNode[];
   emptyMessage: string;
+  scrollAreaProps?: KalosTableProps["scrollAreaProps"];
 };
 
-export function NativeTableGrid({ label, descriptionId, interactive, minWidth, headers, rows, footer, emptyMessage, onReorder }: TableGridModel) {
+export function NativeTableGrid({ label, descriptionId, interactive, minWidth, headers, rows, footer, emptyMessage, onReorder, scrollAreaProps }: TableGridModel) {
   const [previewOrder, setPreviewOrder] = useState<string[] | null>(null);
   const previewRef = useRef<string[] | null>(null);
   const [keyboardDrag, setKeyboardDrag] = useState<{ id: string; targetId: string; position: "before" | "after" } | null>(null);
+  const headerViewport = useRef<HTMLDivElement>(null);
   const instructionsId = useId();
+  const { className: scrollClassName, onScroll, ...viewportProps } = scrollAreaProps ?? {};
+
+  useLayoutEffect(() => {
+    const header = headerViewport.current;
+    const body = header?.nextElementSibling;
+    if (!header || !(body instanceof HTMLDivElement)) return;
+
+    // Match the body content width when a native scrollbar takes up space.
+    const observer = new ResizeObserver(([{ contentRect }]) => {
+      header.style.width = `${contentRect.width}px`;
+      syncTableScroll(body, header);
+    });
+    observer.observe(body);
+    return () => observer.disconnect();
+  }, []);
+
   const orderedRows = previewOrder ? previewOrder.map(id => rows.find(row => row.id === id)).filter((row): row is TableGridModel["rows"][number] => !!row) : rows;
   const finishDrag = (id: string) => {
     const order = previewRef.current;
@@ -49,16 +67,44 @@ export function NativeTableGrid({ label, descriptionId, interactive, minWidth, h
       setKeyboardDrag({ id, targetId: rows[index].id, position: index > rows.findIndex(row => row.id === id) ? "after" : "before" });
     }
   };
-  const bodyRows = rows.length ? orderedRows.map(row => onReorder ? <NativeDraggableRow key={row.id} row={row} headers={headers} interactive={interactive} instructionsId={instructionsId} keyboardDrag={keyboardDrag} onKeyDown={event => keyboard(event, row.id)} onDragStart={() => { setKeyboardDrag(null); }} onDragEnd={() => finishDrag(row.id)} /> : <tr key={row.id} data-selected={row.selected || undefined} aria-selected={interactive ? row.selected : undefined} className={styles.tableRow}>
-    {row.cells.map((cell, index) => cell.colSpan === 0 ? null : <td key={headers[index].key} colSpan={cell.colSpan} role={interactive ? "gridcell" : undefined} aria-selected={interactive ? cell.selected : undefined} data-range={cell.selected || undefined} className={cn(styles.tableCell, cell.className)}>{cell.content}</td>)}
-  </tr>) : <tr><td colSpan={headers.length} className={styles.tableEmpty}>{emptyMessage}</td></tr>;
-  return <table aria-label={label} aria-describedby={descriptionId} role={interactive ? "grid" : undefined} className={styles.tableGrid} style={{ minWidth }}>
-    {onReorder ? <caption id={instructionsId} className="sr-only">按空格拾取行，方向键选择位置，Enter 放置，Escape 取消；也可拖动行首手柄。</caption> : null}
-    <colgroup>{headers.map(header => <col key={header.key} style={{ width: header.width }} />)}</colgroup>
-    <thead><tr>{headers.map(header => <th key={header.key} scope="col" aria-sort={header.sort} className={styles.tableHead}>{header.content}</th>)}</tr></thead>
-    {onReorder ? <Reorder.Group as="tbody" axis="y" values={previewOrder ?? rows.map(row => row.id)} onReorder={order => { previewRef.current = order; setPreviewOrder(order); }}>{bodyRows}</Reorder.Group> : <tbody>{bodyRows}</tbody>}
-    {footer ? <tfoot className={styles.tableSummary}><tr>{headers.map((header, index) => <td key={header.key} className={header.numeric ? "tabular-nums" : undefined}>{footer[index]}</td>)}</tr></tfoot> : null}
-  </table>;
+  const cellRole = interactive ? "gridcell" : "cell";
+  const columns = <colgroup>{headers.map(header => <col key={header.key} style={{ width: header.width }} />)}</colgroup>;
+  const bodyRows = rows.length ? orderedRows.map(row => onReorder ? <NativeDraggableRow key={row.id} row={row} headers={headers} interactive={interactive} instructionsId={instructionsId} keyboardDrag={keyboardDrag} onKeyDown={event => keyboard(event, row.id)} onDragStart={() => { setKeyboardDrag(null); }} onDragEnd={() => finishDrag(row.id)} /> : <tr key={row.id} role="row" data-selected={row.selected || undefined} aria-selected={interactive ? row.selected : undefined} className={styles.tableRow}>
+    {row.cells.map((cell, index) => cell.colSpan === 0 ? null : <td key={headers[index].key} colSpan={cell.colSpan} role={cellRole} aria-colspan={cell.colSpan} aria-selected={interactive ? cell.selected : undefined} data-range={cell.selected || undefined} className={cn(styles.tableCell, cell.className)}>{cell.content}</td>)}
+  </tr>) : <tr role="row"><td role={cellRole} colSpan={headers.length} aria-colspan={headers.length || undefined} className={styles.tableEmpty}>{emptyMessage}</td></tr>;
+
+  function handleBodyScroll(event: UIEvent<HTMLDivElement>) {
+    const header = headerViewport.current;
+    if (header) syncTableScroll(event.currentTarget, header);
+    onScroll?.(event);
+  }
+
+  // Expose one accessible table while the two sections share column sizes and scroll separately.
+  return <div role={interactive ? "grid" : "table"} aria-label={label} aria-describedby={descriptionId}>
+    {onReorder ? <span id={instructionsId} className="sr-only">按空格拾取行，方向键选择位置，Enter 放置，Escape 取消；也可拖动行首手柄。</span> : null}
+    <div ref={headerViewport} data-slot="kalos-table-header" className={styles.tableHeader} tabIndex={-1} onScroll={event => {
+      const body = event.currentTarget.nextElementSibling;
+      if (body) syncTableScroll(event.currentTarget, body);
+    }}>
+      <table role="presentation" className={styles.tableGrid} style={{ minWidth }}>
+        {columns}
+        <thead role="rowgroup"><tr role="row">{headers.map(header => <th key={header.key} role="columnheader" scope="col" aria-sort={header.sort} className={styles.tableHead}>{header.content}</th>)}</tr></thead>
+      </table>
+    </div>
+    <div {...viewportProps} data-slot="kalos-table-scroll" className={cn(styles.tableScroll, scrollClassName)} onScroll={handleBodyScroll}>
+      <table role="presentation" className={styles.tableGrid} style={{ minWidth }}>
+        {columns}
+        {onReorder ? <Reorder.Group as="tbody" role="rowgroup" axis="y" values={previewOrder ?? rows.map(row => row.id)} onReorder={order => { previewRef.current = order; setPreviewOrder(order); }}>{bodyRows}</Reorder.Group> : <tbody role="rowgroup">{bodyRows}</tbody>}
+        {footer ? <tfoot role="rowgroup" className={styles.tableSummary}><tr role="row">{headers.map((header, index) => <td key={header.key} role={cellRole} className={header.numeric ? "tabular-nums" : undefined}>{footer[index]}</td>)}</tr></tfoot> : null}
+      </table>
+    </div>
+  </div>;
+}
+
+function syncTableScroll(source: Element, target: Element) {
+  if (source.scrollLeft !== target.scrollLeft) {
+    target.scrollTo({ left: source.scrollLeft, behavior: "instant" });
+  }
 }
 
 function NativeDraggableRow({ row, headers, interactive, instructionsId, keyboardDrag, onKeyDown, onDragStart, onDragEnd }: {
@@ -73,8 +119,8 @@ function NativeDraggableRow({ row, headers, interactive, instructionsId, keyboar
 }) {
   const controls = useDragControls();
   const [dragging, setDragging] = useState(false);
-  return <Reorder.Item as="tr" value={row.id} dragListener={false} dragControls={controls} layout="position" transition={{ layout: { duration: .2, ease: [.25, .1, .25, 1] } }} onDragStart={() => { setDragging(true); onDragStart(); }} onDragEnd={() => { setDragging(false); onDragEnd(); }} data-table-row={row.id} data-dragging={dragging || keyboardDrag?.id === row.id || undefined} data-drop-position={keyboardDrag?.targetId === row.id ? keyboardDrag.position : undefined} data-selected={row.selected || undefined} aria-selected={interactive ? row.selected : undefined} className={styles.tableRow}>
-    {row.cells.map((cell, index) => cell.colSpan === 0 ? null : <td key={headers[index].key} colSpan={cell.colSpan} role={interactive ? "gridcell" : undefined} aria-selected={interactive ? cell.selected : undefined} data-range={cell.selected || undefined} className={cn(styles.tableCell, cell.className)}>{headers[index].key === "__drag" ? <button type="button" className={styles.tableDragHandle} aria-label={`拖动 ${cell.text} 排序`} aria-describedby={instructionsId} aria-pressed={dragging || keyboardDrag?.id === row.id} onPointerDown={event => { if (event.button === 0) controls.start(event); }} onKeyDown={onKeyDown}><GripVertical aria-hidden /></button> : cell.content}</td>)}
+  return <Reorder.Item as="tr" role="row" value={row.id} dragListener={false} dragControls={controls} layout="position" transition={{ layout: { duration: .2, ease: [.25, .1, .25, 1] } }} onDragStart={() => { setDragging(true); onDragStart(); }} onDragEnd={() => { setDragging(false); onDragEnd(); }} data-table-row={row.id} data-dragging={dragging || keyboardDrag?.id === row.id || undefined} data-drop-position={keyboardDrag?.targetId === row.id ? keyboardDrag.position : undefined} data-selected={row.selected || undefined} aria-selected={interactive ? row.selected : undefined} className={styles.tableRow}>
+    {row.cells.map((cell, index) => cell.colSpan === 0 ? null : <td key={headers[index].key} colSpan={cell.colSpan} role={interactive ? "gridcell" : "cell"} aria-colspan={cell.colSpan} aria-selected={interactive ? cell.selected : undefined} data-range={cell.selected || undefined} className={cn(styles.tableCell, cell.className)}>{headers[index].key === "__drag" ? <button type="button" className={styles.tableDragHandle} aria-label={`拖动 ${cell.text} 排序`} aria-describedby={instructionsId} aria-pressed={dragging || keyboardDrag?.id === row.id} onPointerDown={event => { if (event.button === 0) controls.start(event); }} onKeyDown={onKeyDown}><GripVertical aria-hidden /></button> : cell.content}</td>)}
   </Reorder.Item>;
 }
 
@@ -94,7 +140,7 @@ export function KalosTableView({ Grid = NativeTableGrid, Check, TagSelect, ...pr
 }) {
   const { columns, rows: controlledRows, defaultRows = [], onRowsChange, title, icon, caption, editable = false,
     selectable = false, sortable = false, reorderable = false, tagTones = {}, footer, pagination, rowActions, addRowLabel = "添加行", emptyMessage = "暂无数据", dir, className } = props;
-  const { key: scrollKey, className: scrollClassName, ...scrollAreaProps } = props.scrollAreaProps ?? {};
+  const { key: scrollKey, ...scrollAreaProps } = props.scrollAreaProps ?? {};
   const [internalRows, setRows] = useState(defaultRows);
   const rows = controlledRows ?? internalRows;
   const [sort, setSort] = useState<{ key: string; direction: "ascending" | "descending" } | null>(props.defaultSort ?? null);
@@ -375,13 +421,13 @@ export function KalosTableView({ Grid = NativeTableGrid, Check, TagSelect, ...pr
         <button type="button" className={styles.tableToolbarButton} aria-label="重做" title="重做 (⌘/Ctrl+Shift+Z)" disabled={!history.future.length} onClick={() => travel("redo")}><Redo2 /></button>
       </div> : null}
     </div> : null}
-    <div key={scrollKey} {...scrollAreaProps} data-slot="kalos-table-scroll" className={cn(styles.tableScroll, scrollClassName)}><Grid label={label} descriptionId={caption ? captionId : undefined} interactive={interactive} minWidth={headers.reduce((sum, header) => sum + header.width, 0)} headers={headers} rows={gridRows} onReorder={reorderable ? (ids, targetId, position) => {
+    <Grid key={scrollKey} scrollAreaProps={scrollAreaProps} label={label} descriptionId={caption ? captionId : undefined} interactive={interactive} minWidth={headers.reduce((sum, header) => sum + header.width, 0)} headers={headers} rows={gridRows} onReorder={reorderable ? (ids, targetId, position) => {
       const reordered = reorderTableRows(visible, ids, targetId, position);
       const visibleIds = new Set(visible.map(row => row.id));
       let index = 0;
       commit(rows.map(row => visibleIds.has(row.id) ? reordered[index++] : row));
       setSort(null); setRange(null); setStatus("已更新行顺序");
-    } : undefined} footer={footer ? [...(reorderable ? [null] : []), ...(selectable ? [null] : []), ...footer, ...(rowActions ? [null] : [])] : undefined} emptyMessage={emptyMessage} /></div>
+    } : undefined} footer={footer ? [...(reorderable ? [null] : []), ...(selectable ? [null] : []), ...footer, ...(rowActions ? [null] : [])] : undefined} emptyMessage={emptyMessage} />
     {editable || selectable ? <div className={styles.tableFooter}>
       <div className="flex items-center gap-3">
         {editable ? <button type="button" className={styles.tableAdd} onClick={() => {

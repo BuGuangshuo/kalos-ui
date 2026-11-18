@@ -59,23 +59,39 @@ export default function Example() {
     ]} onAction={value => console.log(value)} />
   </div>;
 }`;
-  return `${imports}
-import { Copy, FileText, Folder, FolderInput, MoreHorizontal, Trash2 } from "lucide-react";
+  if (variant === "basic") return `${imports}
+import { ChevronDown, Copy, FileText, Pencil, Trash2 } from "lucide-react";
 
 export default function Example() {
+  return <KalosDropdownMenu trigger={<>文件操作<ChevronDown /></>} items={[
+    { value: "open", label: "打开文件", icon: <FileText />, shortcut: "↵" },
+    { value: "rename", label: "重命名", icon: <Pencil /> },
+    { value: "duplicate", label: "创建副本", icon: <Copy />, shortcut: "⌘D" },
+    { value: "delete", label: "删除文件", icon: <Trash2 />, danger: true, divider: true },
+  ]} onAction={value => console.log("文件操作：", value)} />;
+}`;
+  return `${imports}
+import { useState } from "react";
+import { Bell, Copy, FileText, Folder, FolderInput, Link, MoreHorizontal, Trash2 } from "lucide-react";
+
+export default function Example() {
+  const [notifications, setNotifications] = useState(true);
+  const [folder, setFolder] = useState("personal");
+
   return <KalosDropdownMenu
     trigger={<MoreHorizontal />}
-    triggerProps={{ variant: "ghost", size: "icon", "aria-label": "文件操作" }}
+    triggerProps={{ variant: "ghost", size: "icon", "aria-label": "文档操作" }}
     align="end"
     items={[
-      { value: "open", label: "打开文件", icon: <FileText />, shortcut: "↵" },
-      { value: "duplicate", label: "创建副本", icon: <Copy />, shortcut: "⌘D" },
+      { value: "open", label: "打开文档", icon: <FileText /> },
+      { value: "duplicate", label: "创建副本", icon: <Copy /> },
+      { value: "copy-link", label: "复制链接", icon: <Link /> },
       { value: "move", label: "移动到", icon: <FolderInput />, divider: true, submenu: [
-        { value: "personal", label: "个人文档", icon: <Folder /> },
-        { value: "shared", label: "共享文档", icon: <Folder /> },
+        { value: "personal", label: "个人文档", icon: <Folder />, type: "radio", checked: folder === "personal", onSelect: () => setFolder("personal") },
+        { value: "shared", label: "共享文档", icon: <Folder />, type: "radio", checked: folder === "shared", onSelect: () => setFolder("shared") },
       ] },
-      { value: "download", label: "下载原文件", disabled: true },
-      { value: "delete", label: "删除文件", icon: <Trash2 />, danger: true, divider: true },
+      { value: "notifications", label: "更新时通知", icon: <Bell />, type: "checkbox", checked: notifications, keepOpen: true, onSelect: () => setNotifications(current => !current) },
+      { value: "delete", label: "删除文档", icon: <Trash2 />, danger: true, divider: true },
     ]}
     onAction={value => console.log("文件操作：", value)}
   />;

@@ -4,8 +4,10 @@ import { useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Search, ArrowUpRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { catalog, categories } from "@/lib/catalog";
+import { newComponentSlugs } from "@/lib/changelog-releases";
 import { site } from "@/lib/site";
 import { designSections } from "@/lib/docs-navigation";
+import { KalosBadge } from "@/registry/kalos/kalos-badge";
 
 const sidebarScrollPositions = { components: 0, docs: 0 };
 
@@ -87,6 +89,12 @@ export function LibrarySidebar({
                   >
                     <span>{item.english}</span>
                     <small title={item.title}>{item.title}</small>
+                    {newComponentSlugs.has(item.slug) ? (
+                      <>
+                        <KalosBadge tone="info" variant="ghost" size="sm" dot className="px-0!" aria-hidden="true" title="本版本新增" />
+                        <span className="sr-only">本版本新增</span>
+                      </>
+                    ) : null}
                   </Link>
                 ))}
               </div>

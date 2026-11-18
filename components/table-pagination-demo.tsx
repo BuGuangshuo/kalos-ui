@@ -29,7 +29,7 @@ export function TablePaginationDemo() {
 
   return <KalosTable aria-label="分页联系人" columns={columns} rows={rows}
     tagTones={{ 设计部: "violet", 研发部: "blue", 运营部: "green" }}
-    scrollAreaProps={{ key: `${page}-${pageSize}`, style: { maxHeight: 316 } }}
+    scrollAreaProps={{ key: `${page}-${pageSize}`, style: { maxHeight: 280 } }}
     pagination={<KalosPagination aria-label="联系人表格分页" page={page} onPageChange={setPage}
       total={contacts.length} pageSize={pageSize} pageSizes={pageSizes} onPageSizeChange={setPageSize} />}
   />;

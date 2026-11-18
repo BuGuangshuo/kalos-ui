@@ -37,7 +37,7 @@ export function KalosDateRangePicker({ value, defaultValue, onChange, presets = 
   const [month, setMonth] = useState(() => addMonths(monthStart((selected ?? initial).end), -1));
   const [ownOpen, setOwnOpen] = useState(defaultOpen);
   const ids = usePickerIds(field.id), control = useRef<HTMLDivElement>(null);
-  const { focused, popupRef, onOpenChange: focusOpenChange, finalFocus } = useSelectFocus(control, field.disabled);
+  const { popupRef, onOpenChange: focusOpenChange, finalFocus } = useSelectFocus(control, field.disabled);
   const small = useSyncExternalStore(subscribeSmall, smallSnapshot, serverSmall);
   const open = !field.disabled && (controlledOpen ?? ownOpen);
   const selectedStamp = selected ? `${dateKey(selected.start)}/${dateKey(selected.end)}` : "empty";
@@ -73,8 +73,8 @@ export function KalosDateRangePicker({ value, defaultValue, onChange, presets = 
   return <KalosPickerField {...field} {...ids} className={cn("kalos-range-field", field.className)}>
     {styles}
     <Popover.Root open={open} onOpenChange={changeOpen}>
-      <div ref={control} className={cn(controlStyles.selectControl, "group/select-control kalos-picker-control kalos-range-control")} data-focus-managed data-focused={focused || undefined} data-invalid={!!field.error} data-disabled={field.disabled || undefined}>
-        <Popover.Trigger ref={ref} id={ids.id} data-slot="date-range-trigger" disabled={field.disabled} className={cn(controlStyles.selectTrigger, "kalos-picker-trigger")} aria-label={field.label == null ? `${field["aria-label"] ?? "日期范围"}：${selected ? formatRange(selected, locale) : placeholder}` : undefined} aria-labelledby={field.label != null ? `${ids.labelId} ${ids.id}-value` : undefined} aria-describedby={field.error || field.hint ? ids.messageId : undefined} aria-invalid={!!field.error} aria-required={field.required || undefined}>
+      <div ref={control} className={cn(controlStyles.selectControlStatic, "group/select-control kalos-picker-control kalos-range-control")} data-invalid={!!field.error} data-disabled={field.disabled || undefined}>
+        <Popover.Trigger ref={ref} id={ids.id} data-slot="date-range-trigger" disabled={field.disabled} className={cn(controlStyles.selectTrigger, "kalos-picker-trigger focus-visible:[&>span]:underline focus-visible:[&>span]:decoration-2 focus-visible:[&>span]:underline-offset-3")} aria-label={field.label == null ? `${field["aria-label"] ?? "日期范围"}：${selected ? formatRange(selected, locale) : placeholder}` : undefined} aria-labelledby={field.label != null ? `${ids.labelId} ${ids.id}-value` : undefined} aria-describedby={field.error || field.hint ? ids.messageId : undefined} aria-invalid={!!field.error} aria-required={field.required || undefined}>
           <CalendarDays strokeWidth={1.5} aria-hidden="true" /><span key={selectedStamp} id={`${ids.id}-value`} className="kalos-picker-value" data-empty={!selected || undefined}>{selected ? formatRange(selected, locale) : placeholder}</span><ChevronDown strokeWidth={1.5} aria-hidden="true" className="kalos-picker-chevron" />
         </Popover.Trigger>
         {showClear ? <KalosButton type="button" variant="ghost" size="icon" data-slot="select-clear" className={controlStyles.selectClear} aria-label="清空日期范围" aria-controls={ids.id} onClick={clear}><X aria-hidden="true" /></KalosButton> : null}

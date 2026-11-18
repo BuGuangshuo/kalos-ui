@@ -234,6 +234,71 @@
       ]
     },
     {
+      "name": "kalos-stepper-form",
+      "type": "registry:ui",
+      "title": "Kalos 分步表单",
+      "description": "逐步填写、校验和复核表单。支持进度动效、返回编辑、异步提交与自定义成功页。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-stepper-form.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/radio-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-stepper-form-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "kalos-input",
       "type": "registry:ui",
       "title": "Kalos 文本输入",
@@ -287,6 +352,82 @@
       ]
     },
     {
+      "name": "kalos-text-area",
+      "type": "registry:ui",
+      "title": "Kalos 多行文本输入",
+      "description": "输入多行文本，支持自动增高、字数统计与右下角拖动调整高度。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-text-area.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-dropzone",
+      "type": "registry:ui",
+      "title": "Kalos 文件上传",
+      "description": "拖放或浏览以添加多个文件，查看上传进度、预计剩余时间，并重试失败的文件。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-dropzone.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-dropzone-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "kalos-number-input",
       "type": "registry:ui",
       "title": "Kalos 数字输入",
@@ -331,6 +472,73 @@
         },
         {
           "path": "components/ui/kalos-number-input-model.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-color-picker",
+      "type": "registry:ui",
+      "title": "Kalos 颜色选择器",
+      "description": "拖动色盘与滑轨或输入 HEX、RGB 值来选色，支持可选透明度、预设色板和内嵌面板。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-color-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-color-picker-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-color-picker-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-otp-input",
+      "type": "registry:ui",
+      "title": "Kalos 验证码输入",
+      "description": "分格输入一次性验证码，支持整段粘贴、短信自动填充、验证动效与重发倒计时。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "cn",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-otp-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-otp-input-styles.ts",
           "type": "registry:ui"
         }
       ]
@@ -908,6 +1116,58 @@
       ]
     },
     {
+      "name": "kalos-drawer",
+      "type": "registry:ui",
+      "title": "Kalos 抽屉",
+      "description": "从屏幕四边滑入的表单面板，支持拖拽关闭、初始化骨架屏和确认加载状态。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-drawer.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/drawer.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-drawer-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-skeleton.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-loading-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "kalos-alert-dialog",
       "type": "registry:ui",
       "title": "Kalos 确认对话框",
@@ -938,7 +1198,7 @@
       "name": "kalos-select",
       "type": "registry:ui",
       "title": "Kalos 选择器",
-      "description": "从一组候选项中进行选择，支持键盘导航与选中反馈。",
+      "description": "从列表中选择一项。选项可带图标和说明，支持禁用、键盘导航与按字匹配。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "dependencies": [
         "@base-ui/react",
@@ -996,6 +1256,67 @@
       ]
     },
     {
+      "name": "kalos-combobox",
+      "type": "registry:ui",
+      "title": "Kalos 搜索选择器",
+      "description": "在分组选项中搜索并多选，支持头像、可移除标签和创建新选项。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-combobox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-avatar-stack.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/avatar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-avatar-shared.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-combobox-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "kalos-tooltip",
       "type": "registry:ui",
       "title": "Kalos 文字提示",
@@ -1048,6 +1369,34 @@
       ]
     },
     {
+      "name": "kalos-toast",
+      "type": "registry:ui",
+      "title": "Kalos 轻提示",
+      "description": "顶部居中的胶囊提示，支持状态图标、操作按钮、异步更新与堆叠，默认 3 秒关闭。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-toast.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-toast-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "kalos-skeleton",
       "type": "registry:ui",
       "title": "Kalos 骨架屏",
@@ -1085,6 +1434,55 @@
         },
         {
           "path": "components/ui/kalos-loading-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-notification",
+      "type": "registry:ui",
+      "title": "Kalos 通知",
+      "description": "逐张关闭的层叠通知，支持装饰图案、自定义图标、操作按钮与四角弹出。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-notification.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-badge.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-badge-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-notification-styles.ts",
           "type": "registry:ui"
         }
       ]
@@ -1186,7 +1584,7 @@
       "name": "kalos-all",
       "type": "registry:block",
       "title": "Kalos UI 完整组件库",
-      "description": "一次安装全部 27 个 Base UI 组件。",
+      "description": "一次安装全部 36 个 Base UI 组件。",
       "dependencies": [
         "@base-ui/react",
         "@fontsource/roboto",
@@ -1309,6 +1707,34 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/kalos/kalos-stepper-form.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/radio-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-stepper-form-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-text-area.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-dropzone.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-dropzone-styles.ts",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/kalos/kalos-number-input.tsx",
           "type": "registry:ui"
         },
@@ -1318,6 +1744,26 @@
         },
         {
           "path": "components/ui/kalos-number-input-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-color-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-color-picker-model.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-color-picker-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-otp-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-otp-input-styles.ts",
           "type": "registry:ui"
         },
         {
@@ -1433,19 +1879,15 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/kalos/kalos-alert-dialog.tsx",
+          "path": "registry/kalos/kalos-drawer.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/kalos/kalos-tooltip.tsx",
+          "path": "components/ui/drawer.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/kalos/kalos-progress.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "components/ui/progress.tsx",
+          "path": "components/ui/kalos-drawer-styles.ts",
           "type": "registry:ui"
         },
         {
@@ -1461,6 +1903,14 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/kalos/kalos-alert-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-combobox.tsx",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/kalos/kalos-avatar-stack.tsx",
           "type": "registry:ui"
         },
@@ -1470,6 +1920,38 @@
         },
         {
           "path": "components/ui/kalos-avatar-shared.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-combobox-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-progress.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/progress.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-toast.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-toast-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-notification.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-notification-styles.ts",
           "type": "registry:ui"
         }
       ]

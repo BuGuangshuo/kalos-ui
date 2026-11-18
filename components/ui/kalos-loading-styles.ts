@@ -1,8 +1,24 @@
 // Generated from design/component-tokens.json, design/skeleton.css and design/spinner.css.
 /*
-Activity and Tooltip examples, Skeleton and Spinner components and previews adapted from [affectUI Hover Card](https://www.affectui.com/components/hover-card), [Tooltip](https://www.affectui.com/components/tooltip), [Skeleton](https://www.affectui.com/components/skeleton) and [Spinner](https://www.affectui.com/components/spinner). Badge visuals and the Chinese task-list preview reference the free [Badge](https://www.affectui.com/components/badge). Date and time picker visuals and interactions reference the free [Date Picker](https://www.affectui.com/components/date-picker) and [Time Picker](https://www.affectui.com/components/time-picker); the Date Range Picker is independently implemented from its public preview.
+Activity and Tooltip examples, Skeleton and Spinner components and previews adapted from [affectUI Hover Card](https://www.affectui.com/components/hover-card), [Tooltip](https://www.affectui.com/components/tooltip), [Skeleton](https://www.affectui.com/components/skeleton) and [Spinner](https://www.affectui.com/components/spinner). Badge visuals and the Chinese task-list preview reference the free [Badge](https://www.affectui.com/components/badge). Date and time picker visuals and interactions reference the free [Date Picker](https://www.affectui.com/components/date-picker) and [Time Picker](https://www.affectui.com/components/time-picker). Kalos UI's Range Picker is independently implemented from the public preview.
 
 Pagination visuals and the Chinese document-list preview reference the free [Pagination](https://www.affectui.com/components/pagination); the implementation uses Base UI buttons and the existing Kalos Select.
+
+Notification card art, stacking and preview reference the free [Notification Stack](https://www.affectui.com/components/notification-stack); the implementation adds Base UI controls, custom icons and four-corner floating placement.
+
+Text Area visuals and the two-field preview reference the free [Text Area](https://www.affectui.com/components/text-area); height dragging and its keyboard controls are implemented for Kalos UI.
+
+OTP Input state motion and the email verification preview reference the free [OTP Input](https://www.affectui.com/components/otp-input). Input and form behavior use Base UI OTP Field.
+
+Color Picker interaction and the live color preview reference the free [Color Picker](https://www.affectui.com/components/color-picker). Kalos UI uses Base UI popovers, sliders and radio groups and a document activity example.
+
+[Dropzone](https://www.affectui.com/components/dropzone) informed the public demo flow and API. Kalos Dropzone uses an independent implementation and Lucide icons.
+
+Combobox interaction and the reviewer-picker preview reference the public [Combobox demo and documentation](https://www.affectui.com/components/combobox). Kalos implements the component with Base UI and shared Kalos styles.
+
+Stepper Form follows the public [Stepper Form preview and API documentation](https://www.affectui.com/components/stepper-form). Kalos UI implements the flow and components independently.
+
+The [Select](https://www.affectui.com/components/select) preview, option layout, and animated checkmark reference affectUI. Kalos UI uses Base UI for selection, keyboard navigation, and positioning.
 
 MIT License
 

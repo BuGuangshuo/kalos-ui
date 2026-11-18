@@ -1,41 +1,19 @@
 "use client";
 
-import { useId, useState, type ComponentType, type ReactNode } from "react";
-import {
-  AnimatePresence,
-  LayoutGroup,
-  motion,
-  useReducedMotion,
-} from "motion/react";
-import {
-  Bell,
-  CircleCheck,
-  Clapperboard,
-  Heart,
-  Send,
-  Settings,
-  Sparkles,
-  X,
-} from "lucide-react";
-import { Switch } from "@/components/ui/switch";
-import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-  FieldLegend,
-} from "@/components/ui/field";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
-import { AutoplayContext, easeOut, useAutoplay } from "./runtime";
+import { useEffect, useState, type ComponentType, type ReactNode } from "react";
+import { Bell, FileText, Plus, Trash2, Users } from "lucide-react";
+import { AvatarDemo } from "@/components/avatar-demo";
+import { FieldGroup, FieldLegend, FieldSet } from "@/components/ui/field";
+import { KalosAvatar, KalosAvatarStack } from "@/registry/kalos/kalos-avatar-stack";
+import { KalosButton } from "@/registry/kalos/kalos-button";
+import { KalosCheckbox } from "@/registry/kalos/kalos-checkbox";
+import { KalosInput } from "@/registry/kalos/kalos-input";
+import { KalosNotification, type KalosNotice } from "@/registry/kalos/kalos-notification";
+import { KalosProgress } from "@/registry/kalos/kalos-progress";
+import { KalosSegmentedControl } from "@/registry/kalos/kalos-segmented-control";
+import { KalosSelect } from "@/registry/kalos/kalos-select";
+import { KalosSwitch } from "@/registry/kalos/kalos-switch";
+import { AutoplayContext, useAutoplay } from "./runtime";
 
 export function AutoplayScope({
   paused,
@@ -48,303 +26,150 @@ export function AutoplayScope({
 }
 
 function SwitchVignette() {
-  const id = useId();
   const [on, setOn] = useState([true, false]);
   useAutoplay(() => setOn(([a, b]) => [!a, !b]), 1600);
   return (
     <FieldGroup className="motion-vignette-fields">
-      {["飞行模式", "无线网络"].map((label, index) => (
-        <Field key={label} orientation="horizontal">
-          <Switch
-            id={`${id}-${index}`}
-            checked={on[index]}
-            onCheckedChange={(value) =>
-              setOn((list) => list.map((v, i) => (i === index ? value : v)))
-            }
-          />
-          <FieldLabel htmlFor={`${id}-${index}`}>
-            <span>{label}</span>
-          </FieldLabel>
-        </Field>
+      {["消息通知", "每周摘要"].map((label, index) => (
+        <KalosSwitch
+          key={label}
+          label={label}
+          checked={on[index]}
+          onCheckedChange={(value) =>
+            setOn((list) => list.map((v, i) => (i === index ? value : v)))
+          }
+        />
       ))}
     </FieldGroup>
   );
 }
 
-const tabs = [
-  { label: "概览", text: "12 项任务，3 项待办。" },
-  { label: "分析", text: "本周页面访问量增长了 25%。" },
-  { label: "报告", text: "5 份报告已准备好导出。" },
+const segments = [
+  { value: "all", label: "全部" },
+  { value: "pending", label: "待处理" },
+  { value: "done", label: "已完成" },
 ];
-export function TabsVignette() {
-  const [value, setValue] = useState("0");
+
+function SegmentedVignette() {
+  const [value, setValue] = useState("all");
   useAutoplay(
-    () => setValue((v) => String((Number(v) + 1) % tabs.length)),
+    () => setValue((current) => segments[(segments.findIndex((item) => item.value === current) + 1) % segments.length].value),
     1600,
     300,
   );
   return (
-    <LayoutGroup>
-      <Tabs
-        value={value}
-        onValueChange={setValue}
-        className="motion-vignette-tabs"
-      >
-        <TabsList aria-label="内容视图">
-          {tabs.map((tab, index) => (
-            <TabsTrigger key={tab.label} value={String(index)}>
-              {value === String(index) ? (
-                <motion.span
-                  layoutId="vignette-tab-highlight"
-                  className="motion-vignette-tab-highlight"
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              ) : null}
-              <span>{tab.label}</span>
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <TabsContent value={value} className="motion-vignette-tab-panel">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={value}
-              initial={{ opacity: 0, y: 8, filter: "blur(3px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -8, filter: "blur(3px)" }}
-              transition={{ duration: 0.2 }}
-            >
-              <strong>{tabs[Number(value)].label}</strong>
-              <p>{tabs[Number(value)].text}</p>
-            </motion.div>
-          </AnimatePresence>
-        </TabsContent>
-      </Tabs>
-    </LayoutGroup>
+    <div className="motion-vignette-segmented">
+      <KalosSegmentedControl options={segments} value={value} onChange={setValue} fullWidth aria-label="文档状态" />
+    </div>
   );
 }
 
-const questions = [
-  ["支持键盘操作吗？", "保留完整的键盘与无障碍交互。"],
-  ["可以自由修改吗？", "源码就在代码目录中，每一处都可以定制。"],
-  ["如何安装组件？", "运行安装命令，按需添加组件。"],
-];
-function AccordionVignette() {
-  const [value, setValue] = useState("0");
-  useAutoplay(() => setValue((v) => String((Number(v) + 1) % 3)), 2000, 600);
-  return (
-    <Accordion
-      value={value ? [value] : []}
-      onValueChange={next => setValue(next[0] ?? "")}
-      className="motion-vignette-accordion"
-    >
-      {questions.map(([question, answer], index) => (
-        <AccordionItem key={question} value={String(index)}>
-          <AccordionTrigger>{question}</AccordionTrigger>
-          <AccordionContent>{answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
+function AvatarVignette() {
+  return <AvatarDemo KalosAvatar={KalosAvatar} KalosAvatarStack={KalosAvatarStack} compact />;
 }
 
-const tasks = ["预订拍摄工作室", "发送服务报价", "选择合适的字体"];
+const tasks = ["整理联系人", "上传文档", "发送邀请"];
+
 function ChecklistVignette() {
-  const id = useId();
-  const [done, setDone] = useState(0);
-  useAutoplay(() => setDone((count) => (count + 1) % 4), 1100, 200);
+  const [checked, setChecked] = useState([true, false, false]);
+  useAutoplay(() => setChecked((current) => {
+    const next = current.findIndex((value) => !value);
+    return next === -1 ? current.map(() => false) : current.map((value, index) => index === next || value);
+  }), 1100, 200);
   return (
     <FieldSet className="motion-vignette-fields">
-      <FieldLegend className="sr-only">待办任务清单</FieldLegend>
+      <FieldLegend className="sr-only">文档待办清单</FieldLegend>
       <FieldGroup className="motion-vignette-fields">
         {tasks.map((task, index) => (
-          <Field key={task} orientation="horizontal">
-            <Checkbox
-              id={`${id}-${index}`}
-              checked={index < done}
-              onCheckedChange={(value) => setDone(value ? index + 1 : index)}
-            />
-            <FieldLabel htmlFor={`${id}-${index}`}>
-              <span
-                className={index < done ? "motion-task-completed" : undefined}
-              >
-                {task}
-              </span>
-            </FieldLabel>
-          </Field>
+          <KalosCheckbox
+            key={task}
+            label={task}
+            checked={checked[index]}
+            onCheckedChange={(value) => setChecked((current) => current.map((item, i) => i === index ? value : item))}
+          />
         ))}
       </FieldGroup>
     </FieldSet>
   );
 }
 
-export function SlidingNumber({ number }: { number: number }) {
-  const reduce = useReducedMotion();
+function InputVignette() {
+  const [value, setValue] = useState("hello@kalos-ui.com");
   return (
-    <span
-      className="motion-sliding-number"
-      aria-label={number.toLocaleString("en-US")}
-    >
-      <span aria-hidden="true">
-        {number
-          .toLocaleString("en-US")
-          .split("")
-          .map((character, index) =>
-            /\d/.test(character) ? (
-              <span key={index} className="motion-number-digit">
-                <motion.span
-                  className="motion-number-strip"
-                  animate={{ y: `${-Number(character) * 10}%` }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 160,
-                    damping: 24,
-                    duration: reduce ? 0 : undefined,
-                  }}
-                >
-                  {Array.from({ length: 10 }, (_, n) => (
-                    <span key={n}>{n}</span>
-                  ))}
-                </motion.span>
-              </span>
-            ) : (
-              <span key={index}>{character}</span>
-            ),
-          )}
-      </span>
-    </span>
-  );
-}
-function CounterVignette() {
-  const [count, setCount] = useState(12480);
-  useAutoplay(() => setCount((c) => c + 67), 1500);
-  return (
-    <div className="motion-counter-demo">
-      <SlidingNumber number={count} />
-      <span>本周组件调用次数 · 演示</span>
+    <div className="motion-vignette-stack">
+      <KalosInput label="邮箱地址" type="email" placeholder="请输入邮箱地址" value={value} onChange={(event) => setValue(event.target.value)} onClear={() => setValue("")} />
     </div>
   );
 }
 
-const densities = ["默认间距", "舒适间距", "紧凑间距"];
-function RadioVignette() {
-  const [value, setValue] = useState(densities[1]);
-  useAutoplay(
-    () => setValue((v) => densities[(densities.indexOf(v) + 1) % 3]),
-    1300,
-    500,
-  );
-  return (
-    <RadioGroup
-      value={value}
-      onValueChange={setValue}
-      aria-label="界面密度"
-      className="motion-vignette-radio"
-    >
-      {densities.map((density) => (
-        <Field key={density} orientation="horizontal">
-          <FieldLabel>
-            <RadioGroupItem value={density} />
-            {density}
-          </FieldLabel>
-        </Field>
-      ))}
-    </RadioGroup>
-  );
-}
+const contactGroups = [
+  { value: "colleagues", label: "同事" },
+  { value: "clients", label: "客户" },
+  { value: "friends", label: "朋友" },
+];
 
-const icons = [Bell, Heart, Settings, Send, Sparkles, Clapperboard];
-export function IconsVignette() {
-  const [turn, setTurn] = useState(0);
-  useAutoplay(() => setTurn((n) => n + 1), 1500, 100);
+function SelectVignette() {
+  const [value, setValue] = useState("colleagues");
   return (
-    <div className="motion-icons-demo">
-      {icons.map((Icon, index) => (
-        <motion.button
-          key={index}
-          type="button"
-          aria-label={["通知", "喜欢", "设置", "发送", "灵感", "影片"][index]}
-          whileHover={{ scale: 1.16, rotate: [0, -16, 16, 0] }}
-          whileTap={{ scale: 0.86 }}
-          animate={
-            index % 3 === turn % 3
-              ? { rotate: [0, -12, 12, -7, 0] }
-              : { rotate: 0 }
-          }
-          transition={{ duration: 0.65, ease: easeOut }}
-        >
-          <Icon />
-        </motion.button>
-      ))}
+    <div className="motion-vignette-stack">
+      <KalosSelect label="联系人分组" items={contactGroups} value={value} onValueChange={setValue} />
     </div>
   );
 }
 
-const notifications = ["文档已创建", "更改已保存", "邀请已发送"];
-function ToastVignette() {
-  const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
-  useAutoplay(
-    () => {
-      setIndex((i) => i + 1);
-      setVisible(true);
-    },
-    1600,
-    300,
-  );
+function ButtonVignette() {
+  const [loading, setLoading] = useState(false);
+  useAutoplay(() => setLoading(true), 2600, 600);
+  useEffect(() => {
+    if (!loading) return;
+    const timeout = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timeout);
+  }, [loading]);
   return (
-    <div className="motion-toast-demo" aria-label="通知演示">
-      <div className="motion-toast-back" />
-      <AnimatePresence mode="popLayout" initial={false}>
-        {visible ? (
-          <motion.div
-            key={index}
-            className="motion-toast-card"
-            initial={{ opacity: 0, y: 50, scale: 0.9, filter: "blur(4px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -12, scale: 0.94, filter: "blur(4px)" }}
-            transition={{ type: "spring", stiffness: 300, damping: 26 }}
-          >
-            <CircleCheck />
-            <span>{notifications[index % 3]}</span>
-            <button
-              type="button"
-              aria-label="关闭演示通知"
-              onClick={() => setVisible(false)}
-            >
-              <X />
-            </button>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+    <div className="motion-vignette-buttons">
+      <KalosButton loading={loading} onClick={() => setLoading(true)}>{!loading ? <Plus data-icon="inline-start" /> : null}添加联系人</KalosButton>
+      <KalosButton variant="outline" onClick={() => setLoading(false)}>取消</KalosButton>
+      <KalosButton variant="destructive" aria-label="删除文档" size="icon"><Trash2 /></KalosButton>
+    </div>
+  );
+}
+
+const notifications: KalosNotice[] = [
+  { id: "documents", title: "文档已更新", text: "使用指南新增了快捷键说明。", icon: <FileText />, pattern: "orbit", action: { label: "标为已读" } },
+  { id: "contacts", title: "联系人共享邀请", text: "陈晓邀请你查看共享通讯录。", icon: <Users />, pattern: "rays", action: { label: "接受邀请" } },
+  { id: "files", title: "文件上传完成", text: "两份文档已保存到文件夹。", icon: <Bell />, pattern: "grid", action: { label: "标为已读" } },
+];
+
+function NotificationVignette() {
+  const [cycle, setCycle] = useState(0);
+  useAutoplay(() => setCycle((current) => current + 1), 4800, 4800);
+  return (
+    <div className="motion-vignette-notification">
+      <KalosNotification key={cycle} notices={notifications} aria-label="文档通知" />
     </div>
   );
 }
 
 const progressSteps = [18, 46, 74, 100];
+
 function ProgressVignette() {
   const [step, setStep] = useState(0);
-  useAutoplay(() => setStep((n) => (n + 1) % 4), 1000, 100);
+  useAutoplay(() => setStep((current) => (current + 1) % progressSteps.length), 1000, 100);
   return (
-    <div className="motion-progress-demo">
-      <div>
-        <span>正在上传</span>
-        <span>
-          <SlidingNumber number={progressSteps[step]} />%
-        </span>
-      </div>
-      <Progress value={progressSteps[step]} aria-label="上传进度" />
+    <div className="motion-vignette-stack">
+      <KalosProgress label={progressSteps[step] === 100 ? "上传完成" : "文件上传中"} value={progressSteps[step]} />
     </div>
   );
 }
 
 export const VIGNETTES: { title: string; Vignette: ComponentType }[] = [
-  { title: "开关 Switch", Vignette: SwitchVignette },
-  { title: "分段控制器 Segmented", Vignette: TabsVignette },
-  { title: "折叠面板 Accordion", Vignette: AccordionVignette },
-  { title: "复选框 Checkbox", Vignette: ChecklistVignette },
-  { title: "数字滚动 Sliding Number", Vignette: CounterVignette },
-  { title: "单选组 Radio Group", Vignette: RadioVignette },
-  { title: "动态图标 Icons", Vignette: IconsVignette },
-  { title: "消息通知 Toast", Vignette: ToastVignette },
-  { title: "进度条 Progress", Vignette: ProgressVignette },
+  { title: "Avatar 头像", Vignette: AvatarVignette },
+  { title: "Switch 开关", Vignette: SwitchVignette },
+  { title: "Segmented Control 分段控制器", Vignette: SegmentedVignette },
+  { title: "Checkbox 复选框", Vignette: ChecklistVignette },
+  { title: "Input 输入框", Vignette: InputVignette },
+  { title: "Select 选择器", Vignette: SelectVignette },
+  { title: "Button 按钮", Vignette: ButtonVignette },
+  { title: "Notification 通知", Vignette: NotificationVignette },
+  { title: "Progress 进度条", Vignette: ProgressVignette },
 ];

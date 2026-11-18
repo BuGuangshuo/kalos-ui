@@ -1,3 +1,11 @@
+import { comboboxExample } from "@/lib/combobox-examples";
+import { colorPickerExample } from "@/lib/color-picker-examples";
+import { textAreaExample } from "@/lib/text-area-examples";
+import { otpInputExample } from "@/lib/otp-input-examples";
+import { dropzoneExample } from "@/lib/dropzone-example";
+import { drawerExample } from "@/lib/drawer-examples";
+import { toastExample } from "@/lib/toast-examples";
+import { notificationExample } from "@/lib/notification-examples";
 import { badgeExample } from "@/lib/badge-examples";
 import { paginationExample } from "@/lib/pagination-examples";
 import { avatarExample } from "@/lib/avatar-examples";
@@ -11,6 +19,65 @@ import { datePickerExample, dateRangePickerExample, timePickerExample } from "@/
 export type PopoverExampleVariant = "default" | "basic" | "align" | "form";
 
 export function popoverExample(variant: PopoverExampleVariant = "default") {
+  if (variant === "default") return `"use client";
+
+import { useState } from "react";
+import { BriefcaseBusiness, CalendarDays, Sun } from "lucide-react";
+import { Radio } from "@base-ui/react/radio";
+import { KalosPopover } from "@/components/ui/kalos-popover";
+import { KalosButton } from "@/components/ui/kalos-button";
+import { FieldLegend, FieldSet } from "@/components/ui/field";
+import { RadioGroup } from "@/components/ui/radio-group";
+
+const schedules = [
+  { value: "daily", label: "每天", description: "每天 09:00", icon: Sun },
+  { value: "weekdays", label: "工作日", description: "周一至周五 09:00", icon: BriefcaseBusiness },
+  { value: "weekly", label: "每周一", description: "汇总上一周的文档", icon: CalendarDays },
+] as const;
+
+export default function Example() {
+  const [open, setOpen] = useState(false);
+  const [saved, setSaved] = useState("weekly");
+  const [schedule, setSchedule] = useState(saved);
+  const currentSchedule = schedules.find(option => option.value === saved) ?? schedules[2];
+
+  return <KalosPopover
+    trigger={<><CalendarDays data-icon="inline-start" />{currentSchedule.label}</>}
+    label="发送日程"
+    align="end"
+    contentClassName="w-[300px] max-w-[calc(100vw-32px)] rounded-xl p-3.5"
+    open={open}
+    onOpenChange={next => { if (next) setSchedule(saved); setOpen(next); }}
+  >
+    <form className="flex flex-col gap-4" onSubmit={event => {
+      event.preventDefault();
+      setSaved(schedule);
+      setOpen(false);
+      // 在这里保存发送日程。
+    }}>
+      <div className="flex flex-col gap-1">
+        <h3 className="text-[13px] font-medium leading-5">发送日程</h3>
+        <p className="text-xs leading-[18px] text-muted-foreground">自动生成摘要，并在完成后发送。</p>
+      </div>
+      <FieldSet className="gap-0">
+        <FieldLegend className="sr-only">重复频率</FieldLegend>
+        <RadioGroup value={schedule} onValueChange={setSchedule} aria-label="重复频率" className="gap-1">
+          {schedules.map(({ value, label, description, icon: Icon }) => (
+            <Radio.Root key={value} value={value} className="flex min-h-[52px] cursor-pointer items-center gap-3 rounded-lg p-2 outline-none transition-colors duration-180 hover:bg-muted data-checked:bg-muted focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring">
+              <Icon aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
+              <span className="flex min-w-0 flex-1 flex-col"><span>{label}</span><span className="text-xs leading-[18px] text-muted-foreground">{description}</span></span>
+              <Radio.Indicator className="size-1.5 shrink-0 rounded-full bg-current" />
+            </Radio.Root>
+          ))}
+        </RadioGroup>
+      </FieldSet>
+      <div className="flex justify-end gap-2">
+        <KalosButton type="button" variant="outline" onClick={() => setOpen(false)}>取消</KalosButton>
+        <KalosButton type="submit">保存</KalosButton>
+      </div>
+    </form>
+  </KalosPopover>;
+}`;
   if (variant === "form") return `"use client";
 
 import { useState } from "react";
@@ -39,10 +106,10 @@ export default function Example() {
       <FieldGroup className="grid grid-cols-2 gap-3.5">
         <KalosInput label="姓名" placeholder="输入姓名" value={filters.name} onChange={event => setFilters(current => ({ ...current, name: event.target.value }))} />
         <KalosInput label="邮箱地址" placeholder="输入邮箱关键词" value={filters.email} onChange={event => setFilters(current => ({ ...current, email: event.target.value }))} />
-        <KalosSelect label="部门" placeholder="全部部门" value={filters.department} onValueChange={department => setFilters(current => ({ ...current, department }))} items={[{ value: "design", label: "设计部" }, { value: "engineering", label: "研发部" }, { value: "operations", label: "运营部" }]} />
-        <KalosSelect label="角色" placeholder="全部角色" value={filters.role} onValueChange={role => setFilters(current => ({ ...current, role }))} items={[{ value: "admin", label: "管理员" }, { value: "editor", label: "编辑者" }, { value: "viewer", label: "查看者" }]} />
-        <KalosSelect label="状态" placeholder="全部状态" value={filters.status} onValueChange={status => setFilters(current => ({ ...current, status }))} items={[{ value: "active", label: "已启用" }, { value: "inactive", label: "已停用" }]} />
-        <KalosSelect label="加入时间" placeholder="不限时间" value={filters.joined} onValueChange={joined => setFilters(current => ({ ...current, joined }))} items={[{ value: "7d", label: "最近 7 天" }, { value: "30d", label: "最近 30 天" }, { value: "90d", label: "最近 90 天" }]} />
+        <KalosSelect label="部门" clearable placeholder="全部部门" value={filters.department} onValueChange={department => setFilters(current => ({ ...current, department }))} items={[{ value: "design", label: "设计部" }, { value: "engineering", label: "研发部" }, { value: "operations", label: "运营部" }]} />
+        <KalosSelect label="角色" clearable placeholder="全部角色" value={filters.role} onValueChange={role => setFilters(current => ({ ...current, role }))} items={[{ value: "admin", label: "管理员" }, { value: "editor", label: "编辑者" }, { value: "viewer", label: "查看者" }]} />
+        <KalosSelect label="状态" clearable placeholder="全部状态" value={filters.status} onValueChange={status => setFilters(current => ({ ...current, status }))} items={[{ value: "active", label: "已启用" }, { value: "inactive", label: "已停用" }]} />
+        <KalosSelect label="加入时间" clearable placeholder="不限时间" value={filters.joined} onValueChange={joined => setFilters(current => ({ ...current, joined }))} items={[{ value: "7d", label: "最近 7 天" }, { value: "30d", label: "最近 30 天" }, { value: "90d", label: "最近 90 天" }]} />
       </FieldGroup>
       <div className="flex justify-end gap-3">
         <KalosButton type="button" variant="outline" onClick={() => setOpen(false)}>取消</KalosButton>
@@ -71,28 +138,45 @@ export default function Example() {
   </div>;
 }`;
 
-  const hasFields = variant !== "basic";
   return `"use client";
 
-import { KalosPopover } from "@/components/ui/kalos-popover";${hasFields ? '\nimport { KalosInput } from "@/components/ui/kalos-input";\nimport { FieldGroup } from "@/components/ui/field";' : ''}
+import { KalosPopover } from "@/components/ui/kalos-popover";
 
 export default function Example() {
   return <KalosPopover trigger="打开浮层" label="尺寸" align="start">
     <div className="flex flex-col gap-4 p-3">
       <div className="flex flex-col gap-1">
         <h3 className="font-medium">尺寸</h3>
-        <p className="text-muted-foreground">设置浮层的尺寸。</p>
-      </div>${hasFields ? `
-      <FieldGroup className="gap-3 [&>[data-slot=field]]:grid [&>[data-slot=field]]:grid-cols-[72px_minmax(0,1fr)] [&>[data-slot=field]]:items-center">
-        <KalosInput label="宽度" defaultValue="100%" placeholder="100%" />${variant === "default" ? '\n        <KalosInput label="最大宽度" defaultValue="300px" placeholder="300px" />' : ''}
-        <KalosInput label="高度" defaultValue="25px" placeholder="25px" />${variant === "default" ? '\n        <KalosInput label="最大高度" defaultValue="none" placeholder="none" />' : ''}
-      </FieldGroup>` : ''}
+      </div>
     </div>
   </KalosPopover>;
 }`;
 }
 
 export function reactExample(item: Item) {
+  if (item.slug === "kalos-toast") return toastExample();
+  if (item.slug === "kalos-select") return `"use client";
+
+import { useState } from "react";
+import { CodeXml, Pencil } from "lucide-react";
+import { KalosSelect, type KalosSelectOption } from "@/components/ui/kalos-select";
+
+const roles: KalosSelectOption[] = [
+  { value: "design", label: "设计", icon: <Pencil /> },
+  { value: "engineering", label: "工程", icon: <CodeXml /> },
+  { value: "reviewer", label: "审阅者", description: "由管理员分配", disabled: true },
+];
+
+export default function Example() {
+  const [role, setRole] = useState<string | null>("design");
+
+  return <KalosSelect label="角色" name="role" options={roles} value={role} onChange={setRole} />;
+}`;
+  if (item.slug === "kalos-combobox") return comboboxExample();
+  if (item.slug === "kalos-text-area") return textAreaExample();
+  if (item.slug === "kalos-otp-input") return otpInputExample;
+  if (item.slug === "kalos-color-picker") return colorPickerExample();
+  if (item.slug === "kalos-dropzone") return dropzoneExample;
   if (item.slug === "kalos-pagination") return paginationExample();
   if (item.slug === "kalos-badge") return badgeExample();
   if (item.slug === "kalos-date-picker") return datePickerExample();
@@ -199,6 +283,8 @@ export default function Example() {
 
   return <KalosForm title="成员设置" fields={fields} defaultValues={{ notifications: true }} onSubmit={save} aria-label="成员设置" />;
 }`;
+  if (item.slug === "kalos-drawer") return drawerExample;
+  if (item.slug === "kalos-notification") return notificationExample;
   if (item.slug === "kalos-dialog") return `"use client";
 
 import { useState } from "react";
@@ -239,7 +325,6 @@ export default function Example() {
     "kalos-input": { state: 'const [email, setEmail] = useState("");', jsx: '<KalosInput\n      label="邮箱地址"\n      type="email"\n      value={email}\n      onChange={event => setEmail(event.target.value)}\n      placeholder="you@example.com"\n    />' },
     "kalos-switch": { state: 'const [enabled, setEnabled] = useState(true);', jsx: '<KalosSwitch\n      label="消息通知"\n      checked={enabled}\n      onCheckedChange={setEnabled}\n    />' },
     "kalos-checkbox": { state: 'const [accepted, setAccepted] = useState(false);', jsx: '<KalosCheckbox\n      label="同意接收产品更新"\n      checked={accepted}\n      onCheckedChange={value => setAccepted(value === true)}\n    />' },
-    "kalos-select": { state: 'const [framework, setFramework] = useState("next");', jsx: '<KalosSelect\n      label="开发框架"\n      value={framework}\n      onValueChange={setFramework}\n      items={[\n        { value: "next", label: "Next.js" },\n        { value: "vite", label: "React + Vite" },\n        { value: "router", label: "React Router" },\n      ]}\n    />' },
   };
   const sample = samples[item.slug];
   const jsx = sample?.jsx || (item.slug === "kalos-button" ? '<KalosButton onClick={() => console.log("saved")}>保存更改</KalosButton>' : item.usage);
