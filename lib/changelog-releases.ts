@@ -6,7 +6,7 @@ type Release = {
 // Keep releases newest first. Set releasedOn after verifying the production deployment.
 export const changelogReleases = {
   "0.3.5": {
-    releasedOn: null,
+    releasedOn: "2026-11-18",
     newComponents: [
       "kalos-stepper-form",
       "kalos-otp-input",

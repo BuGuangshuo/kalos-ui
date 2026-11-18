@@ -36,7 +36,7 @@ export default function ChangelogPage() {
       <article className="changelog-content">
         <header className="docs-title changelog-title">
           <h1>更新日志</h1>
-          <p>组件、安装器与文档的更新。历史日期以 Git 记录为准。</p>
+          <p>组件、安装器与文档的更新。</p>
         </header>
 
         <section id="v0-3-5" className="changelog-entry">
@@ -78,11 +78,11 @@ export default function ChangelogPage() {
             <ChangelogPreview slug="kalos-dropzone" />
           </div>
           <p>首页轨道展示与网格预览改用当前 Kalos 组件，首位展示 Avatar，加入 Input、Select、Button 与 Notification。分段控制器仅保留一行，按钮预览不再展示“已归档”，清理旧版独立控件样式；站点布局与组件 API 保持不变。</p>
-          <p>首页展示验证：Lint、类型检查通过；已核验桌面及 390px 窄屏、浅深主题、输入编辑与清空、标签点击、选择器键盘选择，以及通知关闭、操作与焦点衔接。Figwrite MCP 当前不可用，设计稿尚未同步；本次保持待发布。</p>
+          <p>首页展示验证：Lint、类型检查通过；已核验桌面及 390px 窄屏、浅深主题、输入编辑与清空、标签点击、选择器键盘选择，以及通知关闭、操作与焦点衔接。Figwrite MCP 当前不可用，设计稿尚未同步。</p>
           <p>统一组件 API 表格列宽：说明列占 40%，类型列占 28%；长属性、类型与默认值在列内换行，窄屏在表格内横向滚动。仅调整文档排版，组件 API 保持兼容。</p>
           <p>修复组件源码、用法和手动安装代码的行号折行。行号栏按总行数预留宽度，长代码可在代码块内横向滚动。</p>
           <p>修复滚动组件页面时，日期选择器等浮层遮挡顶部导航的问题。</p>
-          <p>API 表格验证：Lint 与类型检查通过，已检查全部 31 个组件页面的列宽及内容溢出，并截图核验桌面、390px 窄屏与浅深主题。Figwrite 当前没有连接设计文件，设计稿尚未同步；本次保持待发布。</p>
+          <p>API 表格验证：Lint 与类型检查通过，已检查全部 31 个组件页面的列宽及内容溢出，并截图核验桌面、390px 窄屏与浅深主题。Figwrite 当前没有连接设计文件，设计稿尚未同步。</p>
           <div className="changelog-block">
             <h3>Combobox 搜索选择器</h3>
             <p>新增分组搜索、多选和创建选项。详情页的审阅人预览默认展开并聚焦搜索框，可直接用方向键和 Enter 选择。十位审阅人使用卡通头像，新建选项在浮层和已选标签内均显示居中的灰底首字头像。</p>
@@ -113,7 +113,7 @@ export default function ChangelogPage() {
             <h3>Drawer 抽屉</h3>
             <p>新增基于 Base UI 的抽屉，支持上、右、下、左四个方向滑入与拖拽关闭。示例组合姓名、邮箱地址、联系人分组、提醒时间、日期范围与复选框，联系渠道和联系方式同一行展示。姓名、邮箱地址和提醒时间为必填项，确定时检查空值及邮箱格式，错误项显示提示并聚焦首个错误字段；校验通过后才显示 Spinner。每次打开先显示 KalosSkeleton，点击确定时显示 KalosSpinner，处理完成后再滑出；取消与右上角 X 直接关闭。四个弹出方向独立展示在变体预览中。</p>
             <p>loading、confirming 与 onConfirm 支持接入实际异步任务，保留 Base UI 打开状态和事件 API。默认聚焦容器，支持 Tab、Esc、遮罩关闭与焦点返回；确认处理中防止重复提交。新增组件不影响现有调用。</p>
-            <p>本地验证：Lint、类型检查、完整构建、注册表校验与安装命令 dry-run 通过；已核验四向弹出、拖拽关闭、桌面与 390px 窄屏、浅深主题、表单标签与选择器浮层、日期范围应用、同行字段布局、必填及邮箱格式校验、错误聚焦与修正恢复、确定按钮 Spinner，以及取消与 X 在确认处理中直接关闭。Figwrite 未连接设计文件，尚未同步设计稿；本次保持待发布。</p>
+            <p>本地验证：Lint、类型检查、完整构建、注册表校验与安装命令 dry-run 通过；已核验四向弹出、拖拽关闭、桌面与 390px 窄屏、浅深主题、表单标签与选择器浮层、日期范围应用、同行字段布局、必填及邮箱格式校验、错误聚焦与修正恢复、确定按钮 Spinner，以及取消与 X 在确认处理中直接关闭。Figwrite 未连接设计文件，尚未同步设计稿。</p>
             <ChangelogPreview slug="kalos-drawer" />
           </div>
           <div className="changelog-block">
@@ -121,7 +121,7 @@ export default function ChangelogPage() {
             <p>新增层叠通知，参考 affectUI Notification Stack 的卡片递进、关闭动画与轨道、网格、射线图案，支持自定义图标、标签、正文和操作链接。后方卡片不进入键盘焦点顺序，关闭后可继续操作下一张。</p>
             <p>新增 floating 变体，position 支持右上（默认）、右下、左上、左下，底部位置向上层叠；同步补充四角交互预览、TSX 用法、API、安装注册表与 AI Skill。</p>
             <p>预览移除顶部标签与操作后的成功文案，操作按钮统一为 Primary，默认宽度调整为 400px，文字区增加右侧留白以避开背景蓝点；关闭按钮保持在右上角，修复热更新沿用旧样式导致的位置异常。action.onClick 支持返回 Promise：处理中复用 Button 的 loading 状态，保留原有按钮文字并在前面显示加载图标，成功后关闭当前通知，失败时保留并显示重试提示；同步操作执行后直接关闭。onDismiss 同时用于手动关闭和操作成功，异步操作期间的重复点击被禁用。</p>
-            <p>Notification 验证：Lint、类型检查、完整生产构建、注册表校验、38 项安装器测试与安装命令 dry-run 通过；已核验桌面与 390px 窄屏、浅深主题、四角定位、底部向上层叠、Primary 按钮加载后关闭、处理中手动关闭、连续新增与清空、Tab 导航和关闭后的焦点衔接。Figwrite MCP 当前不可用，设计稿尚未同步；本次保持待发布。</p>
+            <p>Notification 验证：Lint、类型检查、完整生产构建、注册表校验、38 项安装器测试与安装命令 dry-run 通过；已核验桌面与 390px 窄屏、浅深主题、四角定位、底部向上层叠、Primary 按钮加载后关闭、处理中手动关闭、连续新增与清空、Tab 导航和关闭后的焦点衔接。Figwrite MCP 当前不可用，设计稿尚未同步。</p>
             <ChangelogPreview slug="kalos-notification" />
           </div>
         </section>
