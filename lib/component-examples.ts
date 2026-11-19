@@ -154,6 +154,86 @@ export default function Example() {
 }
 
 export function reactExample(item: Item) {
+  if (item.slug === "kalos-decision-card") return `"use client";
+
+import { useState } from "react";
+import { KalosDecisionCard, type KalosDecision } from "@/components/ui/kalos-decision-card";
+
+const initialDecisions: KalosDecision[] = [
+  {
+    id: "index",
+    task: "文档索引",
+    question: "何时重建文档索引？",
+    options: [
+      { id: "nightly", title: "每天凌晨", summary: "在文档编辑较少时运行", recommended: true },
+      { id: "on-change", title: "文档变更后", summary: "立即更新搜索结果" },
+    ],
+  },
+  {
+    id: "weekly-update",
+    kind: "approval",
+    question: "将本周简报发送给协作者？",
+    facts: [{ label: "收件人", value: "周宁" }, { label: "主题", value: "本周文档更新" }],
+  },
+];
+
+export function ConversationDecisions() {
+  const [pending, setPending] = useState(initialDecisions);
+
+  return (
+    <KalosDecisionCard
+      decisions={pending}
+      onDecide={(id, answer) => {
+        console.log(id, answer);
+        setPending(items => items.filter(item => item.id !== id));
+      }}
+    />
+  );
+}`;
+  if (item.slug === "kalos-command-menu") return `"use client";
+
+import { useState } from "react";
+import { FilePlus2, Globe, PenTool } from "lucide-react";
+import { KalosCommandMenu, type KalosCommandGroup } from "@/components/ui/kalos-command-menu";
+
+const groups: KalosCommandGroup[] = [
+  { label: "推荐操作", items: [
+    { value: "design", label: "打开设计文件", hint: "Figma", icon: <PenTool />, shortcut: 1 },
+    { value: "website", label: "编辑网页", hint: "Framer", icon: <Globe />, shortcut: 2 },
+  ] },
+  { label: "常用操作", items: [
+    { value: "document", label: "新建文档", icon: <FilePlus2 /> },
+  ] },
+];
+
+export default function Example() {
+  const [selection, setSelection] = useState("");
+
+  return <>
+    <KalosCommandMenu groups={groups} placeholder="输入命令或搜索…" onRun={value => {
+      const item = groups.flatMap(group => group.items).find(item => item.value === value);
+      if (item) setSelection(item.label);
+    }} />
+    {selection && <p role="status">已选择「{selection}」</p>}
+  </>;
+}`;
+  if (item.slug === "kalos-ai-answer") return `"use client";
+
+import { KalosAIAnswer, type KalosAnswerSource } from "@/components/ui/kalos-ai-answer";
+
+const sources: KalosAnswerSource[] = [
+  { name: "Notion", title: "团建计划：候选地点与预算", href: "https://www.notion.so" },
+  { name: "维基百科", title: "阿尔法玛：里斯本最古老的街区", href: "https://en.wikipedia.org/wiki/Alfama" },
+];
+
+export default function Example() {
+  return <KalosAIAnswer
+    question="在里斯本哪里办团建最合适？"
+    answer="**阿尔法玛**适合 12 人团建。这里适合步行，早晨安静，费用也在预算内 [1, 2]。"
+    sources={sources}
+    framed
+  />;
+}`;
   if (item.slug === "kalos-toast") return toastExample();
   if (item.slug === "kalos-select") return `"use client";
 

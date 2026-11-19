@@ -1,0 +1,153 @@
+.kalos-decision-card { width: 100%; min-width: 0; container: decision-card / inline-size; color: var(--kd-ink); }
+.kalos-decision-shell { overflow: clip; overflow-clip-margin: 8px; }
+.kalos-decision-surface {
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: var(--kd-radius);
+  background: var(--kd-surface);
+  box-shadow: var(--kd-shadow);
+  padding: 6px;
+}
+.kalos-decision-head,
+.kalos-decision-actions,
+.kalos-decision-pager {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+}
+.kalos-decision-head { min-height: 28px; gap: 8px; padding-inline: 6px 2px; }
+.kalos-decision-actions { flex: none; margin-inline-start: auto; gap: 4px; }
+.kalos-decision-pager { gap: 2px; color: var(--kd-muted); font-variant-numeric: tabular-nums; font-size: 12px; white-space: nowrap; }
+.kalos-decision-actions button { font-size: 12px; color: var(--kd-muted); }
+.kalos-decision-actions button svg { width: 14px; height: 14px; }
+.kalos-decision-badge,
+.kalos-decision-recommended {
+  flex: none;
+  padding-inline: 6px;
+  border-radius: 5px;
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.kalos-decision-badge { background: var(--kd-warn-wash); color: var(--kd-warn); }
+.kalos-decision-recommended { background: var(--kd-soft); color: var(--kd-muted); }
+.kalos-decision-task { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--kd-muted); font-size: 12px; }
+.kalos-decision-collapse { position: relative; overflow: clip; }
+.kalos-decision-body { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+.kalos-decision-body[inert] { position: absolute; inset: 0 0 auto; pointer-events: none; }
+.kalos-decision-card .kalos-decision-question {
+  margin: 0;
+  padding: 8px 6px 2px;
+  color: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.kalos-decision-options { display: flex; min-width: 0; flex-direction: column; gap: 1px; }
+.kalos-decision-options::before {
+  border-radius: var(--kd-highlight-radius);
+  background: var(--kd-highlight-color);
+  transition-duration: var(--kd-highlight-duration);
+  transition-timing-function: var(--kd-highlight-ease);
+}
+.kalos-decision-options[data-kind="pick"] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 2px 4px; }
+.kalos-decision-option {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--kd-row-radius);
+  background: transparent;
+  padding: 4px 6px;
+  color: inherit;
+  text-align: start;
+  font: inherit;
+  cursor: pointer;
+}
+.kalos-decision-option:focus-visible { outline: none; box-shadow: inset 0 0 0 1.5px var(--kd-focus); }
+.kalos-decision-option-text { display: flex; width: 100%; min-width: 0; align-items: center; gap: 8px; }
+.kalos-decision-key {
+  box-sizing: border-box;
+  display: grid;
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  flex: none;
+  place-items: center;
+  border-radius: var(--kd-row-radius);
+  background: var(--kd-soft);
+  color: var(--kd-muted);
+  font-size: 12px;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.kalos-decision-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; }
+.kalos-decision-option-title,
+.kalos-decision-facts dd {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.kalos-decision-option-title { font-weight: 500; }
+.kalos-decision-summary { color: var(--kd-muted); font-size: 12px; line-height: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kalos-decision-options[data-kind="pick"] .kalos-decision-option { gap: 6px; padding: 4px; justify-content: flex-start; }
+.kalos-decision-art {
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1.5;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--kd-edge);
+  border-radius: 7px;
+  background: var(--kd-soft);
+  color: var(--kd-muted);
+}
+.kalos-decision-art > :is(img, video) { width: 100%; height: 100%; object-fit: cover; }
+.kalos-decision-art svg { width: 18px; height: 18px; }
+.kalos-decision-options[data-kind="pick"] .kalos-decision-recommended {
+  position: absolute;
+  inset-block-start: 9px;
+  inset-inline-end: 9px;
+  background: var(--kd-surface);
+  box-shadow: 0 0 0 1px var(--kd-edge);
+}
+.kalos-decision-own {
+  display: flex;
+  min-height: 32px;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--kd-row-radius);
+  margin-block-start: 2px;
+  padding-inline: 6px;
+}
+.kalos-decision-own input { width: 0; min-height: 32px; flex: 1; border: 0; outline: none; background: transparent; color: inherit; font: inherit; }
+.kalos-decision-own input::placeholder { color: var(--kd-muted); }
+.kalos-decision-facts { display: grid; gap: 3px; margin: 0; padding: 1px 6px 5px; }
+.kalos-decision-facts > div { display: grid; grid-template-columns: minmax(52px, 68px) minmax(0, 1fr); gap: 6px; }
+.kalos-decision-facts dt { min-width: 0; color: var(--kd-muted); overflow-wrap: anywhere; }
+.kalos-decision-facts dd { min-width: 0; margin: 0; color: var(--kd-ink); }
+.kalos-decision-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@container decision-card (width < DECISION_NARROW_WIDTH) {
+  .kalos-decision-options[data-kind="pick"] { display: flex; padding: 0; gap: 2px; }
+  .kalos-decision-options[data-kind="pick"] .kalos-decision-option { flex-direction: row; align-items: center; justify-content: flex-start; padding: 4px 6px; }
+  .kalos-decision-options[data-kind="pick"] .kalos-decision-art { width: 46px; flex: none; }
+  .kalos-decision-options[data-kind="pick"] .kalos-decision-recommended { position: static; background: var(--kd-soft); box-shadow: none; }
+  .kalos-decision-actions { gap: 0; }
+  .kalos-decision-pager { gap: 0; }
+}
+@media (pointer: coarse) {
+  .kalos-decision-option, .kalos-decision-own { min-height: 44px; }
+  .kalos-decision-own input { min-height: 44px; }
+  .kalos-decision-actions button { min-width: 32px; min-height: 32px; }
+}

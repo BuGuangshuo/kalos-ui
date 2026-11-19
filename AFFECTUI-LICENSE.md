@@ -18,6 +18,8 @@ Stepper Form follows the public [Stepper Form preview and API documentation](htt
 
 The [Select](https://www.affectui.com/components/select) preview, option layout, and animated checkmark reference affectUI. Kalos UI uses Base UI for selection, keyboard navigation, and positioning.
 
+The [Command Menu preview](https://www.affectui.com/components/command-menu) informed the example's command groups. Kalos uses its own menu implementation and reuses the Table preview icons. The Slack and Notion icons are sourced from [SVG Logos](https://github.com/gilbarbara/logos). Logos remain the property of their respective owners.
+
 MIT License
 
 Copyright (c) 2026 Florian Höller (adfects)

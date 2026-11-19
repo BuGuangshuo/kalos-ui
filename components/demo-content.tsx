@@ -10,8 +10,6 @@ import {
 import {
   ArrowRight,
   Plus,
-  ArrowUpRight,
-  Layers,
   Heart,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -20,7 +18,7 @@ import type { KalosAvatarProps, KalosAvatarStackProps } from "@/components/ui/ka
 import { Separator } from "@/components/ui/separator";
 import { controlStyles } from "@/components/ui/kalos-styles";
 import { FieldGroup } from "@/components/ui/field";
-import type { KalosCommandMenuProps } from "@/components/ui/kalos-command-menu-panel";
+import { CommandMenuDemo } from "@/components/command-menu-demo";
 import type { KalosPopoverProps } from "@/components/ui/kalos-popover-menu";
 import type { KalosFormProps } from "@/registry/kalos/kalos-form";
 import type { KalosSelectProps } from "@/registry/kalos/kalos-select";
@@ -61,6 +59,9 @@ import { ColorPickerDemo } from "@/components/color-picker-demo";
 import { DropzoneDemo } from "@/components/dropzone-demo";
 import { NumberInputDemo } from "@/components/number-input-demo";
 import { OtpInputDemo } from "@/components/otp-input-demo";
+import { AIAnswerDemo } from "@/components/ai-answer-demo";
+import { ContextWindowDemo } from "@/components/context-window-demo";
+import { DecisionCardDemo } from "@/components/decision-card-demo";
 import type { KalosNumberInputProps } from "@/components/ui/kalos-number-input-model";
 
 const formFields: KalosFormField[] = [
@@ -76,7 +77,6 @@ export interface DemoComponents {
   KalosDropdownMenu: ComponentType<KalosDropdownMenuProps>;
   KalosTable: ComponentType<KalosTableProps>;
   KalosForm: ComponentType<KalosFormProps>;
-  KalosCommandMenu: ComponentType<KalosCommandMenuProps>;
   KalosButton: ComponentType<{
     children?: ReactNode;
     variant?: "default" | "secondary" | "outline" | "ghost" | "destructive";
@@ -223,7 +223,6 @@ export function DemoContent({
     KalosNumberInput,
     KalosHoverCard,
     KalosPopover,
-    KalosCommandMenu,
     KalosCard,
     KalosBadge,
     KalosSwitch,
@@ -270,13 +269,7 @@ export function DemoContent({
     case "kalos-button":
       return <ButtonDemo KalosButton={KalosButton} />;
     case "kalos-command-menu":
-      return <div className="w-full max-w-[560px] p-2"><KalosCommandMenu
-        groups={compact ? [{ label: "常用操作", items: [{ value: "new", label: "新建文档", icon: <Plus /> }, { value: "settings", label: "账号设置", icon: <Layers /> }] }] : [
-          { label: "文档", items: [{ value: "new", label: "新建文档", icon: <Plus /> }, { value: "archive", label: "归档文档", disabled: true }] },
-          { label: "设置", items: [{ value: "settings", label: "账号设置", icon: <Layers /> }, { value: "notifications", label: "通知设置", icon: <ArrowUpRight /> }] },
-        ]}
-        onRun={value => toast({ new: "文档已创建", settings: "已打开账号设置", notifications: "已打开通知设置" }[value] || value)}
-      /></div>;
+      return <CommandMenuDemo compact={compact} />;
     case "kalos-hover-card":
       return <HoverCardActivityDemo KalosHoverCard={KalosHoverCard} compact={compact} />;
     case "kalos-popover":
@@ -285,6 +278,12 @@ export function DemoContent({
       return <NumberInputDemo Control={KalosNumberInput} KalosButton={KalosButton} variant={numberVariant} compact={compact} />;
     case "kalos-otp-input":
       return <OtpInputDemo compact={compact} />;
+    case "kalos-ai-answer":
+      return <AIAnswerDemo compact={compact} />;
+    case "kalos-context-window":
+      return <ContextWindowDemo />;
+    case "kalos-decision-card":
+      return <DecisionCardDemo compact={compact} />;
     case "kalos-combobox":
       return <ComboboxDemo />;
     case "kalos-text-area":

@@ -6,7 +6,7 @@ Use the slug with the Base UI registry URL in SKILL.md. React named exports use 
 | ---------------- | --------------------------------------------------- |
 | kalos-button       | `loading`, `disabled`, underlying Button attributes |
 | kalos-pagination | controlled `page` / `onPageChange`, `total` / `pageSize` or `pageCount`, `pageSizes` / `onPageSizeChange`, `siblings` (0–5), `compact`, `disabled`; Chinese total count and labels, responsive page numbers |
-| kalos-command-menu | grouped commands, optional context, controlled query, onRun/onClose |
+| kalos-command-menu | grouped commands, optional inline `hint` and context, modifier-plus-digit `shortcut`, controlled query, onRun/onClose |
 | kalos-hover-card | `content`, one focusable child, side/align/offset, delays, width, controlled open, disabled |
 | kalos-dropdown-menu | `trigger`, `triggerProps`, recursive `items`, icons/shortcuts, controlled radio/checkbox choices, `keepOpen`, submenus, danger/disabled/divider, `onAction`, controlled open |
 | kalos-popover | ReactNode trigger, triggerProps (variant/size/aria-label), items, optional custom content, controlled open, action callback |
@@ -22,6 +22,9 @@ Use the slug with the Base UI registry URL in SKILL.md. React named exports use 
 | kalos-date-range-picker | Range Picker (`KalosDateRangePicker`) accepts a start/end `Date` range or `null`. It supports presets, `min`/`max`/`today`, two calendars with hover preview, inline embedding and a single month on narrow screens. `onChange` receives the range on Apply or `null` immediately on clear. `clearable` defaults to `true`. Closing discards uncommitted changes. |
 | kalos-time-picker | HH:mm/null value, onChange, step/min/max, 12/24 hour display, typed time normalization, label/hint/error, readOnly/disabled; Base UI editable Combobox |
 | kalos-card         | `title`, optional `description` / `icon` / `action` / content / `footer`; `interactive`, `selected`, `as`, `titleAs` |
+| kalos-ai-answer | `KalosAIAnswer` renders `answer` with paragraphs, bullets, bold and one-based citations like `[1, 2]`. Supply `sources` with name/title and optional href/icon/snippet. Append streamed text and set `streaming` to false when the stream ends. Use `onStop` to cancel the request. Optional props include question, framed, animate/speed, elapsedSeconds, followUps/onFollowUp, onRegenerate, showFeedback/feedbackReasons/onFeedback and onCopy. |
+| kalos-context-window | `KalosContextWindow` visualizes token use against `limit`. Each part has an id and label, plus a token count or a list of items. Mark a part with `compact` to offer compaction or `locked` to keep it read-only. Update `parts` in `onRemoveItem` and after async `onCompact` resolves. Use the session ID as the React key to reset local state between chats. |
+| kalos-decision-card | `KalosDecisionCard` presents a queue of agent questions as numbered options, preview tiles, or approvals. Pass `decisions` and remove the answered item in `onDecide` after recording the answer. Change `reveal` to reopen and focus the card. |
 | kalos-table        | `columns`, controlled `rows` or `defaultRows`, `title`/`icon`, colored `tagTones`, `editable`, `selectable`, `sortable`, `footer`, `pagination`, `scrollAreaProps`, `rowActions`/`rowActionsLabel`/`rowActionsWidth`, `onRowsChange`/`onSelectionChange` |
 | kalos-badge        | `tone`: neutral / info / success / warning / danger / purple / pink；`variant`: soft（浅色底＋状态色文字）/ solid（全色底＋白字）/ ghost（无背景、无外框）；`size`、`dot`、`live`、`icon`、`count`、`max`；兼容 `status` |
 | kalos-switch       | `label`, `description`, `error`, disabled/name               |

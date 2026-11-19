@@ -39,6 +39,19 @@ export default function ChangelogPage() {
           <p>组件、安装器与文档的更新。</p>
         </header>
 
+        <section id="v0-3-6" className="changelog-entry">
+          <h2>v0.3.6 — AI 会话组件</h2>
+          <ReleaseMeta version="0.3.6" />
+          <p>新增 AI Answer，用来源卡片和行内引用呈现可核查的流式回答，支持停止、重新生成、复制、反馈和追问。</p>
+          <ChangelogPreview slug="kalos-ai-answer" caption={false} />
+          <p>新增 Context Window，用方格展示模型的 token 占用和容量预警，支持展开并移除附件、压缩会话历史。</p>
+          <ChangelogPreview slug="kalos-context-window" caption={false} full />
+          <p>新增 Decision Card，在会话中处理编号选择、缩略图方案和审批，支持分页、自定义回答与稍后处理。</p>
+          <ChangelogPreview slug="kalos-decision-card" caption={false} full />
+          <p>Command Menu 预览加入品牌图标和四组中文命令，支持搜索服务名称，并用 ⌘ / Ctrl + 数字执行推荐操作。</p>
+          <p>主导航和文档、组件侧栏悬停时，背景会像 Select 一样在条目间滑动。</p>
+        </section>
+
         <section id="v0-3-5" className="changelog-entry">
           <h2>v0.3.5 — 新组件与预览更新</h2>
           <ReleaseMeta version="0.3.5" />

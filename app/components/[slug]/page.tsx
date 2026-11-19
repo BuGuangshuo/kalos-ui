@@ -53,7 +53,7 @@ export default async function DetailPage({
   const { slug } = await params;
   const item = catalog.find((item) => item.slug === slug);
   if (!item) notFound();
-  const [source, hoverCardDemoSource, tableDemoSource, tableOptionsSource, tablePaginationSource, stepperDemoSource] = await Promise.all([
+  const [source, hoverCardDemoSource, tableDemoSource, tableOptionsSource, tablePaginationSource, stepperDemoSource, contextWindowDemoSource] = await Promise.all([
     slug === "kalos-command-menu"
       ? readFile(path.join(process.cwd(), "components/ui/kalos-command-menu-panel.tsx"), "utf8")
       : readFile(path.join(process.cwd(), "registry/kalos", `${item.slug}.tsx`), "utf8"),
@@ -62,9 +62,12 @@ export default async function DetailPage({
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-row-options.tsx"), "utf8") : "",
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-pagination-demo.tsx"), "utf8") : "",
     slug === "kalos-stepper-form" ? readFile(path.join(process.cwd(), "components/stepper-form-demo.tsx"), "utf8") : "",
+    slug === "kalos-context-window" ? readFile(path.join(process.cwd(), "components/context-window-demo.tsx"), "utf8") : "",
   ]);
   const example = stepperDemoSource
     ? stepperDemoSource.replace("@/registry/kalos/kalos-stepper-form", "@/components/ui/kalos-stepper-form").trim()
+    : contextWindowDemoSource
+    ? contextWindowDemoSource.replace("@/registry/kalos/kalos-context-window", "@/components/ui/kalos-context-window").trim()
     : reactExample(item);
   const index = catalog.indexOf(item);
   const previous = catalog[index - 1],
@@ -111,6 +114,7 @@ export default async function DetailPage({
           </section> : null}
           <section id="usage">
             <h2>使用</h2>
+            {slug === "kalos-ai-answer" ? <p>示例使用本地数据演示分段生成。接入模型时，每收到一段就追加到 <code>answer</code>，流结束后将 <code>streaming</code> 设为 false，并在 <code>onStop</code> 中取消请求。</p> : null}
             {slug === "kalos-dropzone" ? <p>将示例中的 <code>/api/uploads</code> 替换为你的上传端点，并在服务端校验文件类型与大小。省略 <code>onUpload</code> 时使用本地模拟进度。</p> : null}
             {slug === "kalos-drawer" ? <p>表单示例还需安装 Input、Select、Time Picker、Range Picker 与 Checkbox：运行安装命令时追加 input select time-picker date-range-picker checkbox。示例计时器演示初始化与确认加载，实际接入时由数据请求与保存操作控制。</p> : null}
             {slug === "kalos-table" ? <p>默认示例的 Options 使用 Dropdown Menu、Dialog、Input 和 Button；同时安装这些组件，并运行 npm install sonner 以显示操作结果。已有 Toaster 时复用原有入口。</p> : null}

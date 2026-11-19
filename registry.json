@@ -35,7 +35,7 @@
       "name": "kalos-command-menu",
       "type": "registry:ui",
       "title": "Kalos 命令菜单",
-      "description": "在分组列表中搜索并执行操作，支持匹配上下文、键盘导航和连续滑动的选中背景。",
+      "description": "在同一个搜索框里查找并执行分组命令。操作可显示图标、来源和数字快捷键，选中背景随键盘或指针连续滑动。",
       "author": "Alan Bu <https://github.com/BuGuangshuo>",
       "dependencies": [
         "@base-ui/react",
@@ -786,6 +786,136 @@
         },
         {
           "path": "components/ui/kalos-hover-card-shared.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-ai-answer",
+      "type": "registry:ui",
+      "title": "Kalos AI 回答",
+      "description": "逐步呈现 AI 回答，支持来源卡片、行内引用预览、停止与重新生成、复制、反馈和追问。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-ai-answer.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-tooltip-shared.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-ai-answer-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-context-window",
+      "type": "registry:ui",
+      "title": "Kalos 上下文窗口",
+      "description": "用方格展示模型的 token 占用与剩余容量，支持高亮分组、移除附加文件和压缩会话历史。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-context-window.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-context-window-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-decision-card",
+      "type": "registry:ui",
+      "title": "Kalos 决策卡片",
+      "description": "在会话中呈现待确认的决策，支持编号选项、缩略图、审批、分页和稍后处理。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/roboto",
+        "class-variance-authority",
+        "cn",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-decision-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-decision-card-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1584,7 +1714,7 @@
       "name": "kalos-all",
       "type": "registry:block",
       "title": "Kalos UI 完整组件库",
-      "description": "一次安装全部 36 个 Base UI 组件。",
+      "description": "一次安装全部 39 个 Base UI 组件。",
       "dependencies": [
         "@base-ui/react",
         "@fontsource/roboto",
@@ -1811,6 +1941,38 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/kalos/kalos-ai-answer.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-tooltip-shared.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-ai-answer-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-context-window.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-context-window-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-decision-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-decision-card-styles.ts",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/kalos/kalos-table.tsx",
           "type": "registry:ui"
         },
@@ -1820,10 +1982,6 @@
         },
         {
           "path": "components/ui/kalos-table-cell.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "components/ui/kalos-tooltip-shared.tsx",
           "type": "registry:ui"
         },
         {
@@ -1924,10 +2082,6 @@
         },
         {
           "path": "components/ui/kalos-combobox-styles.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/kalos/kalos-tooltip.tsx",
           "type": "registry:ui"
         },
         {

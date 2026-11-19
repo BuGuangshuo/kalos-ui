@@ -21,7 +21,6 @@ import { toast } from "sonner";
 import { KalosButton } from "@/registry/kalos/kalos-button";
 import { KalosHoverCard } from "@/registry/kalos/kalos-hover-card";
 import { KalosPopover } from "@/registry/kalos/kalos-popover";
-import { KalosCommandMenu } from "@/registry/kalos/kalos-command-menu";
 import { KalosNumberInput } from "@/registry/kalos/kalos-number-input";
 import { KalosInput } from "@/registry/kalos/kalos-input";
 import { KalosCard } from "@/registry/kalos/kalos-card";
@@ -52,7 +51,6 @@ const components = {
   KalosNumberInput,
   KalosHoverCard,
   KalosPopover,
-  KalosCommandMenu,
   KalosCard,
   KalosBadge,
   KalosSwitch,

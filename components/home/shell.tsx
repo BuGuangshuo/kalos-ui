@@ -133,9 +133,7 @@ export function HomeShell({ children }: { children: ReactNode }) {
                     }
                     transition={{ duration: 0.6, ease: easeOut, delay: 0.25 }}
                   >
-                    <nav aria-label="主导航">
-                      <SiteNavigation />
-                    </nav>
+                    <SiteNavigation />
                     <GlobalSearch />
                     <motion.a
                       className="motion-github-link"

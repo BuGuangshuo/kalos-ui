@@ -43,9 +43,7 @@ function Header() {
           <Link href="/" className="brand" aria-label="Kalos UI 首页">
             <BrandLogo className="brand-lockup" />
           </Link>
-          <nav className="desktop-nav" aria-label="主导航">
-            <SiteNavigation />
-          </nav>
+          <SiteNavigation className="desktop-nav" />
           <div className="header-actions">
             <GlobalSearch />
             <ThemeToggle />
@@ -74,9 +72,7 @@ function Header() {
           </div>
         </div>
         {menu ? (
-          <nav className="mobile-nav" aria-label="移动导航">
-            <SiteNavigation onNavigate={() => setMenu(false)} />
-          </nav>
+          <SiteNavigation className="mobile-nav" label="移动导航" onNavigate={() => setMenu(false)} />
         ) : null}
       </header>
     </>

@@ -6,7 +6,16 @@ import { cn } from "@/lib/utils";
 import { controlStyles } from "@/components/ui/kalos-styles";
 import { slidingHighlightClasses, useSlidingHighlight } from "@/components/ui/kalos-highlight";
 
-export type KalosCommandItem = { value: string; label: string; description?: ReactNode; icon?: ReactNode; keywords?: string; disabled?: boolean };
+export type KalosCommandItem = {
+  value: string;
+  label: string;
+  description?: ReactNode;
+  hint?: string;
+  icon?: ReactNode;
+  keywords?: string;
+  shortcut?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  disabled?: boolean;
+};
 export type KalosCommandGroup = { label: string; items: KalosCommandItem[] };
 export type KalosCommandMenuProps = {
   groups: KalosCommandGroup[];
@@ -30,7 +39,14 @@ export function KalosCommandMenu({ groups, label = "命令菜单", placeholder =
   const value = query ?? internalQuery;
   const listId = useId();
   const words = value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-  const visible = groups.map(group => ({ ...group, items: group.items.filter(item => !filter || words.every(word => `${item.label} ${typeof item.description === "string" ? item.description : ""} ${item.keywords ?? ""}`.toLocaleLowerCase().includes(word))) })).filter(group => group.items.length);
+  const visible = groups.map(group => ({
+    ...group,
+    items: group.items.filter(item => {
+      if (!filter || !words.length) return true;
+      const searchable = [item.label, item.hint, typeof item.description === "string" ? item.description : "", item.keywords].join(" ").toLocaleLowerCase();
+      return words.every(word => searchable.includes(word));
+    }),
+  })).filter(group => group.items.length);
   const options = visible.flatMap(group => group.items).filter(item => !item.disabled);
   const active = options.length ? Math.min(index, options.length - 1) : -1;
   const activeItem = options[active];
@@ -54,6 +70,14 @@ export function KalosCommandMenu({ groups, label = "命令菜单", placeholder =
         onChange={event => changeQuery(event.target.value)}
         onKeyDown={event => {
           if (event.nativeEvent.isComposing) return;
+          if ((event.ctrlKey || event.metaKey) && !event.altKey && !event.shiftKey) {
+            const shortcutItem = options.find(item => item.shortcut !== undefined && String(item.shortcut) === event.key);
+            if (shortcutItem) {
+              event.preventDefault();
+              if (!event.repeat) onRun?.(shortcutItem.value);
+              return;
+            }
+          }
           if (["ArrowDown", "ArrowUp"].includes(event.key)) {
             event.preventDefault();
             if (options.length) setIndex((active + (event.key === "ArrowDown" ? 1 : -1) + options.length) % options.length);
@@ -69,7 +93,9 @@ export function KalosCommandMenu({ groups, label = "命令菜单", placeholder =
             event.preventDefault(); onRun?.(activeItem.value);
           } else if (event.key === "Escape") {
             event.preventDefault(); event.stopPropagation();
-            if (value) changeQuery(""); else onClose?.();
+            if (value) changeQuery("");
+            else if (onClose) onClose();
+            else event.currentTarget.blur();
           }
         }}
       />
@@ -83,11 +109,22 @@ export function KalosCommandMenu({ groups, label = "命令菜单", placeholder =
           const selected = itemIndex >= 0 && active === itemIndex;
           return <button
             key={item.value} id={itemIndex < 0 ? undefined : `${listId}-${itemIndex}`} type="button" role="option" aria-selected={selected} disabled={item.disabled} data-disabled={item.disabled || undefined}
+            aria-keyshortcuts={item.shortcut && !item.disabled ? `Meta+${item.shortcut} Control+${item.shortcut}` : undefined}
             tabIndex={-1} className={controlStyles.commandItem}
             onPointerMove={() => { if (!item.disabled) setIndex(itemIndex); }}
             onMouseDown={event => event.preventDefault()}
             onClick={() => onRun?.(item.value)}
-          >{item.icon ? <span className={controlStyles.commandIcon}>{item.icon}</span> : null}<span className={controlStyles.commandItemText}><span className={controlStyles.commandTitle}>{item.label}</span>{item.description ? <span className={controlStyles.commandDescription}>{item.description}</span> : null}</span></button>;
+          >
+            {item.icon ? <span data-slot="command-icon" className={controlStyles.commandIcon} aria-hidden="true">{item.icon}</span> : null}
+            <span className={controlStyles.commandItemText}>
+              <span className={controlStyles.commandItemTitle}>
+                <span className={controlStyles.commandTitle}>{item.label}</span>
+                {item.hint ? <span className={controlStyles.commandHint}>{item.hint}</span> : null}
+              </span>
+              {item.description ? <span className={controlStyles.commandDescription}>{item.description}</span> : null}
+            </span>
+            {item.shortcut ? <kbd className={cn(controlStyles.commandKey, controlStyles.commandShortcut)} title={`⌘ / Ctrl + ${item.shortcut}`} aria-hidden="true">⌘{item.shortcut}</kbd> : null}
+          </button>;
         })}
       </div>)}
       {visible.length === 0 ? <p className="px-3 py-8 text-center text-[13px] text-muted-foreground" role="status">{emptyMessage}</p> : null}

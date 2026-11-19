@@ -43,6 +43,13 @@ const segmentedControlCss = (await readFile("design/segmented-control.css", "utf
   .replace("--segment-padding-x: 10px", `--segment-padding-x: ${segment.paddingX}px`);
 const command = inventory.defaults["command-menu"];
 const commandVars = vars("command-menu", Object.fromEntries(["ink", "surface", "highlight", "muted", "edge", "shadow", "ease"].map(k => [`command-${k}`, k])));
+const commandBrandVars = vars("command-menu", { "command-brand-ink": "brand-ink", "command-brand-surface": "brand-surface", "command-brand-shadow": "brand-shadow" });
+const commandBrandIcon = command.brandIcon;
+const commandMenuDemoStyles = {
+  menu: `[&_[data-slot=command-icon]]:mt-0 [&_[data-slot=command-icon]]:size-[${commandBrandIcon.containerSize}px]`,
+  brandIcon: `${commandBrandVars} grid size-[${commandBrandIcon.containerSize}px] shrink-0 place-items-center rounded-[${commandBrandIcon.radius}px] bg-[var(--k-command-brand-surface)] text-[color:var(--k-command-brand-ink)] shadow-[var(--k-command-brand-shadow)] [&>:is(img,svg)]:size-[${commandBrandIcon.size}px] [&>img]:object-contain`,
+  iconSize: commandBrandIcon.size,
+};
 const dialog = inventory.defaults.dialog;
 const alertDialog = inventory.defaults["alert-dialog"];
 const dialogVars = `${vars("dialog", { "dialog-edge": "edge" })} ${vars(dialog.tokensFrom, { "dialog-shadow": "--ui-selc-shadow-menu" })}`;
@@ -204,7 +211,7 @@ const styles = {
   selectTick: `[stroke-dasharray:1] [stroke-dashoffset:0] transition-[stroke-dashoffset] duration-[${select.checkDuration}ms] delay-[${select.checkDelay}ms] ease-[${css(inventory.components.select.light["--ui-selc-ease"])}] starting:[stroke-dashoffset:1]`,
   selectPopup: `min-w-[min(${select.menuMinWidth}px,calc(100vw-16px))] max-w-[calc(100vw-16px)] overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:thin] max-h-[min(var(--available-height),${select.menuMaxHeight}px)] data-[align-trigger=false]:transition-[opacity,translate,scale] data-[align-trigger=false]:duration-[${select.menuDuration}ms] data-[align-trigger=false]:ease-[${css(inventory.components.select.light["--ui-selc-ease"])}] data-[align-trigger=false]:data-starting-style:opacity-0 data-[align-trigger=false]:data-ending-style:opacity-0 data-[align-trigger=false]:data-starting-style:scale-[${select.menuScale}] data-[align-trigger=false]:data-ending-style:scale-[${select.menuScale}] data-[align-trigger=false]:data-starting-style:translate-y-[-${select.menuOffset}px] data-[align-trigger=false]:data-ending-style:translate-y-[-${select.menuOffset}px] data-[align-trigger=false]:data-[side=top]:data-starting-style:translate-y-[${select.menuOffset}px] data-[align-trigger=false]:data-[side=top]:data-ending-style:translate-y-[${select.menuOffset}px]`,
   selectMenu: `${font} ${menuVars} ${selectTextVars} rounded-[${select.menuRadius}px] border-0 ring-0 bg-[var(--k-menu)] p-[${select.menuPadding}px] text-[color:var(--k-ink)] shadow-[var(--k-shadow-menu)] before:rounded-[${select.itemRadius}px] before:bg-[var(--k-glow)] before:duration-[${select.highlightDuration}ms] before:ease-[var(--k-ease)] [&_[role=option]]:min-h-[${select.itemHeight}px] [&_[role=option]]:rounded-[${select.itemRadius}px] [&_[role=option]]:py-[${select.itemPadding[0]}px] [&_[role=option]]:pl-[${select.itemPadding[1]}px] [&_[role=option]]:pr-8 [&_[role=option]]:text-[13px] [&_[role=option]]:leading-5 [&_[role=option]]:text-[color:var(--k-ink)] [&_[data-slot=select-group]]:p-0`,
-  commandMenu: `${font} ${commandVars} w-full max-w-[${command.width}px] overflow-hidden rounded-[${command.radius}px] bg-[var(--k-command-surface)] text-[color:var(--k-command-ink)] shadow-[var(--k-command-shadow)]`,
+  commandMenu: `${font} ${commandVars} @container w-full max-w-[${command.width}px] overflow-hidden rounded-[${command.radius}px] bg-[var(--k-command-surface)] text-[color:var(--k-command-ink)] shadow-[var(--k-command-shadow)]`,
   commandSearch: `flex h-[${command.searchHeight}px] items-center gap-2.5 border-b border-[var(--k-command-edge)] px-[${command.contentInset}px] [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--k-command-muted)]`,
   commandInput: "h-full min-w-0 flex-1 border-0 bg-transparent p-0 text-[13px] font-normal leading-5 outline-none placeholder:text-[var(--k-command-muted)]",
   commandList: `max-h-[min(400px,55dvh)] overflow-y-auto overscroll-contain px-[${command.listPadding}px] pb-1 before:rounded-[${command.itemRadius}px] before:bg-[var(--k-command-highlight)] before:duration-[${command.highlightDuration}ms] before:ease-[var(--k-command-ease)]`,
@@ -212,10 +219,13 @@ const styles = {
   commandItem: "relative z-10 flex min-h-9 w-full items-start gap-2.5 rounded-[6px] border-0 bg-transparent! px-2 py-2 text-left text-[13px] font-normal leading-5 outline-none disabled:cursor-not-allowed disabled:opacity-40 [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--k-command-muted)]",
   commandIcon: "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center text-[color:var(--k-command-muted)] [&>svg]:size-4",
   commandItemText: "min-w-0 flex-1",
-  commandTitle: "block truncate font-normal",
+  commandItemTitle: "flex min-w-0 items-baseline gap-2 overflow-hidden",
+  commandTitle: "max-w-full min-w-0 shrink-0 truncate font-normal",
+  commandHint: `min-w-0 truncate text-[${command.contextFontSize}px] text-[color:var(--k-command-muted)]`,
   commandDescription: `mt-0.5 block text-[${command.contextFontSize}px] leading-[${command.contextLineHeight}px] text-[color:var(--k-command-muted)] [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden`,
   commandFooter: `flex min-h-10 flex-wrap items-center gap-x-4 gap-y-1 border-t border-[var(--k-command-edge)] px-[${command.contentInset}px] py-2 text-[12px] text-[color:var(--k-command-muted)] [&>span]:inline-flex [&>span]:items-center [&>span]:gap-1`,
   commandKey: "inline-flex min-w-5 items-center justify-center rounded border border-[var(--k-command-edge)] px-1 text-[11px] font-normal leading-4",
+  commandShortcut: "hidden shrink-0 self-start leading-[18px] text-[color:var(--k-command-muted)] @min-[22rem]:inline-flex",
   popover: `${font} ${menuVars} w-64 max-w-[calc(100vw-24px)] rounded-[10px] border-0 bg-[var(--k-menu)] p-1 text-[color:var(--k-ink)] shadow-[var(--k-shadow-menu)] ring-0 outline-none`,
   hoverCard: `${font} ${menuVars} z-50 w-max max-w-[min(${hoverCard.maxWidth}px,calc(100vw-32px))] overflow-y-auto overscroll-contain rounded-[${hoverCard.radius}px] border-0 bg-[var(--k-menu)] p-[${hoverCard.padding}px] text-[color:var(--k-ink)] font-normal shadow-[var(--k-shadow-menu)] outline-none [overflow-wrap:anywhere]`,
   hoverCardMotion: `${hoverCardMotion} transition-[opacity,scale,translate] data-starting-style:data-[side=bottom]:-translate-y-1 data-starting-style:data-[side=top]:translate-y-1 data-starting-style:data-[side=left]:translate-x-1 data-starting-style:data-[side=right]:-translate-x-1 data-starting-style:scale-${hoverCard.scale * 100} data-starting-style:opacity-0 data-ending-style:scale-${hoverCard.scale * 100} data-ending-style:opacity-0`,
@@ -250,6 +260,7 @@ const styles = {
 };
 await writeFile("components/ui/kalos-styles.ts", `// Generated from design/component-tokens.json by scripts/build-component-styles.mjs.\nimport "@fontsource/roboto/latin-400.css";\nimport "@fontsource/roboto/latin-500.css";\nexport const controlStyles = ${JSON.stringify(styles, null, 2)} as const;\nexport const hoverCardDefaults = ${JSON.stringify(hoverCard)} as const;\nexport const fieldMessageMotion = ${JSON.stringify(fieldMessageMotion)} as const;\nexport const textAreaDefaults = ${JSON.stringify(textArea)} as const;\nexport const numberInputSettings = ${JSON.stringify(numberInput)} as const;\nexport const avatarCss = ${JSON.stringify(avatarCss)};\nexport const segmentedControlCss = ${JSON.stringify(segmentedControlCss)};\n`);
 await writeFile("components/hover-card-demo-styles.ts", `// Generated from design/component-tokens.json and design/hover-card-demo.css.\nexport const hoverCardDemoCss = ${JSON.stringify(hoverCardDemoCss)};\n`);
+await writeFile("components/command-menu-demo-styles.ts", `// Generated from design/component-tokens.json.\nexport const commandMenuDemoStyles = ${JSON.stringify(commandMenuDemoStyles, null, 2)} as const;\n`);
 const loadingLicense = await readFile("AFFECTUI-LICENSE.md", "utf8");
 await writeFile("components/ui/kalos-loading-styles.ts", `// Generated from design/component-tokens.json, design/skeleton.css and design/spinner.css.\n/*\n${loadingLicense}\n*/\nexport const skeletonDefaults = ${JSON.stringify(skeleton)} as const;\nexport const spinnerDefaults = ${JSON.stringify(spinner)} as const;\nexport const skeletonCss = ${JSON.stringify(skeletonCss)};\nexport const spinnerCss = ${JSON.stringify(spinnerCss)};\n`);
 await writeFile("components/loading-demo-styles.ts", `// Generated from design/component-tokens.json.\nexport const loadingDemoSettings = ${JSON.stringify(loadingDemo)} as const;\n`);
@@ -375,6 +386,57 @@ export const comboboxStyles = ${JSON.stringify(comboboxStyles, null, 2)} as cons
 const dropzone = inventory.defaults.dropzone;
 const dropzoneColors = inventory.components.dropzone;
 const themeTokens = JSON.parse(await readFile("design/tokens.json", "utf8"));
+const answer = inventory.defaults["ai-answer"];
+const answerColors = inventory.components["ai-answer"];
+const answerVars = (mode) => {
+  const palette = inventory.components[answerColors.tokensFrom][mode];
+  return [
+    ...Object.entries(answerColors.themeMapping).map(([key, source]) => [key, `var(--${source}, ${themeTokens[mode][source]})`]),
+    ...Object.entries(answerColors.colorMapping).map(([key, source]) => [key, palette[source]]),
+  ].map(([key, value]) => `--aa-${key}:${value}`).join(";");
+};
+const answerSelectors = ":is(.kalos-ai-answer,.kalos-answer-source-popup)";
+const answerMotion = Object.entries(answer.motion).map(([key, value]) => `--aa-${key}:${value}ms`).join(";");
+const answerCss = [
+  `${answerSelectors}{font-family:${typography.family};font-size:${typography.controlSize}px;line-height:${typography.controlLineHeight}px;${answerVars("light")};--aa-width:${answer.width}px;--aa-radius:${answer.radius}px;--aa-source-radius:${answer.sourceRadius}px;--aa-padding:${answer.padding}px;--aa-narrow-padding:${answer.narrowPadding}px;--aa-duration:${answer.duration}ms;--aa-ease:${answer.ease};${answerMotion}}`,
+  `:where(.dark,[data-theme=dark]) ${answerSelectors}{${answerVars("dark")}}`,
+  (await readFile("design/ai-answer.css", "utf8")).replace("@container kalos-answer (width < 440px)", `@container kalos-answer (width < ${answer.narrowWidth}px)`),
+].join("\n");
+const answerStyleHref = `kalos-ai-answer-${createHash("sha256").update(answerCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-ai-answer-styles.ts", `// Generated from design tokens and design/ai-answer.css.\nexport const answerDefaults = ${JSON.stringify(answer)} as const;\nexport const answerStyleHref = ${JSON.stringify(answerStyleHref)};\nexport const answerCss = ${JSON.stringify(answerCss)};\n`);
+
+const decisionCard = inventory.defaults["decision-card"];
+const decisionColors = inventory.components["decision-card"];
+const decisionVars = (mode) => [
+  ...Object.entries(decisionColors.themeMapping).map(([name, source]) => [name, `var(--${source}, ${themeTokens[mode][source]})`]),
+  ...Object.entries(decisionColors.colorMapping).map(([name, source]) => [name, inventory.components[decisionColors.tokensFrom][mode][source]]),
+  ["highlight-color", inventory.components.select[mode]["--ui-selc-glow"]],
+  ["highlight-ease", inventory.components.select[mode]["--ui-selc-ease"]],
+].map(([name, value]) => `--kd-${name}:${value}`).join(";");
+const decisionCardCss = [
+  `.kalos-decision-card{font-family:${inventory.font.family};font-size:${inventory.font.controlSize}px;line-height:${inventory.font.controlLineHeight}px;${decisionVars("light")};--kd-radius:${decisionCard.radius}px;--kd-row-radius:${decisionCard.rowRadius}px;--kd-highlight-radius:${select.itemRadius}px;--kd-highlight-duration:${select.highlightDuration}ms}`,
+  `:where(.dark,[data-theme=dark]) .kalos-decision-card{${decisionVars("dark")}}`,
+  (await readFile("design/decision-card.css", "utf8")).replace("DECISION_NARROW_WIDTH", `${decisionCard.narrowWidth}px`),
+].join("\n");
+const decisionCardStyleHref = `kalos-decision-card-${createHash("sha256").update(decisionCardCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-decision-card-styles.ts", `// Generated from design tokens and design/decision-card.css.\nexport const decisionDefaults = ${JSON.stringify(decisionCard)} as const;\nexport const decisionCardStyleHref = ${JSON.stringify(decisionCardStyleHref)};\nexport const decisionCardCss = ${JSON.stringify(decisionCardCss)};\n`);
+
+const contextWindow = inventory.defaults["context-window"];
+const contextWindowColors = inventory.components["context-window"];
+const contextWindowVars = (mode) => [
+  ...Object.entries(contextWindowColors.themeMapping).map(([name, source]) => [name, `var(--${source}, ${themeTokens[mode][source]})`]),
+  ...Object.entries(contextWindowColors.colorMapping).map(([name, source]) => [name, inventory.components[contextWindowColors.tokensFrom][mode][source]]),
+  ...Object.entries(contextWindowColors[mode]),
+  ["danger-wash", inventory.components.badge[mode]["danger-wash"]],
+].map(([name, value]) => `--kc-${name}:${value}`).join(";");
+const contextWindowCss = [
+  `.kalos-context-window{${contextWindowVars("light")};--kc-width:${contextWindow.width}px;--kc-padding:${contextWindow.padding}px;--kc-row-radius:${contextWindow.rowRadius}px;--kc-duration:${contextWindow.duration}ms;--kc-shimmer:${contextWindow.shimmer}ms;--kc-ease:${contextWindow.ease}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-context-window{${contextWindowVars("dark")}}`,
+  (await readFile("design/context-window.css", "utf8")).replace("CONTEXT_NARROW_WIDTH", `${contextWindow.narrowWidth}px`),
+].join("\n");
+const contextWindowStyleHref = `kalos-context-window-${createHash("sha256").update(contextWindowCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-context-window-styles.ts", `// Generated from design tokens and design/context-window.css.\nexport const contextWindowDefaults = ${JSON.stringify(contextWindow)} as const;\nexport const contextWindowStyleHref = ${JSON.stringify(contextWindowStyleHref)};\nexport const contextWindowCss = ${JSON.stringify(contextWindowCss)};\n`);
+
 const dropzoneVars = (mode) => {
   const palette = inventory.components[dropzoneColors.tokensFrom][mode];
   return [

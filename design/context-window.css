@@ -1,0 +1,245 @@
+.kalos-context-window {
+  container: kalos-context / inline-size;
+  max-width: var(--kc-width);
+  gap: 8px;
+  padding: 14px var(--kc-padding) 8px;
+}
+
+.kalos-context-window [data-slot="card-header"] { align-items: center; }
+.kalos-context-window [data-slot="card-title"] { color: var(--kc-strong); }
+.kalos-context-window [data-slot="card-action"] {
+  min-width: 0;
+  max-width: 48%;
+}
+.kalos-context-model {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  padding-block: 2px;
+  color: var(--kc-muted);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+}
+.kalos-context-model-icon { display: grid; flex: none; }
+.kalos-context-model :is(svg, img) { width: 12px; height: 12px; }
+
+.kalos-context-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.kalos-context-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.kalos-context-totals {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 7px;
+  color: var(--kc-subtle);
+  font-size: 12px;
+  line-height: 18px;
+}
+.kalos-context-number {
+  display: inline-block;
+  color: var(--kc-strong);
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+.kalos-context-swap { display: inline-grid; max-width: 100%; min-width: 0; }
+.kalos-context-swap-layer { grid-area: 1 / 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kalos-context-percent {
+  flex: none;
+  padding: 1px 6px;
+  border-radius: var(--kc-row-radius);
+  background: var(--kc-empty);
+  color: var(--kc-muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  transition: background-color var(--kc-duration), color var(--kc-duration);
+}
+.kalos-context-meter[data-level="warning"] .kalos-context-percent { background: var(--kc-warn-wash); color: var(--kc-amber); }
+.kalos-context-meter[data-level="full"] .kalos-context-percent { background: var(--kc-danger-wash); color: var(--kc-danger); }
+.kalos-context-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--kc-columns), minmax(0, 1fr));
+  gap: 2px;
+}
+.kalos-context-grid > span {
+  aspect-ratio: 1;
+  min-width: 0;
+  border-radius: 2px;
+  background: var(--kc-empty);
+  transition: background-color var(--kc-duration) var(--kc-ease), opacity var(--kc-duration) var(--kc-ease);
+}
+.kalos-context-grid > [data-part] {
+  background: var(--kc-cell);
+}
+.kalos-context-grid[data-highlighting] > [data-part]:not([data-active], [data-compacting]) { opacity: 0.32; }
+.kalos-context-grid > [data-compacting] {
+  animation: kalos-context-shimmer var(--kc-shimmer) ease-in-out infinite alternate;
+  animation-delay: calc(var(--kc-stagger) * -32ms);
+}
+
+.kalos-context-parts,
+.kalos-context-items { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+.kalos-context-parts { margin-top: 6px; }
+.kalos-context-part {
+  margin-inline: -6px;
+  padding-inline: 6px;
+  border-radius: var(--kc-row-radius);
+  transition: background-color var(--kc-duration) var(--kc-ease);
+}
+.kalos-context-part[data-active] { background: var(--kc-hover); }
+.kalos-context-part[data-dimmed] { color: var(--kc-subtle); }
+.kalos-context-part[data-dimmed] .kalos-context-swatch { opacity: 0.5; }
+.kalos-context-row,
+.kalos-context-item {
+  display: flex;
+  min-width: 0;
+  min-height: 32px;
+  align-items: center;
+  gap: 6px;
+  padding-inline: 0;
+}
+.kalos-context-row-label,
+.kalos-context-toggle {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+}
+.kalos-context-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kalos-context-toggle {
+  min-height: 32px;
+  border: 0;
+  border-radius: var(--kc-row-radius);
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.kalos-context-toggle:focus-visible { outline: 2px solid var(--kc-focus); outline-offset: 2px; }
+.kalos-context-swatch {
+  display: grid;
+  width: 14px;
+  height: 14px;
+  flex: none;
+  place-items: center start;
+  color: var(--kc-part);
+}
+.kalos-context-swatch:empty::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: currentColor;
+  content: "";
+}
+.kalos-context-swatch svg { width: 12px; height: 12px; }
+.kalos-context-chevron { width: 12px; height: 12px; flex: none; color: var(--kc-subtle); transition: transform var(--kc-duration) var(--kc-ease); }
+.kalos-context-toggle[data-panel-open] .kalos-context-chevron { transform: rotate(180deg); }
+.kalos-context-part-count {
+  min-width: 4ch;
+  flex: none;
+  margin-inline-start: auto;
+  text-align: end;
+  color: var(--kc-muted);
+  font-variant-numeric: tabular-nums;
+}
+.kalos-context-window .kalos-context-compact { flex: none; height: 24px; gap: 4px; padding-inline: 6px; color: var(--kc-muted); font-size: 12px; }
+.kalos-context-window .kalos-context-compact svg { width: 12px; height: 12px; }
+.kalos-context-compact[aria-disabled="true"] { opacity: 0.5; cursor: default; }
+.kalos-context-window .kalos-context-compact[data-done] { background: var(--kc-success-wash); color: var(--kc-success); opacity: 1; }
+.kalos-context-compact[aria-busy="true"] svg { animation: kalos-context-arrow var(--kc-shimmer) ease-in-out infinite alternate; }
+.kalos-context-files {
+  height: var(--collapsible-panel-height);
+  overflow: clip;
+  opacity: 1;
+  transition: height var(--kc-duration) var(--kc-ease), opacity var(--kc-duration) var(--kc-ease);
+}
+.kalos-context-files:is([data-starting-style], [data-ending-style]) { height: 0; opacity: 0; }
+.kalos-context-items { padding: 0 0 6px 20px; }
+.kalos-context-item {
+  min-height: 28px;
+  gap: 8px;
+  color: var(--kc-muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+.kalos-context-item .kalos-context-part-count { color: var(--kc-subtle); }
+.kalos-context-item-icon { display: grid; flex: none; place-items: center; color: var(--kc-muted); }
+.kalos-context-item-icon :is(svg, img) { width: 13px; height: 13px; }
+.kalos-context-window .kalos-context-remove { flex: none; width: 24px; height: 24px; color: var(--kc-subtle); }
+.kalos-context-window .kalos-context-remove svg { width: 12px; height: 12px; }
+.kalos-context-empty { margin: 0; padding: 4px 10px 8px 32px; color: var(--kc-muted); font-size: 12px; }
+.kalos-context-footer {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 32px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-top: 8px;
+}
+.kalos-context-footer::before {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: calc(-1 * var(--kc-padding));
+  height: 1px;
+  background: var(--kc-edge);
+  content: "";
+}
+.kalos-context-footer [data-warning="warning"] { color: var(--kc-amber); }
+.kalos-context-footer :is([data-warning="full"], [data-phase="error"]) { color: var(--kc-danger); }
+.kalos-context-footer [data-phase="done"] { color: var(--kc-success); }
+.kalos-context-footer > button { margin-inline-start: auto; }
+.kalos-context-footer button > span { display: grid; color: var(--kc-subtle); }
+.kalos-context-footer button svg { width: 13px; height: 13px; }
+.kalos-context-share { color: var(--kc-subtle); }
+.kalos-context-share strong { color: var(--kc-ink); font-weight: 500; }
+.kalos-context-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@container kalos-context (width < CONTEXT_NARROW_WIDTH) {
+  .kalos-context-grid { grid-template-columns: repeat(var(--kc-narrow-columns), minmax(0, 1fr)); }
+  .kalos-context-compact > span { display: none; }
+}
+@media (pointer: coarse) {
+  .kalos-context-row,
+  .kalos-context-toggle,
+  .kalos-context-item { min-height: 40px; }
+  .kalos-context-window .kalos-context-remove { width: 36px; height: 36px; }
+  .kalos-context-window .kalos-context-compact { height: 36px; min-width: 36px; }
+}
+@keyframes kalos-context-shimmer {
+  from { opacity: 0.24; transform: scale(0.76); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes kalos-context-arrow {
+  from { transform: translateY(-2px); }
+  to { transform: translateY(1px); }
+}

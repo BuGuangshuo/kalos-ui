@@ -53,7 +53,7 @@ Logo 使用 `pnpm dlx shadcn@latest add @animateicons/lu-disc-3` 安装的圆盘
 在准备存放项目的目录运行：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz init
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.6.tgz init
 ```
 
 依次选择 Next.js、Vite 或 React Router 脚手架、项目名和包管理器，默认使用 Base UI。安装器自动配置 TypeScript、Tailwind CSS 与路径别名，并安装完整组件库和 Kalos 主题。新项目创建在独立子目录中，已有目录不会被覆盖。
@@ -61,7 +61,7 @@ npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz init
 脚本中可直接指定全部选项：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz init my-app --template vite --package-manager npm --yes
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.6.tgz init my-app --template vite --package-manager npm --yes
 ```
 
 完成后进入项目目录并运行 `npm run dev`，或所选包管理器对应的开发命令。
@@ -71,19 +71,19 @@ npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz init my-app --templat
 在项目根目录运行，安装全部组件或按需安装：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz add
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz add button card
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.6.tgz add
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.6.tgz add button card
 ```
 
 自动识别 Next.js、React + Vite 和 React Router 以及包管理器，保留主题、目录和别名，统一使用 Base UI。尚无组件配置时先引导配置；项目需已具备 TypeScript、Tailwind CSS 与路径别名。组件以源码形式安装，不会迁移宿主框架或基础库。
 
 ```bash
 # 脚本和 CI 默认使用 Base UI
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz add --yes
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.6.tgz add --yes
 # 只预览，不创建目录或修改项目
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz add --dry-run
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.6.tgz add --dry-run
 # 可选 Kalos 主题
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz add theme
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.6.tgz add theme
 ```
 
 不带子命令时，终端会提供“新建项目”和“安装到已有项目”两种入口。`init` 使用 `--template next|vite|react-router` 指定脚手架；`add` 可使用 `--framework next|vite|react-router` 覆盖自动识别。
@@ -114,8 +114,8 @@ npx shadcn@latest add https://kalos-ui-six.vercel.app/r/kalos-all.json
 需要手动指定项目类型时：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz add --framework vite
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.5.tgz add --framework react-router
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.6.tgz add --framework vite
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.6.tgz add --framework react-router
 ```
 
 ## AI Skill
@@ -174,3 +174,9 @@ Vercel 导入此 GitHub 仓库，框架选择 Next.js，Node.js 选择 24.x；�
 ## License
 
 Kalos UI 注册表组件使用 MIT 许可。shadcn/ui 基础组件保留其原有开源授权；Skeleton、Spinner 及部分预览适配自 Affect UI，授权见 `AFFECTUI-LICENSE.md`；首页适配代码遵循 `ANIMATE-UI-LICENSE.md`，品牌字标采用的 Outfit 字体遵循 `OUTFIT-LICENSE.txt`；界面 Roboto 字体遵循 `ROBOTO-LICENSE.txt`。
+
+AI Answer 的里斯本团建预览参考 [Affect UI 的公开演示](https://www.affectui.com/components/ai-answer)。预览使用的站点图标来自各站点的 favicon 和 [Simple Icons 的维基百科标志](https://github.com/simple-icons/simple-icons/blob/develop/icons/wikipedia.svg)，商标归各权利方所有。
+
+Context Window 的 token 网格与交互参考 [Affect UI 的公开演示](https://www.affectui.com/components/context-window)。预览中的 Claude 图标来自 [Simple Icons](https://github.com/simple-icons/simple-icons/blob/develop/icons/claude.svg)，商标归 Anthropic 所有。
+
+Decision Card 的决策模式和会话预览参考 [Affect UI 的公开演示](https://www.affectui.com/components/decision-card)。Claude 图标来自 [Simple Icons](https://github.com/simple-icons/simple-icons/blob/develop/icons/claude.svg)，OpenAI、Gemini、Grok 和 Kimi 图标来自 [Lobe Icons](https://github.com/lobehub/lobe-icons)，商标归各权利方所有。
