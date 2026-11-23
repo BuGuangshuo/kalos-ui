@@ -5178,6 +5178,9 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 .changelog-preview[data-full-preview] .catalog-preview-viewport {
   height: auto;
 }
+.changelog-preview[data-full-preview]:is([data-component="kalos-permission-request"], [data-component="kalos-collaboration-stream"]) .catalog-preview-content {
+  width: min(100%, var(--catalog-preview-width));
+}
 .changelog-preview[data-full-preview][data-component="kalos-dropzone"] .component-preview {
   align-items: flex-start;
   min-height: 520px;

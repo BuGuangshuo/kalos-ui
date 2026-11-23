@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Search } from "lucide-react";
+import { useInView } from "motion/react";
 import { useEffect, useId, useRef, useState } from "react";
 import { GithubIcon } from "@/components/brand";
 import { KalosCollaborationStream, type StreamAgent, type StreamAttachment, type StreamMessage, type StreamSend } from "@/registry/kalos/kalos-collaboration-stream";
@@ -88,11 +89,15 @@ export function CollaborationStreamDemo({ compact = false }: { compact?: boolean
 
 function LiveCollaborationDemo() {
   const session = useId();
+  const preview = useRef<HTMLDivElement>(null);
+  const visible = useInView(preview, { amount: 0.2 });
   const nextMessage = useRef(0);
   const [log, setLog] = useState(messages);
   const [step, setStep] = useState(0);
 
   useEffect(() => {
+    if (!visible) return;
+
     const stage = stages[step];
     const followUpStep = step - stages.length;
     const followUpIndex = Math.floor(followUpStep / 2);
@@ -109,7 +114,7 @@ function LiveCollaborationDemo() {
       setStep(step + 1);
     }, stage?.delay ?? (typing ? 3400 : 1200));
     return () => window.clearTimeout(timer);
-  }, [step]);
+  }, [step, visible]);
 
   function send({ text, to, replyTo }: StreamSend) {
     const id = `${session}-user-${++nextMessage.current}`;
@@ -117,5 +122,7 @@ function LiveCollaborationDemo() {
     setLog(current => [...current, { id, from: "you", to, kind: replyTo ? "reply" : "ask", text, at, replyTo }]);
   }
 
-  return <KalosCollaborationStream agents={agents} messages={log} task="Refresh the onboarding guide" logos={logos} live maxHeight={636} onSend={send} />;
+  return <div ref={preview} className="w-full min-w-0">
+    <KalosCollaborationStream agents={agents} messages={log} task="Refresh the onboarding guide" logos={logos} live maxHeight={636} onSend={send} />
+  </div>;
 }

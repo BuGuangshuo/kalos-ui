@@ -47,7 +47,7 @@ export default function ChangelogPage() {
           <p>新增 Response Stream，演示回复生成、停止、续写和重试，并展示引导、排队消息及完成后的操作。</p>
           <ChangelogPreview slug="kalos-response-stream" caption={false} full />
           <p>新增 Collaboration Stream，支持在原对话中聚焦智能体消息，预览交接附件，并通过引用或 @ 点名回复。</p>
-          <ChangelogPreview slug="kalos-collaboration-stream" caption={false} />
+          <ChangelogPreview slug="kalos-collaboration-stream" caption={false} full />
           <p>新增 Usage Meter，按周期查看分类用量、每日趋势和套餐限制，并可从卡片购买额度。</p>
           <ChangelogPreview slug="kalos-usage-meter" caption={false} full />
           <p>调浅组件预览在浅色与深色主题下的背景。</p>
