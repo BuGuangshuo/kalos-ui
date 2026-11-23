@@ -42,28 +42,61 @@ export default function ChangelogPage() {
         <section id="v0-3-7" className="changelog-entry">
           <h2>v0.3.7 — 智能体交互</h2>
           <ReleaseMeta version="0.3.7" />
-          <p>新增 Permission Request，在智能体执行操作前展示申请原因和影响明细，支持单次、限时和持续授权，并可撤销授权或重新请求。</p>
-          <ChangelogPreview slug="kalos-permission-request" caption={false} full />
-          <p>新增 Response Stream，演示回复生成、停止、续写和重试，并展示引导、排队消息及完成后的操作。</p>
-          <ChangelogPreview slug="kalos-response-stream" caption={false} full />
-          <p>新增 Collaboration Stream，支持在原对话中聚焦智能体消息，预览交接附件，并通过引用或 @ 点名回复。</p>
-          <ChangelogPreview slug="kalos-collaboration-stream" caption={false} full />
-          <p>新增 Usage Meter，按周期查看分类用量、每日趋势和套餐限制，并可从卡片购买额度。</p>
-          <ChangelogPreview slug="kalos-usage-meter" caption={false} full />
-          <p>调浅组件预览在浅色与深色主题下的背景。</p>
+
+          <div className="changelog-block">
+            <h3>Permission Request 权限请求</h3>
+            <p>在智能体执行操作前展示申请原因和影响明细，支持单次、限时和持续授权，并可撤销授权或重新请求。</p>
+            <ChangelogPreview slug="kalos-permission-request" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3>Response Stream 流式回复</h3>
+            <p>逐步呈现智能体回复，支持停止、续写和重试，并展示引导、排队消息及完成后的操作。</p>
+            <ChangelogPreview slug="kalos-response-stream" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3>Collaboration Stream 协作消息流</h3>
+            <p>在原对话中聚焦智能体消息，预览交接附件，并通过引用或 @ 点名回复。</p>
+            <ChangelogPreview slug="kalos-collaboration-stream" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3>Usage Meter 用量统计</h3>
+            <p>按周期查看分类用量、每日趋势和套餐限制，并可从卡片购买额度。</p>
+            <ChangelogPreview slug="kalos-usage-meter" caption={false} full />
+          </div>
+
+          <div className="changelog-block">
+            <h3>其他更新</h3>
+            <p>调浅组件预览在浅色与深色主题下的背景。</p>
+          </div>
         </section>
 
         <section id="v0-3-6" className="changelog-entry">
           <h2>v0.3.6 — AI 会话组件</h2>
           <ReleaseMeta version="0.3.6" />
-          <p>新增 AI Answer，用来源卡片和行内引用呈现可核查的流式回答，支持停止、重新生成、复制、反馈和追问。</p>
-          <ChangelogPreview slug="kalos-ai-answer" caption={false} />
-          <p>新增 Context Window，用方格展示模型的 token 占用和容量预警，支持展开并移除附件、压缩会话历史。</p>
-          <ChangelogPreview slug="kalos-context-window" caption={false} full />
-          <p>新增 Decision Card，在会话中处理编号选择、缩略图方案和审批，支持分页、自定义回答与稍后处理。</p>
-          <ChangelogPreview slug="kalos-decision-card" caption={false} full />
-          <p>Command Menu 预览加入品牌图标和四组中文命令，支持搜索服务名称，并用 ⌘ / Ctrl + 数字执行推荐操作。</p>
-          <p>主导航和文档、组件侧栏悬停时，背景会像 Select 一样在条目间滑动。</p>
+
+          <div className="changelog-block">
+            <h3>AI Answer AI 回答</h3>
+            <p>用来源卡片和行内引用呈现可核查的流式回答，支持停止、重新生成、复制、反馈和追问。</p>
+            <ChangelogPreview slug="kalos-ai-answer" caption={false} />
+          </div>
+          <div className="changelog-block">
+            <h3>Context Window 上下文窗口</h3>
+            <p>用方格展示模型的 token 占用和容量预警，支持展开并移除附件、压缩会话历史。</p>
+            <ChangelogPreview slug="kalos-context-window" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3>Decision Card 决策卡片</h3>
+            <p>在会话中处理编号选择、缩略图方案和审批，支持分页、自定义回答与稍后处理。</p>
+            <ChangelogPreview slug="kalos-decision-card" caption={false} full />
+          </div>
+
+          <div className="changelog-block">
+            <h3>其他更新</h3>
+            <ul className="changelog-list">
+              <li>Command Menu 预览加入品牌图标和四组中文命令，支持搜索服务名称，并用 ⌘ / Ctrl + 数字执行推荐操作。</li>
+              <li>主导航和文档、组件侧栏悬停时，背景会像 Select 一样在条目间滑动。</li>
+            </ul>
+          </div>
         </section>
 
         <section id="v0-3-5" className="changelog-entry">
