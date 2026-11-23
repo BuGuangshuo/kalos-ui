@@ -59,13 +59,13 @@ const groups: KalosCommandGroup[] = [
 const compactGroups = [{ ...groups[0], items: groups[0].items.slice(0, 2) }];
 const labels = new Map(groups.flatMap(({ items }) => items.map(({ value, label }) => [value, label])));
 
-export function CommandMenuDemo({ compact }: { compact: boolean }) {
+export function CommandMenuDemo({ compact, autoFocus = !compact }: { compact: boolean; autoFocus?: boolean }) {
   return (
     <KalosCommandMenu
       className={commandMenuDemoStyles.menu}
       placeholder="输入命令或搜索…"
       groups={compact ? compactGroups : groups}
-      autoFocus={!compact}
+      autoFocus={autoFocus}
       onRun={value => toast(`已选择「${labels.get(value)}」`)}
     />
   );

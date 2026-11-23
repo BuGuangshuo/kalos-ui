@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Sidebar, OnThisPage } from "@/components/docs-parts";
 import { DocsPagination } from "@/components/page-pagination";
 import { ChangelogPreview } from "@/components/changelog-preview";
+import { CommandMenuDemo } from "@/components/command-menu-demo";
 import { changelogReleases } from "@/lib/changelog-releases";
 
 export const metadata: Metadata = { title: "更新日志" };
@@ -173,15 +174,20 @@ export default function ChangelogPage() {
         <section id="v0-3-3" className="changelog-entry">
           <h2>v0.3.3 — Pagination 与 Badge 中文预览</h2>
           <ReleaseMeta version="0.3.3" />
-          <p>Badge 默认采用 Table 标签的 20px 高度、12px 文字、4px 圆角和左右 6px 内边距，共享浅深主题配色；警告色统一为 #f19021 橙色体系，灰、蓝、绿、紫、粉色与 Table 一致；失败使用独立的红色，粉色单独展示草稿状态。提供浅色底配状态色文字、全色底配白字、无背景三种变体，以及小号尺寸、圆点、呼吸动效、前置图标和封顶计数；补充全色与无背景预览及可复制代码。预览改为中文任务列表，包含时钟、暂停图标与 99+ 计数。</p>
-          <p>保留旧版 status 属性与 Base UI render 组合；默认外观改为轻量圆角标签，原有调用无需迁移。</p>
+
+          <div className="changelog-block">
+            <h3>Badge 徽标</h3>
+            <p>用圆角标签标记任务状态，支持浅色、实色和无背景样式，以及图标、圆点与计数。</p>
+          </div>
           <div className="changelog-block">
             <h3>Pagination 分页器</h3>
-            <p>新增分页器与中文文档列表预览，显示总条数，支持首页与末页、省略页码、每页条数和简洁模式。条数选择器位于页码后，隐藏可见标签，选项显示为 20条、50条、100条。改变每页条数时保留原首条记录所在页；窄容器自动收起页码，支持浅深主题和键盘焦点。详情保留默认与简洁模式预览，不展示条目范围。新增组件不影响现有调用。</p>
-            <p>Table 详情新增分页表格示例，使用 67 条联系人数据演示翻页、每页条数切换和末页边界，附可复制的完整 TSX 代码。</p>
-            <p>安装器升级至 0.3.3，支持按需安装 Pagination，并将其纳入完整组件库。Figwrite 已同步分页器、浅深主题变量与 Table 分页原型；设计稿内的表格滚动暂未配置。</p>
-            <p>发布验证：Lint、TypeScript、80 项测试与完整生产构建通过；已核验注册表与安装器 dry-run，以及桌面和窄屏的翻页、条数切换、末页边界与布局。正式站点已核验 Table 分页交互，线上注册表与 0.3.3 安装包和本地生成产物一致。</p>
+            <p>为列表和表格提供翻页、每页条数切换和简洁模式，窄屏自动收起页码。</p>
             <ChangelogPreview slug="kalos-pagination" caption={false} />
+          </div>
+
+          <div className="changelog-block">
+            <h3>其他更新</h3>
+            <p>Table 详情新增分页示例，安装器支持按需安装 Pagination。</p>
           </div>
         </section>
 
@@ -232,7 +238,9 @@ export default function ChangelogPage() {
             <div className="changelog-preview-grid">
               <ChangelogPreview slug="kalos-dropdown-menu" />
               <ChangelogPreview slug="kalos-number-input" />
-              <ChangelogPreview slug="kalos-hover-card" />
+            </div>
+            <ChangelogPreview slug="kalos-hover-card" full />
+            <div className="changelog-preview-grid">
               <ChangelogPreview slug="kalos-tooltip" />
               <ChangelogPreview slug="kalos-segmented-control" />
             </div>
@@ -295,10 +303,10 @@ export default function ChangelogPage() {
           <h2>v0.1.1 — Command Menu 与 Popover</h2>
           <div className="changelog-meta"><time dateTime="2026-11-10">2026年11月10日</time><span>Git 记录</span></div>
           <p>完整安装清单加入 Command Menu 与 Popover，从 12 个组件扩展为 14 个；品牌更名为 Kalos UI，更新圆盘标志、字标与网站资源，首页及导航加入圆形主题切换效果。</p>
-          <div className="changelog-preview-grid">
-            <ChangelogPreview slug="kalos-command-menu" />
-            <ChangelogPreview slug="kalos-popover" />
-          </div>
+          <ChangelogPreview slug="kalos-command-menu" full>
+            <CommandMenuDemo compact={false} autoFocus={false} />
+          </ChangelogPreview>
+          <ChangelogPreview slug="kalos-popover" />
         </section>
 
         <section id="v0-1-0" className="changelog-entry">
