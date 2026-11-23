@@ -47,7 +47,8 @@
     BlinkMacSystemFont, "noto sans", Helvetica, sans-serif;
   --font-code: "SF Mono", Consolas, monospace;
   --hero-background: #f7f5f1;
-  --preview-background: #f8f8f8;
+  --preview-background: #fafafa;
+  --code-background: #f8f8f8;
   --feature-background: #edf0f4;
   --control-shadow: 0 1px 2px #0000000d;
   --chart-1: #202020;
@@ -81,7 +82,8 @@
   --input: rgba(255, 255, 255, 0.16);
   --ring: #ededed;
   --hero-background: #202020;
-  --preview-background: #1b1b1b;
+  --preview-background: #1f1f21;
+  --code-background: #1b1b1b;
   --feature-background: #292b2e;
   --control-shadow: 0 1px 2px #00000033;
 }
@@ -1099,6 +1101,18 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 .component-preview[data-component="kalos-decision-card"] {
   --catalog-preview-width: 600px;
 }
+.component-preview[data-component="kalos-permission-request"] {
+  --catalog-preview-width: 420px;
+}
+.component-preview[data-component="kalos-response-stream"] {
+  --catalog-preview-width: 520px;
+}
+.component-preview[data-component="kalos-collaboration-stream"] {
+  --catalog-preview-width: 760px;
+}
+.component-card .component-preview[data-component="kalos-usage-meter"] {
+  --catalog-preview-width: 460px;
+}
 .component-preview[data-component="kalos-table"] {
   --catalog-preview-width: 804px;
 }
@@ -1959,7 +1973,7 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 }
 .code-block {
   border: 1px solid var(--border);
-  background: var(--preview-background);
+  background: var(--code-background);
   border-radius: 12px;
   overflow: hidden;
   margin: 18px 0;
@@ -3524,7 +3538,7 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
   padding: 44px 24px;
   position: relative;
   border-radius: 8px;
-  background: radial-gradient(var(--border) 1px, transparent 1px) var(--background);
+  background: radial-gradient(var(--border) 1px, transparent 1px) var(--preview-background);
   background-size: 16px 16px;
 }
 .motion-localhost-label {
@@ -4031,6 +4045,80 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 .detail-preview-surface[data-component="kalos-ai-answer"] {
   max-width: 640px;
 }
+.detail-preview-surface[data-component="kalos-response-stream"] {
+  max-width: 520px;
+  min-width: 0;
+}
+.detail-preview:has(> .detail-preview-surface[data-component="kalos-usage-meter"]) {
+  container: usage-meter-preview / inline-size;
+}
+.detail-preview-surface[data-component="kalos-usage-meter"] {
+  max-width: 460px;
+  min-width: 0;
+  /* Reserve the card height and the documentation section margin. */
+  min-block-size: calc(472px + 44px + var(--usage-preview-touch, 0px));
+  align-items: flex-start;
+}
+@container usage-meter-preview (width <= 400px) {
+  .detail-preview-surface[data-component="kalos-usage-meter"] {
+    min-block-size: calc(534px + 44px + var(--usage-preview-touch, 0px));
+  }
+}
+@container usage-meter-preview (width < 260px) {
+  .detail-preview-surface[data-component="kalos-usage-meter"] {
+    min-block-size: calc(558px + 44px + var(--usage-preview-touch, 0px));
+  }
+}
+@media (pointer: coarse) {
+  .detail-preview-surface[data-component="kalos-usage-meter"] { --usage-preview-touch: 28px; }
+  @container usage-meter-preview (width <= 400px) {
+    .detail-preview-surface[data-component="kalos-usage-meter"] { --usage-preview-touch: 36px; }
+  }
+}
+.detail-preview-surface[data-component="kalos-collaboration-stream"] {
+  max-width: 760px;
+  min-width: 0;
+}
+.component-docs-panel .detail-preview-surface[data-component="kalos-collaboration-stream"] .kalos-collaboration-stream {
+  margin: 0;
+}
+.component-docs-panel .detail-preview:has(> [data-component="kalos-collaboration-stream"]) {
+  padding-block: 60px 56px;
+}
+@media (max-width: 700px) {
+  .component-docs-panel .detail-preview:has(> [data-component="kalos-collaboration-stream"]) {
+    padding-block: 30px;
+  }
+}
+.component-docs-panel .detail-preview:has(> [data-component="kalos-response-stream"]) {
+  min-height: 460px;
+  padding-block-start: 64px;
+  align-items: flex-start;
+}
+@media (max-width: 700px) {
+  .component-docs-panel .detail-preview:has(> [data-component="kalos-response-stream"]) {
+    padding-block-start: 32px;
+  }
+}
+.response-stream-demo {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+.response-stream-demo-question {
+  justify-self: end;
+  max-width: min(100%, 384px);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: var(--card);
+  color: var(--card-foreground);
+  font-size: 13px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
 .component-docs-panel .detail-preview:has(> [data-component="kalos-ai-answer"]) {
   align-items: flex-start;
   min-height: 544px;
@@ -4041,6 +4129,14 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 .detail-preview-surface[data-component="kalos-decision-card"] {
   max-width: 600px;
   min-width: 0;
+}
+.detail-preview-surface[data-component="kalos-permission-request"] {
+  max-width: 420px;
+  min-width: 0;
+}
+.component-docs-panel .detail-preview:has(> [data-component="kalos-permission-request"]) {
+  align-items: flex-start;
+  min-height: 550px;
 }
 .component-docs-panel .detail-preview:has(> [data-component="kalos-decision-card"]) {
   align-items: flex-start;
@@ -4465,7 +4561,6 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 .component-docs-panel .code-block {
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: var(--preview-background);
   overflow: hidden;
 }
 .component-docs-panel .code-header {
@@ -5075,7 +5170,6 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
   padding: 24px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: var(--background);
 }
 .changelog-preview[data-full-preview] .component-preview {
   height: auto;

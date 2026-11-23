@@ -421,6 +421,72 @@ const decisionCardCss = [
 const decisionCardStyleHref = `kalos-decision-card-${createHash("sha256").update(decisionCardCss).digest("hex").slice(0, 12)}`;
 await writeFile("components/ui/kalos-decision-card-styles.ts", `// Generated from design tokens and design/decision-card.css.\nexport const decisionDefaults = ${JSON.stringify(decisionCard)} as const;\nexport const decisionCardStyleHref = ${JSON.stringify(decisionCardStyleHref)};\nexport const decisionCardCss = ${JSON.stringify(decisionCardCss)};\n`);
 
+const permission = inventory.defaults["permission-request"];
+const permissionColors = inventory.components["permission-request"];
+const permissionVars = (mode) => [
+  ...Object.entries(permissionColors.themeMapping).map(([name, source]) => [name, `var(--${source}, ${themeTokens[mode][source]})`]),
+  ...Object.entries(permissionColors.colorMapping).map(([name, source]) => [name, inventory.components[permissionColors.tokensFrom][mode][source]]),
+  ...Object.entries(permissionColors[mode]),
+].map(([name, value]) => `--kpr-${name}:${value}`).join(";");
+const permissionCss = [
+  `.kalos-permission-request{font-family:${typography.family};font-size:${typography.controlSize}px;line-height:${typography.controlLineHeight}px;${permissionVars("light")};--kpr-width:${permission.width}px;--kpr-radius:${permission.radius}px;--kpr-preview-radius:${permission.previewRadius}px;--kpr-padding:${permission.padding}px;--kpr-compact-padding:${permission.compactPadding}px;--kpr-row-duration:${permission.rowDuration}ms;--kpr-row-stagger:${permission.rowStagger}ms;--kpr-ease:cubic-bezier(${permission.ease.join(",")})}`,
+  `:where(.dark,[data-theme=dark]) .kalos-permission-request{${permissionVars("dark")}}`,
+  (await readFile("design/permission-request.css", "utf8")).replace("PERMISSION_NARROW_WIDTH", `${permission.narrowWidth}px`),
+].join("\n");
+const permissionStyleHref = `kalos-permission-request-${createHash("sha256").update(permissionCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-permission-request-styles.ts", `// Generated from design tokens and design/permission-request.css.\nexport const permissionDefaults = ${JSON.stringify(permission)} as const;\nexport const permissionStyleHref = ${JSON.stringify(permissionStyleHref)};\nexport const permissionCss = ${JSON.stringify(permissionCss)};\n`);
+
+const stream = inventory.defaults["response-stream"];
+const streamColors = inventory.components["response-stream"];
+const streamVars = (mode) => [
+  ...Object.entries(streamColors.themeMapping).map(([name, source]) => [name, `var(--${source}, ${themeTokens[mode][source]})`]),
+  ...Object.entries(streamColors.colorMapping).map(([name, source]) => [name, inventory.components[streamColors.tokensFrom][mode][source]]),
+  ...Object.entries(streamColors[mode]),
+  ["action", inventory.components["segmented-control"][mode]["--ui-segc-card"]],
+].map(([name, value]) => `--krs-${name}:${value}`).join(";");
+const streamCss = [
+  `.kalos-response-stream{font-family:${typography.family};font-size:${typography.controlSize}px;line-height:${typography.controlLineHeight}px;${streamVars("light")};--krs-indent:${stream.indent}px;--krs-word-duration:${stream.wordDuration}ms;--krs-dismiss-duration:${stream.dismissDuration}ms;--krs-pixel-duration:${stream.pixelDuration}ms;--krs-caret-duration:${stream.caretDuration}ms;--krs-chip-duration:${stream.chipDuration}ms}`,
+  `:where(.dark,[data-theme=dark]) .kalos-response-stream{${streamVars("dark")}}`,
+  (await readFile("design/response-stream.css", "utf8")).replace("RESPONSE_NARROW_WIDTH", `${stream.narrowWidth}px`),
+].join("\n");
+const streamStyleHref = `kalos-response-stream-${createHash("sha256").update(streamCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-response-stream-styles.ts", `// Generated from design tokens and design/response-stream.css.\nexport const responseStreamDefaults = ${JSON.stringify(stream)} as const;\nexport const responseStreamStyleHref = ${JSON.stringify(streamStyleHref)};\nexport const responseStreamCss = ${JSON.stringify(streamCss)};\n`);
+
+const collaboration = inventory.defaults["collaboration-stream"];
+const collaborationColors = inventory.components["collaboration-stream"];
+const collaborationVars = (mode) => [
+  ...Object.entries(collaborationColors.themeMapping).map(([name, source]) => [name, `var(--${source}, ${themeTokens[mode][source]})`]),
+  ...Object.entries(collaborationColors.colorMapping).map(([name, source]) => [name, inventory.components[collaborationColors.tokensFrom][mode][source]]),
+  ...Object.entries(collaborationColors[mode]),
+].map(([name, value]) => `--kcs-${name}:${value}`).join(";");
+const collaborationMotion = [
+  ...["transition", "dim", "detail", "dialog", "shimmer"].map(name => [name, collaboration[name]]),
+  ["message-shadow", collaboration.messageShadow],
+  ["message-text", collaboration.messageText],
+].map(([name, duration]) => `--kcs-${name}:${duration}ms`).join(";");
+const collaborationCss = [
+  `.kalos-collaboration-stream{font-family:${typography.family};font-size:${typography.controlSize}px;line-height:${typography.controlLineHeight}px;${collaborationVars("light")};--kcs-bubble:${collaboration.bubble}px;--kcs-radius:${collaboration.radius}px;--kcs-ease:${collaboration.ease};--kcs-detail-fade:${collaboration.detailFade}ms;${collaborationMotion}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-collaboration-stream{${collaborationVars("dark")}}`,
+  await readFile("design/collaboration-stream.css", "utf8"),
+].join("\n");
+const collaborationStyleHref = `kalos-collaboration-stream-${createHash("sha256").update(collaborationCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-collaboration-stream-styles.ts", `// Generated from design tokens and design/collaboration-stream.css.\nexport const collaborationDefaults = ${JSON.stringify(collaboration)} as const;\nexport const collaborationStyleHref = ${JSON.stringify(collaborationStyleHref)};\nexport const collaborationCss = ${JSON.stringify(collaborationCss)};\n`);
+
+const usageMeter = inventory.defaults["usage-meter"];
+const usageMeterColors = inventory.components["usage-meter"];
+const usageMeterVars = (mode) => [
+  ...Object.entries(usageMeterColors.themeMapping).map(([name, source]) => [name, `var(--${source}, ${themeTokens[mode][source]})`]),
+  ...Object.entries(usageMeterColors.colorMapping).map(([name, source]) => [name, inventory.components[usageMeterColors.tokensFrom][mode][source]]),
+  ...Object.entries(usageMeterColors[mode]),
+].map(([name, value]) => `--kum-${name}:${value}`).join(";");
+const usageMeterCss = [
+  `.kalos-usage-meter{font-family:${typography.family};font-size:${typography.controlSize}px;line-height:${typography.controlLineHeight}px;${usageMeterVars("light")};--kum-width:${usageMeter.width}px;--kum-radius:${usageMeter.radius}px;--kum-padding:${usageMeter.padding}px;--kum-narrow-padding:${usageMeter.narrowPadding}px;--kum-duration:${usageMeter.duration}ms;--kum-feedback:${usageMeter.feedbackDuration}ms;--kum-limit-duration:${usageMeter.limitDuration}ms;--kum-readout-duration:${usageMeter.readoutDuration}ms;--kum-readout-fade:${usageMeter.readoutFade}ms;--kum-layout-duration:${usageMeter.layoutDuration}ms;--kum-chart-readout-duration:${usageMeter.chartReadoutDuration}ms;--kum-ease:${usageMeter.ease}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-usage-meter{ ${usageMeterVars("dark")} }`,
+  (await readFile("design/usage-meter.css", "utf8")).replaceAll("USAGE_METER_NARROW_WIDTH", `${usageMeter.narrowWidth}px`),
+].join("\n");
+const usageMeterStyleHref = `kalos-usage-meter-${createHash("sha256").update(usageMeterCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-usage-meter-styles.ts", `// Generated from design tokens and design/usage-meter.css.\nexport const usageMeterDefaults = ${JSON.stringify(usageMeter)} as const;\nexport const usageMeterStyleHref = ${JSON.stringify(usageMeterStyleHref)};\nexport const usageMeterCss = ${JSON.stringify(usageMeterCss)};\n`);
+
 const contextWindow = inventory.defaults["context-window"];
 const contextWindowColors = inventory.components["context-window"];
 const contextWindowVars = (mode) => [

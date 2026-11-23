@@ -60,8 +60,12 @@ import { DropzoneDemo } from "@/components/dropzone-demo";
 import { NumberInputDemo } from "@/components/number-input-demo";
 import { OtpInputDemo } from "@/components/otp-input-demo";
 import { AIAnswerDemo } from "@/components/ai-answer-demo";
+import { CollaborationStreamDemo } from "@/components/collaboration-stream-demo";
 import { ContextWindowDemo } from "@/components/context-window-demo";
 import { DecisionCardDemo } from "@/components/decision-card-demo";
+import { PermissionRequestDemo } from "@/components/permission-request-demo";
+import { ResponseStreamDemo } from "@/components/response-stream-demo";
+import { UsageMeterDemo } from "@/components/usage-meter-demo";
 import type { KalosNumberInputProps } from "@/components/ui/kalos-number-input-model";
 
 const formFields: KalosFormField[] = [
@@ -280,10 +284,18 @@ export function DemoContent({
       return <OtpInputDemo compact={compact} />;
     case "kalos-ai-answer":
       return <AIAnswerDemo compact={compact} />;
+    case "kalos-response-stream":
+      return <ResponseStreamDemo compact={compact} />;
+    case "kalos-collaboration-stream":
+      return <CollaborationStreamDemo compact={compact} />;
+    case "kalos-usage-meter":
+      return <UsageMeterDemo />;
     case "kalos-context-window":
       return <ContextWindowDemo />;
     case "kalos-decision-card":
       return <DecisionCardDemo compact={compact} />;
+    case "kalos-permission-request":
+      return <PermissionRequestDemo compact={compact} />;
     case "kalos-combobox":
       return <ComboboxDemo />;
     case "kalos-text-area":

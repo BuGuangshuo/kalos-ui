@@ -1,0 +1,218 @@
+.kalos-permission-request {
+  width: 100%;
+  min-width: 0;
+  max-width: var(--kpr-width);
+  container: kalos-permission / inline-size;
+  color: var(--kpr-ink);
+}
+.kalos-permission-surface {
+  position: relative;
+  overflow: clip;
+  border-radius: var(--kpr-radius);
+  background: var(--kpr-surface);
+  box-shadow: var(--kpr-shadow);
+}
+.kalos-permission-panel { box-sizing: border-box; width: 100%; }
+.kalos-permission-panel[inert] { position: absolute; inset: 0 0 auto; pointer-events: none; }
+.kalos-permission-pending {
+  --kpr-inset: var(--kpr-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: var(--kpr-inset);
+  outline: none;
+}
+.kalos-permission-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 6px 10px;
+  margin-block-end: 2px;
+}
+.kalos-permission-avatar {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  align-self: center;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--kpr-preview-radius);
+  background: var(--kpr-surface);
+  box-shadow: inset 0 0 0 0.5px var(--kpr-edge);
+  color: var(--kpr-brand-ink);
+  font-size: 12px;
+  font-weight: 500;
+}
+.kalos-permission-avatar > :is(img, svg, [data-brand-icon]) { width: 17px; height: 17px; object-fit: contain; }
+.kalos-permission-request .kalos-permission-title {
+  margin: 0;
+  color: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.kalos-permission-title strong { font-weight: 500; }
+.kalos-permission-target,
+.kalos-permission-detail { color: var(--kpr-muted); font-size: 12px; line-height: 18px; }
+.kalos-permission-target { display: flex; min-width: 0; align-items: center; gap: 5px; }
+.kalos-permission-target > svg,
+.kalos-permission-target-icon > :is(img, svg, [data-brand-icon]) { width: 13px; height: 13px; object-fit: contain; }
+.kalos-permission-target-icon { display: inline-flex; flex: none; color: var(--kpr-brand-ink); }
+.kalos-permission-ellipsis { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kalos-permission-request .kalos-permission-reason {
+  grid-column: 2 / -1;
+  margin: 5px 0 0;
+  padding-inline-start: 10px;
+  border-inline-start: 2px solid var(--kpr-edge);
+  color: var(--kpr-muted);
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+.kalos-permission-risk {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 5px;
+  padding: 1px 5px;
+  background: var(--kpr-warn-wash);
+  color: var(--kpr-warn);
+  font-size: 11px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+.kalos-permission-risk[data-risk="destructive"] {
+  background: color-mix(in srgb, var(--kpr-danger) 12%, transparent);
+  color: var(--kpr-danger);
+}
+.kalos-permission-risk svg { width: 12px; height: 12px; }
+.kalos-permission-request .kalos-permission-preview {
+  margin: 0 calc(-1 * var(--kpr-inset));
+  padding: 12px var(--kpr-inset) 6px;
+  border-block: 0.5px solid var(--kpr-edge);
+  background: var(--kpr-surface);
+}
+.kalos-permission-request .kalos-permission-preview-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 4px;
+  color: var(--kpr-muted);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.kalos-permission-count {
+  flex: none;
+  min-width: 17px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 0.5px var(--kpr-edge);
+  padding-inline: 3px;
+  text-align: center;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.kalos-permission-list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+.kalos-permission-item {
+  display: flex;
+  min-height: 30px;
+  align-items: center;
+  gap: 10px;
+  animation: kalos-permission-row var(--kpr-row-duration) var(--kpr-ease) calc(var(--kpr-order) * var(--kpr-row-stagger)) both;
+}
+.kalos-permission-item-icon { display: inline-flex; flex: none; color: var(--kpr-preview-icon); }
+.kalos-permission-item-icon svg { width: 16px; height: 16px; }
+.kalos-permission-meta {
+  display: inline-flex;
+  gap: 4px;
+  margin-inline-start: auto;
+  color: var(--kpr-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.kalos-permission-meta-add { color: var(--kpr-success); }
+.kalos-permission-meta-remove { color: var(--kpr-danger); }
+.kalos-permission-preview .kalos-permission-more { margin-block-start: 2px; margin-inline-start: 22px; padding-inline: 4px; color: var(--kpr-muted); }
+.kalos-permission-scope-field { display: flex; flex-direction: column; gap: 6px; }
+.kalos-permission-scope-note { color: var(--kpr-muted); font-size: 12px; line-height: 18px; }
+.kalos-permission-scopes .kalos-segment__scroller { margin: -2px; }
+.kalos-permission-request .kalos-permission-scopes[data-variant="buttons"] .kalos-segment__option { box-shadow: none; }
+.kalos-permission-request .kalos-permission-scopes[data-variant="buttons"] .kalos-segment__option:not([data-active]):not(:hover) { background: var(--k-fill); }
+.kalos-permission-request .kalos-permission-scopes .kalos-segment__indicator { background: var(--kpr-surface); box-shadow: var(--k-card-shadow); }
+.kalos-permission-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.kalos-permission-actions > button { min-width: 0; gap: 8px; padding-inline: 12px 8px; }
+.kalos-permission-request :is(.kalos-permission-actions, .kalos-permission-preview, .kalos-permission-summary) > button:focus-visible {
+  outline: 2px solid var(--kpr-focus);
+  outline-offset: 2px;
+}
+.kalos-permission-key {
+  display: inline-grid;
+  min-width: 18px;
+  height: 18px;
+  flex: none;
+  place-items: center;
+  border-radius: 4px;
+  background: color-mix(in srgb, currentColor 13%, transparent);
+  padding: 0 4px;
+  font: inherit;
+  font-size: 10px;
+  line-height: 14px;
+}
+.kalos-permission-actions > button:first-child .kalos-permission-key { color: var(--kpr-preview-icon); background: var(--kpr-soft); }
+.kalos-permission-actions > button:last-child .kalos-permission-key { color: color-mix(in srgb, currentColor 72%, transparent); }
+.kalos-permission-label { position: relative; display: grid; justify-items: center; }
+.kalos-permission-label > [aria-hidden="true"] { position: absolute; inset: 0; }
+.kalos-permission-summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  min-height: 60px;
+  padding: 8px var(--kpr-padding);
+}
+.kalos-permission-status-icon {
+  display: grid;
+  width: 17px;
+  height: 17px;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px currentColor;
+  color: var(--kpr-success);
+}
+.kalos-permission-status-icon[data-status="denied"] { color: var(--kpr-danger); }
+.kalos-permission-status-icon[data-status="expired"] { color: var(--kpr-muted); }
+.kalos-permission-status-icon svg { width: 11px; height: 11px; }
+.kalos-permission-status { display: flex; gap: 5px; }
+.kalos-permission-status strong { flex: none; font-weight: 500; }
+.kalos-permission-status-action { color: var(--kpr-muted); }
+.kalos-permission-detail { font-variant-numeric: tabular-nums; }
+.kalos-permission-progress { position: absolute; inset: auto 0 0; height: 2px; background: var(--kpr-soft); }
+.kalos-permission-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--kpr-success);
+  transform-origin: left;
+  transition: transform 1s linear;
+}
+.kalos-permission-progress:dir(rtl) > span { transform-origin: right; }
+
+@keyframes kalos-permission-row {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@container kalos-permission (width < PERMISSION_NARROW_WIDTH) {
+  .kalos-permission-pending { --kpr-inset: var(--kpr-compact-padding); }
+  .kalos-permission-request .kalos-permission-reason { grid-column: 1 / -1; }
+  .kalos-permission-actions > button { flex: 1; }
+  .kalos-permission-key { display: none; }
+  .kalos-permission-summary { gap: 7px; padding-inline: var(--kpr-compact-padding); }
+}
+@media (pointer: coarse) {
+  .kalos-permission-key { display: none; }
+  .kalos-permission-actions > button,
+  .kalos-permission-summary > button,
+  .kalos-permission-preview .kalos-permission-more { min-height: 36px; }
+}

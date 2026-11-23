@@ -1,0 +1,170 @@
+.kalos-response-stream {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  container: kalos-response / inline-size;
+  color: var(--krs-ink);
+}
+.kalos-response-stream[data-dismissing] { animation: kalos-response-dismiss var(--krs-dismiss-duration) ease both; }
+.kalos-response-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 20px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.kalos-response-head:focus { outline: none; }
+.kalos-response-name { color: var(--krs-name); }
+.kalos-response-mark {
+  display: grid;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 1.5px;
+  color: var(--krs-agent-color, var(--krs-accent));
+}
+.kalos-response-pixel { border-radius: 1px; background: currentColor; opacity: var(--krs-pixel-opacity); }
+.kalos-response-stream[data-state="streaming"] .kalos-response-pixel {
+  animation: kalos-response-pixel var(--krs-pixel-duration) ease-in-out var(--krs-pixel-delay) infinite;
+}
+.kalos-response-writing {
+  flex: none;
+  color: var(--krs-subtle);
+  font-size: 12px;
+  font-weight: 400;
+}
+.kalos-response-content {
+  min-width: 0;
+  margin-block-start: 8px;
+  margin-inline-start: 7px;
+  padding-inline-start: calc(var(--krs-indent) - 8px);
+  border-inline-start: 1px solid var(--krs-edge);
+}
+.kalos-response-body { display: grid; gap: 10px; min-width: 0; }
+.kalos-response-stream .kalos-response-paragraph {
+  min-width: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.kalos-response-word {
+  animation: kalos-response-word var(--krs-word-duration) ease-out both;
+}
+.kalos-response-caret {
+  display: inline-block;
+  width: 2px;
+  height: 15px;
+  margin-inline-start: 2px;
+  border-radius: 1px;
+  color: var(--krs-agent-color, var(--krs-caret));
+  background: currentColor;
+  vertical-align: -2px;
+  animation: kalos-response-caret var(--krs-caret-duration) ease-in-out infinite;
+}
+.kalos-response-code {
+  display: grid;
+  min-width: 0;
+  padding: 8px 10px;
+  gap: 3px;
+  border: 0.5px solid var(--krs-edge);
+  border-radius: 7px;
+  background: var(--krs-soft);
+}
+.kalos-response-code-label { color: var(--krs-muted); font-size: 11px; line-height: 16px; overflow-wrap: anywhere; }
+.kalos-response-stream .kalos-response-code pre {
+  margin: 0;
+  padding: 0 1px 1px;
+  overflow-x: auto;
+  white-space: pre;
+  font: 12px/18px ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: inherit;
+}
+.kalos-response-code pre:focus-visible { outline: 2px solid var(--krs-focus); outline-offset: -1px; }
+.kalos-response-bend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--krs-subtle);
+  font-size: 11px;
+  line-height: 16px;
+}
+.kalos-response-bend::after { content: ""; flex: 1; border-block-start: 1px dashed var(--krs-edge); }
+.kalos-response-bend svg { flex: none; width: 13px; height: 13px; }
+.kalos-response-bend span { overflow-wrap: anywhere; }
+.kalos-response-steering { display: grid; gap: 4px; margin-block-end: 10px; }
+.kalos-response-chips { display: grid; gap: 4px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.kalos-response-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-inline: 8px 4px;
+  min-height: 28px;
+  min-width: 0;
+  background: var(--krs-surface);
+  border-radius: 8px;
+  box-shadow: var(--krs-shadow);
+  animation: kalos-response-chip var(--krs-chip-duration) ease-out both;
+}
+.kalos-response-chip > svg { width: 14px; height: 14px; flex: none; color: var(--krs-muted); }
+.kalos-response-chip-badge {
+  background: var(--krs-soft);
+  color: var(--krs-muted);
+  font-size: 11px;
+  line-height: 17px;
+  padding-inline: 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.kalos-response-chip-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kalos-response-more { justify-self: start; }
+.kalos-response-footer { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; min-height: 28px; margin-block-start: 10px; }
+.kalos-response-actions { display: flex; align-items: center; gap: 6px; min-height: 28px; min-width: 0; max-width: 100%; }
+.kalos-response-actions:empty { display: none; }
+.kalos-response-meta, .kalos-response-foot-label {
+  color: var(--krs-subtle);
+  font-size: 12px;
+  line-height: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.kalos-response-meta { margin-inline-start: 6px; }
+.kalos-response-actions > [data-response-action] { --k-surface: var(--krs-action); padding-inline: 8px 10px; font-size: 13px; }
+.kalos-response-key {
+  display: inline-grid;
+  height: 17px;
+  place-items: center;
+  padding-inline: 4px;
+  border-radius: 4px;
+  background: var(--krs-soft);
+  color: var(--krs-muted);
+  font: 11px/16px ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+.kalos-response-stream .kalos-response-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  color: var(--krs-danger);
+  font: inherit;
+  overflow-wrap: anywhere;
+}
+.kalos-response-error svg { flex: none; width: 14px; height: 14px; margin-block-start: 3px; }
+.kalos-response-stream button:focus-visible { outline: 2px solid var(--krs-focus); outline-offset: 2px; }
+.kalos-response-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@container kalos-response (width < RESPONSE_NARROW_WIDTH) {
+  .kalos-response-content { margin-inline-start: 0; padding-inline-start: 0; border-inline-start: 0; }
+  .kalos-response-actions { flex-wrap: wrap; }
+}
+@media (pointer: coarse) { .kalos-response-key { display: none; } }
+@keyframes kalos-response-word { from { opacity: 0.12; filter: blur(3px); } to { opacity: 1; filter: none; } }
+@keyframes kalos-response-caret { 0%, 100% { opacity: 0.45; box-shadow: 0 0 2px currentColor; } 50% { opacity: 1; box-shadow: 0 0 6px currentColor; } }
+@keyframes kalos-response-pixel { 0%, 68%, 100% { opacity: var(--krs-pixel-opacity); } 26% { opacity: 1; } }
+@keyframes kalos-response-dismiss { to { opacity: 0; transform: translateY(-3px); } }
+@keyframes kalos-response-chip { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }

@@ -77,7 +77,7 @@ function Card({ title, Vignette }: { title: string; Vignette: ComponentType }) {
       }}
       className="flex size-full flex-col rounded-xl bg-accent p-1"
     >
-      <div className="relative flex flex-1 flex-col rounded-lg bg-background">
+      <div className="relative flex flex-1 flex-col rounded-lg bg-(--preview-background)">
         <span className="absolute top-2.5 left-3.5 text-xs font-medium text-muted-foreground">
           {title}
         </span>

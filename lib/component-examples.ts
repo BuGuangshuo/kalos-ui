@@ -154,6 +154,122 @@ export default function Example() {
 }
 
 export function reactExample(item: Item) {
+  if (item.slug === "kalos-usage-meter") return `"use client";
+
+import { useState } from "react";
+import { KalosUsageMeter, type UsageMeterState } from "@/components/ui/kalos-usage-meter";
+
+const periods = [
+  { id: "month", label: "本月" },
+  { id: "last", label: "上月" },
+];
+
+const usage = {
+  month: [
+    { label: "文档问答", value: 3760 },
+    { label: "全文检索", value: 1940 },
+  ],
+  last: [
+    { label: "文档问答", value: 6120 },
+    { label: "全文检索", value: 3040 },
+  ],
+};
+
+export default function UsageExample({ openTopUp }: {
+  openTopUp: (state: UsageMeterState) => void;
+}) {
+  const [period, setPeriod] = useState("month");
+
+  return <KalosUsageMeter
+    title="文档助手"
+    plan="专业版"
+    total={10_000}
+    used={period === "month" ? usage.month : usage.last}
+    limits={[{ label: "成员席位", used: 8, total: 10 }]}
+    periods={periods}
+    period={period}
+    onPeriodChange={setPeriod}
+    onUpgrade={openTopUp}
+    locale="zh-CN"
+  />;
+}`;
+
+  if (item.slug === "kalos-collaboration-stream") return `"use client";
+
+import { useState } from "react";
+import { KalosCollaborationStream, type StreamAgent, type StreamMessage } from "@/components/ui/kalos-collaboration-stream";
+
+const agents: StreamAgent[] = [
+  { id: "editor", name: "编辑助手", model: "Gemini Flash" },
+  { id: "reviewer", name: "审核助手" },
+];
+
+export default function Example() {
+  const [messages, setMessages] = useState<StreamMessage[]>([
+    { id: "m1", from: "you", to: "editor", kind: "ask", text: "更新快速开始指南。" },
+    { id: "m2", from: "editor", to: "reviewer", kind: "handoff", text: "请核对成员邀请流程。",
+      attachments: [{ label: "onboarding.md", preview: "打开设置，进入成员页面并发送邀请。" }] },
+  ]);
+
+  return <KalosCollaborationStream
+    agents={agents}
+    messages={messages}
+    task="更新快速开始指南"
+    live
+    onSend={({ text, to, replyTo }) => {
+      const id = crypto.randomUUID();
+      setMessages(current => [...current, { id, from: "you", to, kind: replyTo ? "reply" : "ask", text, replyTo }]);
+    }}
+  />;
+}`;
+
+  if (item.slug === "kalos-response-stream") return `"use client";
+
+import { KalosResponseStream, type ResponseStreamStatus } from "@/components/ui/kalos-response-stream";
+
+type ReplyProps = {
+  text: string;
+  status: ResponseStreamStatus;
+  error?: string;
+  stop: () => void;
+  resume: () => void;
+  retry: () => void;
+};
+
+export function Reply({ text, status, error, stop, resume, retry }: ReplyProps) {
+  return <KalosResponseStream
+    text={text}
+    status={status}
+    error={error}
+    agent={{ id: "atlas", name: "Atlas" }}
+    onStop={stop}
+    onContinue={resume}
+    onRetry={retry}
+  />;
+}`;
+
+  if (item.slug === "kalos-permission-request") return `"use client";
+
+import { useState } from "react";
+import { KalosPermissionRequest, type PermissionDecision } from "@/components/ui/kalos-permission-request";
+
+export default function Example() {
+  const [decision, setDecision] = useState<PermissionDecision | null>(null);
+
+  return <KalosPermissionRequest
+    agent={{ name: "文档助手" }}
+    action="发布文档更新"
+    target="kalos-ui/docs"
+    reason="两份文档已通过审核。"
+    preview={[
+      { id: "tokens", label: "docs/design/tokens.mdx", meta: "+12 −4" },
+      { id: "components", label: "docs/components/index.mdx", meta: "+31 −2" },
+    ]}
+    decision={decision}
+    onDecisionChange={setDecision}
+  />;
+}`;
+
   if (item.slug === "kalos-decision-card") return `"use client";
 
 import { useState } from "react";
