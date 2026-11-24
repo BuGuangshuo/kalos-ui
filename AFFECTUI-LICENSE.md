@@ -20,6 +20,8 @@ The [Select](https://www.affectui.com/components/select) preview, option layout,
 
 The [Command Menu preview](https://www.affectui.com/components/command-menu) informed the example's command groups. Kalos uses its own menu implementation and reuses the Table preview icons. The Slack and Notion icons are sourced from [SVG Logos](https://github.com/gilbarbara/logos). Logos remain the property of their respective owners.
 
+The [Breakdown Chart](https://www.affectui.com/components/breakdown-chart) Clean preview informed the visual design, demo data, and interactions of Kalos UI’s independently implemented chart.
+
 MIT License
 
 Copyright (c) 2026 Florian Höller (adfects)

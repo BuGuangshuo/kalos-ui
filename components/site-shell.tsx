@@ -5,8 +5,6 @@ import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
 import { ThemeProvider } from "next-themes";
 import {
-  Menu,
-  X,
   Terminal,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,7 +25,7 @@ import { BrandLogo, GithubIcon } from "@/components/brand";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { KalosTooltipProvider } from "@/registry/kalos/kalos-tooltip";
 import { GlobalSearch } from "@/components/global-search";
-import { SiteNavigation } from "@/components/site-navigation";
+import { MobileNavTrigger, SiteNavigation } from "@/components/site-navigation";
 const HomeShell = dynamic(() =>
   import("@/components/home/shell").then((module) => module.HomeShell),
 );
@@ -59,16 +57,7 @@ function Header() {
             <Link className="nav-start" href="/docs/getting-started">
               开始使用
             </Link>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="mobile-menu"
-              aria-label={menu ? "关闭导航" : "打开导航"}
-              aria-expanded={menu}
-              onClick={() => setMenu(!menu)}
-            >
-              {menu ? <X /> : <Menu />}
-            </Button>
+            <MobileNavTrigger open={menu} onClick={() => setMenu(!menu)} />
           </div>
         </div>
         {menu ? (

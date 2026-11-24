@@ -835,6 +835,28 @@
       ]
     },
     {
+      "name": "kalos-thinking-state",
+      "type": "registry:ui",
+      "title": "Kalos 思考状态",
+      "description": "显示 AI 的实时思考用时，在可折叠时间轴中依次呈现搜索来源和处理步骤。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "cn",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-thinking-state.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-thinking-state-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "kalos-response-stream",
       "type": "registry:ui",
       "title": "Kalos 流式回复",
@@ -918,6 +940,36 @@
         },
         {
           "path": "components/ui/kalos-collaboration-stream-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kalos-breakdown-chart",
+      "type": "registry:ui",
+      "title": "Kalos 分类统计图",
+      "description": "用堆叠柱状图比较各组的数量或总和。切换统计指标、分组和细分维度，悬停柱条查看明细，也可在下方表格中逐项核对。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/inter",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-breakdown-chart.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-breakdown-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-breakdown-plot.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-breakdown-chart-styles.ts",
           "type": "registry:ui"
         }
       ]
@@ -1895,9 +1947,10 @@
       "name": "kalos-all",
       "type": "registry:block",
       "title": "Kalos UI 完整组件库",
-      "description": "一次安装全部 43 个 Base UI 组件。",
+      "description": "一次安装全部 45 个 Base UI 组件。",
       "dependencies": [
         "@base-ui/react",
+        "@fontsource/inter",
         "@fontsource/roboto",
         "class-variance-authority",
         "cn",
@@ -2138,6 +2191,14 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/kalos/kalos-thinking-state.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-thinking-state-styles.ts",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/kalos/kalos-response-stream.tsx",
           "type": "registry:ui"
         },
@@ -2163,6 +2224,22 @@
         },
         {
           "path": "components/ui/kalos-collaboration-stream-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-breakdown-chart.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-breakdown-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-breakdown-plot.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-breakdown-chart-styles.ts",
           "type": "registry:ui"
         },
         {
@@ -2337,6 +2414,202 @@
           "path": "components/ui/kalos-notification-styles.ts",
           "type": "registry:ui"
         }
+      ]
+    },
+    {
+      "name": "kalos-pricing-plans",
+      "type": "registry:block",
+      "title": "Pricing Plans",
+      "description": "并排比较套餐价格、用量上限和集成能力。切换计费周期后价格逐位滚动，各套餐的详细权益可单独收起。",
+      "files": [
+        {
+          "path": "registry/kalos/blocks/pricing-plans/index.tsx",
+          "target": "@components/blocks/pricing-plans/index.tsx",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/pricing-plans/integration-marks.tsx",
+          "target": "@components/blocks/pricing-plans/integration-marks.tsx",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/pricing-plans/styles.css",
+          "target": "@components/blocks/pricing-plans/styles.css",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/shared/inter.ts",
+          "target": "@components/blocks/shared/inter.ts",
+          "type": "registry:file"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/inter",
+        "lucide-react"
+      ]
+    },
+    {
+      "name": "kalos-logo-marquee",
+      "type": "registry:block",
+      "title": "Logo Marquee",
+      "description": "品牌标志沿水平方向无缝循环。双行交错排列并反向移动，可拖动快转，悬停时标志渐显品牌色。",
+      "files": [
+        {
+          "path": "registry/kalos/blocks/logo-marquee/index.tsx",
+          "target": "@components/blocks/logo-marquee/index.tsx",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/logo-marquee/LICENSE.txt",
+          "target": "@components/blocks/logo-marquee/LICENSE.txt",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/logo-marquee/logos.tsx",
+          "target": "@components/blocks/logo-marquee/logos.tsx",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/logo-marquee/styles.css",
+          "target": "@components/blocks/logo-marquee/styles.css",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/shared/inter.ts",
+          "target": "@components/blocks/shared/inter.ts",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/shared/initials.ts",
+          "target": "@components/blocks/shared/initials.ts",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/shared/use-loop-track.ts",
+          "target": "@components/blocks/shared/use-loop-track.ts",
+          "type": "registry:file"
+        }
+      ],
+      "dependencies": [
+        "@fontsource/inter"
+      ]
+    },
+    {
+      "name": "kalos-invoice-credit",
+      "type": "registry:block",
+      "title": "Invoice & Credit Note",
+      "description": "在层叠的发票和贷项通知单之间切换。逐项选择抵扣内容、调整金额并核对税额，签发后可重新编辑。",
+      "files": [
+        {
+          "path": "registry/kalos/blocks/invoice-credit/index.tsx",
+          "target": "@components/blocks/invoice-credit/index.tsx",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/invoice-credit/styles.css",
+          "target": "@components/blocks/invoice-credit/styles.css",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/shared/inter.ts",
+          "target": "@components/blocks/shared/inter.ts",
+          "type": "registry:file"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/inter",
+        "lucide-react"
+      ]
+    },
+    {
+      "name": "kalos-testimonial-wall",
+      "type": "registry:block",
+      "title": "Testimonial Wall",
+      "description": "客户评价分列上下滚动，每列使用不同的起点和速度。悬停、聚焦或触屏按住可暂停一列，鼠标拖动可浏览其他评价。",
+      "files": [
+        {
+          "path": "registry/kalos/blocks/testimonial-wall/index.tsx",
+          "target": "@components/blocks/testimonial-wall/index.tsx",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/testimonial-wall/LICENSE.txt",
+          "target": "@components/blocks/testimonial-wall/LICENSE.txt",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/testimonial-wall/styles.css",
+          "target": "@components/blocks/testimonial-wall/styles.css",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/testimonial-wall/testimonials.ts",
+          "target": "@components/blocks/testimonial-wall/testimonials.ts",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/shared/inter.ts",
+          "target": "@components/blocks/shared/inter.ts",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/shared/initials.ts",
+          "target": "@components/blocks/shared/initials.ts",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/shared/use-loop-track.ts",
+          "target": "@components/blocks/shared/use-loop-track.ts",
+          "type": "registry:file"
+        }
+      ],
+      "dependencies": [
+        "@fontsource/inter"
+      ]
+    },
+    {
+      "name": "kalos-task-board",
+      "type": "registry:block",
+      "title": "Task Board",
+      "description": "按状态组织任务，拖动卡片调整顺序或移动到其他列。可搜索标题与编号、按标签筛选，打开详情面板修改任务。",
+      "files": [
+        {
+          "path": "registry/kalos/blocks/task-board/index.tsx",
+          "target": "@components/blocks/task-board/index.tsx",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/task-board/card.tsx",
+          "target": "@components/blocks/task-board/card.tsx",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/task-board/data.ts",
+          "target": "@components/blocks/task-board/data.ts",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/task-board/detail.tsx",
+          "target": "@components/blocks/task-board/detail.tsx",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/task-board/task-board.css",
+          "target": "@components/blocks/task-board/task-board.css",
+          "type": "registry:file"
+        },
+        {
+          "path": "registry/kalos/blocks/shared/inter.ts",
+          "target": "@components/blocks/shared/inter.ts",
+          "type": "registry:file"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "@fontsource/inter",
+        "lucide-react"
       ]
     }
   ]

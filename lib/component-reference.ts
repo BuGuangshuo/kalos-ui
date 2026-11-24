@@ -5,6 +5,21 @@ const optionalDescription: Row = ["description", "string", "—", "仅在需要�
 const label: Row = ["label", "string", "—", "控件的可见标签"];
 
 const references: Record<string, Reference> = {
+  "kalos-breakdown-chart": { props: [
+    ["records", "readonly BreakdownRecord[]", "必填", "每条记录包含对应维度的分类值，以及需要求和的数值字段。柱条、总数和明细表共用这组数据"],
+    ["dimensions", "readonly Dimension[]", "必填", "每个维度提供唯一的 key、显示名称 label 和有序的 values。colors 将分类值映射到 CSS 颜色，icons 将分类值映射到图标节点"],
+    ["measures", "readonly Measure[]", "必填", "每个指标提供 key、label 和单位 unit。省略 field 时统计记录数，指定 field 时累计该字段的数值"],
+    ["title", "string", "Workload", "显示在卡片顶部的标题"],
+    ["defaultMeasure", "string", "首个指标", "初始统计指标的 key"],
+    ["defaultSlice", "string", "首个维度", "初始分组维度的 key，每个分类值对应一根柱条和一行数据"],
+    ["defaultSegment", "string", "首个其他维度", "用于堆叠柱条的维度 key。只有一个维度或传入 none 时，每根柱条仅显示该组的总量"],
+    ["className", "string", "—", "添加到图表根元素的样式类"],
+  ], keyboard: [
+    ["Tab / Shift + Tab", "在选择器、柱条和图例按钮之间移动。聚焦柱条时显示该组的统计明细"],
+    ["↑ / ↓", "在已展开的选择器中移动选项"],
+    ["Enter / Space", "确认当前选项，或切换聚焦的图例分类"],
+    ["Esc", "关闭已展开的选择器"],
+  ] },
   "kalos-usage-meter": { props: [
     ["total", "number", "—", "当前周期可用总额度。超额时用量条填满，徽标显示 100%，底部显示实际超出量"],
     ["used", "readonly UsageCategory[]", "—", "每项含 label、value 和可选 color。相同名称合并，切换周期时同名分类沿用原配色。列表占比以已用总量为基数"],
@@ -49,6 +64,21 @@ const references: Record<string, Reference> = {
     ["Enter / Space", "选中或取消选中消息。有明细时同步打开或关闭浮层。输入框中 Enter 发送，Shift + Enter 换行"],
     ["@ / Tab", "输入 @ 打开参与者候选列表。列表打开时用 Enter 或 Tab 选择候选"],
     ["Esc", "关闭附件预览、点名菜单或回复，也可清除当前消息选择和参与者聚焦"],
+  ] },
+  "kalos-thinking-state": { props: [
+    ["steps", "readonly ThinkingStep[]", "—", "按显示顺序传入 { kind, label }。kind 为 search 时还可提供 activeLabel、sources 和 moreSources，activeLabel 用于搜索进行时。新一轮独立任务使用新的 React key"],
+    ["sources / moreSources", "readonly ThinkingSource[]", "[]", "每项包含 label，可选 href、icon 和 tooltip。href 使来源成为链接，tooltip 默认显示链接地址，icon 可传品牌图标。通过数量按钮展开 moreSources，收起按钮位于最后一个来源之后"],
+    ["doneLabel", "string", "思考完成", "时间轴末行文案。英文界面默认为 Finished thinking"],
+    ["stepMs", "number", "1300", "依次显示步骤以及完成行之间的间隔，单位为毫秒。首步立即显示，首步搜索会额外留出来源入场时间。传入 0 会同时显示步骤和完成行"],
+    ["loop", "boolean", "false", "完成后等待 2.6 秒，从第一步开始重播"],
+    ["collapseOnDone", "boolean", "false", "完成动效播放后自动折叠时间轴，标题保留总用时。可以再次展开"],
+    ["onDone", "(seconds: number) => void", "—", "每轮完成时回调一次，返回经过的整秒数"],
+    ["locale", '"zh-CN" | "en-US"', "zh-CN", "切换标题、用时单位、完成与来源展开按钮的内置文案"],
+    ["className", "string", "—", "根容器的样式类"],
+  ], keyboard: [
+    ["Enter / Space", "激活标题或来源数量按钮，展开或折叠对应内容"],
+    ["Tab / Shift + Tab", "在标题、来源链接、有提示的无链接来源和来源数量按钮之间移动。聚焦来源时显示提示"],
+    ["Esc", "关闭当前来源提示，保留焦点"],
   ] },
   "kalos-response-stream": { props: [
     ["text", "string", "—", "当前累计的回复。未完成的末尾单词在生成、停止和失败时等待后续字符。反引号围栏渲染为代码块"],

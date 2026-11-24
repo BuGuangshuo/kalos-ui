@@ -1,0 +1,33 @@
+.block-article {
+  max-width: 1000px;
+  margin-inline: auto;
+  min-width: 0;
+}
+.block-article > #preview { margin-top: 28px; }
+.block-stage {
+  width: 100%;
+  min-width: 0;
+  position: relative;
+  border-radius: 18px;
+  background: var(--preview-background);
+}
+.block-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--border);
+  pointer-events: none;
+}
+.block-preview-toolbar .component-toolbar-handoff { flex-wrap: wrap; }
+.block-source {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+}
+.block-source pre { max-height: 580px; }
+.block-source-select { max-width: 360px; }
+
+.block-stage:is([data-block="logo-marquee"], [data-block="testimonial-wall"]) {
+  overflow: clip;
+}

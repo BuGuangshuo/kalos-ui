@@ -11,7 +11,7 @@ import {
 } from "motion/react";
 import { GlobalSearch } from "@/components/global-search";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { SiteNavigation } from "@/components/site-navigation";
+import { MobileNavTrigger, SiteNavigation } from "@/components/site-navigation";
 import { site } from "@/lib/site";
 import { KalosLogo } from "./logo";
 import { easeOut, IntroContext, PackageManagerContext } from "./runtime";
@@ -25,6 +25,7 @@ const logoGlide = {
 
 export function HomeShell({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
+  const [menu, setMenu] = useState(false);
   const [playing, setPlaying] = useState(true);
   const [done, setDone] = useState(false);
   const [manager, setManager] = useState("npm");
@@ -154,8 +155,10 @@ export function HomeShell({ children }: { children: ReactNode }) {
                       <span>GitHub</span>
                     </motion.a>
                     <ThemeToggle className="motion-theme-toggle" />
+                    <MobileNavTrigger open={menu} onClick={() => setMenu(!menu)} />
                   </motion.div>
                 </div>
+                {menu && <SiteNavigation className="mobile-nav" label="移动导航" onNavigate={() => setMenu(false)} />}
               </header>
               <main
                 id="main-content"

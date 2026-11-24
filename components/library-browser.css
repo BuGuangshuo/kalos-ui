@@ -1,0 +1,12 @@
+.catalog-section#block { scroll-margin-top: 88px; }
+.catalog-content #block .component-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 390px), 1fr)); }
+.catalog-content .catalog-block-preview .component-preview { --catalog-preview-width: 896px; height: auto; aspect-ratio: 16 / 9; padding: 4px; }
+.mobile-component-directory { display: none; }
+@media (max-width: 650px) {
+  .mobile-component-directory { display: block; margin-inline: 20px; border-bottom: 1px solid var(--border); }
+  .mobile-component-directory summary { display: flex; align-items: center; justify-content: space-between; min-height: 38px; font-size: 13px; cursor: pointer; }
+  .mobile-component-directory summary::-webkit-details-marker { display: none; }
+  .mobile-component-directory[open] summary svg { transform: rotate(180deg); }
+  .mobile-component-directory .sidebar-navigation { max-height: min(45dvh, 360px); margin-block: 8px; overflow-y: auto; overscroll-behavior: contain; }
+  .mobile-component-directory .sidebar-list { padding: 0; }
+}

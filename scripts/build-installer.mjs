@@ -3,6 +3,7 @@ import { promisify } from "node:util";
 import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, writeFile, chmod } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve, join } from "node:path";
+import { blocks } from "../lib/blocks.ts";
 import { catalog } from "../lib/catalog.ts";
 import { site } from "../lib/site.ts";
 
@@ -10,7 +11,7 @@ const directory = resolve("packages/cli");
 const pkg = JSON.parse(await readFile(join(directory, "package.json"), "utf8"));
 await writeFile(join(directory, "manifest.json"), JSON.stringify({
   registry: site.url.replace(/\/$/, ""),
-  components: catalog.map((item) => item.slug),
+  components: [...catalog.map(item => item.slug), ...blocks.map(item => `kalos-${item.slug}`)],
 }, null, 2) + "\n");
 await copyFile("LICENSE", join(directory, "LICENSE"));
 await chmod(join(directory, "bin/kalos-ui.mjs"), 0o755);

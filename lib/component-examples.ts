@@ -154,6 +154,35 @@ export default function Example() {
 }
 
 export function reactExample(item: Item) {
+  if (item.slug === "kalos-breakdown-chart") return `"use client";
+
+import { KalosBreakdownChart } from "@/components/ui/kalos-breakdown-chart";
+
+const documents = [
+  { status: "待审核", format: "PDF", pages: 8 },
+  { status: "待审核", format: "Word", pages: 4 },
+  { status: "已归档", format: "PDF", pages: 12 },
+  { status: "已归档", format: "PDF", pages: 6 },
+];
+
+export default function DocumentBreakdown() {
+  return <KalosBreakdownChart
+    title="文档审核"
+    records={documents}
+    dimensions={[
+      { key: "status", label: "审核状态", values: ["待审核", "已归档"] },
+      { key: "format", label: "文件格式", values: ["PDF", "Word"] },
+    ]}
+    measures={[
+      { key: "count", label: "文档数", unit: "份" },
+      { key: "pages", label: "页数", unit: "页", field: "pages" },
+    ]}
+    defaultMeasure="count"
+    defaultSlice="status"
+    defaultSegment="format"
+  />;
+}`;
+
   if (item.slug === "kalos-usage-meter") return `"use client";
 
 import { useState } from "react";
@@ -220,6 +249,36 @@ export default function Example() {
       const id = crypto.randomUUID();
       setMessages(current => [...current, { id, from: "you", to, kind: replyTo ? "reply" : "ask", text, replyTo }]);
     }}
+  />;
+}`;
+
+  if (item.slug === "kalos-thinking-state") return `"use client";
+
+import { BookOpen } from "lucide-react";
+import { KalosThinkingState, type ThinkingStep } from "@/components/ui/kalos-thinking-state";
+
+const steps: readonly ThinkingStep[] = [
+  {
+    kind: "search",
+    label: "已搜索文档",
+    activeLabel: "正在搜索文档",
+    sources: [
+      { label: "MDN · 无障碍指南", href: "https://developer.mozilla.org/zh-CN/docs/Web/Accessibility", icon: <BookOpen /> },
+    ],
+    moreSources: [
+      { label: "WAI · 设计模式", href: "https://www.w3.org/WAI/ARIA/apg/patterns/", tooltip: "查看键盘交互模式" },
+    ],
+  },
+  { kind: "step", label: "核对键盘操作" },
+  { kind: "step", label: "整理更新清单" },
+];
+
+export function DocumentReview({ runId }: { runId: string }) {
+  return <KalosThinkingState
+    key={runId}
+    steps={steps}
+    doneLabel="已整理更新清单"
+    onDone={seconds => console.log(seconds)}
   />;
 }`;
 

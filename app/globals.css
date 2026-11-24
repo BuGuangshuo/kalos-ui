@@ -1107,11 +1107,17 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 .component-preview[data-component="kalos-response-stream"] {
   --catalog-preview-width: 520px;
 }
+.component-preview[data-component="kalos-thinking-state"] {
+  --catalog-preview-width: 380px;
+}
 .component-preview[data-component="kalos-collaboration-stream"] {
   --catalog-preview-width: 760px;
 }
 .component-card .component-preview[data-component="kalos-usage-meter"] {
   --catalog-preview-width: 460px;
+}
+.component-card .component-preview[data-component="kalos-breakdown-chart"] {
+  --catalog-preview-width: 560px;
 }
 .component-preview[data-component="kalos-table"] {
   --catalog-preview-width: 804px;
@@ -4050,6 +4056,18 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
   max-width: 520px;
   min-width: 0;
 }
+.detail-preview-surface[data-component="kalos-thinking-state"] {
+  min-width: 0;
+  min-height: 280px;
+  align-items: flex-start;
+}
+.detail-preview-surface[data-component="kalos-breakdown-chart"] {
+  max-width: 560px;
+  min-width: 0;
+}
+.detail-preview-surface[data-component="kalos-breakdown-chart"] > section {
+  margin: 0;
+}
 .detail-preview:has(> .detail-preview-surface[data-component="kalos-usage-meter"]) {
   container: usage-meter-preview / inline-size;
 }
@@ -4666,6 +4684,9 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
     min-height: 340px;
     padding: 28px 16px;
   }
+  .component-docs-panel .detail-preview:has(> [data-component="kalos-breakdown-chart"]) {
+    padding-inline: 11px;
+  }
   .component-docs-panel .detail-preview:has(> .detail-preview-surface[data-component="kalos-dropzone"]) {
     min-height: 478px;
   }
@@ -5024,6 +5045,7 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
     left: max(24px, calc((100vw - 600px) / 2));
     max-width: calc(100vw - 48px);
   }
+  .motion-header-actions .mobile-menu { display: inline-flex; }
   .motion-header-actions nav,
   .motion-header-actions .motion-github-link {
     display: none;
@@ -5203,6 +5225,12 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 }
 .changelog-preview[data-component="kalos-usage-meter"] .component-preview {
   --changelog-preview-content-height: 500px;
+}
+.changelog-preview[data-component="kalos-breakdown-chart"] .component-preview {
+  --changelog-preview-content-height: 664px;
+}
+.changelog-preview[data-component="kalos-breakdown-chart"] .catalog-preview-content {
+  transform: none;
 }
 .changelog-preview[data-component="kalos-context-window"] .component-preview {
   --changelog-preview-content-height: 490px;

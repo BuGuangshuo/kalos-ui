@@ -145,7 +145,7 @@
     "href": "/docs/mcp#use",
     "section": "文档",
     "paragraphs": [
-      "连接后，先让 AI 列出 @kalos-ui 中的组件，再查看一个组件的信息与依赖。安装前核对项目使用 Base UI，确认生成命令指向 Kalos UI 注册表。完整源码随安装命令写入项目，也可从组件详情页查看。",
+      "连接后可以检索组件和 Block，查看条目类型、文件数量与依赖，再生成安装命令。确认宿主使用 Base UI 后执行命令。Block 的源码、样式和共享文件会安装到组件目录的 blocks 子目录。",
       "已克隆本仓库时，也可以运行 npm run mcp:config，生成三个客户端的项目级配置并更新 Kalos UI 注册表地址；已有其他 MCP 服务和自定义 shadcn 配置会保留。"
     ]
   },
@@ -167,6 +167,16 @@
     "section": "文档",
     "paragraphs": [
       "组件、安装器与文档的更新。"
+    ]
+  },
+  {
+    "title": "更新日志 · v0.3.8 — AI 思考状态、分类统计图与 Block",
+    "href": "/docs/changelog#v0-3-8",
+    "section": "文档",
+    "paragraphs": [
+      "实时显示 AI 思考用时，按顺序展开搜索来源和处理步骤。时间轴可随时折叠，也可在完成后自动折叠。",
+      "按类别统计记录数或数值总和，可切换堆叠维度，通过柱条浮层和联动表格查看各组明细。图例与柱条共用 CostScope 的五个系列色。",
+      "组件目录的 Block 分组新增定价方案、品牌滚动条、发票与贷项通知单、客户评价墙和任务看板。每个 Block 都可独立安装，并提供交互预览、源码和 API。"
     ]
   },
   {
@@ -924,6 +934,30 @@
     ]
   },
   {
+    "title": "Thinking State 思考状态",
+    "href": "/components/kalos-thinking-state",
+    "section": "组件",
+    "paragraphs": [
+      "显示 AI 的实时思考用时，在可折叠时间轴中依次呈现搜索来源和处理步骤。"
+    ]
+  },
+  {
+    "title": "Thinking State 思考状态 · API",
+    "href": "/components/kalos-thinking-state#api",
+    "section": "组件",
+    "paragraphs": [
+      "按显示顺序传入 { kind, label }。kind 为 search 时还可提供 activeLabel、sources 和 moreSources，activeLabel 用于搜索进行时。新一轮独立任务使用新的 React key",
+      "每项包含 label，可选 href、icon 和 tooltip。href 使来源成为链接，tooltip 默认显示链接地址，icon 可传品牌图标。通过数量按钮展开 moreSources，收起按钮位于最后一个来源之后",
+      "时间轴末行文案。英文界面默认为 Finished thinking",
+      "依次显示步骤以及完成行之间的间隔，单位为毫秒。首步立即显示，首步搜索会额外留出来源入场时间。传入 0 会同时显示步骤和完成行",
+      "完成后等待 2.6 秒，从第一步开始重播",
+      "完成动效播放后自动折叠时间轴，标题保留总用时。可以再次展开",
+      "每轮完成时回调一次，返回经过的整秒数",
+      "切换标题、用时单位、完成与来源展开按钮的内置文案",
+      "根容器的样式类"
+    ]
+  },
+  {
     "title": "Response Stream 流式回复",
     "href": "/components/kalos-response-stream",
     "section": "组件",
@@ -980,6 +1014,29 @@
       "普通消息输入框为空时的提示",
       "在正文的指定名称前显示品牌图标，名称及大小写应与正文一致",
       "组件最大高度和根样式类。有输入区时固定高度，消息区独立滚动"
+    ]
+  },
+  {
+    "title": "Breakdown Chart 分类统计图",
+    "href": "/components/kalos-breakdown-chart",
+    "section": "组件",
+    "paragraphs": [
+      "用堆叠柱状图比较各组的数量或总和。切换统计指标、分组和细分维度，悬停柱条查看明细，也可在下方表格中逐项核对。"
+    ]
+  },
+  {
+    "title": "Breakdown Chart 分类统计图 · API",
+    "href": "/components/kalos-breakdown-chart#api",
+    "section": "组件",
+    "paragraphs": [
+      "每条记录包含对应维度的分类值，以及需要求和的数值字段。柱条、总数和明细表共用这组数据",
+      "每个维度提供唯一的 key、显示名称 label 和有序的 values。colors 将分类值映射到 CSS 颜色，icons 将分类值映射到图标节点",
+      "每个指标提供 key、label 和单位 unit。省略 field 时统计记录数，指定 field 时累计该字段的数值",
+      "显示在卡片顶部的标题",
+      "初始统计指标的 key",
+      "初始分组维度的 key，每个分类值对应一根柱条和一行数据",
+      "用于堆叠柱条的维度 key。只有一个维度或传入 none 时，每根柱条仅显示该组的总量",
+      "添加到图表根元素的样式类"
     ]
   },
   {
@@ -1571,6 +1628,195 @@
       "可见头像数量，可设为 0；其余显示为 +N，超过 99 时显示 99+",
       "已知的成员总数，用于只加载部分成员时计算剩余数量",
       "传到对应头像或头像组的根节点；--avatar-ring 可匹配所在表面颜色"
+    ]
+  },
+  {
+    "title": "Pricing Plans 定价方案",
+    "href": "/components/pricing-plans",
+    "section": "Block",
+    "paragraphs": [
+      "并排比较套餐价格、用量上限和集成能力。切换计费周期后价格逐位滚动，各套餐的详细权益可单独收起。"
+    ]
+  },
+  {
+    "title": "Pricing Plans 定价方案 · API",
+    "href": "/components/pricing-plans#api",
+    "section": "Block",
+    "paragraphs": [
+      "套餐名称、月付和年付折算月价、额度、权益、集成信息及选择回调。传入空数组会显示空状态。",
+      "定价区标题。",
+      "标题下方的说明。",
+      "初始计费周期。",
+      "价格前缀或 ISO 4217 货币代码。",
+      "切换卡片外观与操作按钮的排列。",
+      "附加到定价区的类名。",
+      "name 为必填显示名称。可选 id 为列表项提供稳定标识。",
+      "月付月价与年付折算月价，非数值显示 Custom。",
+      "推荐徽标与行动按钮文案，按钮默认为 Start free trial。",
+      "用量标签、字符串或数值以及可选 React 图标。",
+      "同步频率、集成标签、可选数量说明及品牌图标节点。",
+      "标明每项权益是否包含在该方案中。",
+      "点击行动按钮后接收当前计费周期。"
+    ]
+  },
+  {
+    "title": "Pricing Plans 定价方案 · 键盘操作",
+    "href": "/components/pricing-plans#keyboard",
+    "section": "Block",
+    "paragraphs": [
+      "依次聚焦计费切换器、套餐按钮和详情开关。",
+      "在计费切换器内选择月付或年付。",
+      "选择套餐，或展开、收起该套餐的详情。"
+    ]
+  },
+  {
+    "title": "Logo Marquee 品牌滚动条",
+    "href": "/components/logo-marquee",
+    "section": "Block",
+    "paragraphs": [
+      "品牌标志沿水平方向无缝循环。双行交错排列并反向移动，可拖动快转，悬停时标志渐显品牌色。"
+    ]
+  },
+  {
+    "title": "Logo Marquee 品牌滚动条 · API",
+    "href": "/components/logo-marquee#api",
+    "section": "Block",
+    "paragraphs": [
+      "品牌列表。传入空数组时隐藏滚动条。",
+      "品牌名称，也是标志的可访问名称。",
+      "内联标志。使用 currentColor 填充或描边，可随悬停状态变色。",
+      "标志图片地址。缺少图形或图片加载失败时，显示品牌名或首字母。",
+      "品牌色。灰度模式下，指针悬停或键盘聚焦时显示。",
+      "标志的视觉尺寸倍率，名称字号和布局间距保持一致。",
+      "将指定品牌变成可访问的链接。",
+      "每秒滚动的像素数。",
+      "第一行的移动方向。",
+      "双行时，品牌按顺序交错分配，两行反向移动。",
+      "相邻品牌之间的像素间距，窄容器中缩小至 62%。",
+      "指针移入后减速，移出后恢复。键盘聚焦会暂停滚动。",
+      "以灰色显示标志，悬停时恢复品牌色；关闭后直接展示品牌色。",
+      "隐藏名称、在标志下方显示名称或并排显示。",
+      "滚动区域的可访问名称。",
+      "附加到滚动条根元素的类名。",
+      "选择标志尺寸、边缘渐隐和文字外观。"
+    ]
+  },
+  {
+    "title": "Logo Marquee 品牌滚动条 · 键盘操作",
+    "href": "/components/logo-marquee#keyboard",
+    "section": "Block",
+    "paragraphs": [
+      "依次聚焦品牌链接。无链接时，整个滚动条作为一个焦点。",
+      "切换到同行相邻链接，或在无链接时移动滚动条。",
+      "打开当前聚焦的品牌链接。"
+    ]
+  },
+  {
+    "title": "Invoice & Credit Note 发票与贷项通知单",
+    "href": "/components/invoice-credit",
+    "section": "Block",
+    "paragraphs": [
+      "在层叠的发票和贷项通知单之间切换。逐项选择抵扣内容、调整金额并核对税额，签发后可重新编辑。"
+    ]
+  },
+  {
+    "title": "Invoice & Credit Note 发票与贷项通知单 · API",
+    "href": "/components/invoice-credit#api",
+    "section": "Block",
+    "paragraphs": [
+      "开票方和付款方的名称与多行地址。",
+      "发票号码与关联贷项单号码。",
+      "开票日、到期日与账期。传空字符串可隐藏相应条目。",
+      "每行包含唯一 id、name、qty、rate、tax，可选 group。税率用小数表示，负单价可用于折扣。",
+      "金额前缀或 ISO 4217 代码。传入代码时使用相应币种的精度。",
+      "签发时接收所选明细 ID 对应的税前抵扣额，以及含税抵扣总额。",
+      "在线付款地址。未提供地址时，演示按钮显示本地说明。",
+      "接入 PDF 下载服务。默认打开浏览器打印窗口，可另存当前单据为 PDF。",
+      "切换单据、表格和金额输入区的外观。",
+      "附加到单据容器的类名。"
+    ]
+  },
+  {
+    "title": "Invoice & Credit Note 发票与贷项通知单 · 键盘操作",
+    "href": "/components/invoice-credit#keyboard",
+    "section": "Block",
+    "paragraphs": [
+      "在文档切换器、操作按钮、勾选框和金额输入之间移动。",
+      "在切换器内切换或跳到首尾文档。",
+      "勾选或取消抵扣明细。",
+      "在金额输入框中确认修改或恢复输入前的金额。"
+    ]
+  },
+  {
+    "title": "Testimonial Wall 客户评价墙",
+    "href": "/components/testimonial-wall",
+    "section": "Block",
+    "paragraphs": [
+      "客户评价分列上下滚动，每列使用不同的起点和速度。悬停、聚焦或触屏按住可暂停一列，鼠标拖动可浏览其他评价。"
+    ]
+  },
+  {
+    "title": "Testimonial Wall 客户评价墙 · API",
+    "href": "/components/testimonial-wall#api",
+    "section": "Block",
+    "paragraphs": [
+      "评价列表。空数组会显示空状态，评价数量少于列数时自动减少列数。",
+      "评价正文。保留换行，最多显示十行。",
+      "作者名称，缺少头像时用于生成姓名缩写。",
+      "作者职位，显示在姓名下方。",
+      "作者所在机构，与职位以间隔点分隔。",
+      "头像图片地址。缺少图片或加载失败时使用姓名缩写。",
+      "1 至 5 星，省略时隐藏星级。",
+      "在作者姓名旁显示认证图标。",
+      "最大列数。容器宽度低于 740px 时最多两列，低于 480px 时一列。",
+      "第一列每秒移动的像素数。第二列反向，第三列略快。",
+      "指针移入一列时减速暂停，移出时恢复。键盘聚焦始终暂停该列。",
+      "评价墙的可访问名称。",
+      "附加到根元素的类名。Clean 可用 --ui-twc-height 和 --ui-twc-fade 调整高度及渐隐距离，Classic 对应 --ui-tw-height 和 --ui-tw-fade。",
+      "选择卡片边缘、头像尺寸、排版和渐隐样式。"
+    ]
+  },
+  {
+    "title": "Testimonial Wall 客户评价墙 · 键盘操作",
+    "href": "/components/testimonial-wall#keyboard",
+    "section": "Block",
+    "paragraphs": [
+      "向前或向后聚焦一张评价卡；当前列暂停并将卡片移入可见范围，焦点离开后继续滚动。"
+    ]
+  },
+  {
+    "title": "Task Board 任务看板",
+    "href": "/components/task-board",
+    "section": "Block",
+    "paragraphs": [
+      "按状态组织任务，拖动卡片调整顺序或移动到其他列。可搜索标题与编号、按标签筛选，打开详情面板修改任务。"
+    ]
+  },
+  {
+    "title": "Task Board 任务看板 · API",
+    "href": "/components/task-board#api",
+    "section": "Block",
+    "paragraphs": [
+      "任务按 key 唯一区分，title 和 status 为必填。可提供 priority（0 至 4）、estimate、labels、assignee、dueIn、subtasks、pullRequest、created。",
+      "列按传入顺序显示。id 与任务的 status 对应，label 为列名，icon 可替换状态图标。",
+      "每个标签包含 id、label 和 color，用于卡片、筛选菜单及任务详情。",
+      "每位成员提供 id、name 和可选的 avatar 图片地址。",
+      "看板顶部的面包屑路径。",
+      "新增、删除、移动或编辑任务时返回更新后的完整任务列表。",
+      "选择紧凑工具栏或带独立面包屑和属性标签的经典样式。"
+    ]
+  },
+  {
+    "title": "Task Board 任务看板 · 键盘操作",
+    "href": "/components/task-board#keyboard",
+    "section": "Block",
+    "paragraphs": [
+      "在工具栏、卡片和新增按钮间移动，打开详情后焦点留在面板内。",
+      "打开卡片详情或操作当前按钮。",
+      "在筛选菜单内切换标签或跳到首尾。",
+      "在详情面板切换状态或优先级，可直接跨列移动任务。",
+      "在新增输入框内提交并聚焦新卡片。",
+      "关闭详情或筛选菜单，或取消当前新增。"
     ]
   }
 ]

@@ -1,6 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import ts from "typescript";
+import { blocks } from "../lib/blocks.ts";
 import { catalog } from "../lib/catalog.ts";
 import { componentReference } from "../lib/component-reference.ts";
 
@@ -71,6 +72,13 @@ export async function buildSearchIndex() {
     entries.push({ title, href, section: "组件", paragraphs: [item.description] });
     const details = [...new Set(componentReference(item.slug).props.map(row => row[3]))];
     entries.push({ title: `${title} · API`, href: `${href}#api`, section: "组件", paragraphs: details });
+  }
+  for (const item of blocks) {
+    const title = `${item.english} ${item.title}`;
+    const href = `/components/${item.slug}`;
+    entries.push({ title, href, section: "Block", paragraphs: [item.description] });
+    entries.push({ title: `${title} · API`, href: `${href}#api`, section: "Block", paragraphs: [...new Set(item.props.map(row => row[3]))] });
+    if (item.keyboard.length) entries.push({ title: `${title} · 键盘操作`, href: `${href}#keyboard`, section: "Block", paragraphs: item.keyboard.map(row => row[1]) });
   }
   await writeFile("lib/search-content.json", JSON.stringify(entries, null, 2) + "\n");
   console.log(`Search: ${entries.length} destinations, ${entries.reduce((sum, entry) => sum + entry.paragraphs.length, 0)} prose passages.`);

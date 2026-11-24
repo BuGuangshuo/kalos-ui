@@ -19,8 +19,10 @@
     "kalos-card",
     "kalos-hover-card",
     "kalos-ai-answer",
+    "kalos-thinking-state",
     "kalos-response-stream",
     "kalos-collaboration-stream",
+    "kalos-breakdown-chart",
     "kalos-usage-meter",
     "kalos-context-window",
     "kalos-decision-card",
@@ -43,6 +45,11 @@
     "kalos-skeleton",
     "kalos-spinner",
     "kalos-notification",
-    "kalos-avatar-stack"
+    "kalos-avatar-stack",
+    "kalos-pricing-plans",
+    "kalos-logo-marquee",
+    "kalos-invoice-credit",
+    "kalos-testimonial-wall",
+    "kalos-task-board"
   ]
 }

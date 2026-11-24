@@ -1,18 +1,19 @@
 "use client";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Search, ArrowUpRight } from "lucide-react";
+import { Search, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useNavigationHighlight } from "@/components/navigation-highlight";
 import { Input } from "@/components/ui/input";
 import { slidingHighlightClasses } from "@/components/ui/kalos-highlight";
-import { catalog, categories } from "@/lib/catalog";
+import { filterLibraryItems, libraryCategories, libraryItems } from "@/components/library-items";
+import "./library-browser.css";
 import { newComponentSlugs } from "@/lib/changelog-releases";
 import { site } from "@/lib/site";
 import { designSections } from "@/lib/docs-navigation";
 import { cn } from "@/lib/utils";
 import { KalosBadge } from "@/registry/kalos/kalos-badge";
 
-const sidebarScrollPositions = { components: 0, docs: 0 };
+const sidebarScrollPositions: Record<"components" | "docs", number | null> = { components: null, docs: null };
 
 function subscribeHash(onChange: () => void) {
   window.addEventListener("hashchange", onChange);
@@ -34,6 +35,63 @@ function DesignSectionLinks({ active }: { active: boolean }) {
     aria-current={active && (hash || designSections[0].id) === section.id ? "location" : undefined}
   >{section.title}</SectionLink>);
 }
+function ComponentLinks({ active, items }: { active?: string; items: typeof libraryItems }) {
+  return <>
+    <Link
+      className="sidebar-overview"
+      href="/components"
+      aria-current={active === "overview" ? "page" : undefined}
+    >
+      全部组件 <span>{libraryItems.length}</span>
+    </Link>
+    {libraryCategories.map((category) => {
+      const group = items.filter((item) => item.category === category);
+      return group.length ? (
+        <div className="sidebar-group" key={category}>
+          <span>{category}</span>
+          {group.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/components/${item.slug}`}
+              aria-current={active === item.slug ? "page" : undefined}
+            >
+              <span>{item.english}</span>
+              <small title={item.title}>{item.title}</small>
+              {newComponentSlugs.has(item.slug) ? (
+                <>
+                  <KalosBadge tone="info" variant="ghost" size="sm" dot className="px-0!" aria-hidden="true" />
+                  <span className="sr-only">新增组件</span>
+                </>
+              ) : null}
+            </Link>
+          ))}
+        </div>
+      ) : null;
+    })}
+    {items.length === 0 ? (
+      <p className="sidebar-empty">没有匹配的组件</p>
+    ) : null}
+  </>;
+}
+
+function MobileComponentNavigation({ active }: { active?: string }) {
+  const [query, setQuery] = useState("");
+  const nav = useRef<HTMLElement>(null);
+  return <details className="mobile-component-directory" onToggle={event => {
+    if (!event.currentTarget.open || !nav.current) return;
+    const selected = nav.current.querySelector<HTMLElement>('[aria-current="page"]');
+    if (selected) nav.current.scrollTop += selected.getBoundingClientRect().top - nav.current.getBoundingClientRect().top - 36;
+  }} onClick={event => {
+    if ((event.target as HTMLElement).closest('a')) event.currentTarget.open = false;
+  }}>
+    <summary>组件目录 <ChevronDown size={14} aria-hidden="true" /></summary>
+    <Input aria-label="搜索目录中的组件" placeholder="搜索组件…" value={query} onChange={event => setQuery(event.target.value)} />
+    <nav className="sidebar-navigation" ref={nav} aria-label="移动组件导航">
+      <div className="sidebar-list"><ComponentLinks active={active} items={filterLibraryItems(query)} /></div>
+    </nav>
+  </details>;
+}
+
 export function LibrarySidebar({
   active,
   query,
@@ -51,12 +109,22 @@ export function LibrarySidebar({
   const navigationRef = useRef<HTMLElement>(null);
   const { highlight, ...pointerHandlers } = useNavigationHighlight("a[href]");
   useLayoutEffect(() => {
-    if (navigationRef.current) navigationRef.current.scrollTop = sidebarScrollPositions[scrollKey];
-  }, [scrollKey]);
-  const filtered = catalog.filter((item) =>
-    `${item.title} ${item.english}`.toLowerCase().includes(term.toLowerCase()),
-  );
-  return (
+    const navigation = navigationRef.current;
+    if (!navigation) return;
+    const saved = sidebarScrollPositions[scrollKey];
+    if (saved !== null) {
+      navigation.scrollTop = saved;
+      return;
+    }
+    const selected = navigation.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!selected) return;
+    const viewport = navigation.getBoundingClientRect();
+    const row = selected.getBoundingClientRect();
+    if (row.bottom > viewport.bottom) navigation.scrollTop += row.bottom - viewport.bottom;
+    else if (row.top < viewport.top) navigation.scrollTop -= viewport.top - row.top;
+  }, [active, scrollKey]);
+  const filtered = filterLibraryItems(term);
+  return <>
     <aside className="library-sidebar">
       {!isDocs && (
         <div className="sidebar-search">
@@ -82,42 +150,7 @@ export function LibrarySidebar({
       >
         <div ref={highlight} className={cn(slidingHighlightClasses, "navigation-highlight sidebar-list")} {...pointerHandlers}>
           {!isDocs ? (
-            <>
-              <Link
-                className="sidebar-overview"
-                href="/components"
-                aria-current={active === "overview" ? "page" : undefined}
-              >
-                全部组件 <span>{catalog.length}</span>
-              </Link>
-              {categories.map((category) => {
-                const group = filtered.filter((item) => item.category === category);
-                return group.length ? (
-                  <div className="sidebar-group" key={category}>
-                    <span>{category}</span>
-                    {group.map((item) => (
-                      <Link
-                        key={item.slug}
-                        href={`/components/${item.slug}`}
-                        aria-current={active === item.slug ? "page" : undefined}
-                      >
-                        <span>{item.english}</span>
-                        <small title={item.title}>{item.title}</small>
-                        {newComponentSlugs.has(item.slug) ? (
-                          <>
-                            <KalosBadge tone="info" variant="ghost" size="sm" dot className="px-0!" aria-hidden="true" />
-                            <span className="sr-only">新增组件</span>
-                          </>
-                        ) : null}
-                      </Link>
-                    ))}
-                  </div>
-                ) : null;
-              })}
-              {filtered.length === 0 ? (
-                <p className="sidebar-empty">没有匹配的组件</p>
-              ) : null}
-            </>
+            <ComponentLinks active={active} items={filtered} />
           ) : (
             <>
               <div className="sidebar-section">使用指南</div>
@@ -143,5 +176,6 @@ export function LibrarySidebar({
         </div>
       </nav>
     </aside>
-  );
+    {!isDocs && active !== "overview" && <MobileComponentNavigation key={active} active={active} />}
+  </>;
 }

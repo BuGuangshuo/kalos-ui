@@ -49,8 +49,8 @@ export default function McpPage() {
         </section>
         <section id="use">
           <h2>验证与使用</h2>
-          <p>连接后，先让 AI 列出 @kalos-ui 中的组件，再查看一个组件的信息与依赖。安装前核对项目使用 Base UI，确认生成命令指向 Kalos UI 注册表。完整源码随安装命令写入项目，也可从组件详情页查看。</p>
-          <CodeBlock language="text" filename="给 AI 的提示词" code={"列出 @kalos-ui 注册表中的所有组件。\n\n查看 @kalos-ui/kalos-dialog 的组件信息和安装依赖，生成安装命令。\n\n安装 @kalos-ui/kalos-dialog 和 @kalos-ui/kalos-input，添加一个包含姓名和邮箱地址的联系人对话框。保留现有主题、目录和路径别名。"} />
+          <p>连接后可以检索组件和 Block，查看条目类型、文件数量与依赖，再生成安装命令。确认宿主使用 Base UI 后执行命令。Block 的源码、样式和共享文件会安装到组件目录的 blocks 子目录。</p>
+          <CodeBlock language="text" filename="给 AI 的提示词" code={"列出 @kalos-ui 注册表中的组件。\n\n在 @kalos-ui 搜索 task-board，查看 @kalos-ui/kalos-task-board 的文件数量与依赖，生成安装命令。\n\n安装 @kalos-ui/kalos-dialog 和 @kalos-ui/kalos-input，添加一个包含姓名和邮箱地址的联系人对话框。保留现有主题、目录和路径别名。"} />
           <p>已克隆本仓库时，也可以运行 npm run mcp:config，生成三个客户端的项目级配置并更新 Kalos UI 注册表地址；已有其他 MCP 服务和自定义 shadcn 配置会保留。</p>
         </section>
         <section id="troubleshooting">

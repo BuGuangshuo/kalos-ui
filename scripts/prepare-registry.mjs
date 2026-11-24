@@ -1,6 +1,7 @@
-import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
+import { readFile, writeFile, mkdir, readdir, rm } from "node:fs/promises";
 import { dirname, resolve, relative } from "node:path";
 import assert from "node:assert/strict";
+import { blocks } from "../lib/blocks.ts";
 import { catalog } from "../lib/catalog.ts";
 import { site } from "../lib/site.ts";
 import tokens from "../design/tokens.json" with { type: "json" };
@@ -26,9 +27,10 @@ async function collect(filePath, files = new Map()) {
   return files;
 }
 
-async function dependencies(files) {
-  const names = new Set(["@base-ui/react", "cn"]);
+async function dependencies(files, baseDependencies = ["@base-ui/react", "cn"]) {
+  const names = new Set(baseDependencies);
   for (const file of files) {
+    if (!/\.[jt]sx?$/.test(file.path)) continue;
     const content = await readFile(file.path, "utf8");
     for (const [, name] of content.matchAll(/\b(?:from\s*|import\s*)["']([^"']+)["']/g)) {
       if (name.startsWith(".") || name.startsWith("@/") || name === "react" || name === "react-dom") continue;
@@ -58,6 +60,33 @@ items.push({
   description: `一次安装全部 ${catalog.length} 个 Base UI 组件。`,
   dependencies: await dependencies(allFiles), files: allFiles,
 });
+// Keep Block sources in their own directories, including relative assets and styles.
+const sharedFiles = (await readdir("registry/kalos/blocks/shared")).map(name => `registry/kalos/blocks/shared/${name}`);
+for (const { slug, english, description } of blocks) {
+  const root = `registry/kalos/blocks/${slug}`;
+  const names = (await readdir(root, { recursive: true, withFileTypes: true }))
+    .filter(entry => entry.isFile() && entry.name !== "doc.ts" && !entry.name.startsWith("."))
+    .map(entry => relative(root, resolve(entry.parentPath, entry.name)))
+    .sort((a, b) => a === "index.tsx" ? -1 : b === "index.tsx" ? 1 : a.localeCompare(b, "en"));
+  const files = names.map(name => ({
+    path: `${root}/${name}`, target: `@components/blocks/${slug}/${name}`, type: "registry:file",
+  }));
+  const included = new Set(files.map(file => file.path));
+  // Follow shared file imports too, so a single Block can be installed in isolation.
+  for (const file of files) {
+    if (!/\.tsx?$/.test(file.path)) continue;
+    const source = await readFile(file.path, "utf8");
+    for (const [, specifier] of source.matchAll(/\b(?:from\s*|import\s*)["'](\.[^"']+)["']/g)) {
+      const resolved = relative(process.cwd(), resolve(dirname(file.path), specifier));
+      const shared = sharedFiles.find(path => path === resolved || path === resolved + ".ts" || path === resolved + ".tsx");
+      if (shared && !included.has(shared)) {
+        included.add(shared);
+        files.push({ path: shared, target: shared.replace("registry/kalos/", "@components/"), type: "registry:file" });
+      }
+    }
+  }
+  items.push({ name: `kalos-${slug}`, type: "registry:block", title: english, description, files, dependencies: await dependencies(files, []) });
+}
 const registry = { $schema: "https://ui.shadcn.com/schema/registry.json", name: "kalos-ui", homepage: site.url, items };
 await writeFile("registry.json", JSON.stringify(registry, null, 2) + "\n");
 // Retired endpoints must not survive subsequent builds in an existing checkout.

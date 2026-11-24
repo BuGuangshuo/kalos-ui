@@ -9,10 +9,10 @@ Kalos UI is a Base UI React source registry for Next.js, Vite and React Router. 
 
 ## Unified installer
 
-The website serves `https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.7.tgz`.
+The website serves `https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz`.
 
-- **New project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.7.tgz init`. Select the scaffold (Next.js, Vite or React Router), project name and package manager. In automation, supply `init my-app --template vite --package-manager npm --yes`. The installer creates a new subdirectory and configures TypeScript, Tailwind CSS, aliases, all components and the Kalos theme. Existing destinations are refused.
-- **Existing project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.7.tgz add [components...]`. Detect the framework and preserve the existing theme, directories and aliases. Use `add button card` for individual components. Interactive and noninteractive installs default to Base UI. Do not apply the optional theme unless requested.
+- **New project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz init`. Select the scaffold (Next.js, Vite or React Router), project name and package manager. In automation, supply `init my-app --template vite --package-manager npm --yes`. The installer creates a new subdirectory and configures TypeScript, Tailwind CSS, aliases, all components and the Kalos theme. Existing destinations are refused.
+- **Existing project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz add [components...]`. Detect the framework and preserve the existing theme, directories and aliases. Use `add button card` for individual components. Interactive and noninteractive installs default to Base UI. Do not apply the optional theme unless requested.
 
 Without a subcommand, the terminal offers both modes. `--dry-run` previews without modifying files or creating directories. Never run `init` to add components to an existing app; do not change frameworks or silently migrate primitive bases.
 
@@ -40,7 +40,7 @@ Install only the needed component, for example:
 npx shadcn@latest add https://kalos-ui-six.vercel.app/r/kalos-button.json
 ```
 
-`kalos-all.json` installs all components and their Base UI foundations. `kalos-theme.json` installs the optional neutral theme; apply it only when requested. Read the installed source before editing. Preserve the host project's aliases and configuration.
+`kalos-all.json` installs all components and their Base UI foundations. `kalos-theme.json` installs the optional neutral theme; apply it only when requested. Install individual Blocks with `add pricing-plans`, `add logo-marquee`, `add invoice-credit`, `add testimonial-wall` or `add task-board`. They install under the configured components alias in `blocks/`. The Block group in the component library links to interactive previews, source files and APIs at `/components/<slug>`. Read the installed source before editing. Preserve the host project's aliases and configuration.
 
 ## Compose and customize
 

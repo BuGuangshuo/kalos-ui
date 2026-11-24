@@ -22,7 +22,7 @@ function PreviewAction({ label, children, ...props }: React.ComponentProps<typeo
   </ToolHint>;
 }
 
-export function ComponentToolbar({ source, prompt, onRefresh }: { source: string; prompt: string; onRefresh: () => void }) {
+export function ComponentToolbar({ source, prompt, onRefresh, copyLabel = "复制组件源码" }: { source: string; prompt: string; onRefresh: () => void; copyLabel?: string }) {
   const [copiedTool, setCopiedTool] = useState<AITool | null>(null);
   useEffect(() => {
     if (!copiedTool) return;
@@ -53,7 +53,7 @@ export function ComponentToolbar({ source, prompt, onRefresh }: { source: string
       <ToolHint label="配置 MCP">
         <Link href="/docs/mcp" className={buttonVariants({ variant: "outline", className: "component-toolbar-tool component-toolbar-mcp" })} aria-label="配置 MCP">MCP</Link>
       </ToolHint>
-      <CopyButton value={source} label="复制" ariaLabel="复制组件源码" variant="default" className="component-toolbar-copy" />
+      <CopyButton value={source} label="复制" ariaLabel={copyLabel} variant="default" className="component-toolbar-copy" />
     </div>
   </>;
 }

@@ -185,6 +185,16 @@ export const catalog = [
     usage: '<KalosAIAnswer question="在里斯本哪里办团建最合适？" answer="**阿尔法玛**适合 12 人团建。" framed />',
   },
   {
+    slug: "kalos-thinking-state",
+    title: "思考状态",
+    english: "Thinking State",
+    category: "内容展示",
+    description: "显示 AI 的实时思考用时，在可折叠时间轴中依次呈现搜索来源和处理步骤。",
+    dependencies: [],
+    props: "steps；doneLabel；stepMs；loop；collapseOnDone；onDone；locale；className。",
+    usage: '<KalosThinkingState steps={[{ kind: "step", label: "读取文档" }]} />',
+  },
+  {
     slug: "kalos-response-stream",
     title: "流式回复",
     english: "Response Stream",
@@ -203,6 +213,16 @@ export const catalog = [
     dependencies: ["button", "textarea"],
     props: "agents；messages；task；live；selected / onSelectedChange；focusAgent / onFocusAgentChange；onSend；placeholder；logos；maxHeight；title；className。",
     usage: '<KalosCollaborationStream agents={agents} messages={messages} live onSend={handleSend} />',
+  },
+  {
+    slug: "kalos-breakdown-chart",
+    title: "分类统计图",
+    english: "Breakdown Chart",
+    category: "内容展示",
+    description: "用堆叠柱状图比较各组的数量或总和。切换统计指标、分组和细分维度，悬停柱条查看明细，也可在下方表格中逐项核对。",
+    dependencies: [],
+    props: "records、dimensions 和 measures 定义数据，defaultMeasure、defaultSlice 和 defaultSegment 指定初始视图。支持 title 和 className。",
+    usage: '<KalosBreakdownChart title="文档审核" records={documents} dimensions={dimensions} measures={measures} />',
   },
   {
     slug: "kalos-usage-meter",

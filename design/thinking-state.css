@@ -1,0 +1,326 @@
+.kalos-thinking-state {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--kts-width);
+  min-width: 0;
+  color: var(--kts-ink);
+}
+
+.kalos-thinking-header {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  max-width: 100%;
+  gap: 8px;
+  padding-block: 0;
+  padding-inline: 0 6px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--kts-muted);
+  font: inherit;
+  font-weight: 500;
+  text-align: start;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.kalos-thinking-header:is(:hover, :focus-visible),
+.kalos-thinking-state[data-state="done"] .kalos-thinking-header {
+  color: var(--kts-ink);
+}
+
+.kalos-thinking-header-copy {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  animation: kalos-thinking-enter var(--kts-chip-duration) var(--kts-ease) both;
+}
+
+.kalos-thinking-header:focus-visible,
+.kalos-thinking-chip:focus-visible {
+  outline: 1px solid var(--kts-accent);
+  outline-offset: 2px;
+}
+
+.kalos-thinking-mark {
+  display: block;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--kts-accent);
+}
+
+.kalos-thinking-mark > rect:nth-child(odd) { --kts-pixel-delay: -420ms; }
+.kalos-thinking-mark > rect:nth-child(3n) { --kts-pixel-delay: -840ms; }
+.kalos-thinking-mark > rect:nth-child(5) { --kts-pixel-delay: -1200ms; }
+.kalos-thinking-state[data-state="thinking"] .kalos-thinking-mark > rect {
+  animation: kalos-thinking-pixel var(--kts-shimmer-duration) var(--kts-pixel-delay, 0ms) ease-in-out infinite;
+}
+
+.kalos-thinking-time {
+  flex: none;
+  color: var(--kts-node);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.kalos-thinking-header .kalos-thinking-chevron {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  color: var(--kts-thinking);
+  opacity: 0;
+  transition: opacity 160ms ease, rotate 260ms var(--kts-ease);
+}
+
+.kalos-thinking-header[aria-expanded="false"] .kalos-thinking-chevron { rotate: -90deg; }
+.kalos-thinking-header[aria-expanded="false"]:dir(rtl) .kalos-thinking-chevron { rotate: 90deg; }
+.kalos-thinking-header:is(:hover, :focus-visible) .kalos-thinking-chevron { opacity: 1; }
+
+.kalos-thinking-panel[data-starting-style],
+.kalos-thinking-panel[data-ending-style] {
+  height: 0;
+}
+
+.kalos-thinking-panel {
+  height: var(--collapsible-panel-height, auto);
+  overflow-y: clip;
+  transition: height var(--kts-fold-open-duration) var(--kts-fold-open-ease);
+}
+
+.kalos-thinking-panel[data-ending-style] {
+  transition-duration: var(--kts-fold-close-duration);
+  transition-timing-function: var(--kts-ease);
+}
+
+/* Keep the completed step animations from restarting when the inert panel reopens. */
+.kalos-thinking-panel[data-fold-hidden] {
+  height: 0;
+  visibility: hidden;
+}
+
+.kalos-thinking-timeline {
+  margin: 0;
+  padding: 5px 0 4px;
+  list-style: none;
+}
+
+.kalos-thinking-timeline:empty { padding: 0; }
+
+.kalos-thinking-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+  min-height: 32px;
+  padding: 3px 2px 9px 0;
+  color: var(--kts-muted);
+}
+
+.kalos-thinking-row::after {
+  position: absolute;
+  inset-block: 23px -3px;
+  inset-inline-start: 7.5px;
+  width: 1px;
+  border-radius: 1px;
+  background: var(--kts-rail);
+  transform: scaleY(1);
+  transform-origin: top;
+  transition: transform var(--kts-enter-duration) var(--kts-ease);
+  content: "";
+}
+
+.kalos-thinking-row:last-child::after { transform: scaleY(0); }
+
+.kalos-thinking-row > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  animation: kalos-thinking-enter var(--kts-enter-duration) var(--kts-ease) both;
+}
+
+.kalos-thinking-node {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 20px;
+  color: var(--kts-thinking);
+}
+
+.kalos-thinking-node > svg { width: 16px; height: 16px; }
+
+.kalos-thinking-node > i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--kts-node);
+}
+
+.kalos-thinking-row[data-active] .kalos-thinking-node > i {
+  width: 6px;
+  height: 6px;
+  border-radius: 1.5px;
+  background: var(--kts-accent);
+  animation: kalos-thinking-pulse var(--kts-pulse-duration) ease-in-out infinite;
+}
+
+.kalos-thinking-label { display: inline-block; max-width: 100%; }
+
+:is(.kalos-thinking-heading, .kalos-thinking-label)[data-shimmer] {
+  position: relative;
+  color: var(--kts-thinking);
+}
+
+:is(.kalos-thinking-heading, .kalos-thinking-label)[data-shimmer]::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 37%, var(--kts-shimmer) 50%, transparent 63%) 100% / 300% 100%;
+  background-clip: text;
+  color: transparent;
+  animation: kalos-thinking-shimmer var(--kts-shimmer-duration) linear infinite;
+  content: attr(data-shimmer) / "";
+}
+
+@media (forced-colors: active) {
+  :is(.kalos-thinking-heading, .kalos-thinking-label)[data-shimmer]::after { display: none; }
+}
+
+.kalos-thinking-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+  margin-block: 6px 3px;
+}
+
+.kalos-thinking-extra:not([hidden]) {
+  display: contents;
+  --kts-chip-lead: 0ms;
+  --kts-chip-stagger: var(--kts-extra-chip-stagger);
+}
+
+.kalos-thinking-chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 26px;
+  gap: 6px;
+  padding-block: 5px;
+  padding-inline: 6px 8px;
+  border: 0;
+  border-radius: var(--kts-chip-radius);
+  background-color: var(--kts-surface);
+  color: var(--kts-ink);
+  box-shadow: var(--kts-chip-shadow);
+  font: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+  animation: kalos-thinking-source-enter var(--kts-chip-duration) var(--kts-ease) backwards;
+  animation-delay: calc(var(--kts-chip-lead) + min(var(--kts-chip-index, 0), 6) * var(--kts-chip-stagger));
+}
+
+.kalos-thinking-chip > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.kalos-thinking-chip:is(a, button) { cursor: pointer; }
+.kalos-thinking-chip:is(a, [tabindex]):is(:hover, :focus-visible) {
+  background-color: var(--kts-chip-hover);
+}
+
+.kalos-thinking-source-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--kts-muted);
+}
+
+.kalos-thinking-source-icon > :is(img, svg) { width: 100%; height: 100%; object-fit: contain; }
+
+.kalos-thinking-source-icon[data-brand] {
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 0 0 .5px var(--kts-logo-edge);
+}
+
+.kalos-thinking-more {
+  padding-inline: 8px;
+  background: transparent;
+  color: var(--kts-muted);
+  box-shadow: inset 0 0 0 .5px var(--kts-more-edge);
+  font-weight: 500;
+}
+
+.kalos-thinking-more:is(:hover, :focus-visible) {
+  background: var(--kts-more-hover);
+  color: var(--kts-ink);
+}
+
+.kalos-thinking-done { color: var(--kts-ink); font-weight: 500; }
+.kalos-thinking-done .kalos-thinking-node { color: var(--kts-accent); }
+.kalos-thinking-done .kalos-thinking-node > svg {
+  width: 16px;
+  height: 16px;
+  animation: kalos-thinking-check var(--kts-check-duration) cubic-bezier(.34, 1.46, .64, 1) both;
+}
+.kalos-thinking-done path {
+  stroke: var(--kts-on-accent);
+  stroke-dasharray: 1;
+  animation: kalos-thinking-draw var(--kts-tick-duration) var(--kts-tick-delay) var(--kts-ease) both;
+}
+
+.kalos-thinking-tooltip-positioner { z-index: 60; }
+
+.kalos-thinking-tooltip {
+  box-sizing: border-box;
+  max-width: min(var(--available-width, 260px), 260px);
+  padding: 4px 8px;
+  border-radius: var(--kts-chip-radius);
+  background: var(--kts-popup-surface);
+  color: var(--kts-muted);
+  box-shadow: var(--kts-popup-shadow);
+  outline: none;
+  font-size: 12px;
+  line-height: 16px;
+  overflow-wrap: anywhere;
+  transition: opacity 140ms ease, translate 200ms var(--kts-ease);
+}
+
+.kalos-thinking-tooltip:is([data-starting-style], [data-ending-style]) { opacity: 0; translate: 0 4px; }
+.kalos-thinking-tooltip[data-side="bottom"]:is([data-starting-style], [data-ending-style]) { translate: 0 -4px; }
+
+@media (pointer: coarse) {
+  .kalos-thinking-header, .kalos-thinking-chip { min-height: 32px; }
+  .kalos-thinking-header .kalos-thinking-chevron { opacity: 1; }
+}
+
+@keyframes kalos-thinking-pixel {
+  0%, 100% { opacity: .35; }
+  50% { opacity: 1; }
+}
+@keyframes kalos-thinking-pulse {
+  0%, 100% { opacity: .46; scale: .8; }
+  50% { opacity: 1; scale: 1.14; }
+}
+@keyframes kalos-thinking-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+@keyframes kalos-thinking-enter {
+  from { opacity: 0; translate: 0 5px; }
+}
+@keyframes kalos-thinking-source-enter {
+  from { opacity: 0; translate: 0 4px; scale: .92; }
+}
+@keyframes kalos-thinking-check {
+  from { opacity: 0; scale: .55; }
+}
+@keyframes kalos-thinking-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}

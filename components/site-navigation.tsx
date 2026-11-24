@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { useNavigationHighlight } from "@/components/navigation-highlight";
@@ -24,11 +26,6 @@ export function SiteNavigation({
 }) {
   const path = usePathname();
   const { highlight, ...pointerHandlers } = useNavigationHighlight("[data-site-nav-item]");
-  const comingSoon = () => {
-    onNavigate?.();
-    toast("正在建设中");
-  };
-
   return (
     <nav
       ref={highlight}
@@ -47,13 +44,15 @@ export function SiteNavigation({
           {label}
         </Link>
       ))}
-      <button
-        type="button"
-        data-site-nav-item=""
-        onClick={comingSoon}
-      >
-        模版
-      </button>
+      <button type="button" data-site-nav-item="" onClick={() => {
+        onNavigate?.();
+        toast("正在建设中");
+      }}>模版</button>
     </nav>
   );
+}
+
+export function MobileNavTrigger({ open, onClick }: { open: boolean; onClick: () => void }) {
+  return <Button variant="ghost" size="icon" className="mobile-menu" aria-label={open ? "关闭导航" : "打开导航"}
+    aria-expanded={open} onClick={onClick}>{open ? <X /> : <Menu />}</Button>;
 }

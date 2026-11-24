@@ -1,0 +1,223 @@
+.kbc-chart {
+  padding: 20px 16px 10px;
+  --kbc-bar-width: 12px;
+}
+
+.kbc-plot {
+  position: relative;
+  height: 196px;
+  margin-right: 28px;
+}
+
+.kbc-gridline {
+  position: absolute;
+  right: 0;
+  left: 0;
+  border-top: 1px solid var(--kbc-grid);
+  pointer-events: none;
+}
+
+.kbc-gridline[data-baseline] { border-color: var(--kbc-baseline); }
+
+.kbc-tick {
+  position: absolute;
+  top: -8px;
+  right: -28px;
+  width: 24px;
+  color: var(--kbc-muted);
+  font-size: 11px;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.kbc-bars,
+.kbc-xaxis {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.kbc-bars { position: absolute; inset: 0; }
+
+.kalos-breakdown-chart .kbc-column {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.kbc-column:focus-visible { outline: 2px solid var(--kbc-focus); outline-offset: 2px; }
+.kbc-column[data-dim] { opacity: 0.35; }
+
+.kbc-stack,
+.kbc-rest {
+  width: var(--kbc-bar-width);
+  max-width: 100%;
+  border-radius: 3px 3px 0 0;
+  pointer-events: none;
+}
+
+.kbc-stack {
+  position: relative;
+  display: flex;
+  height: var(--kbc-fill-height);
+  flex-direction: column-reverse;
+  gap: 1px;
+  overflow: hidden;
+  transition: height var(--kbc-restack) var(--kbc-ease);
+}
+
+.kbc-stack-part {
+  display: block;
+  min-height: 0;
+  flex-basis: 0;
+  transition: flex-grow var(--kbc-restack) var(--kbc-ease), background-color 300ms ease;
+}
+
+.kbc-rest {
+  position: absolute;
+  top: 0;
+  bottom: var(--kbc-fill-height);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--kbc-wash);
+  opacity: 0;
+  transition: opacity 180ms ease, bottom var(--kbc-restack) var(--kbc-ease);
+}
+
+.kbc-column[data-active] .kbc-rest { opacity: 1; }
+
+.kbc-xaxis { margin: 8px 28px 0 0; }
+
+.kbc-xlabel {
+  position: relative;
+  display: grid;
+  height: 24px;
+  min-width: 0;
+  place-items: center;
+  color: var(--kbc-muted);
+}
+
+.kbc-axis-text,
+.kbc-axis-pill > span,
+.kbc-tip-label > span,
+.kbc-tip-series {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kbc-axis-text {
+  max-width: 100%;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.kbc-axis-pill {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  width: max-content;
+  max-width: min(220px, 80cqi);
+  height: 24px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px 0 6px;
+  border-radius: 6px;
+  transform: translate(-50%, -50%);
+  background: var(--kbc-surface);
+  box-shadow: var(--kbc-shadow);
+  color: var(--kbc-ink);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  animation: kbc-axis-pill-in 200ms var(--kbc-ease);
+}
+
+@keyframes kbc-axis-pill-in {
+  from { transform: translate(-50%, -50%) scale(.92); opacity: 0; }
+  to { transform: translate(-50%, -50%); opacity: 1; }
+}
+
+.kbc-tooltip {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  width: max-content;
+  min-width: min(152px, 100%);
+  max-width: min(260px, 100%);
+  padding: 6px 10px 8px;
+  border-radius: 10px;
+  background: var(--kbc-popover);
+  box-shadow: var(--kbc-pop-shadow);
+  color: var(--kbc-ink);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  transition: left 200ms var(--kbc-ease);
+  animation: kbc-tooltip-in 160ms var(--kbc-ease);
+}
+
+@keyframes kbc-tooltip-in { from { opacity: 0; } to { opacity: 1; } }
+
+.kbc-tip-heading,
+.kbc-tip-label,
+.kbc-tooltip li {
+  display: flex;
+  align-items: center;
+}
+
+.kalos-breakdown-chart .kbc-tip-heading {
+  min-width: 0;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  color: var(--kbc-strong);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.kbc-tip-label { min-width: 0; gap: 6px; }
+.kbc-tip-label > svg, .kbc-axis-pill > svg { flex-shrink: 0; }
+.kbc-tip-heading strong { font-weight: 500; }
+
+.kalos-breakdown-chart .kbc-tooltip ul {
+  display: grid;
+  gap: 0;
+  margin: 4px 0 0;
+  padding: 4px 0 0;
+  border-top: 1px solid var(--kbc-grid);
+  list-style: none;
+}
+
+.kalos-breakdown-chart .kbc-tooltip li {
+  min-width: 0;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  color: var(--kbc-secondary);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.kbc-tip-series { flex: 1; }
+.kbc-tip-number { color: var(--kbc-ink); }
+
+@container breakdown-chart (max-width: BREAKDOWN_NARROW_WIDTH) {
+  .kbc-chart { padding: 18px 12px 8px; --kbc-bar-width: 10px; }
+  .kbc-plot { height: 168px; }
+}

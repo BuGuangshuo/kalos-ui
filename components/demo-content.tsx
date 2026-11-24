@@ -60,11 +60,13 @@ import { DropzoneDemo } from "@/components/dropzone-demo";
 import { NumberInputDemo } from "@/components/number-input-demo";
 import { OtpInputDemo } from "@/components/otp-input-demo";
 import { AIAnswerDemo } from "@/components/ai-answer-demo";
+import { BreakdownChartDemo } from "@/components/breakdown-chart-demo";
 import { CollaborationStreamDemo } from "@/components/collaboration-stream-demo";
 import { ContextWindowDemo } from "@/components/context-window-demo";
 import { DecisionCardDemo } from "@/components/decision-card-demo";
 import { PermissionRequestDemo } from "@/components/permission-request-demo";
 import { ResponseStreamDemo } from "@/components/response-stream-demo";
+import { ThinkingStateDemo } from "@/components/thinking-state-demo";
 import { UsageMeterDemo } from "@/components/usage-meter-demo";
 import type { KalosNumberInputProps } from "@/components/ui/kalos-number-input-model";
 
@@ -286,8 +288,12 @@ export function DemoContent({
       return <AIAnswerDemo compact={compact} />;
     case "kalos-response-stream":
       return <ResponseStreamDemo compact={compact} />;
+    case "kalos-thinking-state":
+      return <ThinkingStateDemo compact={compact} />;
     case "kalos-collaboration-stream":
       return <CollaborationStreamDemo compact={compact} />;
+    case "kalos-breakdown-chart":
+      return <BreakdownChartDemo />;
     case "kalos-usage-meter":
       return <UsageMeterDemo />;
     case "kalos-context-window":

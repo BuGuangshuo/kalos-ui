@@ -386,6 +386,34 @@ export const comboboxStyles = ${JSON.stringify(comboboxStyles, null, 2)} as cons
 const dropzone = inventory.defaults.dropzone;
 const dropzoneColors = inventory.components.dropzone;
 const themeTokens = JSON.parse(await readFile("design/tokens.json", "utf8"));
+const thinking = inventory.defaults["thinking-state"];
+const thinkingColors = inventory.components["thinking-state"];
+const thinkingVars = (mode) => [
+  ...Object.entries(thinkingColors.themeMapping).map(([name, source]) => [name, `var(--${source}, ${themeTokens[mode][source]})`]),
+  ...Object.entries(thinkingColors[mode]),
+].map(([name, value]) => `--kts-${name}:${value}`).join(";");
+const thinkingTimings = Object.entries({
+  "enter-duration": thinking.enterDuration,
+  "fold-open-duration": thinking.foldOpenDuration,
+  "fold-close-duration": thinking.foldCloseDuration,
+  "shimmer-duration": thinking.shimmerDuration,
+  "pulse-duration": thinking.pulseDuration,
+  "chip-duration": thinking.chipDuration,
+  "chip-lead": thinking.chipLead,
+  "chip-stagger": thinking.chipStagger,
+  "extra-chip-stagger": thinking.extraChipStagger,
+  "check-duration": thinking.checkDuration,
+  "tick-duration": thinking.tickDuration,
+  "tick-delay": thinking.tickDelay,
+}).map(([name, value]) => `--kts-${name}:${value}ms`).join(";");
+const thinkingCss = [
+  `.kalos-thinking-state{font-family:${typography.family};font-size:${typography.controlSize}px;line-height:${typography.controlLineHeight}px;${thinkingVars("light")};${thinkingTimings};--kts-width:${thinking.width}px;--kts-chip-radius:${thinking.chipRadius}px;--kts-ease:${thinking.ease};--kts-fold-open-ease:${thinking.foldOpenEase}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-thinking-state{${thinkingVars("dark")}}`,
+  await readFile("design/thinking-state.css", "utf8"),
+].join("\n");
+const thinkingStateStyleHref = `kalos-thinking-state-${createHash("sha256").update(thinkingCss).digest("hex").slice(0, 12)}`;
+await writeFile("components/ui/kalos-thinking-state-styles.ts", `// Generated from design tokens and design/thinking-state.css.\nexport const thinkingStateDefaults = ${JSON.stringify(thinking)} as const;\nexport const thinkingStateStyleHref = ${JSON.stringify(thinkingStateStyleHref)};\nexport const thinkingStateCss = ${JSON.stringify(thinkingCss)};\n`);
+
 const answer = inventory.defaults["ai-answer"];
 const answerColors = inventory.components["ai-answer"];
 const answerVars = (mode) => {
@@ -528,3 +556,15 @@ const stepperCss = [
 ].join("\n");
 const stepperStyleHref = `kalos-stepper-form-${createHash("sha256").update(stepperCss).digest("hex").slice(0, 12)}`;
 await writeFile("components/ui/kalos-stepper-form-styles.ts", `// Generated from design/component-tokens.json and design/stepper-form.css.\nexport const stepperDefaults = ${JSON.stringify(stepper)} as const;\nexport const stepperStyleHref = ${JSON.stringify(stepperStyleHref)};\nexport const stepperCss = ${JSON.stringify(stepperCss)};\n`);
+
+const breakdown = inventory.defaults["breakdown-chart"];
+const breakdownColors = inventory.components["breakdown-chart"];
+const breakdownVars = mode => Object.entries(breakdownColors[mode]).map(([key, value]) => `--kbc-${key}:${value}`).join(";");
+const breakdownCss = [
+  `.kalos-breakdown-chart{${breakdownVars("light")};--kbc-ease:${breakdown.ease};--kbc-width:${breakdown.width}px;--kbc-radius:${breakdown.radius}px;--kbc-restack:${breakdown.restackDuration}ms;--kbc-table-motion:${breakdown.tableDuration}ms;font-family:Inter,${typography.family}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-breakdown-chart{${breakdownVars("dark")}}`,
+  ...(await Promise.all(["design/breakdown-chart.css", "design/breakdown-plot.css"].map(file => readFile(file, "utf8"))))
+    .map(source => source.replaceAll("BREAKDOWN_NARROW_WIDTH", `${breakdown.narrowWidth}px`)),
+].join("\n");
+const breakdownHash = createHash("sha256").update(breakdownCss).digest("hex").slice(0, 12);
+await writeFile("components/ui/kalos-breakdown-chart-styles.ts", `// Generated from the Breakdown Chart design tokens and styles.\nexport const breakdownPalette = ${JSON.stringify(breakdown.palette)} as const;\nexport const breakdownChartStyleHref = "kalos-breakdown-chart-${breakdownHash}";\nexport const breakdownChartCss = ${JSON.stringify(breakdownCss)};\n`);

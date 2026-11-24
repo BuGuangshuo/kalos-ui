@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { blocks } from "@/lib/blocks";
 import type { Metadata } from "next";
 import { Sidebar, OnThisPage } from "@/components/docs-parts";
 import { DocsPagination } from "@/components/page-pagination";
@@ -39,6 +41,26 @@ export default function ChangelogPage() {
           <h1>更新日志</h1>
           <p>组件、安装器与文档的更新。</p>
         </header>
+
+        <section id="v0-3-8" className="changelog-entry">
+          <h2>v0.3.8 — AI 思考状态、分类统计图与 Block</h2>
+          <ReleaseMeta version="0.3.8" />
+          <div className="changelog-block">
+            <h3>Thinking State 思考状态</h3>
+            <p>实时显示 AI 思考用时，按顺序展开搜索来源和处理步骤。时间轴可随时折叠，也可在完成后自动折叠。</p>
+            <ChangelogPreview slug="kalos-thinking-state" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3>Breakdown Chart 分类统计图</h3>
+            <p>按类别统计记录数或数值总和，可切换堆叠维度，通过柱条浮层和联动表格查看各组明细。图例与柱条共用 CostScope 的五个系列色。</p>
+            <ChangelogPreview slug="kalos-breakdown-chart" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3>Block</h3>
+            <p>组件目录的 Block 分组新增定价方案、品牌滚动条、发票与贷项通知单、客户评价墙和任务看板。每个 Block 都可独立安装，并提供交互预览、源码和 API。</p>
+            <ul className="changelog-list">{blocks.map(block => <li key={block.slug}><Link href={`/components/${block.slug}#preview`}>{block.english}</Link></li>)}</ul>
+          </div>
+        </section>
 
         <section id="v0-3-7" className="changelog-entry">
           <h2>v0.3.7 — 智能体交互</h2>

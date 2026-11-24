@@ -1,9 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ArrowUpRight, Layers } from "lucide-react";
-import { catalog, categories } from "@/lib/catalog";
+import { catalog } from "@/lib/catalog";
+import type { BlockSlug } from "@/lib/blocks";
+import { filterLibraryItems, libraryCategories } from "@/components/library-items";
+import { blockPreviews } from "@/components/block-previews";
 import { CatalogPreview } from "@/components/catalog-preview";
 import { DropdownMenuPanelPreview } from "@/components/dropdown-menu-demo";
 import { LibrarySidebar } from "@/components/library-sidebar";
@@ -15,13 +18,29 @@ import {
   EmptyTitle,
   EmptyDescription,
 } from "@/components/ui/empty";
+function CatalogBlockPreview({ slug }: { slug: BlockSlug }) {
+  const card = useRef<HTMLDivElement>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  useEffect(() => {
+    const target = card.current;
+    if (!target) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setShowPreview(true);
+      observer.disconnect();
+    }, { rootMargin: "320px" });
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
+  const Preview = blockPreviews[slug];
+  return <div ref={card} className="catalog-block-preview">
+    <CatalogPreview slug={slug}>{showPreview ? <Preview /> : <span aria-hidden="true" />}</CatalogPreview>
+  </div>;
+}
+
 export function CatalogGrid() {
   const [query, setQuery] = useState("");
-  const items = catalog.filter((item) =>
-    `${item.title} ${item.english} ${item.description} ${item.category}`
-      .toLowerCase()
-      .includes(query.toLowerCase()),
-  );
+  const items = filterLibraryItems(query);
   return (
     <div className="workbench">
       <LibrarySidebar
@@ -44,10 +63,10 @@ export function CatalogGrid() {
           </div>
         ) : null}
         {items.length ? (
-          categories.map((category) => {
+          libraryCategories.map((category) => {
             const group = items.filter((item) => item.category === category);
             return group.length ? (
-              <section className="catalog-section" key={category}>
+              <section className="catalog-section" id={category === "Block" ? "block" : undefined} key={category}>
                 <h2>
                   {category}
                   <span>{group.length}</span>
@@ -55,9 +74,9 @@ export function CatalogGrid() {
                 <div className="component-grid">
                   {group.map((item) => (
                     <article className="component-card" key={item.slug}>
-                      <CatalogPreview slug={item.slug} compact={item.slug !== "kalos-otp-input"}>
+                      {item.category === "Block" ? <CatalogBlockPreview slug={item.slug} /> : <CatalogPreview slug={item.slug} compact={item.slug !== "kalos-otp-input"}>
                         {item.slug === "kalos-dropdown-menu" ? <DropdownMenuPanelPreview /> : null}
-                      </CatalogPreview>
+                      </CatalogPreview>}
                       <Link
                         href={`/components/${item.slug}`}
                         className="component-card-label"
