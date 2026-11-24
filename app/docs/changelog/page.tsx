@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { blocks } from "@/lib/blocks";
 import type { Metadata } from "next";
 import { Sidebar, OnThisPage } from "@/components/docs-parts";
 import { DocsPagination } from "@/components/page-pagination";
@@ -52,13 +51,33 @@ export default function ChangelogPage() {
           </div>
           <div className="changelog-block">
             <h3>Breakdown Chart 分类统计图</h3>
-            <p>按类别统计记录数或数值总和，可切换堆叠维度，通过柱条浮层和联动表格查看各组明细。图例与柱条共用 CostScope 的五个系列色。</p>
+            <p>按类别统计记录数或数值总和，可切换堆叠维度，通过柱条浮层和联动表格查看各组明细。</p>
             <ChangelogPreview slug="kalos-breakdown-chart" caption={false} full />
           </div>
           <div className="changelog-block">
-            <h3>Block</h3>
-            <p>组件目录的 Block 分组新增定价方案、品牌滚动条、发票与贷项通知单、客户评价墙和任务看板。每个 Block 都可独立安装，并提供交互预览、源码和 API。</p>
-            <ul className="changelog-list">{blocks.map(block => <li key={block.slug}><Link href={`/components/${block.slug}#preview`}>{block.english}</Link></li>)}</ul>
+            <h3><Link href="/components/pricing-plans#preview">Pricing Plans 定价方案</Link></h3>
+            <p>切换月付或年付，比较各套餐的价格、用量上限和功能。</p>
+            <ChangelogPreview slug="pricing-plans" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3><Link href="/components/logo-marquee#preview">Logo Marquee 品牌滚动条</Link></h3>
+            <p>品牌标志横向循环，双行可反向移动，拖动可加速浏览。</p>
+            <ChangelogPreview slug="logo-marquee" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3><Link href="/components/invoice-credit#preview">Invoice &amp; Credit Note 发票与贷项通知单</Link></h3>
+            <p>在发票和贷项通知单之间切换，逐项选择抵扣内容、调整金额并核对税额。</p>
+            <ChangelogPreview slug="invoice-credit" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3><Link href="/components/testimonial-wall#preview">Testimonial Wall 客户评价墙</Link></h3>
+            <p>客户评价分列滚动，悬停、聚焦或按住时可暂停阅读。</p>
+            <ChangelogPreview slug="testimonial-wall" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3><Link href="/components/task-board#preview">Task Board 任务看板</Link></h3>
+            <p>按状态组织任务，支持拖动卡片、按标题或编号搜索、按标签筛选和编辑详情。</p>
+            <ChangelogPreview slug="task-board" caption={false} full />
           </div>
         </section>
 

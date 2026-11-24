@@ -1,12 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ArrowUpRight, Layers } from "lucide-react";
 import { catalog } from "@/lib/catalog";
-import type { BlockSlug } from "@/lib/blocks";
 import { filterLibraryItems, libraryCategories } from "@/components/library-items";
-import { blockPreviews } from "@/components/block-previews";
+import { CatalogBlockPreview } from "@/components/catalog-block-preview";
 import { CatalogPreview } from "@/components/catalog-preview";
 import { DropdownMenuPanelPreview } from "@/components/dropdown-menu-demo";
 import { LibrarySidebar } from "@/components/library-sidebar";
@@ -18,26 +17,6 @@ import {
   EmptyTitle,
   EmptyDescription,
 } from "@/components/ui/empty";
-function CatalogBlockPreview({ slug }: { slug: BlockSlug }) {
-  const card = useRef<HTMLDivElement>(null);
-  const [showPreview, setShowPreview] = useState(false);
-  useEffect(() => {
-    const target = card.current;
-    if (!target) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
-      setShowPreview(true);
-      observer.disconnect();
-    }, { rootMargin: "320px" });
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, []);
-  const Preview = blockPreviews[slug];
-  return <div ref={card} className="catalog-block-preview">
-    <CatalogPreview slug={slug}>{showPreview ? <Preview /> : <span aria-hidden="true" />}</CatalogPreview>
-  </div>;
-}
-
 export function CatalogGrid() {
   const [query, setQuery] = useState("");
   const items = filterLibraryItems(query);

@@ -5208,10 +5208,16 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 .changelog-preview[data-full-preview]:is([data-component="kalos-permission-request"], [data-component="kalos-collaboration-stream"], [data-component="kalos-command-menu"]) .catalog-preview-content {
   width: min(100%, var(--catalog-preview-width));
 }
-.changelog-preview[data-full-preview]:is([data-component="kalos-response-stream"], [data-component="kalos-dropzone"]) .catalog-preview-viewport {
+.changelog-preview[data-full-preview]:is(
+  [data-component="kalos-response-stream"], [data-component="kalos-dropzone"],
+  [data-component="pricing-plans"], [data-component="invoice-credit"]
+) .catalog-preview-viewport {
   align-items: flex-start;
 }
-.changelog-preview[data-full-preview]:is([data-component="kalos-response-stream"], [data-component="kalos-dropzone"]) .catalog-preview-content {
+.changelog-preview[data-full-preview]:is(
+  [data-component="kalos-response-stream"], [data-component="kalos-dropzone"],
+  [data-component="pricing-plans"], [data-component="invoice-credit"]
+) .catalog-preview-content {
   transform-origin: center top;
 }
 .changelog-preview[data-component="kalos-permission-request"] .component-preview {
@@ -5250,6 +5256,40 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
 .changelog-preview[data-component="kalos-command-menu"] .component-preview {
   --catalog-preview-width: 560px;
   --changelog-preview-content-height: 472px;
+}
+.changelog-preview[data-component="pricing-plans"] .component-preview {
+  --changelog-preview-content-height: 2220px;
+}
+.changelog-preview[data-component="logo-marquee"] .component-preview {
+  --changelog-preview-content-height: 536px;
+}
+.changelog-preview[data-component="invoice-credit"] .component-preview {
+  --changelog-preview-content-height: 1140px;
+}
+.changelog-preview[data-component="testimonial-wall"] .component-preview {
+  --changelog-preview-content-height: 776px;
+}
+.changelog-preview[data-component="task-board"] .component-preview {
+  --changelog-preview-content-height: 688px;
+}
+@container changelog-preview (width >= 740px) {
+  .changelog-preview[data-component="pricing-plans"] .component-preview {
+    --changelog-preview-content-height: 936px;
+  }
+  .changelog-preview[data-component="pricing-plans"] .kp-grid {
+    grid-template-columns: repeat(var(--kp-columns), minmax(0, 1fr));
+  }
+  .changelog-preview[data-component="invoice-credit"] .component-preview {
+    --changelog-preview-content-height: 900px;
+  }
+}
+@container changelog-preview (width <= 340px) {
+  .changelog-preview[data-component="pricing-plans"] .component-preview {
+    --changelog-preview-content-height: 2340px;
+  }
+  .changelog-preview[data-component="invoice-credit"] .component-preview {
+    --changelog-preview-content-height: 1300px;
+  }
 }
 @container changelog-preview (width <= 520px) {
   .changelog-preview[data-component="kalos-permission-request"] .component-preview {
@@ -5313,6 +5353,9 @@ body:has(> .site-header) > [data-base-ui-portal]:has(> [data-side][data-align]) 
   }
   .changelog-preview {
     --changelog-preview-padding: 20px;
+  }
+  .changelog-preview[data-component="logo-marquee"] .component-preview {
+    --changelog-preview-content-height: 376px;
   }
   .changelog-preview[data-component="kalos-date-range-picker"] .component-preview {
     height: 350px;
