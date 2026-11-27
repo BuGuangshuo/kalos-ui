@@ -4,6 +4,7 @@ import ts from "typescript";
 import { blocks } from "../lib/blocks.ts";
 import { catalog } from "../lib/catalog.ts";
 import { componentReference } from "../lib/component-reference.ts";
+import { templates } from "../lib/templates.ts";
 
 const excluded = new Set(["code", "pre", "nav", "aside", "button", "kbd", "script", "style", "CodeBlock", "InstallCommand", "Sidebar", "OnThisPage", "PagePagination", "DocsPagination"]);
 const prose = new Set(["p", "motion.p", "li", "AlertDescription"]);
@@ -61,10 +62,20 @@ export async function buildSearchIndex() {
     ["app/docs/changelog/page.tsx", "/docs/changelog", "更新日志", "文档"],
     ["app/docs/tokens/page.tsx", "/docs/tokens", "设计系统", "设计系统"],
     ["app/docs/skills/page.tsx", "/docs/skills", "Skills", "Skills"],
+    ["app/templates/page.tsx", "/templates", "Template", "模版"],
     ["components/home/hero.tsx", "/", "首页", "页面"],
     ["components/home/examples.tsx", "/", "首页", "页面"],
   ]) {
     entries.push(...extractPageParagraphs(await readFile(file, "utf8"), { path, title, section }));
+  }
+  for (const template of templates) {
+    if (!template.description) continue;
+    entries.push({
+      title: `${template.english} ${template.title}`,
+      href: template.href,
+      section: "模版",
+      paragraphs: [template.description],
+    });
   }
   for (const item of catalog) {
     const title = `${item.english} ${item.title}`;

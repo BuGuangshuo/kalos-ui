@@ -14,7 +14,7 @@ export function aiToolUrl(tool: AITool, prompt: string) {
 
 export function componentPrompt({ name, description, installation, example, docsUrl, registryUrl }: {
   name: string;
-  description: string;
+  description?: string;
   installation: string;
   example: string;
   docsUrl: string;
@@ -23,8 +23,7 @@ export function componentPrompt({ name, description, installation, example, docs
   return [
     `将 Kalos UI 的「${name}」组件添加到我的 React 项目。`,
     "",
-    `组件作用：${description}`,
-    "",
+    ...(description ? [`组件作用：${description}`, ""] : []),
     "1. 检查 package.json 和 components.json，沿用项目的框架、包管理器、目录、路径别名与主题。Kalos UI 使用 Base UI，支持 Next.js、Vite 和 React Router。",
     "",
     "2. 在项目根目录安装组件源码及依赖：",

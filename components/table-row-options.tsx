@@ -1,25 +1,24 @@
 "use client";
 
-import { useState, type ComponentType } from "react";
+import { useState } from "react";
 import { Copy, Download, ExternalLink, Folder, FolderInput, Link2, MoreHorizontal, Pencil, Star, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import type { KalosDropdownMenuProps } from "@/components/ui/kalos-dropdown-menu-shared";
-import type { DemoComponents } from "@/components/demo-content";
+import { KalosDropdownMenu } from "@/registry/kalos/kalos-dropdown-menu";
+import { KalosDialog } from "@/registry/kalos/kalos-dialog";
+import { KalosButton } from "@/registry/kalos/kalos-button";
+import { KalosInput } from "@/registry/kalos/kalos-input";
 import { tableLink, type KalosTableRow } from "@/components/ui/kalos-table-model";
 import { FieldGroup } from "@/components/ui/field";
-
-type DropdownDemoComponents = Pick<DemoComponents, "KalosDialog" | "KalosButton" | "KalosInput">;
 
 type StackMenuProps = {
   row: KalosTableRow;
   categories: string[];
-  KalosDropdownMenu: ComponentType<KalosDropdownMenuProps>;
   onSave: (row: KalosTableRow) => void;
   onDuplicate: () => void;
   onDelete: () => void;
 };
 
-export function StackMoreMenu({ row, categories, KalosDropdownMenu, onSave, onDuplicate, onDelete, standalone = false }: StackMenuProps & { standalone?: boolean }) {
+export function StackMoreMenu({ row, categories, onSave, onDuplicate, onDelete, standalone = false }: StackMenuProps & { standalone?: boolean }) {
   const [starred, setStarred] = useState(false);
   return <KalosDropdownMenu
     trigger={standalone ? <><MoreHorizontal />更多菜单</> : <MoreHorizontal />}
@@ -37,8 +36,7 @@ export function StackMoreMenu({ row, categories, KalosDropdownMenu, onSave, onDu
   />;
 }
 
-export function StackRowOptions({ row, categories, KalosDropdownMenu, components, onSave, onDuplicate, onDelete }: StackMenuProps & { components: DropdownDemoComponents }) {
-  const { KalosDialog, KalosButton, KalosInput } = components;
+export function StackRowOptions({ row, categories, onSave, onDuplicate, onDelete }: StackMenuProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(String(row.tool));
   const [website, setWebsite] = useState(String(row.website));
@@ -55,6 +53,6 @@ export function StackRowOptions({ row, categories, KalosDropdownMenu, components
         <KalosInput label="网站" placeholder="example.com" value={website} onChange={event => setWebsite(event.target.value)} />
       </FieldGroup>
     </KalosDialog>
-    <StackMoreMenu row={row} categories={categories} KalosDropdownMenu={KalosDropdownMenu} onSave={onSave} onDuplicate={onDuplicate} onDelete={onDelete} />
+    <StackMoreMenu row={row} categories={categories} onSave={onSave} onDuplicate={onDuplicate} onDelete={onDelete} />
   </div>;
 }

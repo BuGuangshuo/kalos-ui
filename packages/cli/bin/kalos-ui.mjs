@@ -2,14 +2,14 @@
 import { parseArgs } from "node:util";
 import { install, selectMode } from "../lib/installer.mjs";
 
-const help = `Kalos UI — 安装 Base UI 组件源码
+const help = `Kalos UI — 安装组件、Block 和模版源码
 
 用法：
   kalos-ui init [项目名] [选项]    创建前端项目并安装组件库
-  kalos-ui add [组件名称...] [选项] 安装到已有项目
+  kalos-ui add [名称...] [选项]    安装到已有项目
   kalos-ui                        交互选择安装方式
 
-不指定组件时安装全部组件；也可使用 add button card 或 add theme。
+不指定名称时安装全部组件。使用 add dashboard-01 安装仪表盘模版。
 
 选项：
   --base <base>            可选；默认使用 Base UI

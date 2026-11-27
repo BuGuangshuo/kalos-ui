@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState, type ReactElement, type ReactNode } from "react";
 import { KalosTooltip } from "@/registry/kalos/kalos-tooltip";
-import { Check, RotateCcw } from "lucide-react";
+import { Check, Maximize, RotateCcw } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { CopyButton } from "@/components/copy-button";
@@ -22,7 +22,13 @@ function PreviewAction({ label, children, ...props }: React.ComponentProps<typeo
   </ToolHint>;
 }
 
-export function ComponentToolbar({ source, prompt, onRefresh, copyLabel = "复制组件源码" }: { source: string; prompt: string; onRefresh: () => void; copyLabel?: string }) {
+export function ComponentToolbar({ source, prompt, onRefresh, previewHref, copyLabel = "复制组件源码" }: {
+  source: string | (() => Promise<string>);
+  prompt: string;
+  onRefresh: () => void;
+  previewHref?: string;
+  copyLabel?: string;
+}) {
   const [copiedTool, setCopiedTool] = useState<AITool | null>(null);
   useEffect(() => {
     if (!copiedTool) return;
@@ -40,11 +46,17 @@ export function ComponentToolbar({ source, prompt, onRefresh, copyLabel = "复�
       <div className="component-toolbar-theme" role="group" aria-label="主题">
         <ToolHint label="切换深浅主题"><ThemeToggle className="component-toolbar-control" /></ToolHint>
       </div>
+      {previewHref && <ToolHint label="在新标签页全屏预览模版">
+        <a href={previewHref} target="_blank" rel="noopener noreferrer" aria-label="在新标签页全屏预览模版"
+          className={buttonVariants({ variant: "ghost", size: "icon", className: "component-toolbar-control" })}>
+          <Maximize aria-hidden="true" />
+        </a>
+      </ToolHint>}
       <Separator orientation="vertical" className="component-toolbar-separator" />
       <PreviewAction label="刷新预览" onClick={onRefresh}><RotateCcw /></PreviewAction>
       <Separator orientation="vertical" className="component-toolbar-separator component-toolbar-end-separator" />
     </div>
-    <div className={`component-toolbar-handoff ${controlStyles.previewToolbar}`} role="group" aria-label="组件源码与 AI 工具">
+    <div className={`component-toolbar-handoff ${controlStyles.previewToolbar}`} role="group" aria-label="源码与 AI 工具">
       {aiTools.map(tool => <ToolHint key={tool.id} label={copiedTool === tool.id ? "提示词已复制" : tool.id === "codex" ? "在 ChatGPT / Codex 中打开" : `在 ${tool.name} 中打开`}>
         <a href={aiToolUrl(tool.id, prompt)} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", size: "icon", className: "component-toolbar-tool" })} aria-label={`在 ${tool.name} 中打开`} onClick={() => copyPrompt(tool.id)}>
           {copiedTool === tool.id ? <Check /> : <AIToolIcon tool={tool.id} />}

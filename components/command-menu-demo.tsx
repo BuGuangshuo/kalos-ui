@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ChartNoAxesColumn, CircleHelp, FilePlus2, House, Inbox, Moon, Settings, Upload, UserRoundPlus } from "lucide-react";
 import { toast } from "sonner";
 import { commandMenuDemoStyles } from "@/components/command-menu-demo-styles";
-import { StackBrandIcon } from "@/components/table-demo";
+import { StackBrandIcon } from "@/components/stack-brand-icons";
 import { KalosCommandMenu, type KalosCommandGroup } from "@/registry/kalos/kalos-command-menu";
 
 function BrandIcon({ name }: { name: "Figma" | "Framer" | "Linear" | "Loom" | "Vercel" | "Slack" | "Notion" }) {

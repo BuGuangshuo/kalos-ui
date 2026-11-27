@@ -1,6 +1,7 @@
 import { dirname, join, normalize } from "node:path";
 import assert from "node:assert/strict";
 import { readFile, writeFile } from "node:fs/promises";
+import { templateFileTarget } from "../lib/template-source.ts";
 import { registrySchema, registryItemSchema } from "shadcn/schema";
 const registry = registrySchema.parse(
   JSON.parse(await readFile("registry.json", "utf8")),
@@ -20,9 +21,11 @@ for (const item of registry.items) {
     assert.equal(file.content, await readFile(file.path, "utf8"));
     if (!/\.[jt]sx?$/.test(file.path)) continue;
     for (const [, name] of file.content.matchAll(/\b(?:from\s*|import\s*)["']([^"']+)["']/g)) {
-      if (file.target && name.startsWith(".")) {
-        const local = normalize(join(dirname(file.target), name));
-        assert.ok(["", ".ts", ".tsx"].some(ext => installed.has(local + ext)), `${item.name}: missing installed file ${name}`);
+      if (file.target && (name.startsWith(".") || name.startsWith("@/"))) {
+        if (name === "@/lib/utils") continue;
+        const local = name.startsWith(".") ? normalize(join(dirname(file.target), name))
+          : templateFileTarget(name.slice(2));
+        assert.ok(["", ".ts", ".tsx", "/index.ts", "/index.tsx"].some(ext => installed.has(local + ext)), `${item.name}: missing installed file ${name} in ${file.path}`);
         continue;
       }
       if (name.startsWith("@/components/ui/") || name.startsWith("@/registry/kalos/") || name.startsWith("./")) {

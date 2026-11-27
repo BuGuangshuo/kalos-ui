@@ -13,10 +13,53 @@
     "headingWeight": [
       500,
       600
-    ],
-    "source": "CostScope/src/index.css"
+    ]
   },
   "components": {
+    "empty-state": {
+      "source": "https://www.affectui.com/r/empty-state-clean.json",
+      "light": {
+        "title": "#000000",
+        "muted": "rgba(0, 0, 0, 0.45)",
+        "tile": "rgba(0, 0, 0, 0.04)",
+        "frame": "rgba(0, 0, 0, 0.02)",
+        "edge": "rgba(0, 0, 0, 0.06)"
+      },
+      "dark": {
+        "title": "#ffffff",
+        "muted": "rgba(255, 255, 255, 0.45)",
+        "tile": "rgba(255, 255, 255, 0.06)",
+        "frame": "rgba(255, 255, 255, 0.03)",
+        "edge": "rgba(255, 255, 255, 0.08)"
+      }
+    },
+    "breadcrumb": {
+      "source": "https://www.affectui.com/components/breadcrumb",
+      "light": {
+        "ink": "rgba(0, 0, 0, 0.88)",
+        "muted": "rgba(0, 0, 0, 0.45)",
+        "faint": "rgba(0, 0, 0, 0.27)",
+        "wash": "rgba(0, 0, 0, 0.04)",
+        "surface": "#ffffff",
+        "text": "rgba(0, 0, 0, 0.61)",
+        "glow": "rgba(0, 0, 0, 0.035)",
+        "shadow": "0 0 0 0.5px rgba(0, 0, 0, 0.1), 0 12px 32px -8px rgba(0, 0, 0, 0.16)",
+        "focus": "rgba(0, 96, 226, 0.7)",
+        "icon": "rgba(0, 0, 0, 0.45)"
+      },
+      "dark": {
+        "ink": "rgba(255, 255, 255, 0.9)",
+        "muted": "rgba(255, 255, 255, 0.45)",
+        "faint": "rgba(255, 255, 255, 0.28)",
+        "wash": "rgba(255, 255, 255, 0.06)",
+        "surface": "#1b1b1e",
+        "text": "rgba(255, 255, 255, 0.62)",
+        "glow": "rgba(255, 255, 255, 0.06)",
+        "shadow": "0 0 0 0.5px rgba(255, 255, 255, 0.14), 0 12px 32px -8px rgba(0, 0, 0, 0.6)",
+        "focus": "rgba(77, 141, 255, 0.8)",
+        "icon": "rgba(255, 255, 255, 0.45)"
+      }
+    },
     "breakdown-chart": {
       "light": {
         "surface": "#ffffff",
@@ -36,11 +79,11 @@
         "shadow": "0 0 0 0.5px rgba(0,0,0,.06), 0 1px 1px -1px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.05)",
         "hover-shadow": "0 0 0 0.5px rgba(0,0,0,.12), 0 1px 1px -1px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.05)",
         "pop-shadow": "0 0 0 0.5px rgba(0,0,0,.08), 0 12px 28px -10px rgba(0,0,0,.16), 0 1px 2px rgba(0,0,0,.05)",
-        "base-chart-1": "var(--chart-series-1, #165dff)",
-        "base-chart-2": "var(--chart-series-2, #3bb6ff)",
-        "base-chart-3": "var(--chart-series-3, #7cdcf7)",
-        "base-chart-4": "var(--chart-series-4, #5b63f6)",
-        "base-chart-5": "var(--chart-series-5, #9270f5)"
+        "base-chart-1": "#165dff",
+        "base-chart-2": "#3bb6ff",
+        "base-chart-3": "#7cdcf7",
+        "base-chart-4": "#5b63f6",
+        "base-chart-5": "#9270f5"
       },
       "dark": {
         "surface": "#1c1c1e",
@@ -60,13 +103,12 @@
         "shadow": "0 0 0 0.5px rgba(255,255,255,.1), 0 1px 2px rgba(0,0,0,.4)",
         "hover-shadow": "0 0 0 0.5px rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.4)",
         "pop-shadow": "0 0 0 0.5px rgba(255,255,255,.12), 0 12px 28px -10px rgba(0,0,0,.6)",
-        "base-chart-1": "var(--chart-series-1, #2f6fef)",
-        "base-chart-2": "var(--chart-series-2, #3bb6ff)",
-        "base-chart-3": "var(--chart-series-3, #88e4ff)",
-        "base-chart-4": "var(--chart-series-4, #5b63f6)",
-        "base-chart-5": "var(--chart-series-5, #9270f5)"
-      },
-      "seriesSource": "CostScope src/index.css, --chart-series-1 to --chart-series-5"
+        "base-chart-1": "#2f6fef",
+        "base-chart-2": "#3bb6ff",
+        "base-chart-3": "#88e4ff",
+        "base-chart-4": "#5b63f6",
+        "base-chart-5": "#9270f5"
+      }
     },
     "text-field": {
       "light": {
@@ -1811,7 +1853,6 @@
       }
     },
     "usage-meter": {
-      "source": "CostScope chart-series-1–4, status-warning, status-error, and feedback-danger",
       "themeMapping": {
         "surface": "card",
         "ink": "card-foreground",
@@ -1953,6 +1994,40 @@
     }
   },
   "defaults": {
+    "empty-state": {
+      "radius": 12,
+      "padding": "48px 24px 52px",
+      "compact-padding": "36px 18px 40px",
+      "compactBreakpoint": 560,
+      "tile-size": 42,
+      "tile-radius": 11,
+      "icon-size": 18,
+      "title-gap": 16,
+      "text-gap": 4,
+      "text-width": 430,
+      "action-gap": 18,
+      "button-gap": 8
+    },
+    "breadcrumb": {
+      "radius": 4,
+      "chevron": 12,
+      "moreWidth": 24,
+      "moreHeight": 20,
+      "menuWidth": 168,
+      "menuRadius": 12,
+      "menuPadding": 4,
+      "rowHeight": 32,
+      "rowRadius": 8,
+      "rowIcon": 15,
+      "touchRow": 40,
+      "fontSize": 13,
+      "maxItems": 4,
+      "labelWidth": 200,
+      "hoverDuration": 120,
+      "currentDuration": 260,
+      "menuDuration": 220,
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)"
+    },
     "breakdown-chart": {
       "width": 560,
       "narrowWidth": 420,
@@ -2572,22 +2647,8 @@
       "viewportWidth": 512,
       "top": 20,
       "duration": 300,
-      "ease": "cubic-bezier(0.22, 1, 0.36, 1)",
-      "source": "CostScope/src/components/ui/toast.tsx and src/index.css"
+      "ease": "cubic-bezier(0.22, 1, 0.36, 1)"
     }
-  },
-  "typographyOverride": {
-    "family": "Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", ByteSans, Arial, \"Helvetica Neue\", -apple-system, BlinkMacSystemFont, \"noto sans\", Helvetica, sans-serif",
-    "controlSize": 13,
-    "controlLineHeight": 20,
-    "controlWeight": 400,
-    "bodyWeight": 400,
-    "headingWeight": [
-      500,
-      600
-    ],
-    "source": "CostScope/src/index.css",
-    "scope": "Font rules only; original measurement retained under font."
   },
   "measuredFont": {
     "family": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",

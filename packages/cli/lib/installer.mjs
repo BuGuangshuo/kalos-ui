@@ -15,7 +15,6 @@ const frameworks = [
   { value: "vite", title: "React + Vite" },
   { value: "react-router", title: "React Router" },
 ];
-const templates = frameworks;
 const frameworkOptions = frameworks.map(item => item.value).join("、");
 const managers = ["npm", "pnpm", "yarn", "bun"];
 
@@ -117,10 +116,10 @@ export async function selectMode(options = {}, hooks = {}) {
   });
 }
 
-function componentNames(requested) {
+function registryNames(requested) {
   const allowed = new Set([...manifest.components, "kalos-all", "kalos-theme"]);
   const components = [...new Set((requested?.length ? requested : ["all"]).map((name) => name.startsWith("kalos-") ? name : `kalos-${name}`))];
-  for (const name of components) if (!allowed.has(name)) throw new Error(`未知组件 ${name}。可安装：${[...allowed].join(", ")}`);
+  for (const name of components) if (!allowed.has(name)) throw new Error(`未知组件或模版 ${name}。可安装：${[...allowed].join(", ")}`);
   return components;
 }
 
@@ -144,11 +143,11 @@ async function createProjectPlan(options, hooks) {
   const interactive = hooks.interactive ?? Boolean(process.stdin.isTTY && process.stdout.isTTY);
   const select = hooks.choose || choose;
   const registry = registryOrigin(options.registry);
-  const components = componentNames(options.components);
+  const components = registryNames(options.components);
   if (!components.includes("kalos-theme")) components.push("kalos-theme");
   let framework = options.template || options.framework;
-  if (!framework && interactive) framework = await select({ message: "选择前端脚手架", choices: templates });
-  if (!templates.some((item) => item.value === framework)) throw new Error("新建项目请通过 --template next、vite 或 react-router 选择脚手架。");
+  if (!framework && interactive) framework = await select({ message: "选择前端脚手架", choices: frameworks });
+  if (!frameworks.some((item) => item.value === framework)) throw new Error("新建项目请通过 --template next、vite 或 react-router 选择脚手架。");
   const base = requireBase(options.base);
   let name = options.name;
   if (name === undefined && interactive) name = await (hooks.input || input)({ message: "项目名称", initial: "my-app", validate: validateName });
@@ -179,7 +178,7 @@ export async function createInstallPlan(options = {}, hooks = {}) {
   const config = await readJson(join(cwd, "components.json"));
   const select = hooks.choose || choose;
   const interactive = hooks.interactive ?? Boolean(process.stdin.isTTY && process.stdout.isTTY);
-  const components = componentNames(options.components);
+  const components = registryNames(options.components);
   const detectedFramework = detectFramework(pkg);
   const deps = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
   if (config?.style?.startsWith("reka-") || (!detectedFramework && ["vue", "nuxt", "@vitejs/plugin-vue", "@astrojs/vue"].some((key) => deps[key]))) {
@@ -254,6 +253,6 @@ export async function install(options = {}, hooks = {}) {
   } finally {
     if (staging) await rm(staging, { recursive: true, force: true });
   }
-  log(options.dryRun ? "\n预览完成，未修改项目。" : plan.mode === "init" ? `\n项目已创建：${plan.projectDir}\n进入项目后运行 ${plan.manager === "npm" ? "npm run" : plan.manager} dev。` : "\nKalos UI 安装完成。组件源码已添加到项目。");
+  log(options.dryRun ? "\n预览完成，未修改项目。" : plan.mode === "init" ? `\n项目已创建：${plan.projectDir}\n进入项目后运行 ${plan.manager === "npm" ? "npm run" : plan.manager} dev。` : "\nKalos UI 安装完成。");
   return plan;
 }

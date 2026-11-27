@@ -33,54 +33,33 @@ export default function Example() {
 }
 
 /** Read the real demo definitions on the server so examples include their SVG icons and data. */
-export function tableExample(variant: TableExampleVariant, demoSource: string, optionsSource = "", paginationSource = "") {
+export function tableExample(variant: TableExampleVariant, demoSource: string, optionsSource = "", paginationSource = "", iconsSource = "", designStackSource = "") {
   if (variant === "pagination") return paginationSource
     .replaceAll("@/registry/kalos/", "@/components/ui/")
     .replace("export function TablePaginationDemo()", "export default function Example()");
   const importTable = 'import { KalosTable, type KalosTableColumn, type KalosTableRow } from "@/components/ui/kalos-table";';
   if (variant === "data") {
-    const definitions = demoSource.slice(demoSource.indexOf("export function StackBrandIcon"), demoSource.indexOf("const invoiceColumns"));
+    const icons = iconsSource.slice(iconsSource.indexOf("export function StackBrandIcon"));
+    const stack = designStackSource.slice(designStackSource.indexOf("export const stackColumns"));
     return `"use client";
 
-import { useId, useState, type ComponentType } from "react";
+import { useId, useState } from "react";
 import { AlignLeft, CalendarDays, Grid2X2, Link2, Copy, Download, ExternalLink, Folder, FolderInput, MoreHorizontal, Pencil, Star, Trash2 } from "lucide-react";
 ${importTable}
 import { KalosButton } from "@/components/ui/kalos-button";
 import { KalosDialog } from "@/components/ui/kalos-dialog";
 import { KalosInput } from "@/components/ui/kalos-input";
-import { KalosDropdownMenu, type KalosDropdownMenuProps } from "@/components/ui/kalos-dropdown-menu";
+import { KalosDropdownMenu } from "@/components/ui/kalos-dropdown-menu";
 import { tableLink } from "@/components/ui/kalos-table-model";
 import { FieldGroup } from "@/components/ui/field";
 import { toast, Toaster } from "sonner";
 
-type DropdownDemoComponents = { KalosDialog: typeof KalosDialog; KalosButton: typeof KalosButton; KalosInput: typeof KalosInput };
-
 ${optionsSource.slice(optionsSource.indexOf("type StackMenuProps"))}
 
-${definitions}
+${icons}
+${stack}
 export default function Example() {
-  const [rows, setRows] = useState<KalosTableRow[]>(stackRows);
-  return <><Toaster /><KalosTable
-    title="Design Stack"
-    icon={<StackTitleIcon />}
-    columns={stackColumns}
-    rows={rows}
-    onRowsChange={setRows}
-    tagTones={stackTones}
-    editable
-    selectable
-    sortable
-    defaultSort={{ key: "tool", direction: "ascending" }}
-    addRowLabel="Add row"
-    rowActionsLabel="Options"
-    rowActionsWidth={84}
-    className="max-w-[804px]"
-    rowActions={row => <StackRowOptions row={row} categories={Object.keys(stackTones)} KalosDropdownMenu={KalosDropdownMenu} components={{ KalosDialog, KalosButton, KalosInput }}
-      onSave={next => setRows(current => current.map(item => item.id === row.id ? next : item))}
-      onDuplicate={() => { setRows(current => [...current, { ...row, id: crypto.randomUUID(), tool: String(row.tool) + " 副本" }]); toast.success("已创建副本"); }}
-      onDelete={() => { setRows(current => current.filter(item => item.id !== row.id)); toast.success("记录已删除"); }}
-    />}
-  /></>;
+  return <><Toaster /><DesignStackTable /></>;
 }`;
   }
   if (variant === "merged" || variant === "reorder") {

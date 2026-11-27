@@ -32,6 +32,7 @@
     "kalos-switch",
     "kalos-checkbox",
     "kalos-segmented-control",
+    "kalos-breadcrumb",
     "kalos-pagination",
     "kalos-accordion",
     "kalos-dialog",
@@ -39,6 +40,7 @@
     "kalos-alert-dialog",
     "kalos-select",
     "kalos-combobox",
+    "kalos-empty-state",
     "kalos-tooltip",
     "kalos-progress",
     "kalos-toast",
@@ -50,6 +52,7 @@
     "kalos-logo-marquee",
     "kalos-invoice-credit",
     "kalos-testimonial-wall",
-    "kalos-task-board"
+    "kalos-task-board",
+    "kalos-dashboard-01"
   ]
 }

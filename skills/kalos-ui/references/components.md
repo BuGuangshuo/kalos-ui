@@ -5,6 +5,8 @@ Use the slug with the Base UI registry URL in SKILL.md. React named exports use 
 | Slug             | Shared purpose and props                            |
 | ---------------- | --------------------------------------------------- |
 | kalos-button       | `loading`, `disabled`, underlying Button attributes |
+| kalos-empty-state | Pass a `title` for an empty collection or search result. Supply `text` for a recovery step and `action` for buttons or links. The default file icon accepts a replacement React node or Hugeicons data, and `icon={null}` removes the tile. Use `bare` inside an existing panel and `tall` to center within a parent of known height. Native div attributes and ref are forwarded. |
+| kalos-breadcrumb | Pass `items` from root to current page, each with a string `label` and optional `href`, `onClick` or `icon` (React node or Hugeicons data). The last item is the current page. `maxItems` defaults to 4 and available width can fold additional ancestors. `separator` defaults to `"slash"` and also accepts `"chevron"` or a React node. Native nav props and ref are forwarded. |
 | kalos-pagination | controlled `page` / `onPageChange`, `total` / `pageSize` or `pageCount`, `pageSizes` / `onPageSizeChange`, `siblings` (0–5), `compact`, `disabled`; Chinese total count and labels, responsive page numbers |
 | kalos-command-menu | grouped commands, optional inline `hint` and context, modifier-plus-digit `shortcut`, controlled query, onRun/onClose |
 | kalos-hover-card | `content`, one focusable child, side/align/offset, delays, width, controlled open, disabled |

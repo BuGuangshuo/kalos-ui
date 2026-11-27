@@ -1,0 +1,193 @@
+.detail-preview-surface[data-component="kalos-breadcrumb"] {
+  max-width: 460px;
+  min-width: 0;
+}
+
+.component-preview[data-component="kalos-breadcrumb"] {
+  --catalog-preview-width: 460px;
+}
+
+.breadcrumb-demo {
+  --demo-muted: rgb(0 0 0 / 45%);
+  --demo-faint: rgb(0 0 0 / 27%);
+  --demo-divider: rgb(0 0 0 / 6%);
+  --demo-hover: rgb(0 0 0 / 3%);
+  --demo-focus: rgb(0 96 226 / 70%);
+  --demo-shadow: 0 0 0 .5px var(--demo-divider), 0 1px 1px -1px rgb(0 0 0 / 10%), 0 1px 2px rgb(0 0 0 / 5%);
+  --demo-surface: var(--card);
+  --demo-ink: var(--card-foreground);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 460px;
+  min-width: 0;
+  border-radius: 10px;
+  background: var(--demo-surface);
+  box-shadow: var(--demo-shadow);
+  color: var(--demo-ink);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: start;
+  -webkit-font-smoothing: antialiased;
+}
+
+.breadcrumb-demo__bar {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 48px;
+  padding-inline: 16px;
+  box-shadow: inset 0 -.5px var(--demo-divider);
+}
+
+.breadcrumb-demo__bar > nav {
+  flex: 1;
+}
+
+.breadcrumb-demo__bar > nav:focus-visible {
+  outline: 2px solid var(--demo-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.breadcrumb-demo__body {
+  min-width: 0;
+  min-height: 136px;
+  padding: 6px;
+  animation: breadcrumb-demo-enter 240ms var(--ease-standard) both;
+}
+
+.breadcrumb-demo__rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumb-demo__rows > li {
+  min-width: 0;
+}
+
+.breadcrumb-demo__row,
+.breadcrumb-demo__leaf {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+}
+
+.breadcrumb-demo__row {
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.breadcrumb-demo__row:hover {
+  background: var(--demo-hover);
+}
+
+.breadcrumb-demo__row:focus-visible {
+  outline: 2px solid var(--demo-focus);
+  outline-offset: -2px;
+}
+
+.breadcrumb-demo__icon,
+.breadcrumb-demo__meta,
+.breadcrumb-demo__arrow {
+  flex: none;
+  color: var(--demo-muted);
+}
+
+.breadcrumb-demo__arrow {
+  color: var(--demo-faint);
+}
+
+.breadcrumb-demo__arrow:dir(rtl) {
+  transform: scaleX(-1);
+}
+
+.breadcrumb-demo__name {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.breadcrumb-demo__meta {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 16px;
+}
+
+.breadcrumb-demo__leaf {
+  align-items: flex-start;
+  padding: 10px;
+}
+
+.breadcrumb-demo__leaf > :first-child {
+  margin-block-start: 2px;
+}
+
+.breadcrumb-demo__leaf-text {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+  overflow-wrap: anywhere;
+}
+
+.breadcrumb-demo__mark {
+  display: grid;
+  flex: none;
+  place-content: center;
+  grid-template-columns: repeat(3, 3px);
+  grid-auto-rows: 3px;
+  gap: 1.5px;
+  width: 16px;
+  height: 16px;
+}
+
+.breadcrumb-demo__mark[data-agent="research"] { color: #0190fe; }
+.breadcrumb-demo__mark[data-agent="triage"] { color: #a651f0; }
+.breadcrumb-demo__mark[data-agent="notes"] { color: #13b3a0; }
+
+.breadcrumb-demo__mark i[data-on] {
+  border-radius: .75px;
+  background: currentColor;
+}
+
+:where(.dark, [data-theme="dark"]) .breadcrumb-demo {
+  --demo-surface: #141416;
+  --demo-muted: rgb(255 255 255 / 45%);
+  --demo-faint: rgb(255 255 255 / 28%);
+  --demo-divider: rgb(255 255 255 / 8%);
+  --demo-hover: rgb(255 255 255 / 5%);
+  --demo-focus: rgb(77 141 255 / 80%);
+  --demo-shadow: 0 0 0 .5px rgb(255 255 255 / 10%), 0 1px 2px rgb(0 0 0 / 40%);
+}
+
+@keyframes breadcrumb-demo-enter {
+  from { opacity: 0; transform: translateY(3px); }
+}
+
+@media (max-width: 560px) {
+  .component-docs-panel .detail-preview:has(> .detail-preview-surface[data-component="kalos-breadcrumb"]) {
+    padding-inline: 7px;
+  }
+
+  .breadcrumb-demo__meta { display: none; }
+  .breadcrumb-demo [data-run] .breadcrumb-demo__meta { display: inline; }
+}

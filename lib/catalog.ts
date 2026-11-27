@@ -319,6 +319,16 @@ export const catalog = [
     usage: '<KalosSegmentedControl aria-label="显示方式" defaultValue="list" options={[{ value: "list", label: "列表" }, { value: "board", label: "看板" }]} />',
   },
   {
+    slug: "kalos-breadcrumb",
+    title: "面包屑",
+    english: "Breadcrumb",
+    category: "导航",
+    description: "显示从工作区到当前页面的层级路径。路径过长或容器变窄时，中间层级会折入省略菜单。",
+    dependencies: [],
+    props: 'items: KalosBreadcrumbItem[]；separator?: "slash" | "chevron" | ReactNode；maxItems?: number；支持原生 nav 属性。',
+    usage: '<KalosBreadcrumb items={[{ label: "工作区", href: "/" }, { label: "文档", href: "/docs" }, { label: "快速开始" }]} />',
+  },
+  {
     slug: "kalos-pagination",
     title: "分页器",
     english: "Pagination",
@@ -393,6 +403,16 @@ export const catalog = [
     dependencies: ["avatar", "field"],
     props: "options: KalosComboboxOption[]；value / defaultValue: string[]；onChange(values, options)；creatable?；onCreate?；maxVisibleTags?；open?。",
     usage: '<KalosCombobox label="审阅人" options={[{ value: "chen", label: "陈晓", avatar: true }]} />',
+  },
+  {
+    slug: "kalos-empty-state",
+    title: "空状态",
+    english: "Empty State",
+    category: "反馈",
+    description: "列表为空或筛选没有匹配结果时，显示标题、可选说明和下一步操作。可放在独立边框内或直接嵌入现有面板。",
+    dependencies: ["empty"],
+    props: "title: ReactNode；text?；action?；icon?: ReactNode | HugeIcon；bare?；tall?；支持原生 div 属性和 ref。",
+    usage: '<KalosEmptyState title="暂无文档" />',
   },
   {
     slug: "kalos-tooltip",

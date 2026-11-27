@@ -45,6 +45,19 @@ test("configured Base UI projects preserve theme and aliases and only add reques
   assert.equal(await readFile(join(cwd, "components.json"), "utf8"), before);
 });
 
+test("Next.js, Vite and React Router install the same numbered template alongside components", async t => {
+  for (const [framework, dependencies] of integrations) {
+    const cwd = await project(t, { style: "base-nova", dependencies });
+    const registry = "http://localhost:3000";
+    const plan = await createInstallPlan({ cwd, registry, components: ["button", "dashboard-01", "kalos-dashboard-01"] });
+    assert.equal(plan.framework, framework);
+    assert.deepEqual(plan.components, ["kalos-button", "kalos-dashboard-01"]);
+    assert.equal(plan.commands.length, 1);
+    assert.deepEqual(plan.commands[0].args.slice(-2), [`${registry}/r/kalos-button.json`, `${registry}/r/kalos-dashboard-01.json`]);
+    assert.deepEqual((await createInstallPlan({ cwd })).components, ["kalos-all"]);
+  }
+});
+
 for (const [style, label] of [["radix-nova", "Radix UI"], ["new-york", "Radix UI"], ["aria-nova", "React Aria"]]) {
   test(`retired ${style} configuration is rejected before commands run`, async t => {
     const cwd = await project(t, { style });

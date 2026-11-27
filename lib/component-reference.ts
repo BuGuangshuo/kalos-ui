@@ -5,6 +5,36 @@ const optionalDescription: Row = ["description", "string", "—", "仅在需要�
 const label: Row = ["label", "string", "—", "控件的可见标签"];
 
 const references: Record<string, Reference> = {
+  "kalos-empty-state": { props: [
+    ["title", "ReactNode", "必填", "指出当前为空的内容，例如「暂无日程」或「未找到匹配的文档」"],
+    ["text", "ReactNode", "—", "补充数据来源或恢复方法。说明最多占 430px 宽，长文字自动换行"],
+    ["action", "ReactNode", "—", "传入可执行的按钮或链接，例如新建日程、清除筛选。多个操作居中排列，空间不足时换行"],
+    ["icon", "ReactNode | HugeIcon", "文件图标", "传入 SVG、图片或 Hugeicons 图标数据，自定义标题上方的装饰图标。传 null 隐藏整个图标底板"],
+    ["bare", "boolean", "false", "去掉外框、底色和内边距，直接嵌入已有面板"],
+    ["tall", "boolean", "false", "占满父容器的可用高度并垂直居中。父容器需要有明确的高度，可与 bare 组合使用"],
+    ["…div 属性", 'Omit<ComponentPropsWithRef<"div">, "title" | "children">', "—", "className、style、id、role 和 ref 等传给外层 div。搜索或筛选后，可在结果区域设置 aria-live 来播报变化"],
+  ], keyboard: [
+    ["Tab / Shift + Tab", "按页面顺序进入或离开操作区，多个操作分别获得焦点"],
+    ["Enter / Space", "Enter 激活聚焦的链接或按钮，Space 激活按钮"],
+  ] },
+  "kalos-breadcrumb": { props: [
+    ["items", "readonly KalosBreadcrumbItem[]", "必填", "从最外层到当前页依次排列。末项以 aria-current 标记为当前页，始终显示为文本。空数组隐藏整个导航"],
+    ["items[].label", "string", "必填", "层级名称。上级名称最长显示 200px，当前页占用剩余空间。悬停在截断文字上可查看全名"],
+    ["items[].href", "string", "—", "上级页面的链接地址，保留浏览器的链接行为"],
+    ["items[].onClick", "(event: MouseEvent<HTMLElement>) => void", "—", "单独传入时渲染按钮。与 href 一起传入时，可调用 event.preventDefault() 并交由路由处理。两者均省略时显示静态名称"],
+    ["items[].icon", "ReactNode | HugeIcon", "—", "显示在名称前的图标，可传品牌 SVG、图片或 Hugeicons 图标数据"],
+    ["separator", '"slash" | "chevron" | ReactNode', "slash", "默认用斜线分隔层级。可改为箭头或自定义节点，内置箭头随文字方向翻转"],
+    ["maxItems", "number", "4", "计入首项和当前页的可见层级数，最少保留这两项。中间层级依序折叠，省略按钮另计。容器变窄时会进一步折叠"],
+    ["aria-label", "string", "面包屑导航", "导航区域的可访问名称。页面有多个路径时可分别命名"],
+    ["…nav 属性", 'Omit<ComponentPropsWithRef<"nav">, "children">', "—", "className、style、dir、ref 等传给根 nav 元素"],
+  ], keyboard: [
+    ["Tab / Shift + Tab", "在路径链接、按钮及省略按钮间移动"],
+    ["Enter", "打开聚焦的链接，执行层级按钮，或展开省略菜单"],
+    ["Space", "激活聚焦的层级按钮或省略按钮"],
+    ["↓ / ↑", "在省略按钮上按 ↓ 展开菜单，再用方向键切换可用层级"],
+    ["Home / End", "在菜单中移动到首个或末个可用层级"],
+    ["Esc", "关闭菜单并将焦点还给省略按钮"],
+  ] },
   "kalos-breakdown-chart": { props: [
     ["records", "readonly BreakdownRecord[]", "必填", "每条记录包含对应维度的分类值，以及需要求和的数值字段。柱条、总数和明细表共用这组数据"],
     ["dimensions", "readonly Dimension[]", "必填", "每个维度提供唯一的 key、显示名称 label 和有序的 values。colors 将分类值映射到 CSS 颜色，icons 将分类值映射到图标节点"],

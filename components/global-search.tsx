@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Blocks, BookOpen, Home, Layers, Palette, Search, Sparkles, type LucideIcon } from "lucide-react";
+import { Blocks, BookOpen, Home, Layers, PanelsTopLeft, Palette, Search, Sparkles, type LucideIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { KalosCommandMenu } from "@/registry/kalos/kalos-command-menu";
 import { highlightMatches, searchSite, type SearchSection } from "@/lib/search";
 
-const icons = { Block: Blocks, 组件: Layers, 文档: BookOpen, 设计系统: Palette, Skills: Sparkles, 页面: Home } satisfies Record<SearchSection, LucideIcon>;
+const icons = { Block: Blocks, 组件: Layers, 模版: PanelsTopLeft, 文档: BookOpen, 设计系统: Palette, Skills: Sparkles, 页面: Home } satisfies Record<SearchSection, LucideIcon>;
 export function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -25,7 +25,7 @@ export function GlobalSearch() {
   const changeOpen = (next: boolean) => { setOpen(next); if (!next) setQuery(""); };
   useEffect(() => {
     const shortcut = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      if (!event.defaultPrevented && (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault(); setOpen(true);
         panel.current?.querySelector<HTMLInputElement>('input[role="combobox"]')?.focus();
       }

@@ -1,0 +1,178 @@
+:root:has(.dashboard-overview) {
+  --chart-1: #165dff;
+  --chart-2: #3bb6ff;
+  --chart-3: #7cdcf7;
+  --chart-4: #5b63f6;
+  --chart-5: #9270f5;
+  --chart-positive: #18b596;
+  --chart-negative: #ff3e27;
+  --chart-background: oklch(1 0 0);
+  --chart-foreground: oklch(0.145 0.004 285);
+  --chart-foreground-muted: oklch(0.55 0.014 260);
+  --chart-line-primary: var(--chart-1);
+  --chart-line-secondary: var(--chart-2);
+  --chart-crosshair: oklch(0.4 0.1828 274.34);
+  --chart-grid: oklch(0.9 0 0);
+  --chart-brush-border: var(--chart-grid);
+  --chart-tooltip-background: var(--popover);
+  --chart-tooltip-foreground: var(--popover-foreground);
+  --chart-tooltip-muted: var(--muted-foreground);
+  --chart-marker-background: oklch(0.97 0.005 260);
+  --chart-marker-border: oklch(0.85 0.01 260);
+  --chart-marker-foreground: oklch(0.3 0.01 260);
+  --chart-label: oklch(0.45 0.01 260);
+  --chart-scale-mix: oklch(1 0 0);
+  --chart-scale-01: oklch(0.922 0 0);
+  --chart-scale-02: color-mix(in oklab, var(--chart-1) 35%, var(--chart-scale-mix));
+  --chart-scale-03: color-mix(in oklab, var(--chart-1) 55%, var(--chart-scale-mix));
+  --chart-scale-04: color-mix(in oklab, var(--chart-1) 78%, var(--chart-scale-mix));
+  --chart-scale-05: var(--chart-1);
+  --chart-scale-pattern-color: oklch(1 0 0);
+  --chart-indicator-color: oklch(0.21 0.006 285);
+  --chart-indicator-secondary-color: oklch(0.913 0 0);
+  --chart-marker-badge-background: oklch(0 0 0);
+  --chart-marker-badge-foreground: oklch(0.84 0 0);
+  --chart-segment-background: oklch(0.756 0 0 / 0.06);
+  --chart-segment-line: oklch(0.5 0 0 / 0.25);
+  --legend: oklch(1 0 0);
+  --legend-foreground: oklch(0.141 0.005 285.823);
+  --legend-muted: oklch(0.967 0.001 286.375);
+  --legend-muted-foreground: oklch(0.552 0.016 285.938);
+  --legend-track: oklch(0.92 0.004 286.32);
+}
+
+:root.dark:has(.dashboard-overview) {
+  --chart-1: #2f6fef;
+  --chart-2: #3bb6ff;
+  --chart-3: #88e4ff;
+  --chart-4: #5b63f6;
+  --chart-5: #9270f5;
+  --chart-positive: #18b596;
+  --chart-negative: #ff3e27;
+  --chart-background: oklch(0.145 0 0);
+  --chart-foreground: oklch(0.45 0 0);
+  --chart-foreground-muted: oklch(0.65 0.01 260);
+  --chart-crosshair: oklch(0.45 0 0);
+  --chart-grid: oklch(0.25 0 0);
+  --chart-brush-border: var(--chart-grid);
+  --chart-marker-background: oklch(0.25 0.01 260);
+  --chart-marker-border: oklch(0.4 0.01 260);
+  --chart-marker-foreground: oklch(0.9 0 0);
+  --chart-label: oklch(0.75 0.01 260);
+  --chart-scale-mix: oklch(0.25 0 0);
+  --chart-scale-01: oklch(0.3 0 0);
+  --chart-scale-02: color-mix(in oklab, var(--chart-1) 35%, var(--chart-scale-mix));
+  --chart-scale-03: color-mix(in oklab, var(--chart-1) 55%, var(--chart-scale-mix));
+  --chart-scale-04: color-mix(in oklab, var(--chart-1) 78%, var(--chart-scale-mix));
+  --chart-scale-05: var(--chart-1);
+  --chart-scale-pattern-color: oklch(0.145 0 0);
+  --chart-indicator-color: oklch(1 0 0);
+  --chart-indicator-secondary-color: oklch(0.145 0 0);
+  --chart-marker-badge-background: oklch(1 0 0);
+  --chart-marker-badge-foreground: oklch(0.15 0 0);
+  --chart-segment-background: oklch(0.41 0.0127 248.14 / 0.25);
+  --chart-segment-line: oklch(1 0 0 / 0.25);
+  --legend: oklch(0.21 0.006 285.885);
+  --legend-foreground: oklch(0.985 0 0);
+  --legend-muted: oklch(0.274 0.006 286.033);
+  --legend-muted-foreground: oklch(0.705 0.015 286.067);
+  --legend-track: oklch(0.274 0.006 286.033);
+}
+
+.dashboard-overview {
+  --overview-card: var(--card);
+  --overview-line: var(--border);
+  --overview-soft: var(--muted);
+  --overview-muted: var(--muted-foreground);
+  --overview-ink: var(--foreground);
+  --focus-ring: var(--chart-1);
+}
+
+/* Keep the Design Stack row identities and actions visible while metrics scroll. */
+#dashboard-tools [role="grid"] {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+  --stack-checkbox-width: 40px;
+  --stack-tool-width: 112px;
+  --stack-actions-width: 84px;
+  --stack-scroll-shadow: rgb(0 0 0 / 10%);
+}
+
+.dark #dashboard-tools [role="grid"] { --stack-scroll-shadow: rgb(0 0 0 / 36%); }
+
+#dashboard-tools [role="grid"]::before,
+#dashboard-tools [role="grid"]::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset-block: 0;
+  width: 8px;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(to right, var(--stack-scroll-shadow), transparent);
+  transition: opacity 150ms ease;
+}
+
+#dashboard-tools [role="grid"]::before { inset-inline-start: calc(var(--stack-checkbox-width) + var(--stack-tool-width)); }
+#dashboard-tools [role="grid"]::after {
+  inset-inline-end: calc(var(--stack-actions-width) + var(--stack-scrollbar-width, 0px));
+  transform: scaleX(-1);
+}
+#dashboard-tools [role="grid"]:dir(rtl)::before { transform: scaleX(-1); }
+#dashboard-tools [role="grid"]:dir(rtl)::after { transform: none; }
+#dashboard-tools[data-overflow-start] [role="grid"]::before,
+#dashboard-tools[data-overflow-end] [role="grid"]::after { opacity: 1; }
+
+#dashboard-tools :is([data-slot="kalos-table-header"], [data-slot="kalos-table-scroll"]) {
+  overscroll-behavior-x: none;
+  scroll-padding-inline: calc(var(--stack-checkbox-width) + var(--stack-tool-width)) var(--stack-actions-width);
+}
+
+#dashboard-tools tr > :is(:first-child, :nth-child(2), :last-child):not(:only-child) {
+  position: sticky;
+  z-index: 1;
+  background-color: var(--k-table-surface);
+  background-image: linear-gradient(var(--stack-row-tint, transparent), var(--stack-row-tint, transparent));
+}
+
+#dashboard-tools tr > :first-child:not(:only-child) { inset-inline-start: 0; }
+#dashboard-tools tr > :nth-child(2) { inset-inline-start: var(--stack-checkbox-width); }
+#dashboard-tools tr > :last-child:not(:only-child) { inset-inline-end: 0; }
+
+#dashboard-tools tbody tr:hover { --stack-row-tint: var(--k-table-hover); }
+#dashboard-tools tbody tr[data-selected="true"],
+#dashboard-tools td[data-range="true"] { --stack-row-tint: var(--k-table-selected); }
+
+.dashboard-overview .text-chart-label { color: var(--chart-label); }
+
+.dashboard-overview .bg-chart-tooltip-background { background-color: var(--chart-tooltip-background); }
+
+.dashboard-overview .text-chart-tooltip-foreground { color: var(--chart-tooltip-foreground); }
+
+.dashboard-overview .text-chart-tooltip-muted { color: var(--chart-tooltip-muted); }
+
+.dashboard-overview .text-legend-foreground { color: var(--legend-foreground); }
+
+.dashboard-overview .text-legend-muted-foreground { color: var(--legend-muted-foreground); }
+
+.dashboard-overview .bg-legend-muted { background-color: var(--legend-muted); }
+
+.dashboard-overview .bg-legend-track { background-color: var(--legend-track); }
+
+.dashboard-stat {
+  --stat-muted: #686868;
+  font-family: "Dashboard Cal Sans", var(--font-sans), sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #262626;
+  background: #fff;
+  border-color: rgb(0 0 0 / 8%);
+}
+.dark .dashboard-stat {
+  --stat-muted: #818181;
+  color: #f5f5f5;
+  background: #1b1b1b;
+  border-color: rgb(255 255 255 / 6%);
+}

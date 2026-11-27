@@ -6,10 +6,13 @@
 kalos-ui init my-app --template vite --package-manager npm --yes
 kalos-ui add
 kalos-ui add button dialog
+kalos-ui add dashboard-01
 kalos-ui add --dry-run
 ```
 
 `init` 选择脚手架、项目名与包管理器，在新目录创建项目并安装全部组件和主题。`add` 识别已有框架与包管理器，保留主题、目录和别名；已有项目需配置 TypeScript、Tailwind CSS 与路径别名。两种方式均默认使用 Base UI，`--base base` 为可选参数。
+
+模版按名称单独安装。Next.js、Vite 和 React Router 均可运行 `kalos-ui add dashboard-01`，然后从组件目录的 `templates/dashboard-01` 导入 `KalosDashboard01`，在所需页面渲染。
 
 已有其他基础库的项目须先迁移。安装器不会自动改写其基础库配置。`--dry-run` 只显示命令，不修改项目。
 

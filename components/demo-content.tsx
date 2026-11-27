@@ -46,6 +46,8 @@ import { DrawerDemo } from "@/components/drawer-demo";
 import { ToastDemo } from "@/components/toast-demo";
 import { StepperFormDemo } from "@/components/stepper-form-demo";
 import { NotificationDemo } from "@/components/notification-demo";
+import { EmptyStateDemo } from "@/components/empty-state-demo";
+import { BreadcrumbDemo } from "@/components/breadcrumb-demo";
 import { PaginationDemo } from "@/components/pagination-demo";
 import type { KalosBadgeProps } from "@/registry/kalos/kalos-badge";
 
@@ -250,6 +252,10 @@ export function DemoContent({
     setDialogOpen(open);
   };
   switch (slug) {
+    case "kalos-empty-state":
+      return <EmptyStateDemo />;
+    case "kalos-breadcrumb":
+      return <BreadcrumbDemo />;
     case "kalos-pagination":
       return <PaginationDemo compact={compact} />;
     case "kalos-date-picker":
@@ -267,7 +273,7 @@ export function DemoContent({
     case "kalos-dropdown-menu":
       return <DropdownMenuDemo KalosDropdownMenu={KalosDropdownMenu} variant={dropdownVariant} compact={compact} />;
     case "kalos-table":
-      return <TableDemo KalosTable={KalosTable} KalosDropdownMenu={KalosDropdownMenu} KalosButton={KalosButton} KalosDialog={KalosDialog} KalosAlertDialog={KalosAlertDialog} KalosInput={KalosInput} variant={tableVariant} compact={compact} />;
+      return <TableDemo KalosTable={KalosTable} KalosButton={KalosButton} KalosDialog={KalosDialog} KalosAlertDialog={KalosAlertDialog} KalosInput={KalosInput} variant={tableVariant} compact={compact} />;
     case "kalos-stepper-form":
       return <StepperFormDemo />;
     case "kalos-form":

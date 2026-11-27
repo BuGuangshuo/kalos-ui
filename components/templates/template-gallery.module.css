@@ -1,0 +1,195 @@
+.gallery {
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: 56px 24px 64px;
+}
+
+.heading {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.heading h1 {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 52px;
+  letter-spacing: -0.04em;
+}
+
+.heading p {
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 24px;
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-element-md);
+  padding: 0 12px;
+  border-radius: var(--radius-full);
+  color: var(--foreground);
+  font-size: 13px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: background-color 175ms cubic-bezier(0.24, 1, 0.4, 1);
+}
+
+.filter:hover {
+  background-color: var(--muted);
+}
+
+.filter[data-checked] {
+  background-color: var(--input);
+  font-weight: 500;
+}
+
+.filter:focus-visible,
+.card:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.card {
+  --thumbnail: var(--thumbnail-light);
+  --preview-shade: rgb(0 0 0 / 64%);
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card) var(--thumbnail) center top / cover no-repeat;
+  transition: border-color 175ms cubic-bezier(0.24, 1, 0.4, 1);
+}
+
+:global(.dark) .card {
+  --thumbnail: var(--thumbnail-dark);
+  --preview-shade: rgb(0 0 0 / 42%);
+}
+
+.card:is(:hover, :focus-visible) {
+  border-color: var(--input);
+}
+
+.cover {
+  position: absolute;
+  inset: auto 0 0;
+  min-height: 50%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: end;
+  gap: 2px 12px;
+  padding: 24px 16px 16px;
+  background: linear-gradient(to bottom, transparent,
+    color-mix(in srgb, var(--preview-shade) 16%, transparent) 15%,
+    color-mix(in srgb, var(--preview-shade) 82%, transparent) 47%,
+    var(--preview-shade) 85%);
+  color: white;
+  opacity: 0;
+  transition: opacity 240ms ease-out;
+}
+
+.cover > * {
+  transform: translateY(6px);
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:is(:hover, :focus-visible) .cover {
+  opacity: 1;
+}
+
+.card:is(:hover, :focus-visible) .cover > * {
+  transform: translateY(0);
+}
+
+.cover h2 {
+  align-self: center;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.cover h2 span,
+.cover p,
+.action {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.cover h2 span {
+  margin-inline-start: 3px;
+}
+
+.cover p {
+  grid-column: 1;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.action {
+  grid-area: 1 / 2;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-element-md);
+  padding: 0 12px;
+  border-radius: var(--radius-full);
+  background: rgb(255 255 255 / 18%);
+  transition: background-color var(--duration-fast);
+}
+
+.cover:has(p) .action {
+  grid-row: 1 / span 2;
+}
+
+.action:hover,
+.card:active .action {
+  background: rgb(255 255 255 / 30%);
+}
+
+@media (max-width: 1175px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 631px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (hover: none) {
+  .cover {
+    min-height: auto;
+    padding: 28px 16px 12px;
+    opacity: 1;
+  }
+
+  .cover > * {
+    transform: none;
+  }
+
+  .cover p,
+  .action {
+    display: none;
+  }
+}

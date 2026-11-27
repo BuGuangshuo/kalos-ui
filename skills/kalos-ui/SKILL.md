@@ -9,14 +9,16 @@ Kalos UI is a Base UI React source registry for Next.js, Vite and React Router. 
 
 ## Unified installer
 
-The website serves `https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz`.
+The website serves `https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz`.
 
-- **New project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz init`. Select the scaffold (Next.js, Vite or React Router), project name and package manager. In automation, supply `init my-app --template vite --package-manager npm --yes`. The installer creates a new subdirectory and configures TypeScript, Tailwind CSS, aliases, all components and the Kalos theme. Existing destinations are refused.
-- **Existing project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz add [components...]`. Detect the framework and preserve the existing theme, directories and aliases. Use `add button card` for individual components. Interactive and noninteractive installs default to Base UI. Do not apply the optional theme unless requested.
+- **New project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz init`. Select the scaffold (Next.js, Vite or React Router), project name and package manager. In automation, supply `init my-app --template vite --package-manager npm --yes`. The installer creates a new subdirectory and configures TypeScript, Tailwind CSS, aliases, all components and the Kalos theme. Existing destinations are refused.
+- **Existing project:** `npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz add [components...]`. Detect the framework and preserve the existing theme, directories and aliases. Use `add button card` for individual components. Interactive and noninteractive installs default to Base UI. Do not apply the optional theme unless requested.
 
 Without a subcommand, the terminal offers both modes. `--dry-run` previews without modifying files or creating directories. Never run `init` to add components to an existing app; do not change frameworks or silently migrate primitive bases.
 
 Direct registry URLs below remain supported for explicit installs and advanced configuration.
+
+Templates use the same `add` command as components and Blocks. Use `add dashboard-01` in Next.js, Vite or React Router. Import `KalosDashboard01` from the configured components directory under `templates/dashboard-01` and render it on the desired page.
 
 ## Detect the project, then choose its registry
 

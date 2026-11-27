@@ -2,6 +2,8 @@ import { readFile, writeFile, mkdir, readdir, rm } from "node:fs/promises";
 import { dirname, resolve, relative } from "node:path";
 import assert from "node:assert/strict";
 import { blocks } from "../lib/blocks.ts";
+import { templates } from "../lib/templates.ts";
+import { templateRegistryItem } from "./template-registry.mjs";
 import { catalog } from "../lib/catalog.ts";
 import { site } from "../lib/site.ts";
 import tokens from "../design/tokens.json" with { type: "json" };
@@ -87,6 +89,7 @@ for (const { slug, english, description } of blocks) {
   }
   items.push({ name: `kalos-${slug}`, type: "registry:block", title: english, description, files, dependencies: await dependencies(files, []) });
 }
+items.push(...await Promise.all(templates.map(templateRegistryItem)));
 const registry = { $schema: "https://ui.shadcn.com/schema/registry.json", name: "kalos-ui", homepage: site.url, items };
 await writeFile("registry.json", JSON.stringify(registry, null, 2) + "\n");
 // Retired endpoints must not survive subsequent builds in an existing checkout.

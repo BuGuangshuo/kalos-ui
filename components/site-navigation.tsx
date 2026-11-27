@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-import { toast } from "sonner";
 import { useNavigationHighlight } from "@/components/navigation-highlight";
 import { slidingHighlightClasses } from "@/components/ui/kalos-highlight";
 import { cn } from "@/lib/utils";
@@ -13,6 +12,7 @@ const links = [
   { href: "/", section: "/", label: "首页" },
   { href: "/docs/getting-started", section: "/docs", label: "文档" },
   { href: "/components", section: "/components", label: "组件" },
+  { href: "/templates", section: "/templates", label: "模版" },
 ];
 
 export function SiteNavigation({
@@ -44,10 +44,6 @@ export function SiteNavigation({
           {label}
         </Link>
       ))}
-      <button type="button" data-site-nav-item="" onClick={() => {
-        onNavigate?.();
-        toast("正在建设中");
-      }}>模版</button>
     </nav>
   );
 }

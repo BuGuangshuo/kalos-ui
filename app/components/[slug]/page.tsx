@@ -59,7 +59,7 @@ export default async function DetailPage({ params }: PageProps<"/components/[slu
   />;
   const item = componentPages[index];
   if (!("category" in item)) return <BlockDetails item={item} pagination={pagination} />;
-  const [source, hoverCardDemoSource, tableDemoSource, tableOptionsSource, tablePaginationSource, stepperDemoSource, contextWindowDemoSource] = await Promise.all([
+  const [source, hoverCardDemoSource, tableDemoSource, tableOptionsSource, tablePaginationSource, tableIconsSource, designStackSource, stepperDemoSource, contextWindowDemoSource] = await Promise.all([
     slug === "kalos-command-menu"
       ? readFile(path.join(process.cwd(), "components/ui/kalos-command-menu-panel.tsx"), "utf8")
       : readFile(path.join(process.cwd(), "registry/kalos", `${item.slug}.tsx`), "utf8"),
@@ -67,6 +67,8 @@ export default async function DetailPage({ params }: PageProps<"/components/[slu
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-demo.tsx"), "utf8") : "",
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-row-options.tsx"), "utf8") : "",
     slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/table-pagination-demo.tsx"), "utf8") : "",
+    slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/stack-brand-icons.tsx"), "utf8") : "",
+    slug === "kalos-table" ? readFile(path.join(process.cwd(), "components/design-stack-table.tsx"), "utf8") : "",
     slug === "kalos-stepper-form" ? readFile(path.join(process.cwd(), "components/stepper-form-demo.tsx"), "utf8") : "",
     slug === "kalos-context-window" ? readFile(path.join(process.cwd(), "components/context-window-demo.tsx"), "utf8") : "",
   ]);
@@ -119,7 +121,7 @@ export default async function DetailPage({ params }: PageProps<"/components/[slu
         {slug === "kalos-drawer" ? <p>表单示例还需安装 Input、Select、Time Picker、Range Picker 与 Checkbox：运行安装命令时追加 input select time-picker date-range-picker checkbox。示例计时器演示初始化与确认加载，实际接入时由数据请求与保存操作控制。</p> : null}
         {slug === "kalos-table" ? <p>默认示例的 Options 使用 Dropdown Menu、Dialog、Input 和 Button；同时安装这些组件，并运行 npm install sonner 以显示操作结果。已有 Toaster 时复用原有入口。</p> : null}
         <CodeBlock
-          code={slug === "kalos-hover-card" ? hoverCardActivityExample(hoverCardDemoSource) : slug === "kalos-table" ? tableExample("data", tableDemoSource, tableOptionsSource) : example}
+          code={slug === "kalos-hover-card" ? hoverCardActivityExample(hoverCardDemoSource) : slug === "kalos-table" ? tableExample("data", tableDemoSource, tableOptionsSource, tablePaginationSource, tableIconsSource, designStackSource) : example}
           language="tsx"
         />
       </section>
@@ -135,7 +137,7 @@ export default async function DetailPage({ params }: PageProps<"/components/[slu
       {slug === "kalos-notification" && <NotificationExamples />}
       {slug === "kalos-badge" && <BadgeExamples />}
       {slug === "kalos-pagination" && <PaginationExamples />}
-      {slug === "kalos-table" && <TableExamples examples={Object.fromEntries(tableExampleVariants.map(({ variant }) => [variant, tableExample(variant, tableDemoSource, tableOptionsSource, tablePaginationSource)]))} />}
+      {slug === "kalos-table" && <TableExamples examples={Object.fromEntries(tableExampleVariants.map(({ variant }) => [variant, tableExample(variant, tableDemoSource, tableOptionsSource, tablePaginationSource, tableIconsSource, designStackSource)]))} />}
       <ComponentReference slug={slug} />
       {pagination}
     </article>

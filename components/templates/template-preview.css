@@ -1,0 +1,59 @@
+.component-docs-panel.template-detail-page {
+  max-width: 1680px;
+  padding-block: 24px 48px;
+  padding-inline: clamp(20px, 10% - 48px, 120px);
+}
+
+.template-detail-page > #preview {
+  margin-top: 28px;
+}
+
+@media (max-width: 700px) {
+  .component-docs-panel.template-detail-page {
+    padding-block: 28px;
+  }
+}
+
+.template-preview-stage {
+  aspect-ratio: 1440 / 900;
+  container-type: inline-size;
+  overflow: clip;
+  background: var(--background);
+}
+
+.template-preview-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% / var(--template-preview-scale, 1));
+  height: calc(100% / var(--template-preview-scale, 1));
+  isolation: isolate;
+  transform-origin: top left;
+  transform: scale(var(--template-preview-scale, 1));
+}
+
+.template-source-grid > .code-block {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.template-source-grid .code-header {
+  flex-shrink: 0;
+}
+
+.template-source-grid pre {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.template-source-grid .code-header [title] {
+  direction: rtl;
+  text-align: left;
+}

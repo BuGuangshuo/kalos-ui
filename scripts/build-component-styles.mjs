@@ -568,3 +568,30 @@ const breakdownCss = [
 ].join("\n");
 const breakdownHash = createHash("sha256").update(breakdownCss).digest("hex").slice(0, 12);
 await writeFile("components/ui/kalos-breakdown-chart-styles.ts", `// Generated from the Breakdown Chart design tokens and styles.\nexport const breakdownPalette = ${JSON.stringify(breakdown.palette)} as const;\nexport const breakdownChartStyleHref = "kalos-breakdown-chart-${breakdownHash}";\nexport const breakdownChartCss = ${JSON.stringify(breakdownCss)};\n`);
+
+const breadcrumb = inventory.defaults.breadcrumb;
+const breadcrumbTheme = inventory.components.breadcrumb;
+const breadcrumbVars = values => Object.entries(values).map(([name, value]) => `--bc-${name}:${value}`).join(";");
+const breadcrumbMetrics = Object.fromEntries(Object.entries(breadcrumb)
+  .filter(([name]) => name !== "maxItems")
+  .map(([name, value]) => [name, typeof value === "string" ? value : `${value}${name.endsWith("Duration") ? "ms" : "px"}`]));
+const breadcrumbCss = [
+  `.kalos-breadcrumb{font-family:${inventory.font.family};${breadcrumbVars(breadcrumbMetrics)};${breadcrumbVars(breadcrumbTheme.light)}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-breadcrumb{${breadcrumbVars(breadcrumbTheme.dark)}}`,
+  await readFile("design/breadcrumb.css", "utf8"),
+].join("\n");
+const breadcrumbLicense = await readFile("BREADCRUMB-LICENSE.md", "utf8");
+await writeFile("components/ui/kalos-breadcrumb-styles.ts", `// Generated from design/component-tokens.json and design/breadcrumb.css.\n/*\n${breadcrumbLicense}\n*/\nexport const breadcrumbCss = ${JSON.stringify(breadcrumbCss)};\nexport const breadcrumbMaxItems = ${breadcrumb.maxItems};\n`);
+
+const emptyState = inventory.components["empty-state"];
+const { compactBreakpoint, ...emptyMetrics } = inventory.defaults["empty-state"];
+const emptyVars = values => Object.entries(values)
+  .map(([name, value]) => `--est-${name}:${typeof value === "number" ? `${value}px` : value}`).join(";");
+const emptyStateCss = [
+  `.kalos-empty-state{font-family:${inventory.font.family};font-size:${inventory.font.controlSize}px;line-height:${inventory.font.controlLineHeight}px;font-weight:${inventory.font.controlWeight};${emptyVars(emptyMetrics)};${emptyVars(emptyState.light)}}`,
+  `:where(.dark,[data-theme=dark]) .kalos-empty-state{${emptyVars(emptyState.dark)}}`,
+  (await readFile("design/empty-state.css", "utf8")).replace("EMPTY_STATE_COMPACT_WIDTH", `${compactBreakpoint}px`),
+].join("\n");
+const emptyStateStyleHref = `kalos-empty-state-${createHash("sha256").update(emptyStateCss).digest("hex").slice(0, 12)}`;
+const emptyStateLicense = await readFile("EMPTY-STATE-LICENSE.md", "utf8");
+await writeFile("components/ui/kalos-empty-state-styles.ts", `// Generated from design/component-tokens.json and design/empty-state.css.\n/*\n${emptyStateLicense}\n*/\nexport const emptyStateStyleHref = ${JSON.stringify(emptyStateStyleHref)};\nexport const emptyStateCss = ${JSON.stringify(emptyStateCss)};\n`);

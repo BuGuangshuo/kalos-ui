@@ -409,6 +409,28 @@ export default function Example() {
     framed
   />;
 }`;
+  if (item.slug === "kalos-empty-state") return `"use client";
+
+import { CalendarDays, Plus } from "lucide-react";
+import { KalosEmptyState } from "@/components/ui/kalos-empty-state";
+// 安装本例时，将 button 加入 empty-state 的安装命令。
+import { KalosButton } from "@/components/ui/kalos-button";
+
+export function EmptySchedules({ onCreate }: { onCreate: () => void }) {
+  return (
+    <KalosEmptyState
+      icon={<CalendarDays />}
+      title="暂无日程"
+      text="为任务设置执行时间后，可以在这里查看下次运行时间。"
+      action={
+        <KalosButton type="button" variant="secondary" size="sm" onClick={onCreate}>
+          <Plus data-icon="inline-start" />
+          新建日程
+        </KalosButton>
+      }
+    />
+  );
+}`;
   if (item.slug === "kalos-toast") return toastExample();
   if (item.slug === "kalos-select") return `"use client";
 
@@ -432,6 +454,18 @@ export default function Example() {
   if (item.slug === "kalos-otp-input") return otpInputExample;
   if (item.slug === "kalos-color-picker") return colorPickerExample();
   if (item.slug === "kalos-dropzone") return dropzoneExample;
+  if (item.slug === "kalos-breadcrumb") return `import { KalosBreadcrumb, type KalosBreadcrumbItem } from "@/components/ui/kalos-breadcrumb";
+
+const items: KalosBreadcrumbItem[] = [
+  { label: "工作区", href: "/" },
+  { label: "文档", href: "/docs" },
+  { label: "设计系统", href: "/docs/tokens" },
+  { label: "字体" },
+];
+
+export default function Example() {
+  return <KalosBreadcrumb items={items} />;
+}`;
   if (item.slug === "kalos-pagination") return paginationExample();
   if (item.slug === "kalos-badge") return badgeExample();
   if (item.slug === "kalos-date-picker") return datePickerExample();

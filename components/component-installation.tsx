@@ -25,7 +25,7 @@ export function ComponentInstallation({ slug, manualContent }: { slug: string; m
   const data = manual?.url === url ? manual.data : undefined;
   return <section id="installation" className="component-installation">
     <h2>安装</h2>
-    <p>在项目根目录运行，安装组件源码。</p>
+    <p>在项目根目录运行，安装源码。</p>
     <Tabs value={method} onValueChange={setMethod}>
       <TabsList variant="line" aria-label="安装方式"><TabsTrigger line value="cli">CLI</TabsTrigger><TabsTrigger line value="manual">手动</TabsTrigger></TabsList>
       <TabsContent value="cli">

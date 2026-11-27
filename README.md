@@ -54,7 +54,7 @@ Logo 使用 `pnpm dlx shadcn@latest add @animateicons/lu-disc-3` 安装的圆盘
 在准备存放项目的目录运行：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz init
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz init
 ```
 
 依次选择 Next.js、Vite 或 React Router 脚手架、项目名和包管理器，默认使用 Base UI。安装器自动配置 TypeScript、Tailwind CSS 与路径别名，并安装完整组件库和 Kalos 主题。新项目创建在独立子目录中，已有目录不会被覆盖。
@@ -62,7 +62,7 @@ npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz init
 脚本中可直接指定全部选项：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz init my-app --template vite --package-manager npm --yes
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz init my-app --template vite --package-manager npm --yes
 ```
 
 完成后进入项目目录并运行 `npm run dev`，或所选包管理器对应的开发命令。
@@ -72,19 +72,20 @@ npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz init my-app --templat
 在项目根目录运行，安装全部组件或按需安装：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz add
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz add button card
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz add
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz add button card
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz add dashboard-01
 ```
 
 自动识别 Next.js、React + Vite 和 React Router 以及包管理器，保留主题、目录和别名，统一使用 Base UI。尚无组件配置时先引导配置；项目需已具备 TypeScript、Tailwind CSS 与路径别名。组件以源码形式安装，不会迁移宿主框架或基础库。
 
 ```bash
 # 脚本和 CI 默认使用 Base UI
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz add --yes
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz add --yes
 # 只预览，不创建目录或修改项目
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz add --dry-run
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz add --dry-run
 # 可选 Kalos 主题
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz add theme
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz add theme
 ```
 
 不带子命令时，终端会提供“新建项目”和“安装到已有项目”两种入口。`init` 使用 `--template next|vite|react-router` 指定脚手架；`add` 可使用 `--framework next|vite|react-router` 覆盖自动识别。
@@ -115,8 +116,8 @@ npx shadcn@latest add https://kalos-ui-six.vercel.app/r/kalos-all.json
 需要手动指定项目类型时：
 
 ```bash
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz add --framework vite
-npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.8.tgz add --framework react-router
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz add --framework vite
+npx https://kalos-ui-six.vercel.app/cli/kalos-ui-0.3.10.tgz add --framework react-router
 ```
 
 ## AI Skill

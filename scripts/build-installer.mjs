@@ -6,12 +6,13 @@ import { resolve, join } from "node:path";
 import { blocks } from "../lib/blocks.ts";
 import { catalog } from "../lib/catalog.ts";
 import { site } from "../lib/site.ts";
+import { templates } from "../lib/templates.ts";
 
 const directory = resolve("packages/cli");
 const pkg = JSON.parse(await readFile(join(directory, "package.json"), "utf8"));
 await writeFile(join(directory, "manifest.json"), JSON.stringify({
   registry: site.url.replace(/\/$/, ""),
-  components: [...catalog.map(item => item.slug), ...blocks.map(item => `kalos-${item.slug}`)],
+  components: [...catalog.map(item => item.slug), ...[...blocks, ...templates].map(item => `kalos-${item.slug}`)],
 }, null, 2) + "\n");
 await copyFile("LICENSE", join(directory, "LICENSE"));
 await chmod(join(directory, "bin/kalos-ui.mjs"), 0o755);

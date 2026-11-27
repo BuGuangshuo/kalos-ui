@@ -2,7 +2,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { ThemeProvider } from "next-themes";
 import {
   Terminal,
@@ -19,6 +19,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { KalosToaster } from "@/registry/kalos/kalos-toast";
 import { catalog } from "@/lib/catalog";
 import { site } from "@/lib/site";
+import { templates } from "@/lib/templates";
 import { installerCommand, type InstallationMode } from "@/lib/installer";
 import { CopyButton } from "@/components/copy-button";
 import { BrandLogo, GithubIcon } from "@/components/brand";
@@ -68,13 +69,13 @@ function Header() {
   );
 }
 export { CopyButton } from "@/components/copy-button";
-const subscribeOrigin = () => () => {};
+const subscribeWindow = () => () => {};
 const getOrigin = () => window.location.origin;
 const getServerOrigin = () => site.url;
 
 export function InstallCommand({ slug = "kalos-button", manager = "npm", mode = "add", template }: { slug?: string; manager?: string; mode?: InstallationMode; template?: string }) {
   const origin = useSyncExternalStore(
-    subscribeOrigin,
+    subscribeWindow,
     getOrigin,
     getServerOrigin,
   );
@@ -104,22 +105,40 @@ export function BundleInstall() {
     </Dialog>
   );
 }
+function focusPreview(main: HTMLElement | null) {
+  if (main && window.parent === window && document.activeElement === document.body) {
+    main.querySelector<HTMLElement>("[data-template-focus]")?.focus({ preventScroll: true });
+  }
+}
+
 export function SiteShell({ children }: { children: React.ReactNode }) {
-  const home = usePathname() === "/";
+  const pathname = usePathname();
+  const isTemplatePreview = templates.some(({ previewHref }) =>
+    pathname === previewHref || pathname.startsWith(`${previewHref}/`),
+  );
+  useEffect(() => {
+    if (isTemplatePreview && window.parent !== window) {
+      window.parent.postMessage({ type: "kalos-template-route", pathname }, window.location.origin);
+    }
+  }, [isTemplatePreview, pathname]);
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-      <KalosTooltipProvider>
-      {home ? (
-        <HomeShell>{children}</HomeShell>
+      {isTemplatePreview ? (
+        <main id="main-content" ref={focusPreview}>{children}</main>
       ) : (
-        <>
-          <Header />
-          <main id="main-content">{children}</main>
-        </>
+        <KalosTooltipProvider>
+          {pathname === "/" ? (
+            <HomeShell>{children}</HomeShell>
+          ) : (
+            <>
+              <Header />
+              <main id="main-content">{children}</main>
+            </>
+          )}
+          <Toaster position="bottom-right" />
+          <KalosToaster />
+        </KalosTooltipProvider>
       )}
-      <Toaster position="bottom-right" />
-      <KalosToaster />
-      </KalosTooltipProvider>
     </ThemeProvider>
   );
 }

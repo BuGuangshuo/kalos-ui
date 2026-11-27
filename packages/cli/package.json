@@ -1,6 +1,6 @@
 {
   "name": "@kalos-ui/cli",
-  "version": "0.3.8",
+  "version": "0.3.10",
   "private": true,
   "description": "Interactive installer for Kalos UI components",
   "type": "module",

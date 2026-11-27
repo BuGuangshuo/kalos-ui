@@ -41,6 +41,27 @@ export default function ChangelogPage() {
           <p>组件、安装器与文档的更新。</p>
         </header>
 
+        <section id="v0-3-10" className="changelog-entry">
+          <h2>v0.3.10 — 仪表盘模版、面包屑与空状态</h2>
+          <ReleaseMeta version="0.3.10" />
+          <div className="changelog-block">
+            <h3><Link href="/templates/dashboard-01">dashboard-01 基础仪表盘</Link></h3>
+            <p>模版与组件共用安装命令。将 dashboard-01 添加到 Next.js、Vite 或 React Router 项目后，即可在自己的页面中渲染仪表盘。</p>
+            <p>从<Link href="/templates">模版目录</Link>查看流量概览、渠道对比和价格走势蜡烛图。顶栏可切换数据、加载骨架和空状态，切回数据时重播图表入场与指标计数。内嵌预览保留桌面布局，全屏按钮在新标签页打开当前页面。源码文件树随当前预览页切换，支持逐文件复制。</p>
+          </div>
+          <div className="changelog-block">
+            <h3><Link href="/components/kalos-breadcrumb">Breadcrumb 面包屑</Link></h3>
+            <p>沿路径返回任一上级页面，可用品牌图标标记工作区。容器变窄时，中间层级自动折入可用键盘操作的省略菜单。</p>
+            <ChangelogPreview slug="kalos-breadcrumb" caption={false} full />
+          </div>
+          <div className="changelog-block">
+            <h3><Link href="/components/kalos-empty-state">Empty State 空状态</Link></h3>
+            <p>在空列表、搜索结果和未选中内容的面板中提示下一步操作。可替换图标、嵌入按钮，并选择带边框或无边框的布局。</p>
+            <ChangelogPreview slug="kalos-empty-state" caption={false} full />
+          </div>
+          <p>分类统计图的默认配色由 Kalos 的浅深主题变量提供。需要自定义时，可在维度配置中指定每个分类的颜色。</p>
+        </section>
+
         <section id="v0-3-8" className="changelog-entry">
           <h2>v0.3.8 — AI 思考状态、分类统计图与 Block</h2>
           <ReleaseMeta version="0.3.8" />

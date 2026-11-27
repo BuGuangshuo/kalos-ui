@@ -1347,6 +1347,31 @@
       ]
     },
     {
+      "name": "kalos-breadcrumb",
+      "type": "registry:ui",
+      "title": "Kalos 面包屑",
+      "description": "显示从工作区到当前页面的层级路径。路径过长或容器变窄时，中间层级会折入省略菜单。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-breadcrumb.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-glyph.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-breadcrumb-styles.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "kalos-pagination",
       "type": "registry:ui",
       "title": "Kalos 分页器",
@@ -1680,6 +1705,36 @@
       ]
     },
     {
+      "name": "kalos-empty-state",
+      "type": "registry:ui",
+      "title": "Kalos 空状态",
+      "description": "列表为空或筛选没有匹配结果时，显示标题、可选说明和下一步操作。可放在独立边框内或直接嵌入现有面板。",
+      "author": "Alan Bu <https://github.com/BuGuangshuo>",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/kalos/kalos-empty-state.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/empty.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-empty-state-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-glyph.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "kalos-tooltip",
       "type": "registry:ui",
       "title": "Kalos 文字提示",
@@ -1947,7 +2002,7 @@
       "name": "kalos-all",
       "type": "registry:block",
       "title": "Kalos UI 完整组件库",
-      "description": "一次安装全部 45 个 Base UI 组件。",
+      "description": "一次安装全部 47 个 Base UI 组件。",
       "dependencies": [
         "@base-ui/react",
         "@fontsource/inter",
@@ -2315,6 +2370,18 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/kalos/kalos-breadcrumb.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-glyph.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-breadcrumb-styles.ts",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/kalos/kalos-pagination.tsx",
           "type": "registry:ui"
         },
@@ -2388,6 +2455,18 @@
         },
         {
           "path": "components/ui/kalos-combobox-styles.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/kalos/kalos-empty-state.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/empty.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kalos-empty-state-styles.ts",
           "type": "registry:ui"
         },
         {
@@ -2610,6 +2689,1034 @@
         "@base-ui/react",
         "@fontsource/inter",
         "lucide-react"
+      ]
+    },
+    {
+      "name": "kalos-dashboard-01",
+      "type": "registry:block",
+      "title": "dashboard-01",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "@fontsource/roboto@^5.3.0",
+        "@number-flow/react@0.6.2",
+        "class-variance-authority@^0.7.1",
+        "cn@^0.2.5",
+        "d3-array@3.2.4",
+        "d3-geo@3.1.2",
+        "d3-scale@4.0.3",
+        "d3-shape@3.2.0",
+        "lucide-react@^1.70.0",
+        "motion@^14.10.1",
+        "next-themes@^0.4.6",
+        "sonner@^2.0.8",
+        "topojson-client@3.1.0",
+        "world-atlas@2.0.2"
+      ],
+      "devDependencies": [
+        "@types/d3-array@^3.2.2",
+        "@types/d3-geo@^3.1.1",
+        "@types/d3-scale@^4.0.9",
+        "@types/d3-shape@^3.2.0",
+        "@types/geojson@^7946.0.16",
+        "@types/topojson-client@^3.1.5",
+        "@types/topojson-specification@^1.0.5"
+      ],
+      "files": [
+        {
+          "path": "components/templates/dashboard-01/dashboard-header.tsx",
+          "target": "@components/templates/dashboard-01/dashboard-header.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/dashboard-template.tsx",
+          "target": "@components/templates/dashboard-01/dashboard-template.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/empty-page.tsx",
+          "target": "@components/templates/dashboard-01/empty-page.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/index.tsx",
+          "target": "@components/templates/dashboard-01/index.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/navigation-icons.tsx",
+          "target": "@components/templates/dashboard-01/navigation-icons.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/navigation.ts",
+          "target": "@components/templates/dashboard-01/navigation.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/accessible-plot.tsx",
+          "target": "@components/templates/dashboard-01/overview/accessible-plot.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/LICENSE.txt",
+          "target": "@components/templates/dashboard-01/overview/bklit/LICENSE.txt",
+          "type": "registry:file"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/animation.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/animation.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/arc-path.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/arc-path.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/background.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/background.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/band-config.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/band-config.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/bar-chart.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/bar-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/bar-depth-geometry.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/bar-depth-geometry.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/bar-squares-layout.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/bar-squares-layout.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/bar-value-label-layout.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/bar-value-label-layout.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/bar-x-axis.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/bar-x-axis.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/bar.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/bar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/candlestick-chart.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/candlestick-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/candlestick.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/candlestick.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-brush-handle.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-brush-handle.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-brush-layout.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-brush-layout.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-brush-selection-overlay.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-brush-selection-overlay.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-brush-state.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-brush-state.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-brush-track-overlay.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-brush-track-overlay.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-brush.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-brush.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-center-typography.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-center-typography.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-child-passthrough.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-child-passthrough.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-config-context.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-config-context.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-context.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-context.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-defs.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-defs.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-formatters.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-formatters.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-legend-hover.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-legend-hover.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-loading-label.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-loading-label.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-parent-size.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-parent-size.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-phase.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-phase.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-reveal-clip.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-reveal-clip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-scale.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-scale.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/chart-stat-flow.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/chart-stat-flow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-background.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-background.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-camera.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-camera.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-chart.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-context.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-context.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-dot-grid.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-dot-grid.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-feature.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-feature.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-graticule.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-graticule.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-marker.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-marker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-projection.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-projection.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-tooltip.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-tooltip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/choropleth-zoom-matrix.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/choropleth-zoom-matrix.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/choropleth/use-choropleth-zoom-state.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/choropleth/use-choropleth-zoom-state.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/crosshair-store.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/crosshair-store.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/dash-tail-stroke.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/dash-tail-stroke.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/date-pill-store.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/date-pill-store.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/decimate-time-series.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/decimate-time-series.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/fade-edges.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/fade-edges.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/fast-path.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/fast-path.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/filter-data-by-x-domain.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/filter-data-by-x-domain.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/generate-chart-skeleton-data.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/generate-chart-skeleton-data.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/grid-lines.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/grid-lines.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/grid.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/grid.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/highlight-segment-bounds.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/highlight-segment-bounds.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/highlight-segment.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/highlight-segment.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/indicator-fade.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/indicator-fade.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/legend/legend-context.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/legend/legend-context.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/legend/legend-item.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/legend/legend-item.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/legend/legend-label.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/legend/legend-label.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/legend/legend-marker.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/legend/legend-marker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/legend/legend.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/legend/legend.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/line-chart.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/line-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/line-loading-pulse.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/line-loading-pulse.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/line-loading-timing.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/line-loading-timing.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/line-path.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/line-path.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/line.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/line.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/loading-sweep.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/loading-sweep.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/local-point.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/local-point.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/motion-utils.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/motion-utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/path-stroke-utils.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/path-stroke-utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/pattern-preset.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/pattern-preset.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/pattern-tile.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/pattern-tile.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/projection-config.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/projection-config.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/projection-utils.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/projection-utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/radar-area.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/radar-area.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/radar-axis.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/radar-axis.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/radar-chart.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/radar-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/radar-context.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/radar-context.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/radar-grid.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/radar-grid.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/radar-labels.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/radar-labels.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/reference-area-config.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/reference-area-config.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/reference-area-geometry.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/reference-area-geometry.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/reference-area-registration-context.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/reference-area-registration-context.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/responsive-chart-label-count.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/responsive-chart-label-count.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/ring-center.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/ring-center.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/ring-chart.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/ring-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/ring-context.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/ring-context.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/ring.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/ring.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/scatter-svg.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/scatter-svg.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/series-bar-layout.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/series-bar-layout.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/series-dash-tail-overlay.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/series-dash-tail-overlay.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/series-highlight-layer.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/series-highlight-layer.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/series-hover-dim.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/series-hover-dim.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/series-markers.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/series-markers.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/series-path-utils.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/series-path-utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/series-point-marker.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/series-point-marker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/shimmering-text.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/shimmering-text.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/sparkline-geometry.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/sparkline-geometry.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/sparkline.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/sparkline.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/static-chart-preview-context.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/static-chart-preview-context.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/time-series-chart-shell.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/time-series-chart-shell.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/chart-tooltip.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/chart-tooltip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/cursor-tooltip-box.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/cursor-tooltip-box.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/date-ticker.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/date-ticker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/liquid-glass.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/liquid-glass.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/tooltip-box.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/tooltip-box.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/tooltip-content.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/tooltip-content.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/tooltip-dot.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/tooltip-dot.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/tooltip-indicator.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/tooltip-indicator.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/use-delayed-tooltip-data.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/use-delayed-tooltip-data.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/tooltip/use-velocity-stretch.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/tooltip/use-velocity-stretch.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/use-animated-series-path.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/use-animated-series-path.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/use-animated-y-domains.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/use-animated-y-domains.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/use-chart-interaction.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/use-chart-interaction.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/use-chart-phase-orchestrator.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/use-chart-phase-orchestrator.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/use-enter-complete.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/use-enter-complete.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/use-grid-shimmer.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/use-grid-shimmer.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/use-highlight-segment.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/use-highlight-segment.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/use-mount-progress.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/use-mount-progress.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/use-scheduled-tooltip.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/use-scheduled-tooltip.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/x-axis-hover.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/x-axis-hover.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/x-axis.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/x-axis.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/y-axis-scales.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/y-axis-scales.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/y-axis-ticks.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/y-axis-ticks.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/y-axis.tsx",
+          "target": "@components/templates/dashboard-01/overview/bklit/y-axis.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/bklit/y-domain-utils.ts",
+          "target": "@components/templates/dashboard-01/overview/bklit/y-domain-utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/channel-radar.tsx",
+          "target": "@components/templates/dashboard-01/overview/channel-radar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/channel-visits-chart.tsx",
+          "target": "@components/templates/dashboard-01/overview/channel-visits-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/chart-controls.tsx",
+          "target": "@components/templates/dashboard-01/overview/chart-controls.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/data.ts",
+          "target": "@components/templates/dashboard-01/overview/data.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/design-stack-icons.tsx",
+          "target": "@components/templates/dashboard-01/overview/design-stack-icons.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/design-stack.tsx",
+          "target": "@components/templates/dashboard-01/overview/design-stack.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/grouped-bars.tsx",
+          "target": "@components/templates/dashboard-01/overview/grouped-bars.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/overview-layout.tsx",
+          "target": "@components/templates/dashboard-01/overview/overview-layout.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/overview-skeleton.css",
+          "target": "@components/templates/dashboard-01/overview/overview-skeleton.css",
+          "type": "registry:file"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/overview-skeleton.tsx",
+          "target": "@components/templates/dashboard-01/overview/overview-skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/overview.css",
+          "target": "@components/templates/dashboard-01/overview/overview.css",
+          "type": "registry:file"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/overview.tsx",
+          "target": "@components/templates/dashboard-01/overview/overview.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/price-chart.tsx",
+          "target": "@components/templates/dashboard-01/overview/price-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/price-history.ts",
+          "target": "@components/templates/dashboard-01/overview/price-history.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/stat-card-font.css",
+          "target": "@components/templates/dashboard-01/overview/stat-card-font.css",
+          "type": "registry:file"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/stat-cards.tsx",
+          "target": "@components/templates/dashboard-01/overview/stat-cards.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/traffic-comparison.tsx",
+          "target": "@components/templates/dashboard-01/overview/traffic-comparison.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/traffic-map.tsx",
+          "target": "@components/templates/dashboard-01/overview/traffic-map.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/traffic-ring.tsx",
+          "target": "@components/templates/dashboard-01/overview/traffic-ring.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/templates/dashboard-01/overview/world-region-names.json",
+          "target": "@components/templates/dashboard-01/overview/world-region-names.json",
+          "type": "registry:file"
+        },
+        {
+          "path": "components/templates/dashboard-01/preview-animation.ts",
+          "target": "@components/templates/dashboard-01/preview-animation.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "LICENSE",
+          "target": "@components/templates/dashboard-01/licenses/LICENSE",
+          "type": "registry:file"
+        },
+        {
+          "path": "SHADCN-LICENSE.md",
+          "target": "@components/templates/dashboard-01/licenses/SHADCN-LICENSE.md",
+          "type": "registry:file"
+        },
+        {
+          "path": "AFFECTUI-LICENSE.md",
+          "target": "@components/templates/dashboard-01/licenses/AFFECTUI-LICENSE.md",
+          "type": "registry:file"
+        },
+        {
+          "path": "BREADCRUMB-LICENSE.md",
+          "target": "@components/templates/dashboard-01/licenses/BREADCRUMB-LICENSE.md",
+          "type": "registry:file"
+        },
+        {
+          "path": "EMPTY-STATE-LICENSE.md",
+          "target": "@components/templates/dashboard-01/licenses/EMPTY-STATE-LICENSE.md",
+          "type": "registry:file"
+        },
+        {
+          "path": "ROBOTO-LICENSE.txt",
+          "target": "@components/templates/dashboard-01/licenses/ROBOTO-LICENSE.txt",
+          "type": "registry:file"
+        },
+        {
+          "path": "components/theme-toggle.tsx",
+          "target": "@components/theme-toggle.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "target": "@ui/button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/dialog.tsx",
+          "target": "@ui/dialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-styles.ts",
+          "target": "@ui/kalos-styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/kalos/kalos-breadcrumb.tsx",
+          "target": "@components/kalos-breadcrumb.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/kalos/kalos-button.tsx",
+          "target": "@components/kalos-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/kalos/kalos-segmented-control.tsx",
+          "target": "@components/kalos-segmented-control.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/kalos/kalos-empty-state.tsx",
+          "target": "@components/kalos-empty-state.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/kalos/kalos-skeleton.tsx",
+          "target": "@components/kalos-skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/empty.tsx",
+          "target": "@ui/empty.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/theme-toggle.css",
+          "target": "@components/theme-toggle.css",
+          "type": "registry:file"
+        },
+        {
+          "path": "components/design-stack-table.tsx",
+          "target": "@components/design-stack-table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/sonner.tsx",
+          "target": "@ui/sonner.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-table-model.ts",
+          "target": "@ui/kalos-table-model.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-glyph.tsx",
+          "target": "@ui/kalos-glyph.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-breadcrumb-styles.ts",
+          "target": "@ui/kalos-breadcrumb-styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-segmented-control-view.tsx",
+          "target": "@ui/kalos-segmented-control-view.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-empty-state-styles.ts",
+          "target": "@ui/kalos-empty-state-styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-loading-styles.ts",
+          "target": "@ui/kalos-loading-styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/kalos/kalos-table.tsx",
+          "target": "@components/kalos-table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/stack-brand-icons.tsx",
+          "target": "@components/stack-brand-icons.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/table-row-options.tsx",
+          "target": "@components/table-row-options.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/checkbox.tsx",
+          "target": "@ui/checkbox.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-table-view.tsx",
+          "target": "@ui/kalos-table-view.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/select.tsx",
+          "target": "@ui/select.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-highlight.ts",
+          "target": "@ui/kalos-highlight.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/kalos/kalos-dropdown-menu.tsx",
+          "target": "@components/kalos-dropdown-menu.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/kalos/kalos-dialog.tsx",
+          "target": "@components/kalos-dialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/kalos/kalos-input.tsx",
+          "target": "@components/kalos-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "target": "@ui/field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-table-cell.tsx",
+          "target": "@ui/kalos-table-cell.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-dropdown-menu-shared.tsx",
+          "target": "@ui/kalos-dropdown-menu-shared.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-field-message.tsx",
+          "target": "@ui/kalos-field-message.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
+          "target": "@ui/input-group.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "target": "@ui/label.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "target": "@ui/separator.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/kalos-tooltip-shared.tsx",
+          "target": "@ui/kalos-tooltip-shared.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "target": "@ui/input.tsx",
+          "type": "registry:component"
+        }
       ]
     }
   ]
